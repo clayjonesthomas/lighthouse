@@ -1,13 +1,14 @@
 import React, {PropTypes} from 'react'
 
-const TextBox = (onUpdate) => (
+const TextBox = (idName) => (
   <input
-    onChange={onUpdate}>
+    type="text"
+    id="#{idName}">
   </input>
 )
 
 TextBox.propTypes = {
-  onUpdate: PropTypes.func.isRequired
+  idName: PropTypes.string.isRequired
 }
 
 export default TextBox

@@ -17,11 +17,3 @@ export const cancelPost = () => {
     type: CANCEL_POST
   }
 }
-
-export const updateForm = (key, value) => {
-  return {
-    type: UPDATE_FORM,
-    key,
-    value
-  }
-}

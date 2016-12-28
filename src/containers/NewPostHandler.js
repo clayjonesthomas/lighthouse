@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
-import {addPost, cancelPost, updateForm} from '../actions/index.js'
+import {addPost, cancelPost} from '../actions/index.js'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,9 +15,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSubmit: (post) => {
       dispatch(addPost(post))
-    },
-    onUpdate: (key, value) => {
-      dispatch(updateForm(key, value))
     }
   }
 }

@@ -3,11 +3,11 @@ import SubmitButton from './SubmitButton'
 import CancelButton from './CancelButton'
 import TextBox from './TextBox'
 
-const NewPostForm = ({onSubmit, onCancel, onUpdate, post}) => (
+const NewPostForm = ({onSubmit, onCancel, post}) => (
   <p>
     Submit a Sale
     <TextBox
-      onUpdate={onUpdate}
+      idName="SaleTitle"
     />
     <CancelButton
       onClick={onCancel}
@@ -21,7 +21,6 @@ const NewPostForm = ({onSubmit, onCancel, onUpdate, post}) => (
 NewPostForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
 }
 
 export default NewPostForm
