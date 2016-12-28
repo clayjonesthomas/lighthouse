@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react'
 import SubmitButton from './SubmitButton'
+import CancelButton from './CancelButton'
+import TextBox from './TextBox'
 
 const NewPostForm = ({onSubmit, onCancel, onUpdate, post}) => (
   <p>
