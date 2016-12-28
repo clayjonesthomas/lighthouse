@@ -24,8 +24,10 @@ function lighthouse(state = initialState, action) {
       });
 
     case CANCEL_POST:
-
+      return state
     default:
       return state
   }
 }
+
+export default lighthouse
