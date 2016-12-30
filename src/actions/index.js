@@ -1,7 +1,5 @@
 export const ADD_POST = 'ADD_POST'
 export const CANCEL_POST = 'CANCEL_POST'
-export const UPDATE_FORM = 'UPDATE_FORM'
-
 
 let nextPostId = 0
 export const addPost = (post) => {

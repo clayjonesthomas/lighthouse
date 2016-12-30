@@ -1,4 +1,4 @@
-import {ADD_POST, CANCEL_POST, UPDATE_FORM} from '../actions/index.js'
+import {ADD_POST, CANCEL_POST} from '../actions/index.js'
 
 const initialState = {
   homePosts: []
@@ -15,6 +15,7 @@ function lighthouse(state = initialState, action) {
       });
 
     case CANCEL_POST:
+      console.log(state)
       return state
     default:
       return state

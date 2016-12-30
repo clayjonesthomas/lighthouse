@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react'
 
-const SubmitButton = (onClick) => (
-  <p
+const SubmitButton = ({onClick}) => (
+  <button
+    type="button"
     onClick={onClick}>
     Submit
-  </p>
+  </button>
 )
 
 SubmitButton.propTypes = {

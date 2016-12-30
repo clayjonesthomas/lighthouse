@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react'
 
-const CancelButton = (onClick) => (
-  <p
-    onClick={onClick}>
+const CancelButton = ({onClick}) => (
+  <button
+    type="button"
+    onClick={() => onClick()}>
     Cancel
-  </p>
+  </button>
 )
 
 CancelButton.propTypes = {

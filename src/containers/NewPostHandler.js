@@ -3,8 +3,12 @@ import NewPostForm from '../components/NewPostForm'
 import {addPost, cancelPost} from '../actions/index.js'
 
 const mapStateToProps = (state) => {
+  return state
+}
+
+const collectPost = (id_name) => {
   return {
-    post: state.post
+    title: document.getElementById(id_name).value
   }
 }
 
@@ -13,8 +17,8 @@ const mapDispatchToProps = (dispatch) => {
     onCancel: () => {
       dispatch(cancelPost())
     },
-    onSubmit: (post) => {
-      dispatch(addPost(post))
+    onSubmit: (id_name) => {
+      dispatch(addPost(collectPost(id_name)))
     }
   }
 }

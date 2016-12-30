@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react'
 
-const TextBox = (idName) => (
+const TextBox = ({idName}) => (
   <input
     type="text"
-    id="#{idName}">
+    id={idName}>
   </input>
 )
 

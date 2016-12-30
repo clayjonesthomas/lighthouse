@@ -3,17 +3,19 @@ import SubmitButton from './SubmitButton'
 import CancelButton from './CancelButton'
 import TextBox from './TextBox'
 
-const NewPostForm = ({onSubmit, onCancel, post}) => (
+const SALE_TITLE = "saleTitle"
+
+const NewPostForm = ({onSubmit, onCancel}) => (
   <p>
     Submit a Sale
     <TextBox
-      idName="SaleTitle"
+      idName={SALE_TITLE}
     />
     <CancelButton
       onClick={onCancel}
     />
     <SubmitButton
-      onClick={() => onSubmit(post)}
+      onClick={() => onSubmit(SALE_TITLE)}
     />
   </p>
 )
