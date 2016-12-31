@@ -1,18 +1,15 @@
 import { createStore } from 'redux'
-import lighthouse from './reducers/reducer.js'
-import NewPostHandler from './containers/NewPostHandler'
+import lighthouse from './web/reducers/reducer.js'
+import Root from './web/components/Root'
 import {Provider} from 'react-redux'
 import React from 'react';
-import ReactDOM from 'react-dom';
-
+import render from 'react-dom';
 
 let store = createStore(lighthouse)
 
 import './index.css';
 
-ReactDOM.render(
-  <Provider store={store}>
-    <NewPostHandler />
-  </Provider>,
+render(
+  <Root/>,
   document.getElementById('root')
 );
