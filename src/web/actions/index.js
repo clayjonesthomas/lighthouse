@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 export const ADD_POST = 'ADD_POST'
 export const CANCEL_POST = 'CANCEL_POST'
 

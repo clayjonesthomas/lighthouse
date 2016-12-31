@@ -3,13 +3,12 @@ import lighthouse from './web/reducers/reducer.js'
 import Root from './web/components/Root'
 import {Provider} from 'react-redux'
 import React from 'react';
-import render from 'react-dom';
+import ReactDOM from 'react-dom';
 
 let store = createStore(lighthouse)
 
 import './index.css';
-
-render(
-  <Root/>,
+ReactDOM.render(
+  <Root store={store} />,
   document.getElementById('root')
 );

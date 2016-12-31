@@ -6,7 +6,7 @@ import NewPostHandler from '../containers/NewPostHandler';
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/(:filter)" component={NewPostHandler} />
+      <Route path="/" component={NewPostHandler} />
     </Router>
   </Provider>
 );
