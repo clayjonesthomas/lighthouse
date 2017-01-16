@@ -1,0 +1,26 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# [START handlers]
+handlers:
+
+- url: /index\.js
+  static_files: index.js
+  upload: index\.js
+
+- url: /bundle\.js
+  static_files: bundled_web/bundle.js
+  upload: bundle\.js
+
+- url: /.*
+  script: backend.backend.app
+# [END handlers]
+
+# [START libraries]
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+# [END libraries]
