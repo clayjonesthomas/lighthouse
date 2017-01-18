@@ -1,13 +1,9 @@
-import { createStore } from 'redux'
-import lighthouse from './web/reducers/reducer.js'
 import Root from './web/components/Root'
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-let store = createStore(lighthouse)
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 import './index.css';
 ReactDOM.render(
-  <Root store={store} />,
+  <Root />,
   document.getElementById('root')
 );

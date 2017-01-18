@@ -1,4 +1,4 @@
-import {ADD_POST, CANCEL_POST} from '../actions/index.js'
+import {ADD_POST, CANCEL_POST} from '../actions/actions.js'
 
 const initialState = {
   homePosts: []

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
-import {pushPost, cancelPost} from '../actions/index.js'
+import {pushPost, cancelPost} from '../actions/actions.js'
 
 const mapStateToProps = (state) => {
   return state
@@ -18,7 +18,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(cancelPost())
     },
     onSubmit: (id_name) => {
-      dispatch(pushPost(collectPost(id_name)))
+      dispatch(pushPost(collectPost(id_name))).then(() =>
+        console.log('post has been pushed')
+      )
     }
   }
 }

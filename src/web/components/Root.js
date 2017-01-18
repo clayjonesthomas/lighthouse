@@ -1,18 +1,26 @@
 import React, { PropTypes } from 'react';
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
+import lighthouse from '../reducers/reducer.js'
 import NewPostHandler from '../containers/NewPostHandler';
+import thunkMiddleware from 'redux-thunk'
 
-const Root = ({ store }) => (
+
+
+let store = createStore(
+  lighthouse,
+  applyMiddleware(
+    thunkMiddleware
+  )
+)
+
+const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={NewPostHandler} />
     </Router>
   </Provider>
 );
-
-Root.propTypes = {
-  store: PropTypes.object.isRequired,
-};
 
 export default Root;

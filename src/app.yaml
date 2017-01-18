@@ -13,6 +13,9 @@ handlers:
   static_files: bundled_web/bundle.js
   upload: bundle\.js
 
+- url: /rest/posts
+  script: backend.backend.app
+
 - url: /.*
   script: backend.backend.app
 # [END handlers]
@@ -24,3 +27,6 @@ libraries:
 - name: jinja2
   version: latest
 # [END libraries]
+
+builtins:
+- remote_api: on
