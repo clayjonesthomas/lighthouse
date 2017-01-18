@@ -1,4 +1,5 @@
 import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
+import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 
 const initialState = {
   homePosts: []
@@ -6,16 +7,10 @@ const initialState = {
 
 function lighthouse(state = initialState, action) {
   switch (action.type) {
+    case REQUEST_POSTS_RETURN:
     case ADD_POST:
-      return Object.assign({}, state, {
-        homePosts: [
-          ...state.homePosts,
-          action.post
-        ]
-      });
-
+      return state
     case CANCEL_POST:
-      console.log(state)
       return state
     default:
       return state
