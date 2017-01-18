@@ -1,9 +1,9 @@
 import $ from 'jquery'
+import {POSTS_URL} from '../constants/constants'
 
 export const ADD_POST = 'ADD_POST'
 export const ADD_POST_RETURN = 'ADD_POST_RETURN'
 export const CANCEL_POST = 'CANCEL_POST'
-export const POST_URL = '/rest/posts'
 
 let nextPostId = 0
 export const addPost = (post) => {
@@ -33,7 +33,7 @@ export function pushPost(post) {
     dispatch(addPost(post))
     return $.ajax({
       method: 'POST',
-      url: POST_URL,
+      url: POSTS_URL,
       dataType: 'json',
       data: post
     })

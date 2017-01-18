@@ -18,7 +18,7 @@ let store = createStore(
 const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={NewPostHandler} />
+      <Route path="/" component={FrontPageHandler} />
     </Router>
   </Provider>
 );

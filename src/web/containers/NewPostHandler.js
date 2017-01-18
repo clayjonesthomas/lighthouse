@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
-import {pushPost, cancelPost} from '../actions/actions.js'
+import {pushPost, cancelPost} from '../actions/NewPostActions.js'
 
 const mapStateToProps = (state) => {
   return state
