@@ -2,7 +2,7 @@ import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
 import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 
 const initialState = {
-  homePosts: []
+  displayedPosts: []
 }
 
 function lighthouse(state = initialState, action) {
