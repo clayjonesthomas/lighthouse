@@ -9,8 +9,8 @@ const FrontPage = ({posts, onSelectPost, onSelectNewPost}) => (
 )
 
 FrontPage.propTypes = {
-  posts: PropTypes.arrayOf(React.propTypes.shape({
-    title: React.PropTypes.string.isRequired
+  posts: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired
   })).isRequired,
   onSelectPost: PropTypes.func.isRequired,
   onSelectNewPost: PropTypes.func.isRequired,
