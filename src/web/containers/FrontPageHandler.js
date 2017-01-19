@@ -1,3 +1,4 @@
+import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 
@@ -8,7 +9,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSelectPost: null,
-    onSelectNewPost: null,
+    onSelectNewPost: () => browserHistory.push('/new')
   }
 }
 

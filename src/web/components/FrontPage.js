@@ -6,9 +6,11 @@ const FrontPage = ({posts, onSelectPost, onSelectNewPost}) => (
     {posts.map(post =>
       <div>post.title</div>
     )}
-    {<Link to='/new'>
+    {<button
+      type="button"
+      onClick={() => onSelectNewPost()}>
       Make a new Post
-    </Link>}
+    </button>}
   </div>
 )
 
