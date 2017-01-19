@@ -28,6 +28,9 @@ class Posts(webapp2.RequestHandler):
         title = self.request.get('title', None)
         post = Post(title=title)
         post_key = post.put()
+
+    def get(self):
+        Post.query(Post.title != None).fetch(10)
         import pdb; pdb.set_trace()
 
 

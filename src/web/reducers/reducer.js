@@ -8,6 +8,9 @@ const initialState = {
 function lighthouse(state = initialState, action) {
   switch (action.type) {
     case REQUEST_POSTS_RETURN:
+      return Object.assign({}, state, {
+        displayedPosts: action.data,
+      })
     case ADD_POST:
       return state
     case CANCEL_POST:
