@@ -1,3 +1,4 @@
+import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
 import {pushPost, cancelPost} from '../actions/NewPostActions.js'
@@ -16,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCancel: () => {
       dispatch(cancelPost())
+      browserHistory.push('/')
     },
     onSubmit: (id_name) => {
       dispatch(pushPost(collectPost(id_name))).then(() =>
