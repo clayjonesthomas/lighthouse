@@ -32,6 +32,6 @@ class Posts(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainPage),
     ('/rest/posts', Posts),
+    ('/.*', MainPage),
 ], debug=True)
