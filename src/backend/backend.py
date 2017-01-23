@@ -1,8 +1,8 @@
-import os
-
-from google.appengine.ext import ndb
-
 import jinja2
+import json
+import logging
+from google.appengine.ext import ndb
+import os
 import webapp2
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -11,9 +11,30 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 
+def spawn_dummy_posts():
+    for i in range(10):
+        Post(title=format('test post please ignore {}'.format(i))).put()
+
+
+def main():
+    logging.info('in main')
+    if len(Post.query().fetch(10)) <= 0:
+        logging.info("spawning dummy datastore entries")
+        spawn_dummy_posts()
+
+if __name__ == "__main__":
+    main()
+
+
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    
+
+    # using _values for the time being but unsure of its spec
+    # def post_json_parser(self):
+    #     result = []
+    #     import pdb; pdb.set_trace()
+    #     result.append(dict([(p, unicode(getattr(self, p))) for p in self._values]))
+    #     return result
 
 class MainPage(webapp2.RequestHandler):
 
@@ -30,11 +51,16 @@ class Posts(webapp2.RequestHandler):
         post_key = post.put()
 
     def get(self):
-        Post.query(Post.title != None).fetch(10)
-        import pdb; pdb.set_trace()
+        if len(Post.query().fetch(10)) <= 0:
+            logging.info("spawning dummy datastore entries")
+            spawn_dummy_posts()
+        fetched_posts = [post.to_dict() for post in Post.query().fetch(10)]
+        logging.info("pulling posts from the datastore")
+        self.response.write(json.dumps(fetched_posts))
 
 
 app = webapp2.WSGIApplication([
     ('/rest/posts', Posts),
     ('/.*', MainPage),
 ], debug=True)
+

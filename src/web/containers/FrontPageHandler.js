@@ -1,5 +1,5 @@
 import {browserHistory} from 'react-router'
-import {Component, PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 import {pullFrontPagePosts} from '../actions/FrontPageActions'
@@ -10,10 +10,12 @@ class FrontPageHandler extends Component {
   }
 
   render () {
-    <FrontPage
-      posts: this.props.posts
-      onSelectPost: this.props.onSelectPost
-      onSelectNewPost: this.props.onSelectNewPost/>
+    return (
+      <FrontPage
+        posts={this.props.posts}
+        onSelectPost={this.props.onSelectPost}
+        onSelectNewPost={this.props.onSelectNewPost}/>
+    )
   }
 }
 

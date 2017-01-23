@@ -25,7 +25,7 @@ export function pullFrontPagePosts() {
       url: POSTS_URL
     })
       .done((response) => {
-        dispatch(requestPostsReturn(response.json()))
+        dispatch(requestPostsReturn(JSON.parse(response)))
       })
       //.fail TODO
   }

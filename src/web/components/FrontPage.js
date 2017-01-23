@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 const FrontPage = ({posts, onSelectPost, onSelectNewPost}) => (
   <div>
     {posts.map(post =>
-      <div>post.title</div>
+        <div>{post.title}</div>
     )}
     {<button
       type="button"
