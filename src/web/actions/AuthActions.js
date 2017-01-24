@@ -3,6 +3,13 @@ import {AUTH_URL} from '../constants/constants'
 
 export const REQUEST_AUTH = 'REQUEST_AUTH'
 export const RESPONSE_AUTH = 'RESPONSE_AUTH'
+export const CANCEL_AUTH = 'CANCEL_AUTH'
+
+export const cancelAuth = () => {
+  return {
+    type: CANCEL_AUTH
+  }
+}
 
 export const requestAuth = (user, pass) => {
   return {
