@@ -26,6 +26,10 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {modalState: state.modalState}
+}
+
 export default connect(
   mapDispatchToProps
 )(LoginHandler)

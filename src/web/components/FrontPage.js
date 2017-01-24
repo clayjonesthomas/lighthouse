@@ -1,6 +1,5 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
-import {Link} from 'react-router'
 
 const FrontPage = ({posts, onSelectPost, onSelectNewPost}) => (
   <div>
