@@ -1,10 +1,12 @@
+import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
 const FrontPage = ({posts, onSelectPost, onSelectNewPost}) => (
   <div>
     {posts.map(post =>
-        <div>{post.title}</div>
+        <PostBox
+          post={post}/>
     )}
     {<button
       type="button"
