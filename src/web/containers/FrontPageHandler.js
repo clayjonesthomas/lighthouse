@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 import {pullFrontPagePosts} from '../actions/FrontPageActions'
+import {showLogin} from '../actions/AuthActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
@@ -14,13 +15,17 @@ class FrontPageHandler extends Component {
       <FrontPage
         posts={this.props.posts}
         onSelectPost={this.props.onSelectPost}
-        onSelectNewPost={this.props.onSelectNewPost}/>
+        onSelectNewPost={this.props.onSelectNewPost}
+        onShowLogin={this.props.onShowLogin}
+        showModalType={this.props.showModalType}/>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {posts: state.displayedPosts}
+  return {
+    posts: state.displayedPosts,
+    showModalType: state.showModalType}
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -29,7 +34,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(pullFrontPagePosts())
     },
     onSelectPost: null,
-    onSelectNewPost: () => browserHistory.push('/new')
+    onSelectNewPost: () => browserHistory.push('/new'),
+    onShowLogin: () => dispatch(showLogin())
   }
 }
 

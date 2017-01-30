@@ -2,15 +2,17 @@ import {browserHistory} from 'react-router'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import LoginModal from '../compponents/LoginModal'
-import {cancelAuth, authorizeUser} from '../actions/AuthActions'
+import {cancelModal, authorizeUser, showSignUp} from '../actions/AuthActions'
 
 class LoginHandler extends Component {
 
   render () {
     return (
       <LoginModal
-        onSubmitAuthentication={this.props.onSubmitAuthentication}
-        onCancel={this.props.onCancel}/>
+        onSubmit={this.props.onSubmitAuthentication}
+        onCancel={this.props.onCancel}
+        onSignup={this.props.onSignUp}
+      />
     )
   }
 }
@@ -21,7 +23,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(authorizeUser(user, pass))
     },
     onCancel: () => {
-      dispatch(cancelAuth())
+      dispatch(cancelModal())
+    },
+    onSignUp: () => {
+      dispatch(showSignUp())
     }
   }
 }
@@ -31,5 +36,6 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(LoginHandler)

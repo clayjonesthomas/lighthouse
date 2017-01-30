@@ -31,3 +31,5 @@ LoginModal.propTypes = {
   onSignUp: PropTypes.func.isRequired
 
 }
+
+export default LoginModal
