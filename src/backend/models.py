@@ -6,6 +6,17 @@ from google.appengine.ext import ndb
 from webapp2_extras import security
 
 
+class Post(ndb.Model):
+    title = ndb.StringProperty(indexed=True)
+
+    # using _values for the time being but unsure of its spec
+    # def post_json_parser(self):
+    #     result = []
+    #     import pdb; pdb.set_trace()
+    #     result.append(dict([(p, unicode(getattr(self, p))) for p in self._values]))
+    #     return result
+
+
 class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
     def set_password(self, raw_password):

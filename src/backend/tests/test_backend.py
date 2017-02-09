@@ -1,34 +1,36 @@
 import unittest
+import webapp2
+import json
 
-from backend.models import User
+from backend.backend import Posts, app
 
 from google.appengine.ext import testbed
 
 
-class TestUser(unittest.TestCase):
+class TestMain(unittest.TestCase):
 
-    def test_set_password(self):
-        u = User()
-        self.assertIsNone(u.password)
-        u.set_password('password')
-        self.assertNotEqual(u.password, 'password')
-        self.assertIsNotNone(u.password)
+    def test_get(self):
+        request = webapp2.Request.blank('/')
+        request.method = 'GET'
+        response = request.get_response(app)
 
-    # hard to do right without stubbing webapp2 so will depend on
-    # backend tests for this
-    # def test_get_by_auth_token(self):
-    #     self.testbed = testbed.Testbed()
-    #     self.testbed.activate()
-    #     self.testbed.init_datastore_v3_stub()
-    #     self.testbed.init_memcache_stub()
-    #     import ipdb; ipdb.set_trace()
-    #     u = User()
-    #     u.username = 'user_name'
-    #     u.put()
-    #     u_id = u.get_id()
-    #     token = User.create_signup_token(u_id)
-    #     gotten_user = User.get_by_auth_token(u_id, token)[1]
-    #
-    #     self.assertEqual('user_name', gotten_user.username)
+        self.assertEqual(response.status_int, 200)
+        self.assertIsNotNone(response.body)
 
-class
+
+class TestPosts(unittest.TestCase):
+
+    def test_post(self):
+        self.testbed = testbed.Testbed()
+        self.testbed.activate()
+        self.testbed.init_datastore_v3_stub()
+        self.testbed.init_memcache_stub()
+        request = webapp2.Request.blank('/rest/posts')
+        request.method = 'GET'
+        response = request.get_response(app)
+
+        self.assertEqual(response.status_int, 200)
+        self.assertEqual(len(json.loads(response.body)), 10)
+        self.assertIn({'title': 'test post please ignore 0'}, json.loads(response.body))
+        # import ipdb; ipdb.set_trace()
+
