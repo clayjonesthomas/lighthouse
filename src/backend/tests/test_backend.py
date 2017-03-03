@@ -134,6 +134,21 @@ class TestAuth(unittest.TestCase):
 
     def test_password_reset(self):
         """user can reset password and log in with new one"""
+        #TBD when functionality implemented on frontend
+        # utils.stub_rest(self)
+        # self._signup_and_verify(self._contents)
+        #
+        # request_password_URL = webapp2.Request.blank('rest/reset_password', POST=self._contents)
+        # response_password_URL = request_password_URL.get_response(app)
+        #
+        # request_password = webapp2.Request.blank(response_password_URL)
+        # response_password = request_password.get_response(app)
+
+
+
+    def test_password_reset_no_username(self):
+        """user cannot reset the password of a nonexistent username"""
+
 
     def test_same_password_reset(self):
         """user can reset password"""
@@ -150,7 +165,38 @@ class TestAuth(unittest.TestCase):
 
     def test_multiple_signups(self):
         """user cannot sign up with an already used email or username"""
+        utils.stub_rest(self)
+        self._signup_and_verify(self._contents)
 
+        # no duplicate emails
+        contents_same_email = self._contents.copy()
+        contents_same_email['username'] = 'not_dude'
+        same_email_request = webapp2.Request.blank('/rest/signup', POST=contents_same_email)
+        same_email_response = same_email_request.get_response(app)
+
+        self.assertEqual(same_email_response.status_int, 200)
+        self.assertIn('Unable to create user', same_email_response.body)
+        self.assertIn('not_dude', same_email_response.body)
+
+        # no duplicate usernames
+        contents_same_username = self._contents.copy()
+        contents_same_username['email'] = 'not_test'
+        same_uname_request = webapp2.Request.blank('/rest/signup', POST=contents_same_username)
+        same_uname_response = same_uname_request.get_response(app)
+
+        self.assertEqual(same_uname_response.status_int, 200)
+        self.assertIn('Unable to create user', same_uname_response.body)
+        self.assertIn('dude', same_uname_response.body)
+
+        # check signup still works
+        unique_enough_contents = self._contents.copy()
+        unique_enough_contents['email'] = 'not_test'
+        unique_enough_contents['username'] = 'not_dude'
+        unique_request = webapp2.Request.blank('/rest/signup', POST=unique_enough_contents)
+        unique_response = unique_request.get_response(app)
+
+        self.assertEqual(unique_response.status_int, 200)
+        self.assertIn('/rest/v', unique_response.body)
 
 
 

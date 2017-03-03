@@ -144,15 +144,15 @@ class SignupHandler(BaseHandler):
         email = self.request.get('email')
         password = self.request.get('password')
 
-        unique_properties = ['email_address']
+        unique_properties = ['email_address']  # username automatically unique
         user_data = self.user_model.create_user(user_name,
                                                 unique_properties,
                                                 email_address=email,
                                                 password_raw=password,
                                                 verified=False)
         if not user_data[0]:  # user_data is a tuple
-            self.response.write('Unable to create user for email %s because of \
-                duplicate keys %s' % (user_name, user_data[1]))
+            self.response.write('Unable to create user for username %s because of '
+                                'duplicate keys %s' % (user_name, user_data[1]))
             return
 
         user = user_data[1]
