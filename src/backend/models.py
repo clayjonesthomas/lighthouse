@@ -48,3 +48,9 @@ class User(webapp2_extras.appengine.auth.models.User):
             return user, timestamp
 
         return None, None
+
+    @classmethod
+    def get_by_id(cls, user_id):
+        # definitely a more concise way to do this
+        user_key = ndb.Key(cls, user_id)
+        return user_key.get()

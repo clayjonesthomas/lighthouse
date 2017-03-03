@@ -49,7 +49,7 @@ class Posts(webapp2.RequestHandler):
 
 ###################################
 
-
+# Original Source: https://github.com/abahgat/webapp2-user-accounts
 def user_required(handler):
     """
       Decorator that checks if there's a user associated with the current session.
@@ -144,7 +144,7 @@ class SignupHandler(BaseHandler):
         email = self.request.get('email')
         password = self.request.get('password')
 
-        unique_properties = ['username']
+        unique_properties = ['email_address']
         user_data = self.user_model.create_user(user_name,
                                                 unique_properties,
                                                 email_address=email,
@@ -159,11 +159,10 @@ class SignupHandler(BaseHandler):
         user_id = user.get_id()
 
         token = self.user_model.create_signup_token(user_id)
-
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
 
-        self.response.write("/rest"+verification_url)
+        self.response.write(verification_url)
 
 
 class ForgotPasswordHandler(BaseHandler):
@@ -185,7 +184,7 @@ class ForgotPasswordHandler(BaseHandler):
         verification_url = self.uri_for('verification', type='p', user_id=user_id,
                                         signup_token=token, _full=True)
 
-        self.response.write("/rest"+verification_url)
+        self.response.write(verification_url)
 
 
 class VerificationHandler(BaseHandler):
@@ -217,8 +216,9 @@ class VerificationHandler(BaseHandler):
             if not user.verified:
                 user.verified = True
                 user.put()
-
-            self.response.write("user {} has had their email verified".format(user.username))
+            # very fragile way to grab the username, should be changed if more advanced
+            # auth_ids usage needed
+            self.response.write("user {} has had their email verified".format(user.auth_ids[0]))
             return
         elif verification_type == 'p':
             # supply user to the page
@@ -238,9 +238,15 @@ class LoginHandler(BaseHandler):
         username = self.request.get('username')
         password = self.request.get('password')
         try:
-            u = self.auth.get_user_by_password(username, password, remember=True,
-                                               save_session=True)
-            self.response.write('success')
+            user_dict = self.auth.get_user_by_password(username, password)
+            user = self.user_model.get_by_id(user_dict['user_id'])
+
+            if user.verified:
+                self.auth.set_session(user_dict, remember=True)
+                self.response.write('success')
+            else:
+                logging.info('Login failed for user %s because they are unverified', username)
+                self.response.write('Login failed; {}'.format('unverified'))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', username, type(e))
             self.response.write('Login failed; {}'.format(e))
@@ -254,8 +260,8 @@ class LogoutHandler(BaseHandler):
 
 config = {
     'webapp2_extras.auth': {
-        'user_model': 'models.User',
-        'user_attributes': ['username']
+        'user_model': 'backend.models.User',
+        'user_attributes': [] # used for caching properties
     },
     'webapp2_extras.sessions': {
         'secret_key': ",9XgK[}5D7*-wAi0e{a)V$O83P5tL*=y17kmx8ID0!U}q?e;mH(@L'*(qOGp#1M"
@@ -264,11 +270,12 @@ config = {
 
 
 app = webapp2.WSGIApplication([
-    ('/rest/reset_password', ForgotPasswordHandler),
-    ('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler),
-    ('/rest/signup', SignupHandler),
-    ('/rest/login', LoginHandler),
-    ('/rest/posts', Posts),
-    ('/.*', MainPage),
+    webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
+    webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
+    webapp2.Route('/rest/signup', SignupHandler, name='signup'),
+    webapp2.Route('/rest/login', LoginHandler, name='login'),
+    webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
+    webapp2.Route('/rest/posts', Posts, name='posts'),
+    webapp2.Route('/', MainPage, name='home'),
 ], debug=True, config=config)
 
