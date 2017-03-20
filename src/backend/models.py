@@ -19,6 +19,11 @@ class Post(ndb.Model):
 
 class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args,**kwargs)
+        self._is_login_enabled = True
+
     def set_password(self, raw_password):
         """Sets the password for the current user
 
@@ -49,11 +54,35 @@ class User(webapp2_extras.appengine.auth.models.User):
 
         return None, None
 
-    def get_username(self):
+    @property
+    def username(self):
         """
         :returns: the username of the user
         """
         return self.auth_ids[0]
+
+    @property
+    def is_login_enabled(self):
+        """
+        :return: whether or not the user can be logged in
+        """
+        return self._is_login_enabled
+
+    def toggle_login(self, **kwargs):
+        """
+        disable or enable whether or not a user can login
+        :param kwargs: enable: evaluates to True if the user can login,
+            False if not.
+        """
+        should_enable = kwargs['enable']
+
+        if should_enable is not None:
+            if should_enable:
+                self._is_login_enabled = True
+            else:
+                self._is_login_enabled = False
+        else:
+            self._is_login_enabled = not self._is_login_enabled
 
     @classmethod
     def get_by_id(cls, user_id):

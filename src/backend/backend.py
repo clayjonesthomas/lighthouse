@@ -1,7 +1,6 @@
 import jinja2
 import json
 import logging
-from google.appengine.ext.webapp import template
 import os
 
 import webapp2
@@ -48,6 +47,7 @@ class Posts(webapp2.RequestHandler):
         self.response.write(json.dumps(fetched_posts))
 
 ###################################
+
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
 def user_required(handler):
@@ -109,20 +109,13 @@ class BaseHandler(webapp2.RequestHandler):
         """Shortcut to access the current session."""
         return self.session_store.get_session(backend="datastore")
 
-    def render_template(self, view_filename, params=None):
-        if not params:
-            params = {}
-        user = self.user_info
-        params['user'] = user
-        path = os.path.join(os.path.dirname(__file__), 'views', view_filename)
-        self.response.out.write(template.render(path, params))
-
-    def display_message(self, message):
-        """Utility function to display a template with a simple message."""
-        params = {
-            'message': message
-        }
-        self.render_template('message.html', params)
+    # def render_template(self, view_filename, params=None):
+    #     if not params:
+    #         params = {}
+    #     user = self.user_info
+    #     params['user'] = user
+    #     path = os.path.join(os.path.dirname(__file__), 'views', view_filename)
+    #     self.response.out.write(template.render(path, params))
 
     # this is needed for webapp2 sessions to work
     def dispatch(self):
@@ -177,7 +170,9 @@ class ForgotPasswordHandler(BaseHandler):
 
         user_id = user.get_id()
         token = self.user_model.create_signup_token(user_id)
-
+        u = self.user_model.get_by_auth_id(username)
+        u.toggle_login(enable=False)
+        u.put()
         verification_url = self.uri_for('verification', type='p', user_id=user_id,
                                         signup_token=token, _full=True)
 
@@ -205,7 +200,6 @@ class VerificationHandler(BaseHandler):
 
         # store user data in the session
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-
         if verification_type == 'v':
             # remove signup token, we don't want users to come back with an old link
             self.user_model.delete_signup_token(user.get_id(), signup_token)
@@ -215,7 +209,7 @@ class VerificationHandler(BaseHandler):
                 user.put()
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
-            self.response.write("user {} has had their email verified".format(user.get_username()))
+            self.response.write("user {} has had their email verified".format(user.username))
             return
         else:
             logging.info('verification type not supported')
@@ -246,8 +240,9 @@ class VerificationHandler(BaseHandler):
         if verification_type == 'p':
             self.user_model.delete_signup_token(user.get_id(), signup_token)
             user.set_password(new_password)
+            user.toggle_login(enable=True)
             user.put()
-            self.response.write("user {} has had their password updated".format(user.get_username()))
+            self.response.write("user {} has had their password updated".format(user.username))
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -259,18 +254,30 @@ class LoginHandler(BaseHandler):
         username = self.request.get('username')
         password = self.request.get('password')
         try:
-            user_dict = self.auth.get_user_by_password(username, password)
+            user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
 
             if user.verified:
-                self.auth.set_session(user_dict, remember=True)
-                self.response.write('success')
+                if user.is_login_enabled:
+                    self.auth.set_session(user_dict, remember=True)
+                    self.response.write('success')
+                else:
+                    logging.info('Login failed for user %s because they reset their password', username)
+                    self.response.write('Login failed; {}'.format('login attempted during password reset'))
             else:
                 logging.info('Login failed for user %s because they are unverified', username)
                 self.response.write('Login failed; {}'.format('unverified'))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', username, type(e))
             self.response.write('Login failed; bad username or password')
+
+    @user_required
+    def get(self):
+        """
+        lowkey just used to ensure a user is logged in after verification,
+        but likely will be used in the future to pull login data
+        """
+        self.response.write(self.user.username)
 
 
 class LogoutHandler(BaseHandler):

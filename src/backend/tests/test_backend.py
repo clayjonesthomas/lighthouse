@@ -68,7 +68,7 @@ class TestAuth(unittest.TestCase):
 
         request_verify = webapp2.Request.blank(response_signup.body)
         request_verify.method = 'GET'
-        request_verify.get_response(app)
+        return request_verify.get_response(app)
 
     def test_signup_handler(self):
         """user can sign up"""
@@ -111,10 +111,12 @@ class TestAuth(unittest.TestCase):
         """user cannot login without verification"""
 
         utils.stub_rest(self)
-        request_signup = webapp2.Request.blank('/rest/signup', POST=self._contents)
+        request_signup = webapp2.Request.blank('/rest/signup',
+                                               POST=self._contents)
         request_signup.get_response(app)
 
-        request_login = webapp2.Request.blank('/rest/login', POST=self._contents)
+        request_login = webapp2.Request.blank('/rest/login',
+                                              POST=self._contents)
         response_login = request_login.get_response(app)
 
         self.assertEqual(response_login.status_int, 200)
@@ -133,14 +135,15 @@ class TestAuth(unittest.TestCase):
 
     def test_password_reset(self):
         """user can reset password and log in with new one"""
-
         utils.stub_rest(self)
         self._signup_and_verify(self._contents)
 
-        request_password_url = webapp2.Request.blank('/rest/reset_password', POST=self._contents)
+        request_password_url = webapp2.Request.blank('/rest/reset_password',
+                                                     POST=self._contents)
         response_password_url = request_password_url.get_response(app)
 
-        request_password = webapp2.Request.blank(response_password_url.body, POST={'password': 'new_pass'})
+        request_password = webapp2.Request.blank(response_password_url.body,
+                                            POST={'password': 'new_pass'})
         response_password = request_password.get_response(app)
 
         self.assertEqual(response_password.status_int, 200)
@@ -155,19 +158,103 @@ class TestAuth(unittest.TestCase):
 
     def test_password_reset_no_username(self):
         """user cannot reset the password of a nonexistent username"""
+        utils.stub_rest(self)
+        self._signup_and_verify(self._contents)
+
+        request_password_url = webapp2.Request.blank('/rest/reset_password',
+                                                POST={'username': 'not_dude'})
+        response_password_url = request_password_url.get_response(app)
+
+        self.assertEqual(response_password_url.status_int, 200)
+        self.assertIn('Could not find any user', response_password_url.body)
 
     def test_same_password_reset(self):
-        """user can reset password"""
+        """user can reset password with same password"""
+        utils.stub_rest(self)
+        self._signup_and_verify(self._contents)
+
+        request_password_url = webapp2.Request.blank('/rest/reset_password',
+                                                     POST=self._contents)
+        response_password_url = request_password_url.get_response(app)
+
+        request_password = webapp2.Request.blank(response_password_url.body,
+                                                 POST={'password': 'plaintext_sucks'})
+        response_password = request_password.get_response(app)
+
+        self.assertEqual(response_password.status_int, 200)
+        self.assertIn('user dude has had', response_password.body)
+
+        request_login = webapp2.Request.blank('/rest/login', POST=
+        {'username': 'dude', 'password': 'plaintext_sucks'})
+        response_login = request_login.get_response(app)
+
+        self.assertEqual(response_login.status_int, 200)
+        self.assertEqual('success', response_login.body)
 
     def test_logged_in_after_verify(self):
         """user is already logged in after verifying email"""
+        utils.stub_rest(self)
+        verify_response = self._signup_and_verify(self._contents)
+
+        request_user_data = webapp2.Request.blank('/rest/login')
+        request_user_data.method = 'GET'
+        # hack to fib through the auth cookie
+        request_user_data.headers['Cookie'] = verify_response.headers['Set-Cookie']
+        response_user_data = request_user_data.get_response(app)
+
+        self.assertEqual(200, response_user_data.status_int)
+        self.assertEqual('dude', response_user_data.body)
+
+    def test_must_be_logged_in(self):
+        """user is redirected if not logged in (no auth cookie)"""
+        request_session = webapp2.Request.blank('/rest/login')
+        request_session.method = 'GET'
+        response_session = request_session.get_response(app)
+
+        self.assertEqual(302, response_session.status_int)
 
     def test_logged_in_after_reset(self):
         """user is already logged in after resetting password"""
+        utils.stub_rest(self)
+        self._signup_and_verify(self._contents)
+
+        request_logout = webapp2.Request.blank('/rest/logout')
+        request_logout.method = 'GET'
+        response_logout = request_logout.get_response(app)
+
+        request_password_url = webapp2.Request.blank('/rest/reset_password',
+                                                     POST=self._contents)
+        response_password_url = request_password_url.get_response(app)
+
+        request_password = webapp2.Request.blank(response_password_url.body,
+                                                 POST={'password': 'new_pass'})
+        response_password = request_password.get_response(app)
+
+        request_user_data = webapp2.Request.blank('/rest/login')
+        request_user_data.method = 'GET'
+        # hack to fib through the auth cookie
+        request_user_data.headers['Cookie'] = response_password.headers['Set-Cookie']
+        response_user_data = request_user_data.get_response(app)
+
+        self.assertEqual(200, response_user_data.status_int)
+        self.assertEqual('dude', response_user_data.body)
 
     def test_password_reset_early_login(self):
         """user cannot ask to reset password and login before
         resetting password"""
+        utils.stub_rest(self)
+        self._signup_and_verify(self._contents)
+
+        request_password_url = webapp2.Request.blank('/rest/reset_password',
+                                                     POST=self._contents)
+        response_password_url = request_password_url.get_response(app)
+
+        request_login = webapp2.Request.blank('/rest/login',
+                                              POST=self._contents)
+        response_login = request_login.get_response(app)
+
+        self.assertEqual(200,response_login.status_int)
+        self.assertIn('password reset', response_login.body)
 
     def test_multiple_signups(self):
         """user cannot sign up with an already used email or username"""
@@ -177,7 +264,8 @@ class TestAuth(unittest.TestCase):
         # no duplicate emails
         contents_same_email = self._contents.copy()
         contents_same_email['username'] = 'not_dude'
-        same_email_request = webapp2.Request.blank('/rest/signup', POST=contents_same_email)
+        same_email_request = webapp2.Request.blank('/rest/signup',
+                                                   POST=contents_same_email)
         same_email_response = same_email_request.get_response(app)
 
         self.assertEqual(same_email_response.status_int, 200)
@@ -187,7 +275,8 @@ class TestAuth(unittest.TestCase):
         # no duplicate usernames
         contents_same_username = self._contents.copy()
         contents_same_username['email'] = 'not_test'
-        same_uname_request = webapp2.Request.blank('/rest/signup', POST=contents_same_username)
+        same_uname_request = webapp2.Request.blank('/rest/signup',
+                                                   POST=contents_same_username)
         same_uname_response = same_uname_request.get_response(app)
 
         self.assertEqual(same_uname_response.status_int, 200)
