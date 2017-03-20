@@ -131,24 +131,30 @@ class TestAuth(unittest.TestCase):
         self.assertEqual(response_logout.status_int, 200)
         self.assertEqual('Logout successful', response_logout.body)
 
-
     def test_password_reset(self):
         """user can reset password and log in with new one"""
-        #TBD when functionality implemented on frontend
-        # utils.stub_rest(self)
-        # self._signup_and_verify(self._contents)
-        #
-        # request_password_URL = webapp2.Request.blank('rest/reset_password', POST=self._contents)
-        # response_password_URL = request_password_URL.get_response(app)
-        #
-        # request_password = webapp2.Request.blank(response_password_URL)
-        # response_password = request_password.get_response(app)
 
+        utils.stub_rest(self)
+        self._signup_and_verify(self._contents)
 
+        request_password_url = webapp2.Request.blank('/rest/reset_password', POST=self._contents)
+        response_password_url = request_password_url.get_response(app)
+
+        request_password = webapp2.Request.blank(response_password_url.body, POST={'password': 'new_pass'})
+        response_password = request_password.get_response(app)
+
+        self.assertEqual(response_password.status_int, 200)
+        self.assertIn('user dude has had', response_password.body)
+
+        request_login = webapp2.Request.blank('/rest/login', POST=
+            {'username': 'dude', 'password': 'new_pass'})
+        response_login = request_login.get_response(app)
+
+        self.assertEqual(response_login.status_int, 200)
+        self.assertEqual('success', response_login.body)
 
     def test_password_reset_no_username(self):
         """user cannot reset the password of a nonexistent username"""
-
 
     def test_same_password_reset(self):
         """user can reset password"""

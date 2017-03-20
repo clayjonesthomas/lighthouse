@@ -166,9 +166,6 @@ class SignupHandler(BaseHandler):
 
 
 class ForgotPasswordHandler(BaseHandler):
-    def get(self):
-        self._serve_page()
-
     def post(self):
         username = self.request.get('username')
 
@@ -218,15 +215,39 @@ class VerificationHandler(BaseHandler):
                 user.put()
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
-            self.response.write("user {} has had their email verified".format(user.auth_ids[0]))
+            self.response.write("user {} has had their email verified".format(user.get_username()))
             return
-        elif verification_type == 'p':
-            # supply user to the page
-            params = {
-                'user': user,
-                'token': signup_token
-            }
-            self.render_template('resetpassword.html', params)
+        else:
+            logging.info('verification type not supported')
+            self.abort(404)
+
+    def post(self, *args, **kwargs):
+        user = None
+        user_id = kwargs['user_id']
+        signup_token = kwargs['signup_token']
+        verification_type = kwargs['type']
+        new_password = self.request.get('password')
+
+        # it should be something more concise like
+        # self.auth.get_user_by_token(user_id, signup_token)
+        # unfortunately the auth interface does not (yet) allow to manipulate
+        # signup tokens concisely
+        user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
+                                                            'signup')
+
+        if not user:
+            logging.info('Could not find any user with id "%s" signup token "%s"',
+                         user_id, signup_token)
+            self.abort(404)
+
+        # store user data in the session
+        self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
+
+        if verification_type == 'p':
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
+            user.set_password(new_password)
+            user.put()
+            self.response.write("user {} has had their password updated".format(user.get_username()))
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -249,7 +270,7 @@ class LoginHandler(BaseHandler):
                 self.response.write('Login failed; {}'.format('unverified'))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', username, type(e))
-            self.response.write('Login failed; {}'.format(e))
+            self.response.write('Login failed; bad username or password')
 
 
 class LogoutHandler(BaseHandler):

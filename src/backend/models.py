@@ -49,6 +49,12 @@ class User(webapp2_extras.appengine.auth.models.User):
 
         return None, None
 
+    def get_username(self):
+        """
+        :returns: the username of the user
+        """
+        return self.auth_ids[0]
+
     @classmethod
     def get_by_id(cls, user_id):
         # definitely a more concise way to do this
