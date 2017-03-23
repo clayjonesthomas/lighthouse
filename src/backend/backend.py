@@ -43,7 +43,7 @@ class Posts(webapp2.RequestHandler):
             logging.info("spawning dummy datastore entries")
             spawn_dummy_posts()
         fetched_posts = [post.to_dict() for post in Post.query().fetch(10)]
-        logging.info("pulling posts from the datastore")
+        logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
 ###################################
