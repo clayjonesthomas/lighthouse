@@ -3,25 +3,29 @@ import {AUTH_URL} from '../constants/constants'
 
 export const REQUEST_AUTH = 'REQUEST_AUTH'
 export const RESPONSE_AUTH = 'RESPONSE_AUTH'
-export const CANCEL_MODAL = 'CANCEL_MODAL'
-export const SHOW_SIGN_UP = 'SHOW_SIGN_UP'
-export const SHOW_LOGIN = 'SHOW_LOGIN'
+export const SHOW_MODAL = 'SHOW_MODEL'
+export const CANCEL = 'CANCEL'
+export const SIGN_UP = 'SIGN_UP'
+export const LOGIN = 'LOGIN'
 
 export const cancelModal = () => {
   return {
-    type: CANCEL_MODAL
+    type: SHOW_MODAL,
+    meta: CANCEL
   }
 }
 
 export const showSignUp = () => {
   return {
-    type: SHOW_SIGN_UP
+    type: SHOW_MODAL,
+    meta: SIGN_UP
   }
 }
 
 export const showLogin = () => {
   return {
-    type: SHOW_LOGIN
+    type: SHOW_MODAL,
+    meta: LOGIN
   }
 }
 
