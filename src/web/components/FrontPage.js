@@ -1,14 +1,11 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
-import {LOGIN_MODAL, SIGN_UP_MODAL} from '../constants/constants'
-import LoginModal from './LoginModal'
 
 const FrontPage =
   ({posts,
     onSelectPost,
     onSelectNewPost,
-    onShowLogin,
-    showModalType}) => (
+    onShowLogin}) => (
   <div>
     {<button
       type="button"
@@ -24,9 +21,6 @@ const FrontPage =
       onClick={() => onSelectNewPost()}>
       Make a new Post
     </button>}
-    {showModalType == LOGIN_MODAL &&
-      <LoginModal/>
-    }
   </div>
 )
 
