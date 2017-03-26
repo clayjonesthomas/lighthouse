@@ -24,8 +24,8 @@ class FrontPageHandler extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.displayedPosts,
-    showModalType: state.showModalType}
+    posts: state.displayedPosts
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -3,12 +3,10 @@ import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {RESPONSE_AUTH, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
 
-import {LOGIN_MODAL, SIGN_UP_MODAL} from '../constants/constants'
-
 const initialState = {
   displayedPosts: [],
   jwt: null,
-  showModalType: null
+  modal: null
 }
 
 function lighthouse(state = initialState, action) {
@@ -18,15 +16,15 @@ function lighthouse(state = initialState, action) {
         default:
         case CANCEL:
           return Object.assign({}, state, {
-            showModalType: null,
+            modal: null,
           })
         case SIGN_UP:
           return Object.assign({}, state, {
-            showModalType: SIGN_UP_MODAL,
+            modal: SIGN_UP,
           })
         case LOGIN:
           return Object.assign({}, state, {
-            showModalType: LOGIN_MODAL,
+            modal: LOGIN,
           })
       }
     case REQUEST_POSTS_RETURN:
