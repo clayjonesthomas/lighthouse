@@ -1,15 +1,16 @@
 import React, {PropTypes} from 'react'
-import TextBox from './TextBox'
-import SubmitButton from './SubmitButton'
-import CancelButton from './CancelButton'
+import TextBox from '../TextBox'
+import SubmitButton from '../SubmitButton'
+import CancelButton from '../CancelButton'
 import {Link} from 'react-router'
+import './LoginModal'
 
 const USERNAME = "username"
 const PASSWORD = "password"
 
 const LoginModal = ({onCancel, onSubmit, onSignUp}) => (
-  <div>
-    <p> Login or <Link to="/" onClick={onSignUp}> Sign Up </Link> </p>
+  <div class="login-modal">
+     <p> Login or <Link to="/" onClick={onSignUp}> Sign Up </Link> </p>
     <TextBox
       idName={USERNAME}
     />

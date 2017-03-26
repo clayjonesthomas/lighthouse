@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import LoginModal from '../components/LoginModal'
+import LoginModal from '../components/modals/LoginModal'
 import {connect} from 'react-redux'
 
 const MODAL_COMPONENTS = {

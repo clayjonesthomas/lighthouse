@@ -1,7 +1,7 @@
 import {browserHistory} from 'react-router'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import LoginModal from '../components/LoginModal'
+import LoginModal from '../components/modals/LoginModal'
 import {cancelModal, authorizeUser, showSignUp} from '../actions/AuthActions'
 
 class LoginHandler extends Component {
