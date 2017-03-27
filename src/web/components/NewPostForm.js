@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
-import SubmitButton from './SubmitButton'
+import SubmitButton from './ui-kit/SubmitButton'
 import CancelButton from './CancelButton'
-import TextBox from './TextBox'
+import TextBox from './ui-kit/TextBox'
 
 const SALE_TITLE = "saleTitle"
 

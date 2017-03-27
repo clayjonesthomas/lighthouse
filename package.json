@@ -16,6 +16,7 @@
   "dependencies": {
     "normalizr": "^2.2.1",
     "react": "^15.4.0",
+    "react-bootstrap": "^0.30.8",
     "react-dom": "^15.4.0",
     "react-modal": "^1.7.3",
     "react-redux": "^4.4.6",

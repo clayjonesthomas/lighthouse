@@ -7,5 +7,17 @@
 }
 
 .login{
-    background-color: black;
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+}
+
+.sign-up{
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+}
+
+.auth-title{
+    text-align: center;
 }

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
-import TextBox from '../TextBox'
-import SubmitButton from '../SubmitButton'
+import TextBox from '../ui-kit/TextBox'
+import SubmitButton from '../ui-kit/SubmitButton'
 import CancelButton from '../CancelButton'
 import {Link} from 'react-router'
 import './LoginModal.css'
@@ -30,31 +30,33 @@ const LoginModal = ({onCancel, onLogin, onSignUp}) => (
     contentLabel='Login'
     style={LoginStyle}
   >
+    <p className='auth-title'> Login or Sign Up </p>
     <div className='login'>
-      <p> Login or Sign Up </p>
       <TextBox
         idName={LOGIN_USERNAME}
       />
+      <br/>
       <TextBox
         idName={LOGIN_PASSWORD}
       />
-      <CancelButton
-        onClick={onCancel}
-      />
+      <br/>
       <SubmitButton
         onClick={() => onLogin(LOGIN_USERNAME, LOGIN_PASSWORD)}
       />
     </div>
-    <div>
+    <div className='sign-up'>
       <TextBox
         idName={SIGN_UP_USERNAME}
       />
+      <br/>
       <TextBox
         idName={SIGN_UP_PASSWORD_1}
       />
+      <br/>
       <TextBox
         idName={SIGN_UP_PASSWORD_2}
       />
+      <br/>
       <SubmitButton
         onClick={ () =>
           onSignUp(SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2)}

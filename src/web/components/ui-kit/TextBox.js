@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react'
+import './TextBox.css'
 
 const TextBox = ({idName}) => (
   <input
     type="text"
-    id={idName}>
+    id={idName}
+    className="text-box">
   </input>
 )
 
