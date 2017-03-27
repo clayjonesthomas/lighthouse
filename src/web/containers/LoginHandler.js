@@ -9,7 +9,7 @@ class LoginHandler extends Component {
   render () {
     return (
       <LoginModal
-        onSubmit={this.props.onSubmitAuthentication}
+        onLogin={this.props.onSubmitAuthentication}
         onCancel={this.props.onCancel}
         onSignup={this.props.onSignUp}
       />
@@ -31,11 +31,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {modalState: state.modalState}
-}
-
 export default connect(
-  mapStateToProps,
   mapDispatchToProps
 )(LoginHandler)

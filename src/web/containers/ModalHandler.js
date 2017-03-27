@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
-import LoginModal from '../components/modals/LoginModal'
+import LoginModalHandler from './LoginHandler'
 import {connect} from 'react-redux'
 
 const MODAL_COMPONENTS = {
-  'LOGIN': LoginModal
+  'LOGIN': LoginModalHandler
 }
 
 const ModalRoot = ({ modal, modalProps }) => {
