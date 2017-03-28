@@ -7,15 +7,17 @@
 }
 
 .login{
-    width: 50%;
-    display: inline-block;
-    text-align: center;
+    /*width: 50%;*/
+    /*display: inline-block;*/
+    /*text-align: center;*/
+    /*position: relative;*/
+    /*top: -20px;*/
 }
 
 .sign-up{
-    width: 50%;
-    display: inline-block;
-    text-align: center;
+    /*width: 50%;*/
+    /*display: inline-block;*/
+    /*text-align: center;*/
 }
 
 .auth-title{
