@@ -25,7 +25,7 @@ def spawn_dummy_posts():
 
 class MainPage(webapp2.RequestHandler):
 
-    def get(self):
+    def get(self, *args):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -304,6 +304,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Posts, name='posts'),
-    webapp2.Route('/', MainPage, name='home'),
+    webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
 
