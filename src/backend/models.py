@@ -13,7 +13,6 @@ class Post(ndb.Model):
     # using _values for the time being but unsure of its spec
     # def post_json_parser(self):
     #     result = []
-    #     import pdb; pdb.set_trace()
     #     result.append(dict([(p, unicode(getattr(self, p))) for p in self._values]))
     #     return result
 

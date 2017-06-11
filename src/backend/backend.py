@@ -44,7 +44,6 @@ class MainPage(webapp2.RequestHandler):
 class Posts(webapp2.RequestHandler):
 
     def post(self):
-        import pdb; pdb.set_trace()
         title = self.request.get('title')
         store = self.request.get('store')
         post = Post(title=title, store=store)
@@ -61,7 +60,8 @@ class Posts(webapp2.RequestHandler):
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(fetched_posts)
 
-    def _prepare_post(self, post):
+    @staticmethod
+    def _prepare_post(post):
         post_dictionary = post.to_dict()
         post_dictionary['store'] = post.store_key.get().to_dict()
         del post_dictionary['store_key']
