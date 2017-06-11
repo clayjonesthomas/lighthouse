@@ -15,8 +15,8 @@ build
 npm-debug.log
 
 #fuckin pyc files
-src/backend.pyc
-src/models.pyc
+src/backend/backend.pyc
+src/backend/models.pyc
 
 .idea
 npm-debug.log
