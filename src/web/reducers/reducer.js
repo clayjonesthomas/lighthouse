@@ -1,4 +1,5 @@
 import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
+import {GO_HOME, GO_MY_SHOPS, GO_PROFILE} from '../actions/MenuActions.js'
 import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {RESPONSE_AUTH, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
@@ -31,8 +32,10 @@ function lighthouse(state = initialState, action) {
       return Object.assign({}, state, {
         displayedPosts: action.data,
       })
+    case GO_MY_SHOPS:
+    case GO_PROFILE:
+    case GO_HOME:
     case ADD_POST:
-      return state
     case CANCEL_POST:
       return state
     case RESPONSE_AUTH:
