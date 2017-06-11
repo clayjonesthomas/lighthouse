@@ -2,6 +2,7 @@ import jinja2
 import json
 import logging
 import os
+import random
 
 import webapp2
 
@@ -10,7 +11,7 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
-from models import Post
+from models import Post, Store
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -19,8 +20,18 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 
 def spawn_dummy_posts():
+    fetched_stores = Store.query().fetch(5)
+    while not fetched_stores:
+        fetched_stores = Store.query().fetch(5)
     for i in range(10):
-        Post(title=format('test post please ignore {}'.format(i))).put()
+        Post(title=format('test post please ignore {}'.format(i)),
+             store_key=random.choice(fetched_stores).key).put()
+
+
+def spawn_dummy_stores():
+    for i in range(5):
+        Store(name=format('Store#{}'.format(i)),
+              website=format('www.store{}'.format(i))).put()
 
 
 class MainPage(webapp2.RequestHandler):
@@ -33,18 +44,47 @@ class MainPage(webapp2.RequestHandler):
 class Posts(webapp2.RequestHandler):
 
     def post(self):
-        title = self.request.get('title', None)
-        post = Post(title=title)
+        import pdb; pdb.set_trace()
+        title = self.request.get('title')
+        store = self.request.get('store')
+        post = Post(title=title, store=store)
         post_key = post.put()
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
 
     def get(self):
         if len(Post.query().fetch(10)) <= 0:
-            logging.info("spawning dummy datastore entries")
+            logging.info("spawning dummy datastore stores")
+            spawn_dummy_stores()
+            logging.info("spawning dummy datastore posts")
             spawn_dummy_posts()
-        fetched_posts = [post.to_dict() for post in Post.query().fetch(10)]
+        fetched_posts = [self._prepare_post(post) for post in Post.query().fetch(10)]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
-        self.response.write(json.dumps(fetched_posts))
+        self.response.write(fetched_posts)
+
+    def _prepare_post(self, post):
+        post_dictionary = post.to_dict()
+        post_dictionary['store'] = post.store_key.get().to_dict()
+        del post_dictionary['store_key']
+        return json.dumps(post_dictionary)
+
+
+class Stores(webapp2.RequestHandler):
+
+    def post(self):
+        name = self.request.get('name')
+        website = self.request.get('website')
+        store = Store(name=name, website=website)
+        store_key = store.put()
+        self.response.write(json.dumps({'id': store_key.urlsafe()}))
+
+    def get(self):
+        if len(Store.query.fetch(10)) <= 5:
+            logging.info("spawning dummy datastore stores")
+            spawn_dummy_stores()
+        fetched_stores = [store.to_dict() for store in Store.query().fetch(10)]
+        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
+        self.response.write(json.dumps(fetched_stores))
+
 
 ###################################
 

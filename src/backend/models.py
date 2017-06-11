@@ -8,6 +8,7 @@ from webapp2_extras import security
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
+    store_key = ndb.KeyProperty(indexed=True)
 
     # using _values for the time being but unsure of its spec
     # def post_json_parser(self):
@@ -15,6 +16,11 @@ class Post(ndb.Model):
     #     import pdb; pdb.set_trace()
     #     result.append(dict([(p, unicode(getattr(self, p))) for p in self._values]))
     #     return result
+
+
+class Store(ndb.Model):
+    name = ndb.StringProperty(indexed=True)
+    website = ndb.StringProperty(indexed=False)
 
 
 class User(webapp2_extras.appengine.auth.models.User):
