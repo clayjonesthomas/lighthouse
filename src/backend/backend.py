@@ -41,14 +41,17 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 
-class Posts(webapp2.RequestHandler):
+class SinglePost(webapp2.RequestHandler):
 
     def post(self):
-        title = self.request.get('title')
-        store = self.request.get('store')
-        post = Post(title=title, store=store)
+        post = Post(title=self.request.get('title'),
+                    store=self.request.get('store'),
+                    likes=0)
         post_key = post.put()
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
+
+
+class Feed(webapp2.RequestHandler):
 
     def get(self):
         if len(Post.query().fetch(10)) <= 0:
@@ -58,22 +61,22 @@ class Posts(webapp2.RequestHandler):
             spawn_dummy_posts()
         fetched_posts = [self._prepare_post(post) for post in Post.query().fetch(10)]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
-        self.response.write(fetched_posts)
+        self.response.write(json.dumps(fetched_posts))
 
     @staticmethod
     def _prepare_post(post):
         post_dictionary = post.to_dict()
         post_dictionary['store'] = post.store_key.get().to_dict()
         del post_dictionary['store_key']
-        return json.dumps(post_dictionary)
+        return post_dictionary
 
 
 class Stores(webapp2.RequestHandler):
 
     def post(self):
-        name = self.request.get('name')
-        website = self.request.get('website')
-        store = Store(name=name, website=website)
+        store = Store(name=self.request.get('name'),
+                      website=self.request.get('website'),
+                      likes=0)
         store_key = store.put()
         self.response.write(json.dumps({'id': store_key.urlsafe()}))
 
@@ -343,7 +346,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
-    webapp2.Route('/rest/posts', Posts, name='posts'),
+    webapp2.Route('/rest/posts', Feed, name='feed'),
+    webapp2.Route('/rest/single_post', SinglePost, name='single_post'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
 

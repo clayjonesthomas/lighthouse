@@ -6,9 +6,20 @@ from google.appengine.ext import ndb
 from webapp2_extras import security
 
 
+class Comment(ndb.Model):
+    body = ndb.TextProperty()
+    author_user_key = ndb.KeyProperty()
+    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    likes = ndb.IntegerProperty(indexed=True)
+    child_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
+
+
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    store_key = ndb.KeyProperty(indexed=True)
+    store_key = ndb.KeyProperty(indexed=True, kind='Store')
+    likes = ndb.IntegerProperty(indexed=True)
+    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
 
     # using _values for the time being but unsure of its spec
     # def post_json_parser(self):
@@ -20,6 +31,8 @@ class Post(ndb.Model):
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
+    likes = ndb.IntegerProperty(indexed=True)
+    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
 
 
 class User(webapp2_extras.appengine.auth.models.User):
