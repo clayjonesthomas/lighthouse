@@ -13,7 +13,10 @@ build
 .DS_Store
 .env
 npm-debug.log
-*.pyc
+
+#fuckin pyc files
+src/backend.pyc
+src/models.pyc
 
 .idea
 npm-debug.log

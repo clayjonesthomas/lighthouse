@@ -21,6 +21,10 @@ class Post(ndb.Model):
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
 
+    @staticmethod
+    def get_post_from_url_key(url_key):
+        return ndb.Key(urlsafe=url_key).get()
+
     # using _values for the time being but unsure of its spec
     # def post_json_parser(self):
     #     result = []

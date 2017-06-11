@@ -50,6 +50,14 @@ class SinglePost(webapp2.RequestHandler):
         post_key = post.put()
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
 
+    def get(self, url_key):
+        post = Post.get_post_from_url_key(url_key)
+        post_dict = post.to_dict()
+        comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
+        post_dict['top_comments'] = comment_keys
+        import pdb; pdb.set_trace()
+        self.response.write(json.dumps(post_dict))
+
 
 class Feed(webapp2.RequestHandler):
 
