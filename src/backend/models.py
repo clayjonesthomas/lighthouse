@@ -10,32 +10,36 @@ class Comment(ndb.Model):
     body = ndb.TextProperty()
     author_user_key = ndb.KeyProperty()
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-    likes = ndb.IntegerProperty(indexed=True)
+    likes = ndb.IntegerProperty(indexed=True, default=0)
     child_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
+    comment_amount = ndb.IntegerProperty(indexed=True, default=0)
+
+    def add_child_comment(self, comment):
+        self.comment_amount += comment.comment_amount + 1
+        self.comment_amount.append(comment.key)
 
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
     store_key = ndb.KeyProperty(indexed=True, kind='Store')
-    likes = ndb.IntegerProperty(indexed=True)
+    likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
+    comment_amount = ndb.IntegerProperty(indexed=True, default=0)
 
     @staticmethod
     def get_post_from_url_key(url_key):
         return ndb.Key(urlsafe=url_key).get()
 
-    # using _values for the time being but unsure of its spec
-    # def post_json_parser(self):
-    #     result = []
-    #     result.append(dict([(p, unicode(getattr(self, p))) for p in self._values]))
-    #     return result
+    def add_top_comment(self, comment):
+        self.comment_amount += comment.comment_amount + 1
+        self.top_comments.append(comment.key)
 
 
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
-    likes = ndb.IntegerProperty(indexed=True)
+    likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
 
 

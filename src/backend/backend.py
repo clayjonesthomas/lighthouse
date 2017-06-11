@@ -45,8 +45,7 @@ class SinglePost(webapp2.RequestHandler):
 
     def post(self):
         post = Post(title=self.request.get('title'),
-                    store=self.request.get('store'),
-                    likes=0)
+                    store=self.request.get('store'))
         post_key = post.put()
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
 
@@ -83,8 +82,7 @@ class Stores(webapp2.RequestHandler):
 
     def post(self):
         store = Store(name=self.request.get('name'),
-                      website=self.request.get('website'),
-                      likes=0)
+                      website=self.request.get('website'))
         store_key = store.put()
         self.response.write(json.dumps({'id': store_key.urlsafe()}))
 
