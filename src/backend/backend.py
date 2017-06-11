@@ -36,7 +36,7 @@ class Posts(webapp2.RequestHandler):
         title = self.request.get('title', None)
         post = Post(title=title)
         post_key = post.put()
-        self.response.write(post_key.urlsafe())
+        self.response.write(json.dumps({'id': post_key.urlsafe()}))
 
     def get(self):
         if len(Post.query().fetch(10)) <= 0:

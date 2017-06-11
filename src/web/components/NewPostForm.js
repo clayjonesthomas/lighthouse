@@ -6,7 +6,7 @@ import TextBox from './ui-kit/TextBox'
 const SALE_TITLE = "saleTitle"
 
 const NewPostForm = ({onSubmit, onCancel}) => (
-  <p>
+  <div>
     Submit a Sale
     <TextBox
       idName={SALE_TITLE}
@@ -17,7 +17,7 @@ const NewPostForm = ({onSubmit, onCancel}) => (
     <SubmitButton
       onClick={() => onSubmit(SALE_TITLE)}
     />
-  </p>
+  </div>
 )
 
 NewPostForm.propTypes = {

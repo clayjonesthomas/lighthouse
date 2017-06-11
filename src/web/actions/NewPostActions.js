@@ -38,7 +38,8 @@ export function pushPost(post) {
       data: post
     })
       .done((response) => {
-        dispatch(addPostReturn(response.json().id, true))
+        dispatch(addPostReturn(response.id, true))
+        console.log('here')
       })
       .fail((response) => {
         dispatch(addPostReturn(0, false))
