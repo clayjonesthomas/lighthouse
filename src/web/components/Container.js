@@ -3,9 +3,10 @@ import ModalHandler from '../containers/ModalHandler.js'
 
 const Container = (props) =>
   <div>
+
     <ModalHandler
       modal={props.modal}/>
-    {props.children}
+      {props.children}
   </div>
 
 export default Container

@@ -7,7 +7,8 @@ const FrontPage =
     onSelectNewPost,
     onShowLogin}) => (
   <div>
-    {<button
+    {
+      <button
       type="button"
       onClick={() => onShowLogin()}>
       Log in
