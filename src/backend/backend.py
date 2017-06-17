@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import datetime
-import timedelta
 
 import webapp2
 
@@ -30,27 +29,27 @@ def _spawn_dummy_posts(store_keys):
     posts = [Post(title='50% off all items on clearance',
                   store_key=store_keys[0],
                   likes=25074,
-                  timestamp=datetime.now()-timedelta(1)),
+                  timestamp=datetime.datetime.now()-datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
                   store_key=store_keys[1],
                   likes=14543,
-                  timestamp=datetime.now()-timedelta(2)),
+                  timestamp=datetime.datetime.now()-datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
                   store_key=store_keys[1],
                   likes=30210,
-                  timestamp=datetime.now()-timedelta(1.5)),
+                  timestamp=datetime.datetime.now()-datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
                   store_key=store_keys[1],
                   likes=12532,
-                  timestamp=datetime.now()-timedelta(.4)),
+                  timestamp=datetime.datetime.now()-datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
                   store_key=store_keys[2],
                   likes=2664,
-                  timestamp=datetime.now()-timedelta(1.9)),
+                  timestamp=datetime.datetime.now()-datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
                   store_key=store_keys[3],
                   likes=352,
-                  timestamp=datetime.now()-timedelta(.1))
+                  timestamp=datetime.datetime.now()-datetime.timedelta(.1))
              ]
     ndb.put_multi(posts)
 
@@ -94,7 +93,6 @@ class SinglePost(webapp2.RequestHandler):
         post_dict = post.to_dict()
         comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
         post_dict['top_comments'] = comment_keys
-        import pdb; pdb.set_trace()
         self.response.write(json.dumps(post_dict))
 
 
@@ -110,8 +108,12 @@ class Feed(webapp2.RequestHandler):
     @staticmethod
     def _prepare_post(post):
         post_dictionary = post.to_dict()
-        post_dictionary['store'] = post.store_key.get().to_dict()
+        post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
+        post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
+        post_dictionary['store_url'] = post_dictionary['store_key'].urlsafe()
         del post_dictionary['store_key']
+        post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
+
         return post_dictionary
 
 
