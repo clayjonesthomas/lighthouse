@@ -26,13 +26,14 @@ class Post(ndb.Model):
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
     comment_amount = ndb.IntegerProperty(indexed=True, default=0)
+    author = ndb.KeyProperty(indexed=True, kind='User')
 
     @staticmethod
     def get_post_from_url_key(url_key):
         return ndb.Key(urlsafe=url_key).get()
 
     def add_top_comment(self, comment):
-        self.comment_amount += comment.comment_amount + 1
+        self.comment_amount += 1
         self.top_comments.append(comment.key)
 
 

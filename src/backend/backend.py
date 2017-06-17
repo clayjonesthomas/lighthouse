@@ -1,8 +1,10 @@
+from google.appengine.ext import ndb
 import jinja2
 import json
 import logging
 import os
-import random
+import datetime
+import timedelta
 
 import webapp2
 
@@ -19,19 +21,57 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 
 
-def spawn_dummy_posts():
-    fetched_stores = Store.query().fetch(5)
-    while not fetched_stores:
-        fetched_stores = Store.query().fetch(5)
-    for i in range(10):
-        Post(title=format('test post please ignore {}'.format(i)),
-             store_key=random.choice(fetched_stores).key).put()
+def populate_dummy_datastore():
+    store_keys = _spawn_dummy_stores()
+    _spawn_dummy_posts(store_keys)
 
 
-def spawn_dummy_stores():
-    for i in range(5):
-        Store(name=format('Store#{}'.format(i)),
-              website=format('www.store{}'.format(i))).put()
+def _spawn_dummy_posts(store_keys):
+    posts = [Post(title='50% off all items on clearance',
+                  store_key=store_keys[0],
+                  likes=25074,
+                  timestamp=datetime.now()-timedelta(1)),
+             Post(title='Buy any oxford on the site, get one free',
+                  store_key=store_keys[1],
+                  likes=14543,
+                  timestamp=datetime.now()-timedelta(2)),
+             Post(title='$5 off the entire summer selection',
+                  store_key=store_keys[1],
+                  likes=30210,
+                  timestamp=datetime.now()-timedelta(1.5)),
+             Post(title='Free shipping on any order of $10 or more',
+                  store_key=store_keys[1],
+                  likes=12532,
+                  timestamp=datetime.now()-timedelta(.4)),
+             Post(title="Summer jeans moved to clearance, everything 20% off or more",
+                  store_key=store_keys[2],
+                  likes=2664,
+                  timestamp=datetime.now()-timedelta(1.9)),
+             Post(title='$10 off a purchase of $100 or more',
+                  store_key=store_keys[3],
+                  likes=352,
+                  timestamp=datetime.now()-timedelta(.1))
+             ]
+    ndb.put_multi(posts)
+
+
+def _spawn_dummy_stores():
+    stores = [Store(name='American Eagle',
+                    website='www.ae.com',
+                    likes=302470),
+              Store(name='JCrew',
+                    website='www.jcrew.com',
+                    likes=493218),
+              Store(name="Levi's Jeans",
+                    website='www.levis.com',
+                    likes=124341),
+              Store(name='Lulu Lemon',
+                    website='www.lululemon.com',
+                    likes=295831),
+              Store(name='Old Navy',
+                    website='www.oldnavy.com',
+                    likes=324319)]
+    return ndb.put_multi(stores)
 
 
 class MainPage(webapp2.RequestHandler):
@@ -62,10 +102,7 @@ class Feed(webapp2.RequestHandler):
 
     def get(self):
         if len(Post.query().fetch(10)) <= 0:
-            logging.info("spawning dummy datastore stores")
-            spawn_dummy_stores()
-            logging.info("spawning dummy datastore posts")
-            spawn_dummy_posts()
+            populate_dummy_datastore()
         fetched_posts = [self._prepare_post(post) for post in Post.query().fetch(10)]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
@@ -87,9 +124,6 @@ class Stores(webapp2.RequestHandler):
         self.response.write(json.dumps({'id': store_key.urlsafe()}))
 
     def get(self):
-        if len(Store.query.fetch(10)) <= 5:
-            logging.info("spawning dummy datastore stores")
-            spawn_dummy_stores()
         fetched_stores = [store.to_dict() for store in Store.query().fetch(10)]
         logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
         self.response.write(json.dumps(fetched_stores))
