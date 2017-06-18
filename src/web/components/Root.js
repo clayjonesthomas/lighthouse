@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { createStore, applyMiddleware } from 'redux'
 import FrontPageHandler from '../containers/FrontPageHandler'
+import StorePageHandler from '../containers/StorePageHandler'
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import lighthouse from '../reducers/reducer.js'
@@ -23,6 +24,7 @@ const Root = () => (
       <Route path="/" component={Container}>
         <IndexRoute component={FrontPageHandler} />
         <Route path="/new" component={NewPostHandler} />
+        <Route path="/store/:url_key" component={StorePageHandler}/>
       </Route>
     </Router>
   </Provider>

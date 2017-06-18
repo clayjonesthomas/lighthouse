@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react'
 
 const FrontPage =
   ({posts,
-    onSelectPost,
     onSelectNewPost,
     onShowLogin}) => (
   <div>
@@ -29,7 +28,6 @@ FrontPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired
   })).isRequired,
-  onSelectPost: PropTypes.func.isRequired,
   onSelectNewPost: PropTypes.func.isRequired,
 }
 

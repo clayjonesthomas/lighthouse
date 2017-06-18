@@ -33,7 +33,6 @@ const mapDispatchToProps = (dispatch) => {
     getPosts: () => {
       dispatch(pullFrontPagePosts())
     },
-    onSelectPost: null,
     onSelectNewPost: () => browserHistory.push('/new'),
     onShowLogin: () => dispatch(showLogin())
   }

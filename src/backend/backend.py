@@ -12,7 +12,7 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
-from models import Post, Store
+from models import Post, Store, get_entity_from_url_key
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -89,11 +89,20 @@ class SinglePost(webapp2.RequestHandler):
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
 
     def get(self, url_key):
-        post = Post.get_post_from_url_key(url_key)
+        post = get_entity_from_url_key(url_key)
         post_dict = post.to_dict()
         comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
         post_dict['top_comments'] = comment_keys
         self.response.write(json.dumps(post_dict))
+
+
+class SingleStore(webapp2.RequestHandler):
+
+    def get(self, url_key):
+        store = get_entity_from_url_key(url_key)
+        store_dict = store.to_dict()
+        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
+        self.response.write(json.dumps(store_dict))
 
 
 class Feed(webapp2.RequestHandler):
@@ -390,6 +399,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/single_post', SinglePost, name='single_post'),
+    webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
 
