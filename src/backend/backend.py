@@ -80,7 +80,7 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 
-class SinglePost(webapp2.RequestHandler):
+class Post(webapp2.RequestHandler):
 
     def post(self):
         post = Post(title=self.request.get('title'),
@@ -102,6 +102,7 @@ class SingleStore(webapp2.RequestHandler):
         store = get_entity_from_url_key(url_key)
         store_dict = store.to_dict()
         store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
+        # do a query to get posts associated with the store
         self.response.write(json.dumps(store_dict))
 
 
@@ -398,7 +399,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
-    webapp2.Route('/rest/single_post', SinglePost, name='single_post'),
+    webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='post'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
