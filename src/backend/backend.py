@@ -80,7 +80,7 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 
-class Post(webapp2.RequestHandler):
+class SinglePost(webapp2.RequestHandler):
 
     def post(self):
         post = Post(title=self.request.get('title'),
