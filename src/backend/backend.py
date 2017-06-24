@@ -83,8 +83,13 @@ class MainPage(webapp2.RequestHandler):
 class SinglePost(webapp2.RequestHandler):
 
     def post(self):
+        store_name = self.request.get('store')
+        try:
+            store = Store.query(Store.name == store_name).fetch(1)[0]
+        except IndexError:
+            store = Store.query().fetch(1)[0]
         post = Post(title=self.request.get('title'),
-                    store=self.request.get('store'))
+                    store_key=store.key)
         post_key = post.put()
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
 
@@ -399,7 +404,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
-    webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='post'),
+    webapp2.Route('/rest/post', SinglePost, name='single_post'),
+    webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)

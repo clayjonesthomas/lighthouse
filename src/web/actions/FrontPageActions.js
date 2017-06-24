@@ -23,13 +23,5 @@ export function pullFrontPagePosts() {
     return fetch(POSTS_URL)
       .then(response => response.json())
       .then(json => dispatch(requestPostsReturn(json)))
-    // $.ajax({
-    //   method: 'GET',
-    //   url: POSTS_URL
-    // })
-    //   .done((response) => {
-    //     dispatch(requestPostsReturn(JSON.parse(response)))
-    //   })
-    //   //.fail TODO
   }
 }
