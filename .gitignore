@@ -14,6 +14,11 @@ build
 .env
 npm-debug.log
 
+#fuckin pyc files
+src/backend/backend.pyc
+src/backend/models.pyc
+src/bundled_web
+
 .idea
 npm-debug.log
 node_modules
