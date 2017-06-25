@@ -18,7 +18,7 @@ const Menu =
       {<button
         type="button"
         onClick={() => onProfile()}>
-        Make a new Post
+        My Profile
       </button>}
     </div>
   )

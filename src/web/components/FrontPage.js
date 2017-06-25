@@ -4,8 +4,13 @@ import React, {PropTypes} from 'react'
 const FrontPage =
   ({posts,
     onSelectNewPost,
-    onShowLogin}) => (
+    onShowLogin,
+    userName
+  }) => (
   <div>
+    {
+      "username: " + userName
+    }
     {
       <button
       type="button"

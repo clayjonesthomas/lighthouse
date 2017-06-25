@@ -2,7 +2,7 @@ import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
 import {GO_HOME, GO_MY_SHOPS, GO_PROFILE} from '../actions/MenuActions.js'
 import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
-import {RESPONSE_AUTH, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
+import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
 
 const initialState = {
@@ -47,7 +47,7 @@ function lighthouse(state = initialState, action) {
     case ADD_POST:
     case CANCEL_POST:
       return state
-    case RESPONSE_AUTH:
+    case RESPONSE_LOGIN:
       return Object.assign({}, state, {
         jwt: action.data.jwt
       })

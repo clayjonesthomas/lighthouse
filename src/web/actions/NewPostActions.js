@@ -32,7 +32,6 @@ export function pushPost(post) {
     method: 'POST',
     data: post
   }
-
   return dispatch => {
     dispatch(addPost(post))
     return fetch(POST_URL, args)

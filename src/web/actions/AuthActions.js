@@ -1,8 +1,8 @@
-import $ from 'jquery'
-import {AUTH_URL} from '../constants/constants'
+import fetch from 'isomorphic-fetch'
+import {LOGIN_URL} from '../constants/constants'
 
-export const REQUEST_AUTH = 'REQUEST_AUTH'
-export const RESPONSE_AUTH = 'RESPONSE_AUTH'
+export const REQUEST_LOGIN = 'REQUEST_LOGIN'
+export const RESPONSE_LOGIN = 'RESPONSE_LOGIN'
 export const SHOW_MODAL = 'SHOW_MODEL'
 export const CANCEL = 'CANCEL'
 export const SIGN_UP = 'SIGN_UP'
@@ -29,35 +29,32 @@ export const showLogin = () => {
   }
 }
 
-export const requestAuth = (user, pass) => {
+export const requestLogin = () => {
   return {
-    type: REQUEST_AUTH,
-    data: {
-      username: user,
-      password: pass
-    }
+    type: REQUEST_LOGIN
   }
 }
 
-export const responseAuth = (jwt) => {
+export const responseLogin = (jwt) => {
   return {
-    type: RESPONSE_AUTH,
+    type: RESPONSE_LOGIN,
     data: {
       jwt: jwt
     }
   }
 }
 
-export function authorizeUser(user, pass) {
+export function logInUser(user, pass) {
+  var args = {
+    method: 'POST',
+    data: {
+      username: user,
+      password: pass
+    }
+  }
   return dispatch => {
-    dispatch(requestAuth(user, pass))
-    return $.ajax({
-      method: 'POST',
-      url: AUTH_URL
-    })
-      .done((response) => {
-        dispatch(responseAuth(response))
-      })
-      //.fail TODO
+    dispatch(requestLogin())
+    return fetch(LOGIN_URL, args)
+      .then(response => dispatch(responseLogin(response)))
   }
 }

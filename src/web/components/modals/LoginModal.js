@@ -24,12 +24,22 @@ var LoginStyle = {
   }
 }
 
-const LoginModal = ({onCancel, onLogin, onSignUp}) => (
+const LoginModal = (
+  {
+    onCancel,
+    onLogin,
+    onSignUp
+  }) => (
   <Modal
     isOpen={true}
     contentLabel='Login'
     style={LoginStyle}
   >
+    <button
+      type="button"
+      onClick={() => onCancel()}>
+      cancel
+    </button>
     <p className='auth-title'> Login or Sign Up </p>
     <FormGroup>
       <Col componentClass='login' sm={6}>
@@ -74,7 +84,7 @@ const LoginModal = ({onCancel, onLogin, onSignUp}) => (
 
 LoginModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
   onSignUp: PropTypes.func.isRequired
 
 }
