@@ -98,6 +98,12 @@ class SinglePost(webapp2.RequestHandler):
         post_dict = post.to_dict()
         comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
         post_dict['top_comments'] = comment_keys
+        store = get_entity_from_url_key(post_dict['store_key'])
+        post_dict['store'] = {
+            'name': store.name,
+            'website': store.website,
+            'url_key': store.key.urlsafe()
+        }
         self.response.write(json.dumps(post_dict))
 
 
@@ -404,9 +410,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
-    webapp2.Route('/rest/post', SinglePost, name='single_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
+
+    webapp2.Route('/new', MainPage, name='new'),
+    webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
+    webapp2.Route('/store/<:.*>', MainPage, name='single_store_view'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
-

@@ -1,25 +1,37 @@
 import $ from 'jquery'
+import fetch from 'isomorphic-fetch'
 import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import StorePage from '../components/StorePage'
+import {pullSinglePost} from '../actions/PostPageActions'
+import React, {Component, PropTypes} from 'react'
 
-const mapStateToProps = (state, ownProps) => {
-  $.ajax({
-    method:'GET',
-    url: '/rest/store/'+ownProps.params.url_key,
-    dataType: 'json',
-  })
-    .done((response => {
-      debugger
-      return response
-    }))
-    .fail((response => {
-      //make a 500 page
-    }))
+class StorePageHandler extends Component {
+  componentDidMount () {
+    return this.props.getPost(this.props.params.url_key)
+  }
+
+  render () {
+    return (
+      <StorePage
+        title={this.props.title}
+        store={this.props.store}
+        likes={this.props.likes}
+        timestamp={this.props.timestamp}
+        author={this.props.author}/>
+    )
+  }
 }
 
-const StorePageHandler = connect(
-  mapStateToProps
-)(StorePage)
 
-export default StorePageHandler
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getPost: (url_key) => {
+      dispatch(pullSinglePost(url_key))
+    },
+  }
+}
+
+export default connect(
+  mapDispatchToProps
+)(StorePageHandler)

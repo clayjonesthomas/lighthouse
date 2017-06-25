@@ -1,6 +1,7 @@
 import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
 import {GO_HOME, GO_MY_SHOPS, GO_PROFILE} from '../actions/MenuActions.js'
 import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
+import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
 import {RESPONSE_AUTH, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
 
@@ -31,6 +32,14 @@ function lighthouse(state = initialState, action) {
     case REQUEST_POSTS_RETURN:
       return Object.assign({}, state, {
         displayedPosts: action.data,
+      })
+    case REQUEST_SINGLE_POST_RETURN:
+      return Object.assign({}, state, {
+        title: action.data.title,
+        likes: action.data.likes,
+        timestamp: action.data.timestamp,
+        author: action.data.author,
+        store: action.data.store
       })
     case GO_MY_SHOPS:
     case GO_PROFILE:
