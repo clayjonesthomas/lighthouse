@@ -15,7 +15,6 @@ export const addPost = (post) => {
 }
 
 export const addPostReturn = (postId) => {
-  debugger
   return {
     type: ADD_POST_RETURN,
     postId: postId
@@ -38,19 +37,6 @@ export function pushPost(post) {
     dispatch(addPost(post))
     return fetch(POST_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(addPostReturn(json)))
-    //
-    // return $.ajax({
-    //   method: 'POST',
-    //   url: POSTS_URL,
-    //   dataType: 'json',
-    //   data: post
-    // })
-    //   .done((response) => {
-    //     dispatch(addPostReturn(response.id, true))
-    //   })
-    //   .fail((response) => {
-    //     dispatch(addPostReturn(0, false))
-    //   })
+      .then(json => dispatch(addPostReturn(json.id)))
   }
 }

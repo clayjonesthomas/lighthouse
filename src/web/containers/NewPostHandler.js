@@ -21,9 +21,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSubmit: (id_name) => {
       dispatch(pushPost(collectPost(id_name))).then(response =>
-        {
-          browserHistory.push('/')
-        }
+        browserHistory.push(`/post/${response.postId}`)
       )
     }
   }
