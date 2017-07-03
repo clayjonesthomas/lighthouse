@@ -7,6 +7,7 @@ export const SHOW_MODAL = 'SHOW_MODEL'
 export const CANCEL = 'CANCEL'
 export const SIGN_UP = 'SIGN_UP'
 export const LOGIN = 'LOGIN'
+export const REF_FUNC_AUTH = 'REF_FUNC_AUTH'
 
 export const cancelModal = () => {
   return {
@@ -44,7 +45,18 @@ export const responseLogin = (jwt) => {
   }
 }
 
+export const refFunc = (elemID, ref) => {
+  return {
+    type: REF_FUNC_AUTH,
+    data: {
+      elemID: elemID,
+      ref: ref
+    }
+  }
+}
+
 export function logInUser(user, pass) {
+
   var args = {
     method: 'POST',
     data: {
@@ -55,6 +67,9 @@ export function logInUser(user, pass) {
   return dispatch => {
     dispatch(requestLogin())
     return fetch(LOGIN_URL, args)
-      .then(response => dispatch(responseLogin(response)))
+      .then(response => {
+        debugger
+        dispatch(responseLogin(response))
+      })
   }
 }

@@ -2,7 +2,7 @@ import {browserHistory} from 'react-router'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import LoginModal from '../components/modals/LoginModal'
-import {cancelModal, logInUser, signUpUser} from '../actions/AuthActions'
+import {cancelModal, logInUser, signUpUser, refFunc} from '../actions/AuthActions'
 
 class LoginHandler extends Component {
 
@@ -20,7 +20,8 @@ class LoginHandler extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (user, pass) => dispatch(logInUser(user, pass)),
-    onSignUp: () => dispatch(signUpUser())
+    onSignUp: () => dispatch(signUpUser()),
+    refFunc: (elemID, ref) => dispatch(elemID, ref)
   }
 }
 

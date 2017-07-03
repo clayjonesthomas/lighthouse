@@ -2,8 +2,10 @@ import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
 import {GO_HOME, GO_MY_SHOPS, GO_PROFILE} from '../actions/MenuActions.js'
 import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
-import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
+import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL, REF_FUNC_AUTH}
   from '../actions/AuthActions.js'
+import {LOGIN_USERNAME, LOGIN_PASSWORD, SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2}
+  from '../components/modals/LoginModal'
 
 const initialState = {
   displayedPosts: [],
@@ -49,8 +51,13 @@ function lighthouse(state = initialState, action) {
       return state
     case RESPONSE_LOGIN:
       return Object.assign({}, state, {
+        modal: null,
         jwt: action.data.jwt
       })
+    case REF_FUNC_AUTH:
+      var state_append = {}
+      state_append[action.data.elemID] = action.data.ref
+      return Object.assign({}, state, state_append)
     default:
       return state
   }

@@ -28,7 +28,8 @@ const LoginModal = (
   {
     onCancel,
     onLogin,
-    onSignUp
+    onSignUp,
+    refFunc
   }) => (
   <Modal
     isOpen={true}
@@ -44,38 +45,38 @@ const LoginModal = (
     <FormGroup>
       <Col componentClass='login' sm={6}>
         <TextBox
-          idName={LOGIN_USERNAME}
           placeholder="username"
+          refFunc={ref => refFunc(LOGIN_USERNAME, ref)}
         />
         <br/>
         <TextBox
-          idName={LOGIN_PASSWORD}
           placeholder="password"
+          refFunc={ref => refFunc(LOGIN_PASSWORD, ref)}
         />
         <br/>
         <SubmitButton
-          onClick={() => onLogin(LOGIN_USERNAME, LOGIN_PASSWORD)}
+          onClick={() => onLogin()}
         />
       </Col>
       <Col componentClass='sign-up' sm={6}>
         <TextBox
-          idName={SIGN_UP_USERNAME}
           placeholder="choose a username"
+          refFunc={ref => refFunc(SIGN_UP_USERNAME, ref)}
         />
         <br/>
         <TextBox
-          idName={SIGN_UP_PASSWORD_1}
           placeholder="enter a password"
+          refFunc={ref => refFunc(SIGN_UP_PASSWORD_1, ref)}
         />
         <br/>
         <TextBox
-          idName={SIGN_UP_PASSWORD_2}
           placeholder="confirm your password"
+          refFunc={ref => refFunc(SIGN_UP_PASSWORD_2, ref)}
         />
         <br/>
         <SubmitButton
           onClick={ () =>
-            onSignUp(SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2)}
+            onSignUp()}
         />
       </Col>
     </FormGroup>
