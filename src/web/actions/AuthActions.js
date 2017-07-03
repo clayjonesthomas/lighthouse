@@ -45,18 +45,8 @@ export const responseLogin = (jwt) => {
   }
 }
 
-export const refFunc = (elemID, ref) => {
-  return {
-    type: REF_FUNC_AUTH,
-    data: {
-      elemID: elemID,
-      ref: ref
-    }
-  }
-}
-
 export function logInUser(user, pass) {
-
+  debugger
   var args = {
     method: 'POST',
     data: {

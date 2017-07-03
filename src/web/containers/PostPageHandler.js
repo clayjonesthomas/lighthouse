@@ -10,7 +10,6 @@ const mapStateToProps = (state, ownProps) => {
     dataType: 'json',
   })
     .done((response => {
-      debugger
       return response
     }))
     .fail((response => {

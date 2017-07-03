@@ -22,7 +22,6 @@ export function pullSinglePost(url_key) {
     dispatch(requestSinglePost())
     return fetch(POST_URL+`/${url_key}`)
       .then(response =>{
-        debugger
         response.json()
       })
       .then(json => dispatch(requestSinglePostReturn(json)))

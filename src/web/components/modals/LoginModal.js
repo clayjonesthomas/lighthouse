@@ -6,6 +6,7 @@ import './LoginModal.css'
 
 import Modal from 'react-modal'
 import {Col, FormGroup} from 'react-bootstrap'
+import {Component} from 'react'
 
 const LOGIN_USERNAME = "LOGIN_USERNAME"
 const LOGIN_PASSWORD = "LOGIN_PASSWORD"
@@ -15,73 +16,79 @@ const SIGN_UP_PASSWORD_2 = "SIGN_UP_PASSWORD_2"
 
 // move me eventually
 var LoginStyle = {
-  overlay:{
+  overlay: {
     backgroundColor: 'rgba(0,0,0,.78)',
   },
-  content:{
+  content: {
     borderRadius: '8px',
     backgroundColor: '#caffff'
   }
 }
 
-const LoginModal = (
-  {
-    onCancel,
-    onLogin,
-    onSignUp,
-    refFunc
-  }) => (
-  <Modal
-    isOpen={true}
-    contentLabel='Login'
-    style={LoginStyle}
-  >
-    <button
-      type="button"
-      onClick={() => onCancel()}>
-      cancel
-    </button>
-    <p className='auth-title'> Login or Sign Up </p>
-    <FormGroup>
-      <Col componentClass='login' sm={6}>
-        <TextBox
-          placeholder="username"
-          refFunc={ref => refFunc(LOGIN_USERNAME, ref)}
-        />
-        <br/>
-        <TextBox
-          placeholder="password"
-          refFunc={ref => refFunc(LOGIN_PASSWORD, ref)}
-        />
-        <br/>
-        <SubmitButton
-          onClick={() => onLogin()}
-        />
-      </Col>
-      <Col componentClass='sign-up' sm={6}>
-        <TextBox
-          placeholder="choose a username"
-          refFunc={ref => refFunc(SIGN_UP_USERNAME, ref)}
-        />
-        <br/>
-        <TextBox
-          placeholder="enter a password"
-          refFunc={ref => refFunc(SIGN_UP_PASSWORD_1, ref)}
-        />
-        <br/>
-        <TextBox
-          placeholder="confirm your password"
-          refFunc={ref => refFunc(SIGN_UP_PASSWORD_2, ref)}
-        />
-        <br/>
-        <SubmitButton
-          onClick={ () =>
-            onSignUp()}
-        />
-      </Col>
-    </FormGroup>
-  </Modal>
-)
+class LoginModal extends Component {
+
+  render() {
+    return (
+      <Modal
+        isOpen={true}
+        contentLabel='Login'
+        style={LoginStyle}
+      >
+        <button
+          type="button"
+          onClick={() => this.props.onCancel()}>
+          cancel
+        </button>
+        <p className='auth-title'> Login or Sign Up </p>
+        <FormGroup>
+          <Col componentClass='login' sm={6}>
+            <TextBox
+              placeholder="username"
+              refFunc={ref => {
+                debugger
+                this.login_username = ref
+              }}
+            />
+            <br/>
+            <TextBox
+              placeholder="password"
+              refFunc={ref => this.login_password = ref}
+            />
+            <br/>
+            <SubmitButton
+              onClick={() => this.props.onLogin(this.login_username.value,
+                this.login_password.value)}
+            />
+          </Col>
+          <Col componentClass='sign-up' sm={6}>
+            <TextBox
+              placeholder="choose a username"
+              refFunc={ref => this.sign_up_username = ref}
+            />
+            <br/>
+            <TextBox
+              placeholder="enter a password"
+              refFunc={ref => this.sign_up_password_1 = ref}
+            />
+            <br/>
+            <TextBox
+              placeholder="confirm your password"
+              refFunc={ref => this.sign_up_password_2 = ref}
+            />
+            <br/>
+            <SubmitButton
+              onClick={ () =>
+                this.props.onSignUp(this.sign_up_username.value,
+                  this.sign_up_password_1.value,
+                  this.sign_up_password_2.value)}
+            />
+          </Col>
+        </FormGroup>
+      </Modal>
+    )
+  }
+}
+
 
 LoginModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
