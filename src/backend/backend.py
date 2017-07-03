@@ -23,6 +23,17 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 def populate_dummy_datastore():
     store_keys = _spawn_dummy_stores()
     _spawn_dummy_posts(store_keys)
+    _spawn_admin()
+
+
+def _spawn_admin():
+    _contents = {'username': 'admin', 'email': 'ctjones@mit.edu',
+                 'password': '32hereford'}
+    request_signup = webapp2.Request.blank('/rest/signup', POST=_contents)
+    response_signup = request_signup.get_response(app)
+
+    request_verify = webapp2.Request.blank(response_signup.body)
+    request_verify.method = 'GET'
 
 
 def _spawn_dummy_posts(store_keys):
@@ -242,7 +253,6 @@ class SignupHandler(BaseHandler):
         user_name = self.request.get('username')
         email = self.request.get('email')
         password = self.request.get('password')
-
         unique_properties = ['email_address']  # username automatically unique
         user_data = self.user_model.create_user(user_name,
                                                 unique_properties,

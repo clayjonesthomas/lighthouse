@@ -1,3 +1,4 @@
+from webapp2_extras import auth
 import time
 import webapp2_extras.appengine.auth.models
 

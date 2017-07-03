@@ -9,7 +9,7 @@ class LoginHandler extends Component {
   render () {
     return (
       <LoginModal
-        onLogin={this.props.onSubmitAuthentication}
+        onLogin={this.props.onLogin}
         onCancel={this.props.onCancel}
         onSignup={this.props.onSignUp}
       />
