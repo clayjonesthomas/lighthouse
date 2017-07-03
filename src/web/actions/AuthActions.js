@@ -49,10 +49,10 @@ export function logInUser(user, pass) {
   debugger
   var args = {
     method: 'POST',
-    data: {
+    body: JSON.stringify({
       username: user,
       password: pass
-    }
+    })
   }
   return dispatch => {
     dispatch(requestLogin())

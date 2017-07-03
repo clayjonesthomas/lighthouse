@@ -30,7 +30,7 @@ export const cancelPost = () => {
 export function pushPost(post) {
   var args = {
     method: 'POST',
-    data: post
+    body: JSON.stringify(post)
   }
   return dispatch => {
     dispatch(addPost(post))

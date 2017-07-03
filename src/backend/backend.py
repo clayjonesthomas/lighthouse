@@ -94,12 +94,13 @@ class MainPage(webapp2.RequestHandler):
 class SinglePost(webapp2.RequestHandler):
 
     def post(self):
-        store_name = self.request.get('store')
+        body = json.loads(self.request.body)
+        store_name = body['store']
         try:
             store = Store.query(Store.name == store_name).fetch(1)[0]
         except IndexError:
             store = Store.query().fetch(1)[0]
-        post = Post(title=self.request.get('title'),
+        post = Post(title=body['title'],
                     store_key=store.key)
         post_key = post.put()
         self.response.write(json.dumps({'id': post_key.urlsafe()}))
@@ -367,8 +368,9 @@ class VerificationHandler(BaseHandler):
 class LoginHandler(BaseHandler):
 
     def post(self):
-        username = self.request.get('username')
-        password = self.request.get('password')
+        body = json.loads(self.request.body)
+        username = body['username']
+        password = body['password']
         try:
             user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
