@@ -148,6 +148,7 @@ class Feed(webapp2.RequestHandler):
         post_dictionary['store_url'] = post_dictionary['store_key'].urlsafe()
         del post_dictionary['store_key']
         post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
+        post_dictionary['post_url'] = post.key.urlsafe()
 
         return post_dictionary
 

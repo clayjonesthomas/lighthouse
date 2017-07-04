@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
+import LikeButton from './ui-kit/LikeButton'
 
 const PostBox = (
   {
@@ -11,7 +12,20 @@ const PostBox = (
         {
           post['store']['name']
         }
+      </Link>}
+    {
+      <Link to={"/post/"+post['post_url']}>
+        {
+          post['title']
+        }
       </Link>
+    }
+    {
+      <LikeButton
+      isPressed={false}
+      >
+
+      </LikeButton>
     }
   </div>
 )

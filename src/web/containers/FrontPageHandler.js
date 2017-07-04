@@ -25,7 +25,6 @@ class FrontPageHandler extends Component {
 }
 
 const mapStateToProps = (state) => {
-  debugger
   return {
     posts: state.displayedPosts,
     username: state.username

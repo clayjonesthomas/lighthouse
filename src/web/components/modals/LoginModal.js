@@ -45,7 +45,7 @@ class LoginModal extends Component {
             <TextBox
               placeholder="username"
               refFunc={ref => {
-                this.login_username = ref
+              this.login_username = ref
               }}
             />
             <br/>

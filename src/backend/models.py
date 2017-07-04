@@ -47,6 +47,9 @@ class Store(ndb.Model):
 class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
 
+    liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
+    liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
+
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args,**kwargs)
         self._is_login_enabled = True
