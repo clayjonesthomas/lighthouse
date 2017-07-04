@@ -5,11 +5,11 @@ const FrontPage =
   ({posts,
     onSelectNewPost,
     onShowLogin,
-    userName
+    username
   }) => (
   <div>
     {
-      "username: " + userName
+      "username: " + username
     }
     {
       <button

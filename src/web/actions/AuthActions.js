@@ -36,17 +36,16 @@ export const requestLogin = () => {
   }
 }
 
-export const responseLogin = (jwt) => {
+export const responseLogin = (username) => {
   return {
     type: RESPONSE_LOGIN,
     data: {
-      jwt: jwt
+      username: username
     }
   }
 }
 
 export function logInUser(user, pass) {
-  debugger
   var args = {
     method: 'POST',
     body: JSON.stringify({
@@ -57,9 +56,7 @@ export function logInUser(user, pass) {
   return dispatch => {
     dispatch(requestLogin())
     return fetch(LOGIN_URL, args)
-      .then(response => {
-        debugger
-        dispatch(responseLogin(response))
-      })
+      .then(response => response.json())
+      .then(json => dispatch(responseLogin(json.username)))
   }
 }

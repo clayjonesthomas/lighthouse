@@ -4,6 +4,7 @@ import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
 import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
+import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/FrontPageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -48,9 +49,16 @@ function lighthouse(state = initialState, action) {
     case CANCEL_POST:
       return state
     case RESPONSE_LOGIN:
+      debugger
       return Object.assign({}, state, {
         modal: null,
-        jwt: action.data.jwt
+        username: action.data.username
+      })
+    case REQUEST_USER_INFO:
+      return state
+    case REQUEST_USER_INFO_RETURN:
+      return Object.assign({}, state, {
+        username: action.data.username
       })
     default:
       return state

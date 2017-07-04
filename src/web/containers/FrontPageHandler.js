@@ -2,12 +2,13 @@ import {browserHistory} from 'react-router'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
-import {pullFrontPagePosts} from '../actions/FrontPageActions'
+import {pullFrontPagePosts, pullUserInfo} from '../actions/FrontPageActions'
 import {showLogin} from '../actions/AuthActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
-    return this.props.getPosts()
+    this.props.getPosts()
+    this.props.getUserInfo()
   }
 
   render () {
@@ -16,14 +17,18 @@ class FrontPageHandler extends Component {
         posts={this.props.posts}
         onSelectPost={this.props.onSelectPost}
         onSelectNewPost={this.props.onSelectNewPost}
-        onShowLogin={this.props.onShowLogin}/>
+        onShowLogin={this.props.onShowLogin}
+        username={this.props.username}
+      />
     )
   }
 }
 
 const mapStateToProps = (state) => {
+  debugger
   return {
-    posts: state.displayedPosts
+    posts: state.displayedPosts,
+    username: state.username
   }
 }
 
@@ -31,6 +36,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: () => {
       dispatch(pullFrontPagePosts())
+    },
+    getUserInfo: () => {
+      dispatch(pullUserInfo())
     },
     onSelectNewPost: () => browserHistory.push('/new'),
     onShowLogin: () => dispatch(showLogin())

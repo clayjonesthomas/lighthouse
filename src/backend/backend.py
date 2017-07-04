@@ -35,6 +35,8 @@ def _spawn_admin():
     request_verify = webapp2.Request.blank(response_signup.body)
     request_verify.method = 'GET'
 
+    response_verify = request_verify.get_response(app)
+
 
 def _spawn_dummy_posts(store_keys):
     posts = [Post(title='50% off all items on clearance',
@@ -378,7 +380,7 @@ class LoginHandler(BaseHandler):
             if user.verified:
                 if user.is_login_enabled:
                     self.auth.set_session(user_dict, remember=True)
-                    self.response.write('success')
+                    self.response.write(json.dumps({'username': self.user.username}))
                 else:
                     logging.info('Login failed for user %s because they reset their password', username)
                     self.response.write('Login failed; {}'.format('login attempted during password reset'))
@@ -389,13 +391,15 @@ class LoginHandler(BaseHandler):
             logging.info('Login failed for user %s because of %s', username, type(e))
             self.response.write('Login failed; bad username or password')
 
-    @user_required
     def get(self):
         """
         lowkey just used to ensure a user is logged in after verification,
         but likely will be used in the future to pull login data
         """
-        self.response.write(self.user.username)
+        if self.auth.get_user_by_session():
+            self.response.write(json.dumps({'username': self.user.username}))
+        else:
+            self.response.write(json.dumps({'logged_in': False}))
 
 
 class LogoutHandler(BaseHandler):
