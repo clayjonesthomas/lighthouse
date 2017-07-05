@@ -5,7 +5,8 @@ const FrontPage =
   ({posts,
     onSelectNewPost,
     onShowLogin,
-    username
+    username,
+    onLike
   }) => (
   <div>
     {
@@ -19,7 +20,9 @@ const FrontPage =
     </button>}
     {posts.map(post =>
         <PostBox
-          post={post}/>
+          post={post}
+          onLike={() => onLike(post.post_url)}
+        />
     )}
     {<button
       type="button"

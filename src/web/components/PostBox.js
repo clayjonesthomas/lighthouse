@@ -4,7 +4,8 @@ import LikeButton from './ui-kit/LikeButton'
 
 const PostBox = (
   {
-    post
+    post,
+    onLike
   }) => (
   <div style={{'border-style':'strong'}}>
     {
@@ -22,7 +23,8 @@ const PostBox = (
     }
     {
       <LikeButton
-      isPressed={false}
+      isPressed={post.isLiked}
+      onClick={() => onLike()}
       >
 
       </LikeButton>

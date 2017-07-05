@@ -5,6 +5,7 @@ import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
 import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
 import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/FrontPageActions'
+import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -60,6 +61,16 @@ function lighthouse(state = initialState, action) {
       return Object.assign({}, state, {
         username: action.data.username
       })
+    case LIKE_POST:
+      return Object.assign({}, state, {
+        posts: state.posts.map(post => {
+          if(post.post_url === action.data.post_url)
+            post.isLiked = !post.isLiked
+          return post
+        })
+      })
+    case LIKE_POST_RETURN:
+      return state
     default:
       return state
   }

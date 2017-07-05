@@ -121,6 +121,15 @@ class SinglePost(webapp2.RequestHandler):
         self.response.write(json.dumps(post_dict))
 
 
+class LikePost(webapp2.RequestHandler):
+    def post(self):
+        body = json.loads(self.request.body)
+        post = get_entity_from_url_key(body['post_url'])
+        if auth.get_auth().get_user_by_session():
+            user = BaseHandler.user
+            user.liked_posts.append(post.key)
+
+
 class SingleStore(webapp2.RequestHandler):
 
     def get(self, url_key):
@@ -134,14 +143,15 @@ class SingleStore(webapp2.RequestHandler):
 class Feed(webapp2.RequestHandler):
 
     def get(self):
-        if len(Post.query().fetch(10)) <= 0:
-            populate_dummy_datastore()
-        fetched_posts = [self._prepare_post(post) for post in Post.query().fetch(10)]
+        user = None
+        if auth.get_auth().get_user_by_session():
+            user = BaseHandler.user
+        fetched_posts = [self._prepare_post(post, user) for post in Post.query().fetch(10)]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
     @staticmethod
-    def _prepare_post(post):
+    def _prepare_post(post, user):
         post_dictionary = post.to_dict()
         post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
         post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
@@ -149,6 +159,11 @@ class Feed(webapp2.RequestHandler):
         del post_dictionary['store_key']
         post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
         post_dictionary['post_url'] = post.key.urlsafe()
+
+        if user:
+            post_dictionary['isLiked'] = post.key in user.liked_posts
+        else:
+            post_dictionary['isLiked'] = False
 
         return post_dictionary
 
@@ -427,6 +442,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
+    webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
 
