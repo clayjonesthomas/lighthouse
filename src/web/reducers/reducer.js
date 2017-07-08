@@ -50,7 +50,6 @@ function lighthouse(state = initialState, action) {
     case CANCEL_POST:
       return state
     case RESPONSE_LOGIN:
-      debugger
       return Object.assign({}, state, {
         modal: null,
         username: action.data.username
@@ -63,7 +62,7 @@ function lighthouse(state = initialState, action) {
       })
     case LIKE_POST:
       return Object.assign({}, state, {
-        posts: state.posts.map(post => {
+        displayedPosts: state.displayedPosts.map(post => {
           if(post.post_url === action.data.post_url)
             post.isLiked = !post.isLiked
           return post

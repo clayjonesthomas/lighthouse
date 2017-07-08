@@ -57,7 +57,6 @@ export function toggleLike(post_url) {
   return dispatch => {
     dispatch(likePost(post_url))
     return fetch(LIKE_URL, args)
-      .then(response => response.json())
-      .then(json => dispatch(likePostReturn(json)))
+      .then(likePostReturn())
   }
 }

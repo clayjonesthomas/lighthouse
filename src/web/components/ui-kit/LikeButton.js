@@ -9,7 +9,7 @@ const LikeButton = ({onClick, isPressed}) => (
   >
     <path
       id="like"
-      style={{"fill":"red","stroke":"red","strokeWidth":0}}
+      style={{"fill": isPressed ? "red" : "blue","stroke":"red","strokeWidth":0}}
       d="M 60 30
          a 30 30 0 0 1 0 60
          L 0 90 0 30

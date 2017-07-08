@@ -143,6 +143,8 @@ class SingleStore(webapp2.RequestHandler):
 class Feed(webapp2.RequestHandler):
 
     def get(self):
+        if not Post.query().fetch(10):
+            populate_dummy_datastore()
         user = None
         if auth.get_auth().get_user_by_session():
             user = BaseHandler.user

@@ -18,11 +18,12 @@ const FrontPage =
       onClick={() => onShowLogin()}>
       Log in
     </button>}
-    {posts.map(post =>
-        <PostBox
+    {posts.map(post => {
+        return <PostBox
           post={post}
           onLike={() => onLike(post.post_url)}
         />
+      }
     )}
     {<button
       type="button"

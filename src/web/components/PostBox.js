@@ -7,7 +7,7 @@ const PostBox = (
     post,
     onLike
   }) => (
-  <div style={{'border-style':'strong'}}>
+  <div style={{'borderStyle':'strong'}}>
     {
       <Link to={"/store/" + post['store_url']}>
         {
@@ -23,11 +23,9 @@ const PostBox = (
     }
     {
       <LikeButton
-      isPressed={post.isLiked}
-      onClick={() => onLike()}
-      >
-
-      </LikeButton>
+        onClick={() => onLike()}
+        isPressed={post.isLiked}
+      />
     }
   </div>
 )
