@@ -4,7 +4,7 @@ const Menu =
   ({onHome,
     onMyShops,
     onProfile}) => (
-    <div style={{'border-style': 'solid'}}>
+    <div style={{'borderStyle': 'solid'}}>
       {<button
           type="button"
           onClick={() => onHome()}>

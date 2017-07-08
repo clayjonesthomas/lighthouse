@@ -10,7 +10,8 @@ import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 const initialState = {
   displayedPosts: [],
   jwt: null,
-  modal: null
+  modal: null,
+  username: null
 }
 
 function lighthouse(state = initialState, action) {

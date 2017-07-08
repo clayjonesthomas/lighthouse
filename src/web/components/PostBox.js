@@ -7,7 +7,7 @@ const PostBox = (
     post,
     onLike
   }) => (
-  <div style={{'borderStyle':'strong'}}>
+  <div style={{'borderStyle':'solid'}}>
     {
       <Link to={"/store/" + post['store_url']}>
         {

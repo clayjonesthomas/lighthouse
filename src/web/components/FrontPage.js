@@ -9,27 +9,31 @@ const FrontPage =
     onLike
   }) => (
   <div>
-    {
+    {username &&
       "username: " + username
     }
-    {
+    {!username &&
       <button
-      type="button"
-      onClick={() => onShowLogin()}>
-      Log in
-    </button>}
-    {posts.map(post => {
+        type="button"
+        onClick={() => onShowLogin()}>
+        Log in
+      </button>
+    }
+    {
+      posts.map(post => {
         return <PostBox
           post={post}
           onLike={() => onLike(post.post_url)}
         />
-      }
-    )}
-    {<button
-      type="button"
-      onClick={() => onSelectNewPost()}>
-      Make a new Post
-    </button>}
+      })
+    }
+    {
+      <button
+        type="button"
+        onClick={() => onSelectNewPost()}>
+        Make a new Post
+      </button>
+    }
   </div>
 )
 
