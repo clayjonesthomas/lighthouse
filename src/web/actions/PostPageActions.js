@@ -50,6 +50,7 @@ export const likePostReturn = (json) => {
 export function toggleLike(post_url) {
   let args = {
     method: 'POST',
+    credentials: 'same-origin',
     body: JSON.stringify({
       post_url: post_url
     })

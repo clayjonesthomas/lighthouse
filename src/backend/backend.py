@@ -12,6 +12,9 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
+# https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
+from google.appengine.ext import deferred
+
 from models import Post, Store, get_entity_from_url_key
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -84,107 +87,6 @@ def _spawn_dummy_stores():
                     website='www.oldnavy.com',
                     likes=324319)]
     return ndb.put_multi(stores)
-
-
-class MainPage(webapp2.RequestHandler):
-
-    def get(self, *args):
-        template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
-
-
-class SinglePost(webapp2.RequestHandler):
-
-    def post(self):
-        body = json.loads(self.request.body)
-        store_name = body['store']
-        try:
-            store = Store.query(Store.name == store_name).fetch(1)[0]
-        except IndexError:
-            store = Store.query().fetch(1)[0]
-        post = Post(title=body['title'],
-                    store_key=store.key)
-        post_key = post.put()
-        self.response.write(json.dumps({'id': post_key.urlsafe()}))
-
-    def get(self, url_key):
-        post = get_entity_from_url_key(url_key)
-        post_dict = post.to_dict()
-        comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
-        post_dict['top_comments'] = comment_keys
-        store = get_entity_from_url_key(post_dict['store_key'])
-        post_dict['store'] = {
-            'name': store.name,
-            'website': store.website,
-            'url_key': store.key.urlsafe()
-        }
-        self.response.write(json.dumps(post_dict))
-
-
-class LikePost(webapp2.RequestHandler):
-    def post(self):
-        body = json.loads(self.request.body)
-        post = get_entity_from_url_key(body['post_url'])
-        if auth.get_auth().get_user_by_session():
-            user = BaseHandler.user
-            user.liked_posts.append(post.key)
-
-
-class SingleStore(webapp2.RequestHandler):
-
-    def get(self, url_key):
-        store = get_entity_from_url_key(url_key)
-        store_dict = store.to_dict()
-        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
-        # do a query to get posts associated with the store
-        self.response.write(json.dumps({'store': store_dict}))
-
-
-class Feed(webapp2.RequestHandler):
-
-    def get(self):
-        if not Post.query().fetch(10):
-            populate_dummy_datastore()
-        user = None
-        if auth.get_auth().get_user_by_session():
-            user = BaseHandler.user
-        fetched_posts = [self._prepare_post(post, user) for post in Post.query().fetch(10)]
-        logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
-        self.response.write(json.dumps(fetched_posts))
-
-    @staticmethod
-    def _prepare_post(post, user):
-        post_dictionary = post.to_dict()
-        post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
-        post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
-        post_dictionary['store_url'] = post_dictionary['store_key'].urlsafe()
-        del post_dictionary['store_key']
-        post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
-        post_dictionary['post_url'] = post.key.urlsafe()
-
-        if user:
-            post_dictionary['isLiked'] = post.key in user.liked_posts
-        else:
-            post_dictionary['isLiked'] = False
-
-        return post_dictionary
-
-
-class Stores(webapp2.RequestHandler):
-
-    def post(self):
-        store = Store(name=self.request.get('name'),
-                      website=self.request.get('website'))
-        store_key = store.put()
-        self.response.write(json.dumps({'id': store_key.urlsafe()}))
-
-    def get(self):
-        fetched_stores = [store.to_dict() for store in Store.query().fetch(10)]
-        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps(fetched_stores))
-
-
-###################################
 
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
@@ -267,6 +169,102 @@ class BaseHandler(webapp2.RequestHandler):
             # Save all sessions.
             self.session_store.save_sessions(self.response)
 
+
+class MainPage(webapp2.RequestHandler):
+
+    def get(self, *args):
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class SinglePost(webapp2.RequestHandler):
+
+    def post(self):
+        body = json.loads(self.request.body)
+        store_name = body['store']
+        try:
+            store = Store.query(Store.name == store_name).fetch(1)[0]
+        except IndexError:
+            store = Store.query().fetch(1)[0]
+        post = Post(title=body['title'],
+                    store_key=store.key)
+        post_key = post.put()
+        self.response.write(json.dumps({'id': post_key.urlsafe()}))
+
+    def get(self, url_key):
+        post = get_entity_from_url_key(url_key)
+        post_dict = post.to_dict()
+        comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
+        post_dict['top_comments'] = comment_keys
+        store = get_entity_from_url_key(post_dict['store_key'])
+        post_dict['store'] = {
+            'name': store.name,
+            'website': store.website,
+            'url_key': store.key.urlsafe()
+        }
+        self.response.write(json.dumps(post_dict))
+
+
+class LikePost(BaseHandler):
+    def post(self):
+        body = json.loads(self.request.body)
+        post = get_entity_from_url_key(body['post_url'])
+        user = self.user
+        if user:
+            user.liked_posts.append(post.key)
+            user.put()
+
+
+class SingleStore(webapp2.RequestHandler):
+
+    def get(self, url_key):
+        store = get_entity_from_url_key(url_key)
+        store_dict = store.to_dict()
+        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
+        # do a query to get posts associated with the store
+        self.response.write(json.dumps({'store': store_dict}))
+
+
+class Feed(BaseHandler):
+
+    def get(self):
+        if not Post.query().fetch(10):
+            populate_dummy_datastore()
+        user = self.user
+        fetched_posts = [self._prepare_post(post, user) for post in Post.query().fetch(10)]
+        logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
+        self.response.write(json.dumps(fetched_posts))
+
+    @staticmethod
+    def _prepare_post(post, user):
+        post_dictionary = post.to_dict()
+        post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
+        post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
+        post_dictionary['store_url'] = post_dictionary['store_key'].urlsafe()
+        del post_dictionary['store_key']
+        post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
+        post_dictionary['post_url'] = post.key.urlsafe()
+
+        if user:
+            post_dictionary['isLiked'] = post.key in user.liked_posts
+        else:
+            post_dictionary['isLiked'] = False
+
+        return post_dictionary
+
+
+class Stores(webapp2.RequestHandler):
+
+    def post(self):
+        store = Store(name=self.request.get('name'),
+                      website=self.request.get('website'))
+        store_key = store.put()
+        self.response.write(json.dumps({'id': store_key.urlsafe()}))
+
+    def get(self):
+        fetched_stores = [store.to_dict() for store in Store.query().fetch(10)]
+        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
+        self.response.write(json.dumps(fetched_stores))
 
 
 class SignupHandler(BaseHandler):

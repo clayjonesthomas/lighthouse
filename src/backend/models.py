@@ -5,6 +5,8 @@ import webapp2_extras.appengine.auth.models
 from google.appengine.ext import ndb
 
 from webapp2_extras import security
+from webapp2_extras import auth
+
 
 def get_entity_from_url_key(url_key):
     return ndb.Key(urlsafe=url_key).get()

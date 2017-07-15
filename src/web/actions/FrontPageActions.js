@@ -33,9 +33,13 @@ export const requestUserInfoReturn = (info) => {
 }
 
 export function pullFrontPagePosts() {
+  const args = {
+    method: 'GET',
+    credentials: 'same-origin',
+  }
   return dispatch => {
     dispatch(requestPosts())
-    return fetch(POSTS_URL)
+    return fetch(POSTS_URL, args)
       .then(response => response.json())
       .then(json => dispatch(requestPostsReturn(json)))
   }
