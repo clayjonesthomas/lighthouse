@@ -6,13 +6,16 @@ import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
 import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/FrontPageActions'
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
+import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
 
 const initialState = {
   displayedPosts: [],
   jwt: null,
   modal: null,
-  username: null
+  username: null,
+  store: {}
 }
+
 
 function lighthouse(state = initialState, action) {
   switch (action.type) {
@@ -71,6 +74,12 @@ function lighthouse(state = initialState, action) {
       })
     case LIKE_POST_RETURN:
       return state
+    case REQUEST_STORE:
+      return state
+    case REQUEST_STORE_RETURN:
+      return Object.assign({}, state, {
+        store: action.data.store
+      })
     default:
       return state
   }

@@ -137,7 +137,7 @@ class SingleStore(webapp2.RequestHandler):
         store_dict = store.to_dict()
         store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
         # do a query to get posts associated with the store
-        self.response.write(json.dumps(store_dict))
+        self.response.write(json.dumps({'store': store_dict}))
 
 
 class Feed(webapp2.RequestHandler):

@@ -1,38 +1,41 @@
-import $ from 'jquery'
-import fetch from 'isomorphic-fetch'
-import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import StorePage from '../components/StorePage'
-import {pullSinglePost} from '../actions/PostPageActions'
-import React, {Component, PropTypes} from 'react'
+import {pullStore} from '../actions/StorePageActions'
+import React, {Component} from 'react'
 
 class StorePageHandler extends Component {
   componentDidMount () {
-    debugger
     this.props.getStore(this.props.params.url_key)
   }
 
   render () {
     return (
       <StorePage
-        title={this.props.title}
-        store={this.props.store}
+        name={this.props.name}
+        website={this.props.website}
         likes={this.props.likes}
-        timestamp={this.props.timestamp}
-        author={this.props.author}/>
+        timestamp={this.props.timestamp}/>
     )
   }
 }
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPost: (url_key) => {
-      dispatch(pullSinglePost(url_key))
-    },
+    getStore: (url_key) => {
+      dispatch(pullStore(url_key))
+    }
+  }
+}
+const mapStateToProps = (state) => {
+  return {
+    name: state.store.name,
+    website: state.store.website,
+    likes: state.store.likes,
+    timestamp: state.store.timestamp
   }
 }
 
 export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(StorePageHandler)

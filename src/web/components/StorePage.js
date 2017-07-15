@@ -2,24 +2,24 @@ import React, {PropTypes} from 'react'
 
 const StorePage =
   ({
-    title,
+    name,
     website,
     likes,
     timestamp
   }) => (
     <div>
       {
-        title + '   ' + website + '   ' + likes + '   ' + timestamp
+        name + '   ' + website + '   ' + likes + '   ' + timestamp
       }
       <br/><br/>
     </div>
   )
 
 StorePage.propTypes = {
-  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   website: PropTypes.string.isRequired,
   likes: PropTypes.number.isRequired,
-  timestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.string.isRequired
 }
 
 export default StorePage
