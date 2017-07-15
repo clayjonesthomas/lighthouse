@@ -15,11 +15,11 @@ const PostBox = (
         }
       </Link>}
     {
-      <Link to={"/post/"+post['post_url']}>
+      <a href={"http://" + post.store.website}>
         {
           post['title']
         }
-      </Link>
+      </a>
     }
     {
       <LikeButton

@@ -52,7 +52,6 @@ export function pullUserInfo() {
       .then(response => response.json())
       .then(json => {
         dispatch(requestUserInfoReturn(json))
-        debugger
       })
   }
 }
