@@ -8,7 +8,8 @@ import React, {Component, PropTypes} from 'react'
 
 class StorePageHandler extends Component {
   componentDidMount () {
-    return this.props.getPost(this.props.params.url_key)
+    debugger
+    this.props.getStore(this.props.params.url_key)
   }
 
   render () {
