@@ -268,6 +268,7 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
+
 class SignupHandler(BaseHandler):
 
     def post(self):
@@ -397,7 +398,6 @@ class LoginHandler(BaseHandler):
 
             if user.verified:
                 if user.is_login_enabled:
-                    self.auth.set_session(user_dict, remember=True)
                     self.response.write(json.dumps({'username': self.user.username}))
                 else:
                     logging.info('Login failed for user %s because they reset their password', username)

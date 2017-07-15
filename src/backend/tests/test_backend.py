@@ -292,24 +292,3 @@ class TestAuth(unittest.TestCase):
 
         self.assertEqual(unique_response.status_int, 200)
         self.assertIn('/rest/v', unique_response.body)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

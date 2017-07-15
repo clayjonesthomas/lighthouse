@@ -27,7 +27,7 @@ const FrontPage =
         />
       })
     }
-    {
+    {username &&
       <button
         type="button"
         onClick={() => onSelectNewPost()}>

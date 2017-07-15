@@ -46,8 +46,9 @@ export const responseLogin = (username) => {
 }
 
 export function logInUser(user, pass) {
-  var args = {
+  const args = {
     method: 'POST',
+    credentials: 'same-origin',
     body: JSON.stringify({
       username: user,
       password: pass

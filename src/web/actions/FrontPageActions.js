@@ -42,10 +42,17 @@ export function pullFrontPagePosts() {
 }
 
 export function pullUserInfo() {
+  const args = {
+    method: 'GET',
+    credentials: 'same-origin',
+  }
   return dispatch => {
     dispatch(requestUserInfo())
-    return fetch(LOGIN_URL)
+    return fetch(LOGIN_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(requestUserInfoReturn(json)))
+      .then(json => {
+        dispatch(requestUserInfoReturn(json))
+        debugger
+      })
   }
 }
