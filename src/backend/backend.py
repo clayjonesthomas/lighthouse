@@ -177,7 +177,7 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 
-class SinglePost(webapp2.RequestHandler):
+class SinglePost(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
@@ -195,7 +195,14 @@ class SinglePost(webapp2.RequestHandler):
         post = get_entity_from_url_key(url_key)
         post_dict = post.to_dict()
         comment_keys = [comment.urlsafe() for comment in post_dict.top_comments]
+
         post_dict['top_comments'] = comment_keys
+        user = self.user
+        if user:
+            post_dict['isLiked'] = post.key in user.liked_posts
+        else:
+            post_dict['isLiked'] = False
+
         store = get_entity_from_url_key(post_dict['store_key'])
         post_dict['store'] = {
             'name': store.name,
@@ -215,13 +222,30 @@ class LikePost(BaseHandler):
             user.put()
 
 
-class SingleStore(webapp2.RequestHandler):
+class LikeStore(BaseHandler):
+    def post(self):
+        body = json.loads(self.request.body)
+        store = get_entity_from_url_key(body['store_url'])
+        user = self.user
+        if user:
+            user.liked_stores.append(store.key)
+            user.put()
+
+
+class SingleStore(BaseHandler):
 
     def get(self, url_key):
         store = get_entity_from_url_key(url_key)
         store_dict = store.to_dict()
         store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
         # do a query to get posts associated with the store
+
+        user = self.user
+        if user:
+            store_dict['isLiked'] = store.key in user.liked_stores
+        else:
+            store_dict['isLiked'] = False
+
         self.response.write(json.dumps({'store': store_dict}))
 
 
@@ -253,7 +277,7 @@ class Feed(BaseHandler):
         return post_dictionary
 
 
-class Stores(webapp2.RequestHandler):
+class Stores(BaseHandler):
 
     def post(self):
         store = Store(name=self.request.get('name'),
@@ -262,9 +286,18 @@ class Stores(webapp2.RequestHandler):
         self.response.write(json.dumps({'id': store_key.urlsafe()}))
 
     def get(self):
-        fetched_stores = [store.to_dict() for store in Store.query().fetch(10)]
+        user = self.user
+        fetched_stores = [self._prepare_store(store, user) for store in Store.query().fetch(10)]
         logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
         self.response.write(json.dumps(fetched_stores))
+
+    @staticmethod
+    def _prepare_store(store, user):
+        store_dict = store.to_dict()
+        if user:
+            store_dict['isLiked'] = store.key in user.liked_stores
+        else:
+            store_dict['isLiked'] = False
 
 
 class SignupHandler(BaseHandler):
