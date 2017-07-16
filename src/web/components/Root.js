@@ -3,6 +3,7 @@ import { createStore, applyMiddleware } from 'redux'
 import FrontPageHandler from '../containers/FrontPageHandler'
 import StorePageHandler from '../containers/StorePageHandler'
 import PostPageHandler from '../containers/PostPageHandler'
+import MyShopsPageHandler from '../containers/MyShopsPageHandler'
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import lighthouse from '../reducers/reducer.js'
@@ -27,6 +28,7 @@ const Root = () => (
         <Route path="/new" component={NewPostHandler} />
         <Route path="/store/:url_key" component={StorePageHandler}/>
         <Route path="/post/:url_key" component={PostPageHandler}/>
+        <Route path="/shops" component={MyShopsPageHandler}/>
       </Route>
     </Router>
   </Provider>

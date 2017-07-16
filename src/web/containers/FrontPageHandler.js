@@ -16,7 +16,6 @@ class FrontPageHandler extends Component {
     return (
       <FrontPage
         posts={this.props.posts}
-        onSelectPost={this.props.onSelectPost}
         onSelectNewPost={this.props.onSelectNewPost}
         onShowLogin={this.props.onShowLogin}
         username={this.props.username}

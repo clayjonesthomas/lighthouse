@@ -482,13 +482,14 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
-    webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
+    webapp2.Route('/rest/shops', Stores, name='my_shops'),
+    webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
 
     webapp2.Route('/new', MainPage, name='new'),
     webapp2.Route('/shops', MainPage, name='stores'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
-    webapp2.Route('/shop/<:.*>', MainPage, name='single_store_view'),
+    webapp2.Route('/store/<:.*>', MainPage, name='single_store_view'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
