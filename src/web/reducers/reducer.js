@@ -8,9 +8,11 @@ import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/FrontPageA
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
 import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/StorePageActions'
+import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN} from '../actions/MyShopsPageActions'
 
 const initialState = {
   displayedPosts: [],
+  displayedShops: [],
   jwt: null,
   modal: null,
   username: null,
@@ -89,6 +91,12 @@ function lighthouse(state = initialState, action) {
       })
     case LIKE_STORE_RETURN:
       return state
+    case REQUEST_MY_SHOPS:
+      return state
+    case REQUEST_MY_SHOPS_RETURN:
+      return Object.assign({}, state, {
+        displayedShops: action.data.shops
+      })
     default:
       return state
   }
