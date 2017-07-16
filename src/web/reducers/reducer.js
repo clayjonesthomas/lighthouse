@@ -72,7 +72,7 @@ function lighthouse(state = initialState, action) {
     case LIKE_POST:
       return Object.assign({}, state, {
         displayedPosts: state.displayedPosts.map(post => {
-          if(post.post_url === action.data.post_url)
+          if(post.key === action.data.post_key)
             post.isLiked = !post.isLiked
           return post
         })

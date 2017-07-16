@@ -30,11 +30,11 @@ export function pullSinglePost(url_key) {
   }
 }
 
-export const likePost = (post_url) => {
+export const likePost = (post_key) => {
   return {
     type: LIKE_POST,
     data: {
-      post_url: post_url
+      post_key: post_key
     }
   }
 }
@@ -47,16 +47,16 @@ export const likePostReturn = (json) => {
 }
 
 
-export function togglePostLike(post_url) {
+export function togglePostLike(post_key) {
   let args = {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      post_url: post_url
+      post_key: post_key
     })
   }
   return dispatch => {
-    dispatch(likePost(post_url))
+    dispatch(likePost(post_key))
     return fetch(LIKE_POST_URL, args)
       .then(likePostReturn())
   }

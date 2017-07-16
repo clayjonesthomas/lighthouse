@@ -23,7 +23,7 @@ const FrontPage =
       posts.map(post => {
         return <PostBox
           post={post}
-          onLike={() => onLike(post.post_url)}
+          onLike={() => onLike(post.key)}
         />
       })
     }

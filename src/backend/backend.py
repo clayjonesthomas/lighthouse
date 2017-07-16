@@ -207,7 +207,7 @@ class SinglePost(BaseHandler):
         post_dict['store'] = {
             'name': store.name,
             'website': store.website,
-            'url_key': store.key.urlsafe()
+            'key': store.key.urlsafe()
         }
         self.response.write(json.dumps(post_dict))
 
@@ -215,7 +215,7 @@ class SinglePost(BaseHandler):
 class LikePost(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        post = get_entity_from_url_key(body['post_url'])
+        post = get_entity_from_url_key(body['key'])
         user = self.user
         if user:
             if post.key in user.liked_posts:
@@ -228,7 +228,7 @@ class LikePost(BaseHandler):
 class LikeStore(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        store = get_entity_from_url_key(body['store_url'])
+        store = get_entity_from_url_key(body['key'])
         user = self.user
         if user:
             if store.key in user.liked_stores:
@@ -270,10 +270,10 @@ class Feed(BaseHandler):
         post_dictionary = post.to_dict()
         post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
         post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
-        post_dictionary['store_url'] = post_dictionary['store_key'].urlsafe()
+        post_dictionary['store_key'] = post_dictionary['store_key'].urlsafe()
         del post_dictionary['store_key']
         post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
-        post_dictionary['post_url'] = post.key.urlsafe()
+        post_dictionary['key'] = post.key.urlsafe()
 
         if user:
             post_dictionary['isLiked'] = post.key in user.liked_posts
@@ -300,7 +300,7 @@ class Stores(BaseHandler):
     @staticmethod
     def _prepare_store(store, user):
         store_dict = store.to_dict()
-        store_dict['store_url'] = store.key.urlsafe()
+        store_dict['key'] = store.key.urlsafe()
         store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
 
         if user:

@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSelectNewPost: () => browserHistory.push('/new'),
     onShowLogin: () => dispatch(showLogin()),
-    onLike: (post_url) => dispatch(togglePostLike(post_url))
+    onLike: (post_key) => dispatch(togglePostLike(post_key))
   }
 }
 

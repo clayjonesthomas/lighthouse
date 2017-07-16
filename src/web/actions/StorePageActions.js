@@ -34,11 +34,11 @@ export function pullStore(url_key) {
   }
 }
 
-export const likeStore = (store_url) => {
+export const likeStore = (store_key) => {
   return {
     type: LIKE_STORE,
     data: {
-      post_url: store_url
+      store_key: store_key
     }
   }
 }
@@ -51,16 +51,16 @@ export const likeStoreReturn = (json) => {
 }
 
 
-export function toggleStoreLike(store_url) {
+export function toggleStoreLike(store_key) {
   let args = {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      store_url: store_url
+      store_key: store_key
     })
   }
   return dispatch => {
-    dispatch(likeStore(store_url))
+    dispatch(likeStore(store_key))
     return fetch(LIKE_STORE_URL, args)
       .then(likeStoreReturn())
   }

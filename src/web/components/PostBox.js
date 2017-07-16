@@ -9,7 +9,7 @@ const PostBox = (
   }) => (
   <div style={{'borderStyle':'solid'}}>
     {
-      <Link to={"/store/" + post['store_url']}>
+      <Link to={"/store/" + post['store_key']}>
         {
           post['store']['name']
         }
