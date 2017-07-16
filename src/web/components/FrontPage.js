@@ -1,14 +1,19 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
+import Spinner from './ui-kit/Spinner'
 
 const FrontPage =
   ({posts,
     onSelectNewPost,
     username,
-    onLike
+    onLike,
+    arePostsLoaded
   }) => (
   <div>
-    {posts &&
+    {!arePostsLoaded &&
+      <Spinner/>
+    }
+    {arePostsLoaded && posts &&
       posts.map(post => {
         return <PostBox
           post={post}

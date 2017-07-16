@@ -11,12 +11,10 @@ const UserInfo =
       {!isUserInfoLoaded &&
         <Spinner/>
       }
-      {isUserInfoLoaded &&
-        username &&
+      {isUserInfoLoaded && username &&
           "username: " + username
       }
-      {isUserInfoLoaded &&
-        !username &&
+      {isUserInfoLoaded && !username &&
           <button
           type="button"
           onClick={() => onShowLogin()}>

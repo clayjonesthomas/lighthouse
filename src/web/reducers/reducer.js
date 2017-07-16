@@ -1,6 +1,6 @@
 import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
-import {GO_HOME, GO_MY_SHOPS, GO_PROFILE} from '../actions/MenuActions.js'
-import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
+import {GO_HOME, GO_MY_SHOPS} from '../actions/MenuActions.js'
+import {REQUEST_POSTS, REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
 import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
@@ -17,7 +17,8 @@ const initialState = {
   modal: null,
   username: null,
   store: {},
-  isUserInfoLoaded: false
+  isUserInfoLoaded: false,
+  arePostsLoaded: false
 }
 
 
@@ -39,10 +40,15 @@ function lighthouse(state = initialState, action) {
             modal: LOGIN,
           })
       }
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        arePostsLoaded: false,
+      })
     case REQUEST_POSTS_RETURN:
       if(action.data.posts)
         return Object.assign({}, state, {
           displayedPosts: action.data.posts,
+          arePostsLoaded: true
         })
       return state
     case REQUEST_SINGLE_POST_RETURN:
@@ -54,7 +60,6 @@ function lighthouse(state = initialState, action) {
         store: action.data.store
       })
     case GO_MY_SHOPS:
-    case GO_PROFILE:
     case GO_HOME:
     case ADD_POST:
     case CANCEL_POST:

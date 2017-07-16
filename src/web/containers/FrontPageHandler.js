@@ -13,7 +13,7 @@ class FrontPageHandler extends Component {
     return (
       <FrontPage
         posts={this.props.posts}
-        username={this.props.username}
+        arePostsLoaded={this.props.arePostsLoaded}
         onLike={this.props.onLike}
       />
     )
@@ -23,7 +23,7 @@ class FrontPageHandler extends Component {
 const mapStateToProps = (state) => {
   return {
     posts: state.displayedPosts,
-    username: state.username
+    arePostsLoaded: state.arePostsLoaded
   }
 }
 

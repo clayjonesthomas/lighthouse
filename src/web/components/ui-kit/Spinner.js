@@ -13,7 +13,7 @@ const Spinner = () => (
       fill="none"
       strokeLinecap="round"
       r="40"
-      strokeWidth="5"
+      strokeWidth="10"
       stroke="#93dbe9"
       strokeDasharray="62.83185307179586 62.83185307179586"
       transform="rotate(283.337 50 50)">
