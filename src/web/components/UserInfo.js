@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import Spinner from './ui-kit/Spinner'
 
 const UserInfo =
   ({
@@ -6,17 +7,21 @@ const UserInfo =
      username,
      isUserInfoLoaded
    }) => (
-    isUserInfoLoaded &&
     <div style={{'borderStyle':'solid'}}>
-      {username &&
-        "username: " + username
+      {!isUserInfoLoaded &&
+        <Spinner/>
       }
-      {!username &&
-      <button
-        type="button"
-        onClick={() => onShowLogin()}>
-        Log in
-      </button>
+      {isUserInfoLoaded &&
+        username &&
+          "username: " + username
+      }
+      {isUserInfoLoaded &&
+        !username &&
+          <button
+          type="button"
+          onClick={() => onShowLogin()}>
+          Log in
+          </button>
       }
     </div>
   )
