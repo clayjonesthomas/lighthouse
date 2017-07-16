@@ -300,6 +300,8 @@ class Stores(BaseHandler):
     @staticmethod
     def _prepare_store(store, user):
         store_dict = store.to_dict()
+        store_dict['store_url'] = store.key.urlsafe()
+
         if user:
             store_dict['isLiked'] = store.key in user.liked_stores
         else:
