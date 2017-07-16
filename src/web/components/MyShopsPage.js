@@ -7,7 +7,7 @@ const MyShopsPage =
      onLike
    }) => (
     <div>
-      {
+      {shops &&
         shops.map(shop => {
           return <ShopBox
             shop={shop}

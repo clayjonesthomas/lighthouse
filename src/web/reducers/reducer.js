@@ -39,9 +39,11 @@ function lighthouse(state = initialState, action) {
           })
       }
     case REQUEST_POSTS_RETURN:
-      return Object.assign({}, state, {
-        displayedPosts: action.data,
-      })
+      if(action.data.posts)
+        return Object.assign({}, state, {
+          displayedPosts: action.data.posts,
+        })
+      return state
     case REQUEST_SINGLE_POST_RETURN:
       return Object.assign({}, state, {
         title: action.data.title,
@@ -94,9 +96,11 @@ function lighthouse(state = initialState, action) {
     case REQUEST_MY_SHOPS:
       return state
     case REQUEST_MY_SHOPS_RETURN:
-      return Object.assign({}, state, {
-        displayedShops: action.data.shops
-      })
+      if(action.data.shops)
+        return Object.assign({}, state, {
+          displayedShops: action.data.shops
+        })
+      return state
     default:
       return state
   }

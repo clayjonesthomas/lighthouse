@@ -15,7 +15,9 @@ export const requestPosts = () => {
 export const requestPostsReturn = (posts) => {
   return {
     type: REQUEST_POSTS_RETURN,
-    data: posts
+    data: {
+      posts: posts
+    }
   }
 }
 

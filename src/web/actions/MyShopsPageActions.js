@@ -13,7 +13,9 @@ export const requestMyShops = () => {
 export const requestMyShopsReturn = (shops) => {
   return {
     type: REQUEST_MY_SHOPS_RETURN,
-    data: shops
+    data: {
+      shops: shops
+    }
   }
 }
 
