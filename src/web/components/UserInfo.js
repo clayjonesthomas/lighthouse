@@ -3,11 +3,13 @@ import React, {PropTypes} from 'react'
 const UserInfo =
   ({
      onShowLogin,
-     username
+     username,
+     isUserInfoLoaded
    }) => (
+    isUserInfoLoaded &&
     <div style={{'borderStyle':'solid'}}>
       {username &&
-      "username: " + username
+        "username: " + username
       }
       {!username &&
       <button

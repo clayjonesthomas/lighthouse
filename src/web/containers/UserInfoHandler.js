@@ -13,6 +13,7 @@ class UserInfoHandler extends Component {
     return (
       <UserInfo
         username={this.props.username}
+        isUserInfoLoaded={this.props.isUserInfoLoaded}
         onShowLogin={this.props.onShowLogin}
       />
     )
@@ -21,7 +22,8 @@ class UserInfoHandler extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    username: state.username
+    username: state.username,
+    isUserInfoLoaded: state.isUserInfoLoaded
   }
 }
 

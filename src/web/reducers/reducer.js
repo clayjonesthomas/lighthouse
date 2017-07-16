@@ -16,7 +16,8 @@ const initialState = {
   jwt: null,
   modal: null,
   username: null,
-  store: {}
+  store: {},
+  isUserInfoLoaded: false
 }
 
 
@@ -64,10 +65,13 @@ function lighthouse(state = initialState, action) {
         username: action.data.username
       })
     case REQUEST_USER_INFO:
-      return state
+      return Object.assign({}, state, {
+        isUserInfoLoaded: false
+      })
     case REQUEST_USER_INFO_RETURN:
       return Object.assign({}, state, {
-        username: action.data.username
+        username: action.data.username,
+        isUserInfoLoaded: true
       })
     case LIKE_POST:
       return Object.assign({}, state, {
