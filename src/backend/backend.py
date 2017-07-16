@@ -218,7 +218,10 @@ class LikePost(BaseHandler):
         post = get_entity_from_url_key(body['post_url'])
         user = self.user
         if user:
-            user.liked_posts.append(post.key)
+            if post.key in user.liked_posts:
+                user.liked_posts.remove(post.key)
+            else:
+                user.liked_posts.append(post.key)
             user.put()
 
 
@@ -228,7 +231,10 @@ class LikeStore(BaseHandler):
         store = get_entity_from_url_key(body['store_url'])
         user = self.user
         if user:
-            user.liked_stores.append(store.key)
+            if store.key in user.liked_stores:
+                user.liked_stores.remove(store.key)
+            else:
+                user.liked_stores.append(store.key)
             user.put()
 
 

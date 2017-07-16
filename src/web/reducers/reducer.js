@@ -7,6 +7,7 @@ import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
 import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/FrontPageActions'
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
+import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/StorePageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -80,6 +81,14 @@ function lighthouse(state = initialState, action) {
       return Object.assign({}, state, {
         store: action.data.store
       })
+    case LIKE_STORE:
+      return Object.assign({}, state, {
+        store: Object.assign({}, state.store, {
+          isLiked: !state.store.isLiked
+        })
+      })
+    case LIKE_STORE_RETURN:
+      return state
     default:
       return state
   }

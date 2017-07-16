@@ -34,10 +34,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getStore: (url_key) => dispatch(pullStore(url_key)),
-    onLike: (store_url) => dispatch(toggleStoreLike(store_url))
+    onLike: () => dispatch(toggleStoreLike(ownProps.params.url_key))
   }
 }
 
