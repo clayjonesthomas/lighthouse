@@ -59,6 +59,7 @@ export function toggleStoreLike(store_url) {
       store_url: store_url
     })
   }
+  debugger
   return dispatch => {
     dispatch(likeStore(store_url))
     return fetch(LIKE_STORE_URL, args)
