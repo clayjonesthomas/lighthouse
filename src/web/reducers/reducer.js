@@ -1,4 +1,4 @@
-import {ADD_POST, CANCEL_POST} from '../actions/NewPostActions.js'
+import {ADD_POST, CANCEL_POST, SAVE_NEW_POST_FORM_REF} from '../actions/NewPostActions.js'
 import {GO_HOME, GO_MY_SHOPS} from '../actions/MenuActions.js'
 import {REQUEST_POSTS, REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
@@ -19,7 +19,8 @@ const initialState = {
   store: {},
   isUserInfoLoaded: false,
   arePostsLoaded: false,
-  areShopsLoaded: false
+  areShopsLoaded: false,
+  formRefs: {}
 }
 
 
@@ -114,6 +115,12 @@ function lighthouse(state = initialState, action) {
           areShopsLoaded: true
         })
       return state
+    case SAVE_NEW_POST_FORM_REF:
+      let ref_obj = {}
+      ref_obj[action.data.type] = action.data.ref
+      return Object.assign({}, state, {
+        formRefs: Object.assign({}, state.formRefs, ref_obj)
+      })
     default:
       return state
   }

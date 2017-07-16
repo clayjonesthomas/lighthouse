@@ -1,16 +1,10 @@
 import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
-import {pushPost, cancelPost} from '../actions/NewPostActions.js'
+import {pushPost, cancelPost, onSaveRef} from '../actions/NewPostActions.js'
 
-const mapStateToProps = (state) => {
-  return state
-}
-
-const collectPost = (id_name) => {
-  return {
-    title: document.getElementById(id_name).value
-  }
+const mapStateToProps = () => {
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -19,11 +13,13 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(cancelPost())
       browserHistory.push('/')
     },
-    onSubmit: (id_name) => {
-      dispatch(pushPost(collectPost(id_name))).then(response =>
-        browserHistory.push(`/post/${response.postId}`)
-      )
-    }
+    onSubmit: () => {
+      dispatch(pushPost())
+        .then(response => browserHistory.push(`/`))
+    },
+    onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),
+    onSaveGenderRef: (ref) => dispatch(onSaveRef(ref, 'gender')),
+    onSaveAgeRef: (ref) => dispatch(onSaveRef(ref, 'age'))
   }
 }
 
