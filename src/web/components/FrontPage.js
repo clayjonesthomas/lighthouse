@@ -17,13 +17,6 @@ const FrontPage =
         />
       })
     }
-    {username &&
-      <button
-        type="button"
-        onClick={() => onSelectNewPost()}>
-        Make a new Post
-      </button>
-    }
   </div>
 )
 
@@ -31,8 +24,7 @@ FrontPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     key: PropTypes.string.isRequired
-  })).isRequired,
-  onSelectNewPost: PropTypes.func.isRequired,
+  })).isRequired
 }
 
 export default FrontPage

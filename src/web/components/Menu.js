@@ -3,7 +3,9 @@ import React, {PropTypes} from 'react'
 const Menu =
   ({onHome,
     onMyShops,
-    onProfile}) => (
+    onSelectNewPost,
+    username
+  }) => (
     <div style={{'borderStyle': 'solid'}}>
       {<button
           type="button"
@@ -15,10 +17,11 @@ const Menu =
         onClick={() => onMyShops()}>
         My Shops
       </button>}
-      {<button
+      {username &&
+        <button
         type="button"
-        onClick={() => onProfile()}>
-        My Profile
+        onClick={() => onSelectNewPost()}>
+        Submit a Sale
       </button>}
     </div>
   )
@@ -26,7 +29,8 @@ const Menu =
 Menu.propTypes = {
   onHome: PropTypes.func.isRequired,
   onMyShops: PropTypes.func.isRequired,
-  onProfile: PropTypes.func.isRequired,
+  onSelectNewPost: PropTypes.func.isRequired,
+  username: PropTypes.string
 }
 
 export default Menu

@@ -1,10 +1,12 @@
 import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import Menu from '../components/Menu.js'
-import {goHome, goMyShops, goProfile} from '../actions/MenuActions.js'
+import {goHome, goMyShops} from '../actions/MenuActions.js'
 
 const mapStateToProps = (state) => {
-  return state
+  return {
+    username: state.username
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -17,10 +19,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(goMyShops)
       browserHistory.push('/shops')
     },
-    onProfile: () => {
-      dispatch(goProfile())
-      browserHistory.push('/profile')
-    },
+    onSelectNewPost: () => browserHistory.push('/new')
   }
 }
 

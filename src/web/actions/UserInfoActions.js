@@ -17,7 +17,6 @@ export const requestUserInfoReturn = (info) => {
   }
 }
 
-
 export function pullUserInfo() {
   const args = {
     method: 'GET',

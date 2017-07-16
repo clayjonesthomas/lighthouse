@@ -1,23 +1,18 @@
-import {browserHistory} from 'react-router'
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 import {pullFrontPagePosts} from '../actions/FrontPageActions'
-import {showLogin} from '../actions/AuthActions'
 import {togglePostLike} from '../actions/PostPageActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
     this.props.getPosts()
-    this.props.getUserInfo()
   }
 
   render () {
     return (
       <FrontPage
         posts={this.props.posts}
-        onSelectNewPost={this.props.onSelectNewPost}
-        onShowLogin={this.props.onShowLogin}
         username={this.props.username}
         onLike={this.props.onLike}
       />
@@ -37,11 +32,6 @@ const mapDispatchToProps = (dispatch) => {
     getPosts: () => {
       dispatch(pullFrontPagePosts())
     },
-    getUserInfo: () => {
-      dispatch(pullUserInfo())
-    },
-    onSelectNewPost: () => browserHistory.push('/new'),
-    onShowLogin: () => dispatch(showLogin()),
     onLike: (post_key) => dispatch(togglePostLike(post_key))
   }
 }
