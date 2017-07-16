@@ -1,18 +1,23 @@
 import ShopBox from './ShopBox'
 import React, {PropTypes} from 'react'
+import Spinner from './ui-kit/Spinner'
 
 const MyShopsPage =
   ({
      shops,
-     onLike
+     onLike,
+    areShopsLoaded
    }) => (
     <div>
-      {shops &&
+      {!areShopsLoaded &&
+        <Spinner/>
+      }
+      {areShopsLoaded && shops &&
         shops.map(shop => {
           return <ShopBox
             shop={shop}
             key={shop.key}
-            onLike={() => onLike(shop.shop_url)}
+            onLike={() => onLike(shop.key)}
           />
         })
       }
@@ -26,7 +31,8 @@ MyShopsPage.propTypes = {
     likes: PropTypes.number.isRequired,
     isLiked: PropTypes.bool.isRequired,
     key: PropTypes.string.isRequired
-  })).isRequired
+  })).isRequired,
+  areShopsLoaded: PropTypes.bool.isRequired
 }
 
 export default MyShopsPage

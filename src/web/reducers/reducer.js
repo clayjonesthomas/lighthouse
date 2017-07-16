@@ -18,7 +18,8 @@ const initialState = {
   username: null,
   store: {},
   isUserInfoLoaded: false,
-  arePostsLoaded: false
+  arePostsLoaded: false,
+  areShopsLoaded: false
 }
 
 
@@ -103,11 +104,14 @@ function lighthouse(state = initialState, action) {
     case LIKE_STORE_RETURN:
       return state
     case REQUEST_MY_SHOPS:
-      return state
+      return Object.assign({}, state, {
+        areShopsLoaded: false
+      })
     case REQUEST_MY_SHOPS_RETURN:
       if(action.data.shops)
         return Object.assign({}, state, {
-          displayedShops: action.data.shops
+          displayedShops: action.data.shops,
+          areShopsLoaded: true
         })
       return state
     default:
