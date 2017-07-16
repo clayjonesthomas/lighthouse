@@ -4,13 +4,12 @@ import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 
 const TextBox = (
   {
-    idName,
     placeholder,
     label,
     className,
     refFunc
   }) => (
-  <FormGroup controlId={idName}>
+  <FormGroup>
     <ControlLabel>{label}</ControlLabel>
     <FormControl
       type="text"
@@ -22,7 +21,6 @@ const TextBox = (
 )
 
 TextBox.propTypes = {
-  idName: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   label: PropTypes.string,
   className: PropTypes.string,

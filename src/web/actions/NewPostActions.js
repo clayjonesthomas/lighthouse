@@ -1,10 +1,12 @@
 import fetch from 'isomorphic-fetch'
-import {POST_URL} from '../constants/constants'
+import {POST_URL, SHOPS_URL} from '../constants/constants'
 
 export const ADD_POST = 'ADD_POST'
 export const ADD_POST_RETURN = 'ADD_POST_RETURN'
 export const CANCEL_POST = 'CANCEL_POST'
 export const SAVE_NEW_POST_FORM_REF = 'SAVE_NEW_POST_FORM_REF'
+export const REQUEST_SHOPS = "REQUEST_SHOPS"
+export const REQUEST_SHOPS_RETURN = "REQUEST_SHOPS_RETURN"
 
 export const onSaveRef = (ref, type) => {
   return {
@@ -56,5 +58,34 @@ export function pushPost() {
     return fetch(POST_URL, args)
       .then(response => response.json())
       .then(json => dispatch(addPostReturn(json.key)))
+  }
+}
+
+export const requestShops = () => {
+  return {
+    type: REQUEST_SHOPS
+  }
+}
+
+export const requestShopsReturn = (shops) => {
+  return {
+    type: REQUEST_SHOPS_RETURN,
+    data: {
+      shops: shops
+    }
+  }
+}
+
+export function pullShops() {
+  return (dispatch) => {
+    const args = {
+      method: 'GET',
+      credentials: 'same-origin'
+    }
+
+    dispatch(requestShops())
+    return fetch(SHOPS_URL, args)
+      .then(response => response.json())
+      .then(json => dispatch(requestShopsReturn(json.shops)))
   }
 }
