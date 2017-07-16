@@ -283,6 +283,30 @@ class Feed(BaseHandler):
         return post_dictionary
 
 
+class MyStores(BaseHandler):
+
+    def get(self):
+        user = self.user
+        fetched_stores = [self._prepare_store(store_key, user)
+                          for store_key in user.liked_stores]
+        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
+        self.response.write(json.dumps(fetched_stores))
+
+    @staticmethod
+    def _prepare_store(store_key, user):
+        store = ndb.Key(Store, store_key)
+        store_dict = store.to_dict()
+        store_dict['key'] = store.key.urlsafe()
+        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
+
+        if user:
+            store_dict['isLiked'] = store.key in user.liked_stores
+        else:
+            store_dict['isLiked'] = False
+
+        return store_dict
+
+
 class Stores(BaseHandler):
 
     def post(self):
@@ -485,10 +509,12 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
+
     webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
+    webapp2.Route('/rest/my_shops', MyStores, name='my_shops'),
     webapp2.Route('/rest/shops', Stores, name='my_shops'),
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),

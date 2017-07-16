@@ -5,6 +5,7 @@ import NewPostForm from '../components/NewPostForm'
 import {pushPost, cancelPost, onSaveRef, pullShops} from '../actions/NewPostActions.js'
 
 class NewPostHandler extends Component {
+
   componentDidMount () {
     this.props.getShops()
   }
@@ -22,10 +23,19 @@ class NewPostHandler extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
-    shops: state.shops
+    shops: []
   }
+  // return {
+  //   shops: state.shops.map(shop => {
+  //     return {
+  //       name: shop.name,
+  //       key: shop.key,
+  //       icon: ''
+  //     }
+  //   })
+  // }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -40,9 +50,7 @@ const mapDispatchToProps = (dispatch) => {
         .then(response => browserHistory.push(`/`))
     },
     onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),
-    onSaveShopsRef: (ref) => dispatch(onSaveRef(ref, 'shops')),
-    onSaveGenderRef: (ref) => dispatch(onSaveRef(ref, 'gender')),
-    onSaveAgeRef: (ref) => dispatch(onSaveRef(ref, 'age'))
+    onSaveShopsRef: (ref) => dispatch(onSaveRef(ref, 'shops'))
   }
 }
 

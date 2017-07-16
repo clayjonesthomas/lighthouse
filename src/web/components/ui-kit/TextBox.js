@@ -1,24 +1,28 @@
-import React, {PropTypes} from 'react'
+import React, {PropTypes, Component} from 'react'
 import './TextBox.css'
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 
-const TextBox = (
-  {
-    placeholder,
-    label,
-    className,
-    refFunc
-  }) => (
-  <FormGroup>
-    <ControlLabel>{label}</ControlLabel>
-    <FormControl
-      type="text"
-      placeholder={placeholder}
-      className={"text-box"+className}
-      inputRef={ref => refFunc(ref)}
-    />
-  </FormGroup>
-)
+class TextBox extends Component {
+
+  //idk why but i do
+  shouldComponentUpdate(nextProps){
+    return this.props.label !== nextProps.label ||
+        this.props.placeholder !== nextProps.placeholder ||
+        this.props.className !== nextProps.className
+  }
+
+  render () {
+    return <FormGroup>
+      <ControlLabel>{this.props.label}</ControlLabel>
+      <FormControl
+        type="text"
+        placeholder={this.props.placeholder}
+        className={"text-box"+this.props.className}
+        inputRef={ref => this.props.refFunc(ref)}
+      />
+    </FormGroup>
+  }
+}
 
 TextBox.propTypes = {
   placeholder: PropTypes.string,

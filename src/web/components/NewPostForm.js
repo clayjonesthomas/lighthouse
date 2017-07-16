@@ -9,8 +9,6 @@ const NewPostForm = (
     onSubmit,
     onCancel,
     onSaveTitleRef,
-    onSaveGenderRef,
-    onSaveAgeRef,
     shops
   }) => (
   <div>
@@ -20,8 +18,8 @@ const NewPostForm = (
       label="Sale Specifics: "
     />
     <ShopFinder
-      shops={[]}
-      onAddNewShop={}
+      shops={shops}
+      onAddNewShop=""
     />
     <CancelButton
       onClick={onCancel}
