@@ -19,10 +19,11 @@ const FrontPage =
         Log in
       </button>
     }
-    {
+    {posts &&
       posts.map(post => {
         return <PostBox
           post={post}
+          key={post.key}
           onLike={() => onLike(post.key)}
         />
       })
@@ -39,7 +40,8 @@ const FrontPage =
 
 FrontPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    key: PropTypes.string.isRequired
   })).isRequired,
   onSelectNewPost: PropTypes.func.isRequired,
 }

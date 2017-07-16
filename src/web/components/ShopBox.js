@@ -24,9 +24,9 @@ ShopBox.propTypes = {
     name: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
-    onLike: PropTypes.func.isRequired,
     isLiked: PropTypes.bool.isRequired
-  }).isRequired
+  }).isRequired,
+  onLike: PropTypes.func.isRequired
 }
 
 export default ShopBox

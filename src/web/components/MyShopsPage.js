@@ -11,6 +11,7 @@ const MyShopsPage =
         shops.map(shop => {
           return <ShopBox
             shop={shop}
+            key={shop.key}
             onLike={() => onLike(shop.shop_url)}
           />
         })
@@ -23,9 +24,8 @@ MyShopsPage.propTypes = {
     name: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
-    onLike: PropTypes.func.isRequired,
     isLiked: PropTypes.bool.isRequired,
-    shop_url: PropTypes.string.isRequired
+    key: PropTypes.string.isRequired
   })).isRequired
 }
 
