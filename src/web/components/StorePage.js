@@ -6,13 +6,12 @@ const StorePage =
     name,
     website,
     likes,
-    timestamp,
     onLike,
     isLiked
   }) => (
     <div>
       {
-        name + '   ' + website + '   ' + likes + '   ' + timestamp
+        name + '   ' + website + '   ' + likes
       }
       <LikeButton
         onClick={() => onLike()}
@@ -26,7 +25,6 @@ StorePage.propTypes = {
   name: PropTypes.string.isRequired,
   website: PropTypes.string.isRequired,
   likes: PropTypes.number.isRequired,
-  timestamp: PropTypes.string.isRequired,
   onLike: PropTypes.func.isRequired,
   isLiked: PropTypes.bool.isRequired
 }
