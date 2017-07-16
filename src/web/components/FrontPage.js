@@ -4,21 +4,10 @@ import React, {PropTypes} from 'react'
 const FrontPage =
   ({posts,
     onSelectNewPost,
-    onShowLogin,
     username,
     onLike
   }) => (
   <div>
-    {username &&
-      "username: " + username
-    }
-    {!username &&
-      <button
-        type="button"
-        onClick={() => onShowLogin()}>
-        Log in
-      </button>
-    }
     {posts &&
       posts.map(post => {
         return <PostBox

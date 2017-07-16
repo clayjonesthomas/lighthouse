@@ -4,7 +4,7 @@ import {REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
 import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
   from '../actions/AuthActions.js'
-import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/FrontPageActions'
+import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/UserInfoActions'
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
 import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/StorePageActions'

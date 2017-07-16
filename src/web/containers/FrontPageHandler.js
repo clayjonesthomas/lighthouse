@@ -2,7 +2,7 @@ import {browserHistory} from 'react-router'
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
-import {pullFrontPagePosts, pullUserInfo} from '../actions/FrontPageActions'
+import {pullFrontPagePosts} from '../actions/FrontPageActions'
 import {showLogin} from '../actions/AuthActions'
 import {togglePostLike} from '../actions/PostPageActions'
 
