@@ -319,7 +319,7 @@ class Stores(BaseHandler):
         user = self.user
         fetched_stores = [self._prepare_store(store, user) for store in Store.query().fetch(10)]
         logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps(fetched_stores))
+        self.response.write(json.dumps({'shops': fetched_stores}))
 
     @staticmethod
     def _prepare_store(store, user):
@@ -515,7 +515,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyStores, name='my_shops'),
-    webapp2.Route('/rest/shops', Stores, name='my_shops'),
+    webapp2.Route('/rest/shops', Stores, name='shops'),
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
 

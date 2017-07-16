@@ -86,6 +86,8 @@ export function pullShops() {
     dispatch(requestShops())
     return fetch(SHOPS_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(requestShopsReturn(json.shops)))
+      .then(json => {
+        dispatch(requestShopsReturn(json.shops))
+      })
   }
 }

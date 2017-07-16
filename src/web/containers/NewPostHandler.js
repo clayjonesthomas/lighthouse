@@ -23,19 +23,16 @@ class NewPostHandler extends Component {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
-    shops: []
+    shops: state.shops.map(shop => {
+      return {
+        name: shop.name,
+        key: shop.key,
+        icon: ''
+      }
+    })
   }
-  // return {
-  //   shops: state.shops.map(shop => {
-  //     return {
-  //       name: shop.name,
-  //       key: shop.key,
-  //       icon: ''
-  //     }
-  //   })
-  // }
 }
 
 const mapDispatchToProps = (dispatch) => {

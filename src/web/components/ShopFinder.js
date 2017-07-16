@@ -7,6 +7,7 @@ const ShopFinder = (
     shops
   }) => (
   <Typeahead
+    labelKey="name"
     multiple={true}
     options={shops}
     placeholder="pick a shop..."
