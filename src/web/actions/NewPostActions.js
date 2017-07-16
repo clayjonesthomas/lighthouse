@@ -7,6 +7,7 @@ export const CANCEL_POST = 'CANCEL_POST'
 export const SAVE_NEW_POST_FORM_REF = 'SAVE_NEW_POST_FORM_REF'
 export const REQUEST_SHOPS = "REQUEST_SHOPS"
 export const REQUEST_SHOPS_RETURN = "REQUEST_SHOPS_RETURN"
+export const UPDATE_FORM_SHOPS = "UPDATE_FORM_SHOPS"
 
 export const onSaveRef = (ref, type) => {
   return {
@@ -42,11 +43,17 @@ export const cancelPost = () => {
 
 export function pushPost() {
   return (dispatch, getState) => {
-    const refs = getState().formRefs
+    const state = getState()
+    const refs = state.formRefs
+    const shops = state.form.shops.map(shop => {
+      return {
+        key: shop.key
+      }
+    })
     const title = refs.title.value
     const post_data = {
       title: title,
-      store: ''
+      shops: shops
     }
     const args = {
       method: 'POST',
@@ -89,5 +96,14 @@ export function pullShops() {
       .then(json => {
         dispatch(requestShopsReturn(json.shops))
       })
+  }
+}
+
+export const onUpdateFormShops = (shops) => {
+  return {
+    type: UPDATE_FORM_SHOPS,
+    data: {
+      shops: shops
+    }
   }
 }

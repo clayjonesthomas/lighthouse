@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
-import {pushPost, cancelPost, onSaveRef, pullShops} from '../actions/NewPostActions.js'
+import {pushPost, cancelPost, onSaveRef, pullShops,
+  onUpdateFormShops} from '../actions/NewPostActions.js'
 
 class NewPostHandler extends Component {
 
@@ -17,7 +18,7 @@ class NewPostHandler extends Component {
         onSubmit={this.props.onSubmit}
         onCancel={this.props.onCancel}
         onSaveTitleRef={this.props.onSaveTitleRef}
-        onSaveShopsRef={this.props.onSaveShopsRef}
+        onUpdateFormShops={this.props.onUpdateFormShops}
       />
     )
   }
@@ -47,7 +48,7 @@ const mapDispatchToProps = (dispatch) => {
         .then(response => browserHistory.push(`/`))
     },
     onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),
-    onSaveShopsRef: (ref) => dispatch(onSaveRef(ref, 'shops'))
+    onUpdateFormShops: (shops) => dispatch(onUpdateFormShops(shops))
   }
 }
 

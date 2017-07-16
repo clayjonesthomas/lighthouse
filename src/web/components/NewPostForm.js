@@ -9,6 +9,7 @@ const NewPostForm = (
     onSubmit,
     onCancel,
     onSaveTitleRef,
+    onUpdateFormShops,
     shops
   }) => (
   <div>
@@ -19,7 +20,7 @@ const NewPostForm = (
     />
     <ShopFinder
       shops={shops}
-      onAddNewShop=""
+      onAddNewShop={onUpdateFormShops}
     />
     <CancelButton
       onClick={onCancel}
@@ -33,7 +34,8 @@ const NewPostForm = (
 NewPostForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onSaveTitleRef: PropTypes.func.isRequired
+  onSaveTitleRef: PropTypes.func.isRequired,
+  onUpdateFormShops: PropTypes.func.isRequired
 }
 
 export default NewPostForm

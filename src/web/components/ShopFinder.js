@@ -11,6 +11,7 @@ const ShopFinder = (
     multiple={true}
     options={shops}
     placeholder="pick a shop..."
+    onChange={onAddNewShop}
   />
 )
 
