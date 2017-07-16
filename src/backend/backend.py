@@ -189,7 +189,7 @@ class SinglePost(BaseHandler):
         post = Post(title=body['title'],
                     store_key=store.key)
         post_key = post.put()
-        self.response.write(json.dumps({'id': post_key.urlsafe()}))
+        self.response.write(json.dumps({'key': post_key.urlsafe()}))
 
     def get(self, url_key):
         post = get_entity_from_url_key(url_key)
@@ -487,6 +487,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
+    webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/shops', Stores, name='my_shops'),
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),

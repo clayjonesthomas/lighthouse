@@ -25,10 +25,10 @@ export const addPost = (post) => {
   }
 }
 
-export const addPostReturn = (postId) => {
+export const addPostReturn = (postKey) => {
   return {
     type: ADD_POST_RETURN,
-    postId: postId
+    postKey: postKey
   }
 }
 
@@ -43,17 +43,18 @@ export function pushPost() {
     const refs = getState().formRefs
     const title = refs.title.value
     const post_data = {
-      title: title
+      title: title,
+      store: ''
     }
     const args = {
       method: 'POST',
       credentials: 'same-origin',
       body: JSON.stringify(post_data)
     }
-    
+
     dispatch(addPost(post_data))
     return fetch(POST_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(addPostReturn(json.id)))
+      .then(json => dispatch(addPostReturn(json.key)))
   }
 }
