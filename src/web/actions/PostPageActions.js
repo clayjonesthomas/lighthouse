@@ -1,4 +1,4 @@
-import {POST_URL, LIKE_URL} from '../constants/constants'
+import {POST_URL, LIKE_POST_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 
 export const REQUEST_SINGLE_POST = 'REQUEST_POSTS'
@@ -47,7 +47,7 @@ export const likePostReturn = (json) => {
 }
 
 
-export function toggleLike(post_url) {
+export function togglePostLike(post_url) {
   let args = {
     method: 'POST',
     credentials: 'same-origin',
@@ -57,7 +57,7 @@ export function toggleLike(post_url) {
   }
   return dispatch => {
     dispatch(likePost(post_url))
-    return fetch(LIKE_URL, args)
+    return fetch(LIKE_POST_URL, args)
       .then(likePostReturn())
   }
 }

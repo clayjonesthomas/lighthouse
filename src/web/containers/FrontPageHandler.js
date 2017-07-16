@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 import {pullFrontPagePosts, pullUserInfo} from '../actions/FrontPageActions'
 import {showLogin} from '../actions/AuthActions'
-import {toggleLike} from '../actions/PostPageActions'
+import {togglePostLike} from '../actions/PostPageActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSelectNewPost: () => browserHistory.push('/new'),
     onShowLogin: () => dispatch(showLogin()),
-    onLike: (post_url) => dispatch(toggleLike(post_url))
+    onLike: (post_url) => dispatch(togglePostLike(post_url))
   }
 }
 
