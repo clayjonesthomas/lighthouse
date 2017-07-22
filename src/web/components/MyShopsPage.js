@@ -6,7 +6,7 @@ const MyShopsPage =
   ({
      shops,
      onLike,
-    areShopsLoaded
+     areShopsLoaded
    }) => (
     <div>
       {!areShopsLoaded &&

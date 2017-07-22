@@ -271,7 +271,6 @@ class Feed(BaseHandler):
         post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
         post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
         post_dictionary['store_key'] = post_dictionary['store_key'].urlsafe()
-        del post_dictionary['store_key']
         post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
         post_dictionary['key'] = post.key.urlsafe()
 
@@ -287,14 +286,16 @@ class MyStores(BaseHandler):
 
     def get(self):
         user = self.user
-        fetched_stores = [self._prepare_store(store_key, user)
-                          for store_key in user.liked_stores]
-        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
+        fetched_stores = []
+        if user:
+            fetched_stores = [self._prepare_store(store_key, user)
+                              for store_key in user.liked_stores]
+            logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
         self.response.write(json.dumps(fetched_stores))
 
     @staticmethod
     def _prepare_store(store_key, user):
-        store = ndb.Key(Store, store_key)
+        store = store_key.get()
         store_dict = store.to_dict()
         store_dict['key'] = store.key.urlsafe()
         store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')

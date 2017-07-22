@@ -15,7 +15,7 @@ class MyShopsPageHandler extends Component {
       <MyShopsPage
         shops={this.props.shops}
         onSelectShop={this.props.onSelectShop}
-        areShopsLoaded={this.props.areShopsLoaded}
+        areShopsLoaded={this.props.areMyShopsLoaded}
         onLike={this.props.onLike}
       />
     )
@@ -25,7 +25,7 @@ class MyShopsPageHandler extends Component {
 const mapStateToProps = (state) => {
   return {
     shops: state.displayedShops,
-    areShopsLoaded: state.areShopsLoaded
+    areMyShopsLoaded: state.areMyShopsLoaded
   }
 }
 

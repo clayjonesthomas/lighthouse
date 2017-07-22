@@ -114,6 +114,7 @@ function lighthouse(state = initialState, action) {
         areMyShopsLoaded: false
       })
     case REQUEST_MY_SHOPS_RETURN:
+      debugger
       if(action.data.shops)
         return Object.assign({}, state, {
           displayedShops: action.data.shops,

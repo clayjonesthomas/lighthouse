@@ -56,7 +56,7 @@ export function toggleStoreLike(store_key) {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      store_key: store_key
+      key: store_key
     })
   }
   return dispatch => {
