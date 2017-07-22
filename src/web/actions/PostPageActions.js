@@ -52,7 +52,7 @@ export function togglePostLike(post_key) {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      post_key: post_key
+      key: post_key
     })
   }
   return dispatch => {
