@@ -27,7 +27,7 @@ class Comment(ndb.Model):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    store_key = ndb.KeyProperty(indexed=True, kind='Store')
+    shop_keys = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
     likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)

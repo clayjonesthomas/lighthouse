@@ -43,27 +43,27 @@ def _spawn_admin():
 
 def _spawn_dummy_posts(store_keys):
     posts = [Post(title='50% off all items on clearance',
-                  store_key=store_keys[0],
+                  shop_keys=[store_keys[0]],
                   likes=25074,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  store_key=store_keys[1],
+                  shop_keys=[store_keys[1]],
                   likes=14543,
                   timestamp=datetime.datetime.now()-datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  store_key=store_keys[1],
+                  shop_keys=[store_keys[1]],
                   likes=30210,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  store_key=store_keys[1],
+                  shop_keys=[store_keys[1]],
                   likes=12532,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  store_key=store_keys[2],
+                  shop_keys=[store_keys[2]],
                   likes=2664,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  store_key=store_keys[3],
+                  shop_keys=[store_keys[3]],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1))
              ]
@@ -181,15 +181,18 @@ class SinglePost(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        store_name = body['store']
-        try:
-            store = Store.query(Store.name == store_name).fetch(1)[0]
-        except IndexError:
-            store = Store.query().fetch(1)[0]
-        post = Post(title=body['title'],
-                    store_key=store.key)
-        post_key = post.put()
-        self.response.write(json.dumps({'key': post_key.urlsafe()}))
+        shops = body['shops']
+        if shops:
+            shop_keys = []
+            for shop in shops:
+                shop_keys.append(ndb.Key(urlsafe=shop['key']))
+            post = Post(title=body['title'],
+                        shop_keys=shop_keys)
+            post_key = post.put()
+            self.response.write(json.dumps({'key': post_key.urlsafe()}))
+        else:
+            logging.info("post without a shop tried to save itself")
+            self.response.write("a post needs a shop")
 
     def get(self, url_key):
         post = get_entity_from_url_key(url_key)
@@ -268,9 +271,11 @@ class Feed(BaseHandler):
     @staticmethod
     def _prepare_post(post, user):
         post_dictionary = post.to_dict()
-        post_dictionary['store'] = post_dictionary['store_key'].get().to_dict()
-        post_dictionary['store']['timestamp'] = post_dictionary['store']['timestamp'].isoformat(' ')
-        post_dictionary['store_key'] = post_dictionary['store_key'].urlsafe()
+        # currently not actually supporting multiple shops on a post
+        post_dictionary['store'] = post.shop_keys[0].get().to_dict()
+        del post_dictionary['store']['timestamp']
+        del post_dictionary['shop_keys']
+        post_dictionary['store_key'] = post.shop_keys[0].urlsafe()
         post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
         post_dictionary['key'] = post.key.urlsafe()
 
@@ -278,7 +283,6 @@ class Feed(BaseHandler):
             post_dictionary['isLiked'] = post.key in user.liked_posts
         else:
             post_dictionary['isLiked'] = False
-
         return post_dictionary
 
 
