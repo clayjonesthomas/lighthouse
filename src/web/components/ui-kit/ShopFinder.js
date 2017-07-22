@@ -4,19 +4,22 @@ import {Typeahead} from 'react-bootstrap-typeahead'
 const ShopFinder = (
   {
     onAddNewShop,
+    onSubmitShops,
     shops
   }) => (
   <Typeahead
     labelKey="name"
     multiple={true}
     options={shops}
-    placeholder="pick a shop..."
+    placeholder="add shops to your favorites..."
     onChange={onAddNewShop}
+    submitFormOnEnter={onSubmitShops}
   />
 )
 
 ShopFinder.propTypes = {
-  onAddNewShop: PropTypes.func.isRequired
+  onAddNewShop: PropTypes.func,
+  onSubmitShops: PropTypes.func
 }
 
 export default ShopFinder

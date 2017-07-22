@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import SubmitButton from './ui-kit/SubmitButton'
 import CancelButton from './CancelButton'
 import TextBox from './ui-kit/TextBox'
-import ShopFinder from './ShopFinder'
+import ShopFinder from './ui-kit/ShopFinder'
 
 const NewPostForm = (
   {

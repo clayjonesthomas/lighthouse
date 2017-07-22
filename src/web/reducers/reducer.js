@@ -1,6 +1,6 @@
 import {ADD_POST, CANCEL_POST, SAVE_NEW_POST_FORM_REF,
 REQUEST_SHOPS, REQUEST_SHOPS_RETURN, UPDATE_FORM_SHOPS}
-from '../actions/NewPostActions.js'
+  from '../actions/NewPostActions.js'
 import {GO_HOME, GO_MY_SHOPS} from '../actions/MenuActions.js'
 import {REQUEST_POSTS, REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
@@ -10,7 +10,8 @@ import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/UserInfoAc
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
 import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/StorePageActions'
-import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN} from '../actions/MyShopsPageActions'
+import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
+  ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN} from '../actions/MyShopsPageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -140,6 +141,12 @@ function lighthouse(state = initialState, action) {
         form: {
           shops: action.data.shops
         }
+      })
+    case ADD_SHOPS_TO_MY_SHOPS_REQUEST:
+      return state
+    case ADD_SHOPS_TO_MY_SHOPS_RETURN:
+      return Object.assign({}, state, {
+        myShops: state.myShops.concat(action.data.shopsToAdd)
       })
     default:
       return state

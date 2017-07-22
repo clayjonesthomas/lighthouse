@@ -1,19 +1,32 @@
 import ShopBox from './ShopBox'
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
+import ShopFinder from './ui-kit/ShopFinder'
 
 const MyShopsPage =
   ({
-     shops,
+     myShops,
      onLike,
-     areShopsLoaded
+     areShopsLoaded,
+
+     shops,
+     onAddNewShop,
+     onSubmitShops
    }) => (
     <div>
       {!areShopsLoaded &&
         <Spinner/>
       }
-      {areShopsLoaded && shops &&
-        shops.map(shop => {
+      {areShopsLoaded &&
+        <ShopFinder
+          shops={shops}
+          onAddNewShop={() => {onAddNewShop()}}//not really necessary here
+          onSubmitShops={() => {onSubmitShops()}}
+          placeholder="search for a shop..."
+        />
+      }
+      {areShopsLoaded && myShops &&
+        myShops.map(shop => {
           return <ShopBox
             shop={shop}
             key={shop.key}
@@ -26,6 +39,13 @@ const MyShopsPage =
 
 MyShopsPage.propTypes = {
   shops: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    website: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    isLiked: PropTypes.bool.isRequired,
+    key: PropTypes.string.isRequired
+  })).isRequired,
+  myShops: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,

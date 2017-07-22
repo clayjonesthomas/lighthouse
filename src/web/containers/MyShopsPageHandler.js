@@ -2,21 +2,26 @@ import {browserHistory} from 'react-router'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import MyShopsPage from '../components/MyShopsPage'
-import {pullMyShops} from '../actions/MyShopsPageActions'
+import {pullMyShops, addShopsToMyShops} from '../actions/MyShopsPageActions'
 import {toggleStoreLike} from '../actions/StorePageActions'
+import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
 
 class MyShopsPageHandler extends Component {
   componentDidMount () {
-    this.props.getShops()
+    this.props.getMyShops()
+    this.props.getAllShops()
   }
 
   render () {
     return (
       <MyShopsPage
-        shops={this.props.shops}
+        myShops={this.props.myShops}
         onSelectShop={this.props.onSelectShop}
         areShopsLoaded={this.props.areMyShopsLoaded}
         onLike={this.props.onLike}
+        shops={this.props.shops}
+        onAddNewShop={this.props.onAddNewShop}
+        onSubmitShops={this.props.onSubmitShops}
       />
     )
   }
@@ -24,18 +29,28 @@ class MyShopsPageHandler extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    shops: state.displayedShops,
-    areMyShopsLoaded: state.areMyShopsLoaded
+    myShops: state.displayedShops,
+    areMyShopsLoaded: state.areMyShopsLoaded,
+    shops: state.shops
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getShops: () => {
+    getMyShops: () => {
       dispatch(pullMyShops())
     },
     onLike: (shop_url) => dispatch(toggleStoreLike(shop_url)),
-    onSelectShop: (shop_url) => browserHistory.push(`/store/${shop_url}`)
+    onSelectShop: (shop_url) => browserHistory.push(`/store/${shop_url}`),
+    onAddNewShop: () => {
+      dispatch(onUpdateFormShops())
+    },
+    getAllShops: () => {
+      dispatch(pullShops())
+    },
+    onSubmitShops: () => {
+      dispatch(addShopsToMyShops())
+    }
   }
 }
 
