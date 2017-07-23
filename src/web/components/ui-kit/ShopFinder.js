@@ -5,7 +5,8 @@ const ShopFinder = (
   {
     onAddNewShop,
     submitShops,
-    shops
+    shops,
+    onAddShopFinderRef
   }) => (
   <Typeahead
     labelKey="name"
@@ -13,6 +14,7 @@ const ShopFinder = (
     options={shops}
     placeholder="add shops to your favorites..."
     onChange={onAddNewShop}
+    ref={ref => onAddShopFinderRef(ref)}
     submitFormOnEnter={submitShops}
   />
 )

@@ -2,7 +2,8 @@ import {browserHistory} from 'react-router'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import MyShopsPage from '../components/MyShopsPage'
-import {pullMyShops, addShopsToMyShops} from '../actions/MyShopsPageActions'
+import {pullMyShops, addShopsToMyShops, addShopFinderRef, clearShopFinder}
+  from '../actions/MyShopsPageActions'
 import {toggleStoreLike} from '../actions/StorePageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
 
@@ -22,6 +23,8 @@ class MyShopsPageHandler extends Component {
         shops={this.props.shops}
         onAddNewShop={this.props.onAddNewShop}
         onSubmitShops={this.props.onSubmitShops}
+        onAddShopFinderRef={this.props.onAddShopFinderRef}
+        clearShopFinder={this.props.clearShopFinder}
       />
     )
   }
@@ -48,7 +51,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSubmitShops: () => {
       dispatch(addShopsToMyShops())
-    }
+    },
+    onAddShopFinderRef: (ref) => {
+      dispatch(addShopFinderRef(ref))
+    },
+    clearShopFinder: () => {dispatch(clearShopFinder())}
+
   }
 }
 

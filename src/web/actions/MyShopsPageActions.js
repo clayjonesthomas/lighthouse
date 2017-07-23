@@ -5,6 +5,8 @@ export const REQUEST_MY_SHOPS = 'REQUEST_MY_SHOPS'
 export const REQUEST_MY_SHOPS_RETURN = 'REQUEST_MY_SHOPS_RETURN'
 export const ADD_SHOPS_TO_MY_SHOPS_REQUEST = 'ADD_SHOPS_TO_MY_SHOPS_REQUEST'
 export const ADD_SHOPS_TO_MY_SHOPS_RETURN = 'ADD_SHOPS_TO_MY_SHOPS_RETURN'
+export const ADD_SHOP_FINDER_REF = 'ADD_SHOP_FINDER_REF'
+export const CLEAR_SHOP_FINDER = 'CLEAR_SHOP_FINDER'
 
 export const requestMyShops = () => {
   return {
@@ -68,6 +70,25 @@ export function addShopsToMyShops(){
       return fetch(LIKE_STORE_URL, args)
         .then(response => response.json())
         .then(json => dispatch(AddShopsToMyShopsReturn(json)))
+    }
+  }
+}
+
+export const addShopFinderRef = (ref) => {
+  return {
+    type: ADD_SHOP_FINDER_REF,
+    data: {
+      ref: ref
+    }
+  }
+}
+
+export function clearShopFinder() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const shopFinder = state.formRefs.shopFinder
+    if(shopFinder){
+      shopFinder.getInstance().clear()
     }
   }
 }

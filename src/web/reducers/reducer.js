@@ -11,7 +11,9 @@ import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
 import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/StorePageActions'
 import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
-  ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN} from '../actions/MyShopsPageActions'
+  ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN, ADD_SHOP_FINDER_REF,
+  CLEAR_SHOP_FINDER}
+  from '../actions/MyShopsPageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -147,6 +149,12 @@ function lighthouse(state = initialState, action) {
     case ADD_SHOPS_TO_MY_SHOPS_RETURN:
       return Object.assign({}, state, {
         displayedShops: state.displayedShops.concat(action.data.shopsToAdd)
+      })
+    case ADD_SHOP_FINDER_REF:
+      return Object.assign({}, state, {
+        formRefs: Object.assign({}, state.formRefs, {
+          shopFinder: action.data.ref
+        })
       })
     default:
       return state

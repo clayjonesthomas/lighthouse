@@ -12,7 +12,9 @@ const MyShopsPage =
 
      shops,
      onAddNewShop,
-     onSubmitShops
+     onSubmitShops,
+     onAddShopFinderRef,
+     clearShopFinder
    }) => (
     <div>
       {!areShopsLoaded &&
@@ -24,12 +26,17 @@ const MyShopsPage =
         onAddNewShop={(shops) => {
           onAddNewShop(shops)
         }}
+        onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
         placeholder="search for a shop..."
       />
       }
       {areShopsLoaded &&
         <SubmitButton
-          onClick={() => onSubmitShops()}
+          onClick={() => {
+            onSubmitShops()
+            clearShopFinder()
+          }
+        }
         />
       }
       {areShopsLoaded && myShops &&
