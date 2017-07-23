@@ -23,8 +23,8 @@ const MyShopsPage =
       {areShopsLoaded &&
       <ShopFinder
         shops={shops}
-        onAddNewShop={(shops) => {
-          onAddNewShop(shops)
+        onAddNewShop={(shop) => {
+          onAddNewShop(shop)
         }}
         onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
         placeholder="search for a shop..."

@@ -1,13 +1,21 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
+import ShopFinder from './ui-kit/ShopFinder'
+import SubmitButton from './ui-kit/SubmitButton'
 
 const FrontPage =
   ({posts,
     onSelectNewPost,
     username,
     onLike,
-    arePostsLoaded
+    arePostsLoaded,
+
+     shops,
+     onAddNewShop,
+     onSubmitShops,
+     onAddShopFinderRef,
+     clearShopFinder
   }) => (
   <div>
     {!arePostsLoaded &&
@@ -22,6 +30,21 @@ const FrontPage =
         />
       })
     }
+    <ShopFinder
+      shops={shops}
+      onAddNewShop={(shop) => {
+        onAddNewShop(shop)
+      }}
+      onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+      placeholder="search for a shop..."
+    />
+    <SubmitButton
+      onClick={() => {
+        onSubmitShops()
+        clearShopFinder()
+      }
+      }
+    />
   </div>
 )
 

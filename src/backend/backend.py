@@ -280,7 +280,8 @@ class Feed(BaseHandler):
         if not Post.query().fetch(10):
             populate_dummy_datastore()
         user = self.user
-        fetched_posts = [self._prepare_post(post, user) for post in Post.query().fetch(10)]
+        raw_posts = self._get_posts(user)
+        fetched_posts = [self._prepare_post(post, user) for post in raw_posts]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
@@ -300,6 +301,14 @@ class Feed(BaseHandler):
         else:
             post_dictionary['isLiked'] = False
         return post_dictionary
+
+    @staticmethod
+    def _get_posts(user):
+        if user:
+            liked_store_keys = user.liked_stores
+            query = Post.query(Post.shop_keys.IN(liked_store_keys)).fetch(10)
+            return query
+        return Post.query().fetch(10)
 
 
 class MyStores(BaseHandler):

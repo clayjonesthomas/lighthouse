@@ -20,6 +20,7 @@ class MyShopsPageHandler extends Component {
         onSelectShop={this.props.onSelectShop}
         areShopsLoaded={this.props.areMyShopsLoaded}
         onLike={this.props.onLike}
+
         shops={this.props.shops}
         onAddNewShop={this.props.onAddNewShop}
         onSubmitShops={this.props.onSubmitShops}
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onLike: (shop_url) => dispatch(toggleStoreLike(shop_url)),
     onSelectShop: (shop_url) => browserHistory.push(`/store/${shop_url}`),
+
     onAddNewShop: (shops) => dispatch(onUpdateFormShops(shops)),
     getAllShops: () => {
       dispatch(pullShops())

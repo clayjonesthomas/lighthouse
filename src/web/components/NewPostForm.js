@@ -21,6 +21,7 @@ const NewPostForm = (
     <ShopFinder
       shops={shops}
       onAddNewShop={onUpdateFormShops}
+      placeholder="add shops to your favorites..."
     />
     <CancelButton
       onClick={onCancel}
