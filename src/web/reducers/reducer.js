@@ -16,7 +16,6 @@ import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
 const initialState = {
   displayedPosts: [],
   displayedShops: [],
-  myShops: [],
   shops: [],
   jwt: null,
   modal: null,
@@ -147,7 +146,7 @@ function lighthouse(state = initialState, action) {
       return state
     case ADD_SHOPS_TO_MY_SHOPS_RETURN:
       return Object.assign({}, state, {
-        myShops: state.myShops.concat(action.data.shopsToAdd)
+        displayedShops: state.displayedShops.concat(action.data.shopsToAdd)
       })
     default:
       return state
