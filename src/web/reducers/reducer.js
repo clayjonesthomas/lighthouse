@@ -16,6 +16,7 @@ import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
 const initialState = {
   displayedPosts: [],
   displayedShops: [],
+  myShops: [],
   shops: [],
   jwt: null,
   modal: null,

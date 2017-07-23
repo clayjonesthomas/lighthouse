@@ -231,14 +231,30 @@ class LikePost(BaseHandler):
 class LikeStore(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        store = get_entity_from_url_key(body['key'])
+        stores = []
+        if 'key' in body:
+            stores = [get_entity_from_url_key(body['key'])]
+        if 'keys' in body:
+            stores = [get_entity_from_url_key(key)
+                      for key in body['keys']]
         user = self.user
         if user:
-            if store.key in user.liked_stores:
-                user.liked_stores.remove(store.key)
+            # stupid amount of ifs here, but we dont want a user to
+            # remove stores they add in a group on accident. We should
+            # probably send only unliked stores in this case or something
+            if len(stores) > 1:
+                for store in stores:
+                    user.liked_stores.append(store.key)
             else:
-                user.liked_stores.append(store.key)
+                # is this what it means, what it means to hack
+                for store in stores:
+                    if store.key in user.liked_stores:
+                        user.liked_stores.remove(store.key)
+                    else:
+                        user.liked_stores.append(store.key)
             user.put()
+            stores = [MyStores._prepare_store(store.key, user) for store in stores] # move this out
+            self.response.write(json.dumps(stores))
 
 
 class SingleStore(BaseHandler):

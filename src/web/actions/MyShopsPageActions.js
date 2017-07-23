@@ -34,13 +34,13 @@ export function pullMyShops() {
   }
 }
 
-export function AddShopsToMyShopsRequest(){
+export const AddShopsToMyShopsRequest = () => {
   return {
     type: ADD_SHOPS_TO_MY_SHOPS_REQUEST
   }
 }
 
-export function AddShopsToMyShopsReturn(shopsToAdd){
+export const AddShopsToMyShopsReturn = (shopsToAdd) => {
   return {
     type: ADD_SHOPS_TO_MY_SHOPS_RETURN,
     data: {
@@ -52,19 +52,22 @@ export function AddShopsToMyShopsReturn(shopsToAdd){
 export function addShopsToMyShops(){
   return (dispatch, getState) => {
     const state = getState()
-    const shops = state.form.shops.map(shop => {
-      return {
-        key: shop.key
+    if(state.form.shops) {
+      const shops = state.form.shops.map(shop => {
+        return shop.key
+      })
+      const body = {
+        keys: shops
       }
-    })
-    const args = {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: JSON.stringify(shops)
+      const args = {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: JSON.stringify(body)
+      }
+      dispatch(AddShopsToMyShopsRequest())
+      return fetch(LIKE_STORE_URL, args)
+        .then(response => response.json())
+        .then(json => dispatch(AddShopsToMyShopsReturn(json)))
     }
-    dispatch(AddShopsToMyShopsRequest())
-    return fetch(LIKE_STORE_URL, args)
-      .then(response => response.json())
-      .then(json => dispatch(AddShopsToMyShopsReturn(json.shopsToAdd)))
   }
 }

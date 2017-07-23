@@ -42,9 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onLike: (shop_url) => dispatch(toggleStoreLike(shop_url)),
     onSelectShop: (shop_url) => browserHistory.push(`/store/${shop_url}`),
-    onAddNewShop: () => {
-      dispatch(onUpdateFormShops())
-    },
+    onAddNewShop: (shops) => dispatch(onUpdateFormShops(shops)),
     getAllShops: () => {
       dispatch(pullShops())
     },

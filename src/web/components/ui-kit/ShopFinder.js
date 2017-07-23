@@ -4,7 +4,7 @@ import {Typeahead} from 'react-bootstrap-typeahead'
 const ShopFinder = (
   {
     onAddNewShop,
-    onSubmitShops,
+    submitShops,
     shops
   }) => (
   <Typeahead
@@ -13,13 +13,13 @@ const ShopFinder = (
     options={shops}
     placeholder="add shops to your favorites..."
     onChange={onAddNewShop}
-    submitFormOnEnter={onSubmitShops}
+    submitFormOnEnter={submitShops}
   />
 )
 
 ShopFinder.propTypes = {
   onAddNewShop: PropTypes.func,
-  onSubmitShops: PropTypes.func
+  submitShops: PropTypes.bool
 }
 
 export default ShopFinder

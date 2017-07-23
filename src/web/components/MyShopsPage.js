@@ -2,6 +2,7 @@ import ShopBox from './ShopBox'
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
 import ShopFinder from './ui-kit/ShopFinder'
+import SubmitButton from './ui-kit/SubmitButton'
 
 const MyShopsPage =
   ({
@@ -18,11 +19,17 @@ const MyShopsPage =
         <Spinner/>
       }
       {areShopsLoaded &&
-        <ShopFinder
-          shops={shops}
-          onAddNewShop={() => {onAddNewShop()}}//not really necessary here
-          onSubmitShops={() => {onSubmitShops()}}
-          placeholder="search for a shop..."
+      <ShopFinder
+        shops={shops}
+        onAddNewShop={(shops) => {
+          onAddNewShop(shops)
+        }}
+        placeholder="search for a shop..."
+      />
+      }
+      {areShopsLoaded &&
+        <SubmitButton
+          onClick={() => onSubmitShops()}
         />
       }
       {areShopsLoaded && myShops &&
