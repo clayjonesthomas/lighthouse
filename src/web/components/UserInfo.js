@@ -1,11 +1,13 @@
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
+import LinkButton from './ui-kit/LinkButton'
 
 const UserInfo =
   ({
      onShowLogin,
      username,
-     isUserInfoLoaded
+     isUserInfoLoaded,
+     signOut
    }) => (
     <div style={{'borderStyle':'solid'}}>
       {!isUserInfoLoaded &&
@@ -20,6 +22,11 @@ const UserInfo =
           onClick={() => onShowLogin()}>
           Log in
           </button>
+      }
+      {isUserInfoLoaded && username &&
+        <LinkButton
+          onClick={() => signOut()}
+        />
       }
     </div>
   )

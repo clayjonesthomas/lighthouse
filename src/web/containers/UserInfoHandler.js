@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {pullUserInfo} from '../actions/UserInfoActions'
+import {pullUserInfo, signOut} from '../actions/UserInfoActions'
 import {showLogin} from '../actions/AuthActions'
 import UserInfo from '../components/UserInfo'
 
@@ -15,6 +15,7 @@ class UserInfoHandler extends Component {
         username={this.props.username}
         isUserInfoLoaded={this.props.isUserInfoLoaded}
         onShowLogin={this.props.onShowLogin}
+        signOut={this.props.signOut}
       />
     )
   }
@@ -33,6 +34,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(pullUserInfo())
     },
     onShowLogin: () => dispatch(showLogin()),
+    signOut: () => dispatch(signOut())
   }
 }
 

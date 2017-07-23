@@ -519,7 +519,7 @@ class LoginHandler(BaseHandler):
 class LogoutHandler(BaseHandler):
     def get(self):
         self.auth.unset_session()
-        self.response.write('Logout successful')
+        self.response.write(json.dumps('Logout successful'))
 
 
 config = {

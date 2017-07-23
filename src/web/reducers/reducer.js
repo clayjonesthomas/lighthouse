@@ -11,9 +11,9 @@ import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
 import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/StorePageActions'
 import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/StorePageActions'
 import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
-  ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN, ADD_SHOP_FINDER_REF,
-  CLEAR_SHOP_FINDER}
+  ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN, ADD_SHOP_FINDER_REF}
   from '../actions/MyShopsPageActions'
+import {SIGN_OUT_REQUEST, SIGN_OUT_RESPONSE} from '../actions/UserInfoActions'
 
 const initialState = {
   displayedPosts: [],
@@ -158,6 +158,12 @@ function lighthouse(state = initialState, action) {
           shopFinder: action.data.ref
         })
       })
+    case SIGN_OUT_REQUEST:
+      return Object.assign({}, state, {
+        username: null
+      })
+    case SIGN_OUT_RESPONSE:
+      return state
     default:
       return state
   }
