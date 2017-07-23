@@ -106,8 +106,10 @@ function lighthouse(state = initialState, action) {
       })
     case LIKE_STORE:
       return Object.assign({}, state, {
-        store: Object.assign({}, state.store, {
-          isLiked: !state.store.isLiked
+        displayedShops: state.displayedShops.map(shop => {
+          if(shop.key === action.data.store_key)
+            shop.isLiked = !shop.isLiked
+          return shop
         })
       })
     case LIKE_STORE_RETURN:
