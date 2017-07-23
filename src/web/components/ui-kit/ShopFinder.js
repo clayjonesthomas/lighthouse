@@ -15,7 +15,10 @@ const ShopFinder = (
     options={shops}
     placeholder={placeholder}
     onChange={onAddNewShop}
-    ref={ref => onAddShopFinderRef(ref)}
+    ref={ref => {
+      if(onAddShopFinderRef)
+        onAddShopFinderRef(ref)
+    }}
     submitFormOnEnter={submitShops}
   />
 )
