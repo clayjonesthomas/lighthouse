@@ -52,6 +52,7 @@ class User(webapp2_extras.appengine.auth.models.User):
 
     liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
+    is_moderator = ndb.BooleanProperty(indexed=True, default=False)
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args,**kwargs)

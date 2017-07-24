@@ -275,14 +275,17 @@ class SingleStore(BaseHandler):
         self.response.write(json.dumps({'store': store_dict}))
 
     def post(self):
-        store = Store(
-            name=self.request.get('name'),
-            website=self.request.get('website')
-        )
-        icon = self.request.get('img')
-        icon = images.resize(icon, 64, 64)
-        store.avatar = icon
-        store.put()
+        user = self.user
+        if user:
+            if user.is_moderator:
+                store = Store(
+                    name=self.request.get('name'),
+                    website=self.request.get('website')
+                )
+                icon = self.request.get('img')
+                icon = images.resize(icon, 64, 64)
+                store.avatar = icon
+                store.put()
 
 
 class Feed(BaseHandler):
@@ -383,11 +386,15 @@ class SignupHandler(BaseHandler):
         email = self.request.get('email')
         password = self.request.get('password')
         unique_properties = ['email_address']  # username automatically unique
+        is_moderator = False
+        if self.request.get('username') == 'admin':
+            is_moderator = True
         user_data = self.user_model.create_user(user_name,
                                                 unique_properties,
                                                 email_address=email,
                                                 password_raw=password,
-                                                verified=False)
+                                                verified=False,
+                                                is_moderator=is_moderator)
         if not user_data[0]:  # user_data is a tuple
             self.response.write('Unable to create user for username %s because of '
                                 'duplicate keys %s' % (user_name, user_data[1]))
