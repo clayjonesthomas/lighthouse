@@ -44,6 +44,7 @@ class Store(ndb.Model):
     website = ndb.StringProperty(indexed=False)
     likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    icon = ndb.BlobProperty(indexed=False)
 
 
 class User(webapp2_extras.appengine.auth.models.User):

@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+from google.appengine.api import images
 import jinja2
 import json
 import logging
@@ -272,6 +273,16 @@ class SingleStore(BaseHandler):
             store_dict['isLiked'] = False
 
         self.response.write(json.dumps({'store': store_dict}))
+
+    def post(self):
+        store = Store(
+            name=self.request.get('name'),
+            website=self.request.get('website')
+        )
+        icon = self.request.get('img')
+        icon = images.resize(icon, 64, 64)
+        store.avatar = icon
+        store.put()
 
 
 class Feed(BaseHandler):
