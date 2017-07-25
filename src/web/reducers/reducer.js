@@ -28,7 +28,8 @@ const initialState = {
   areMyShopsLoaded: false,
   areShopsLoaded: false,
   formRefs: {},
-  form: {}
+  form: {},
+  isModerator: false
 }
 
 
@@ -86,6 +87,7 @@ function lighthouse(state = initialState, action) {
     case REQUEST_USER_INFO_RETURN:
       return Object.assign({}, state, {
         username: action.data.username,
+        isModerator: action.data.isModerator,
         isUserInfoLoaded: true
       })
     case LIKE_POST:

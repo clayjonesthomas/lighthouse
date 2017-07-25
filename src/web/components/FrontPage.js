@@ -34,6 +34,9 @@ const FrontPage =
               />
             })
           }
+          {arePostsLoaded && !posts.length &&
+            <span>You'll see some posts once you follow some stores. add some here! --></span>
+          }
         </Col>
         <Col md={2}>
           <ShopFinder

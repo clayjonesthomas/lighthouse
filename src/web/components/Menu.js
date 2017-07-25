@@ -4,7 +4,9 @@ const Menu =
   ({onHome,
     onMyShops,
     onSelectNewPost,
-    username
+    username,
+    isModerator,
+    onAddAShop
   }) => (
     <div style={{'borderStyle': 'solid'}}>
       {<button
@@ -23,6 +25,13 @@ const Menu =
         onClick={() => onSelectNewPost()}>
         Submit a Sale
       </button>}
+      {username && isModerator &&
+      <button
+        type="button"
+        onClick={() => onAddAShop()}>
+        Add a Store
+      </button>
+      }
     </div>
   )
 
@@ -30,7 +39,8 @@ Menu.propTypes = {
   onHome: PropTypes.func.isRequired,
   onMyShops: PropTypes.func.isRequired,
   onSelectNewPost: PropTypes.func.isRequired,
-  username: PropTypes.string
+  username: PropTypes.string,
+  isModerator: PropTypes.bool
 }
 
 export default Menu

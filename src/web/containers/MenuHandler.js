@@ -5,7 +5,8 @@ import {goHome, goMyShops} from '../actions/MenuActions.js'
 
 const mapStateToProps = (state) => {
   return {
-    username: state.username
+    username: state.username,
+    isModerator: state.isModerator
   }
 }
 
@@ -19,7 +20,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(goMyShops)
       browserHistory.push('/shops')
     },
-    onSelectNewPost: () => browserHistory.push('/new')
+    onSelectNewPost: () => browserHistory.push('/new'),
+    onAddAShop: () => {
+      browserHistory.push('/new_shop')
+    }
   }
 }
 

@@ -13,6 +13,9 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
+
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
@@ -282,10 +285,40 @@ class SingleStore(BaseHandler):
                     name=self.request.get('name'),
                     website=self.request.get('website')
                 )
-                icon = self.request.get('img')
-                icon = images.resize(icon, 64, 64)
-                store.avatar = icon
-                store.put()
+                store_key = store.put()
+                self.response.write(json.dumps({'key': store_key.urlsafe()}))
+
+
+class StoreImage(BaseHandler, blobstore_handlers.BlobStoreUploadHandler):
+
+    def get(self, url_key):
+        blob_key = ndb.key(urlsafe=url_key)
+        img = images.Image(blob_key=blob_key)
+        img.resize(width=64, height=64)
+        img.execute_transforms(output_encoding=images.JPEG)
+
+        self.response.headers['Content-Type'] = 'image/jpeg'
+        self.response.out.write(img)
+
+    def post(self):
+        user = self.user
+        if user:
+            if user.is_moderator:
+                store = ndb.Key(urlsafe=self.request.get('key'))
+                uploads = self.get_uploads()[0]
+                # uploads.put()??
+                blob_key = uploads.key()
+                store.icon_key = blob_key
+                store_key = store.put()
+                self.response.write(json.dumps({'key': store_key.urlsafe()}))
+
+
+class StoreUrl(BaseHandler, blobstore_handlers.BlobStoreUploadHandler):
+
+    def get(self):
+        upload_url = blobstore.create_upload_url('/upload_photo')
+        self.response.write(json.dumps({'upload_url': upload_url}))
+
 
 
 class Feed(BaseHandler):
@@ -320,8 +353,10 @@ class Feed(BaseHandler):
     def _get_posts(user):
         if user:
             liked_store_keys = user.liked_stores
-            query = Post.query(Post.shop_keys.IN(liked_store_keys)).fetch(10)
-            return query
+            if liked_store_keys:
+                query = Post.query(Post.shop_keys.IN(liked_store_keys)).fetch(10)
+                return query
+            return []
         return Post.query().fetch(10)
 
 
@@ -353,11 +388,11 @@ class MyStores(BaseHandler):
 
 class Stores(BaseHandler):
 
-    def post(self):
-        store = Store(name=self.request.get('name'),
-                      website=self.request.get('website'))
-        store_key = store.put()
-        self.response.write(json.dumps({'id': store_key.urlsafe()}))
+    # def post(self):
+    #     store = Store(name=self.request.get('name'),
+    #                   website=self.request.get('website'))
+    #     store_key = store.put()
+    #     self.response.write(json.dumps({'id': store_key.urlsafe()}))
 
     def get(self):
         user = self.user
@@ -529,7 +564,10 @@ class LoginHandler(BaseHandler):
         but likely will be used in the future to pull login data
         """
         if self.auth.get_user_by_session():
-            self.response.write(json.dumps({'username': self.user.username}))
+            self.response.write(json.dumps({
+                'username': self.user.username,
+                'isModerator': self.user.is_moderator
+            }))
         else:
             self.response.write(json.dumps({'logged_in': False}))
 
@@ -566,6 +604,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shops', Stores, name='shops'),
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
+    webapp2.Route('/rest/store', SingleStore, name='single_store'),
+    webapp2.Route('/rest/store_img/<url_key:.*>', StoreImage, name='store_image')
 
     webapp2.Route('/new', MainPage, name='new'),
     webapp2.Route('/shops', MainPage, name='stores'),

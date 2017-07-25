@@ -7,9 +7,10 @@ import MyShopsPageHandler from '../containers/MyShopsPageHandler'
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import lighthouse from '../reducers/reducer.js'
-import NewPostHandler from '../containers/NewPostHandler';
+import NewPostHandler from '../containers/NewPostHandler'
 import thunkMiddleware from 'redux-thunk'
 import Container from './Container.js'
+import NewStoreHandler from '../containers/NewStoreHandler'
 
 
 
@@ -25,6 +26,7 @@ const Root = () => (
     <Router history={browserHistory}>
       <Route path="/" component={Container}>
         <IndexRoute component={FrontPageHandler} />
+        <Route path="/new_store" component={NewStoreHandler} />
         <Route path="/new" component={NewPostHandler} />
         <Route path="/store/:url_key" component={StorePageHandler}/>
         <Route path="/post/:url_key" component={PostPageHandler}/>
