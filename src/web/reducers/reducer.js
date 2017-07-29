@@ -14,6 +14,7 @@ import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
   ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN, ADD_SHOP_FINDER_REF}
   from '../actions/MyShopsPageActions'
 import {SIGN_OUT_REQUEST, SIGN_OUT_RESPONSE} from '../actions/UserInfoActions'
+import {ADD_STORE_ICON_TO_FORM_DATA} from '../actions/NewStoreActions'
 
 const initialState = {
   displayedPosts: [],
@@ -166,6 +167,12 @@ function lighthouse(state = initialState, action) {
       })
     case SIGN_OUT_RESPONSE:
       return state
+    case ADD_STORE_ICON_TO_FORM_DATA:
+      return Object.assign({}, state, {
+        formRefs: Object.assign({}, state.formRefs, {
+          icon: action.data.icon
+        })
+      })
     default:
       return state
   }

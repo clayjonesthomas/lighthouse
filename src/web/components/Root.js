@@ -26,7 +26,7 @@ const Root = () => (
     <Router history={browserHistory}>
       <Route path="/" component={Container}>
         <IndexRoute component={FrontPageHandler} />
-        <Route path="/new_store" component={NewStoreHandler} />
+        <Route path="/new_shop" component={NewStoreHandler} />
         <Route path="/new" component={NewPostHandler} />
         <Route path="/store/:url_key" component={StorePageHandler}/>
         <Route path="/post/:url_key" component={PostPageHandler}/>

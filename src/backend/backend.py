@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import datetime
+import cloudstorage as gcs
 
 import webapp2
 
@@ -289,7 +290,7 @@ class SingleStore(BaseHandler):
                 self.response.write(json.dumps({'key': store_key.urlsafe()}))
 
 
-class StoreImage(BaseHandler, blobstore_handlers.BlobStoreUploadHandler):
+class AddIconToStore(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
 
     def get(self, url_key):
         blob_key = ndb.key(urlsafe=url_key)
@@ -300,11 +301,12 @@ class StoreImage(BaseHandler, blobstore_handlers.BlobStoreUploadHandler):
         self.response.headers['Content-Type'] = 'image/jpeg'
         self.response.out.write(img)
 
-    def post(self):
+    def post(self, url_key):
+        import pdb; pdb.set_trace()
         user = self.user
         if user:
             if user.is_moderator:
-                store = ndb.Key(urlsafe=self.request.get('key'))
+                store = ndb.Key(urlsafe=url_key)
                 uploads = self.get_uploads()[0]
                 # uploads.put()??
                 blob_key = uploads.key()
@@ -313,12 +315,11 @@ class StoreImage(BaseHandler, blobstore_handlers.BlobStoreUploadHandler):
                 self.response.write(json.dumps({'key': store_key.urlsafe()}))
 
 
-class StoreUrl(BaseHandler, blobstore_handlers.BlobStoreUploadHandler):
+class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
 
     def get(self):
         upload_url = blobstore.create_upload_url('/upload_photo')
         self.response.write(json.dumps({'upload_url': upload_url}))
-
 
 
 class Feed(BaseHandler):
@@ -603,9 +604,13 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_shops', MyStores, name='my_shops'),
     webapp2.Route('/rest/shops', Stores, name='shops'),
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
+    webapp2.Route('/rest/store/new', SingleStore, name='store_image'),
+    webapp2.Route('/rest/store/icon/<url_key:.*>', AddIconToStore, name='single_store'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
     webapp2.Route('/rest/store', SingleStore, name='single_store'),
-    webapp2.Route('/rest/store_img/<url_key:.*>', StoreImage, name='store_image')
+    # webapp2.Route('/rest/store_img/<url_key:.*>', StoreImage, name='store_image'),
+    # webapp2.Route('/rest/store_img', StoreImage, name='store_image'),
+
 
     webapp2.Route('/new', MainPage, name='new'),
     webapp2.Route('/shops', MainPage, name='stores'),

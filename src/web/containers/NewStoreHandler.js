@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import NewStoreForm from '../components/NewStoreForm'
 import {onSaveRef} from '../actions/NewPostActions'
-import {submitStore} from '../actions/NewStoreActions'
+import {submitStore, onIconChange} from '../actions/NewStoreActions'
 
 
 const mapStateToProps = () => {
@@ -14,7 +15,11 @@ const mapDispatchToProps = (dispatch) => {
     onSaveNameRef: (ref) => dispatch(onSaveRef(ref, 'store_name')),
     onSaveWebsiteRef: (ref) => dispatch(onSaveRef(ref, 'store_website')),
     onSaveIconRef: (ref) => dispatch(onSaveRef(ref, 'store_icon')),
-    onSubmit: () => dispatch(submitStore())
+    onSubmit: () => dispatch(submitStore()),
+    onCancel: () => {
+      browserHistory.push('/')
+    },
+    onIconChange: (ref) => dispatch(onIconChange(ref))
   }
 }
 
@@ -23,4 +28,4 @@ const NewStoreHandler = connect(
   mapDispatchToProps
 )(NewStoreForm)
 
-export default NewStoreForm
+export default NewStoreHandler
