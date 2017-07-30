@@ -53,27 +53,27 @@ def _spawn_admin():
 
 def _spawn_dummy_posts(store_keys):
     posts = [Post(title='50% off all items on clearance',
-                  shop_keys=[store_keys[0]],
+                  shop_key=store_keys[0],
                   likes=25074,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  shop_keys=[store_keys[1]],
+                  shop_key=store_keys[1],
                   likes=14543,
                   timestamp=datetime.datetime.now()-datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  shop_keys=[store_keys[1]],
+                  shop_key=store_keys[1],
                   likes=30210,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  shop_keys=[store_keys[1]],
+                  shop_key=store_keys[1],
                   likes=12532,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  shop_keys=[store_keys[2]],
+                  shop_key=store_keys[2],
                   likes=2664,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_keys=[store_keys[3]],
+                  shop_key=store_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1))
              ]
@@ -193,7 +193,7 @@ class Feed(BaseHandler):
 
     def get(self, offset):
         user = self.user
-        raw_posts = self._get_posts(user, offset)
+        raw_posts = self._get_posts(user, int(offset))
         fetched_posts = [post.prepare_post(user) for post in raw_posts]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
@@ -204,7 +204,7 @@ class Feed(BaseHandler):
             liked_store_keys = user.liked_stores
             if liked_store_keys:
                 three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
-                query = Post.query(Post.shop_keys.IN(liked_store_keys))
+                query = Post.query(Post.shop_key.IN(liked_store_keys))
                 filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
                 result = filter_old_posts.fetch(10, offset=offset)
                 ordered_result = Post.order_posts(result)

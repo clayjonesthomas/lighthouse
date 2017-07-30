@@ -6,11 +6,14 @@ import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 
 const FrontPage =
-  ({posts,
-    onSelectNewPost,
-    username,
-    onLike,
-    arePostsLoaded,
+  ({
+     posts,
+     onSelectNewPost,
+     username,
+     onLike,
+     arePostsLoaded,
+     onMorePosts,
+     areMorePostsLoaded,
 
      shops,
      onAddNewShop,
@@ -37,6 +40,19 @@ const FrontPage =
           {arePostsLoaded && !posts.length &&
             <span>You'll see some posts once you follow some stores. add some here! --></span>
           }
+          <Row>
+            {areMorePostsLoaded &&
+              <SubmitButton
+                onClick={() => {
+                  onMorePosts()
+                }
+                }
+              />
+            }
+            {!areMorePostsLoaded &&
+              <Spinner/>
+            }
+          </Row>
         </Col>
         <Col md={2}>
           <ShopFinder

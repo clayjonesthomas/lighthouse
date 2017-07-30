@@ -47,7 +47,7 @@ class Post(ndb.Model):
         # currently not actually supporting multiple shops on a post
         post_dictionary['store'] = self.shop_key.get().to_dict()
         del post_dictionary['store']['timestamp']
-        del post_dictionary['shop_keys']
+        del post_dictionary['shop_key']
         post_dictionary['store_key'] = self.shop_key.urlsafe()
         post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
         post_dictionary['key'] = self.key.urlsafe()

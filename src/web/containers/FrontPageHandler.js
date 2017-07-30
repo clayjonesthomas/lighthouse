@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
-import {pullFrontPagePosts} from '../actions/FrontPageActions'
+import {pullFrontPagePosts, pullMoreFrontPagePosts}
+from '../actions/FrontPageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
@@ -25,6 +26,7 @@ class FrontPageHandler extends Component {
         onSubmitShops={this.props.onSubmitShops}
         onAddShopFinderRef={this.props.onAddShopFinderRef}
         clearShopFinder={this.props.clearShopFinder}
+        onMorePosts={this.props.getMorePosts}
       />
     )
   }
@@ -34,7 +36,8 @@ const mapStateToProps = (state) => {
   return {
     posts: state.displayedPosts,
     arePostsLoaded: state.arePostsLoaded,
-    shops: state.shops
+    shops: state.shops,
+    areMorePostsLoaded: state.areMorePostsLoaded
   }
 }
 
@@ -55,7 +58,8 @@ const mapDispatchToProps = (dispatch) => {
     onAddShopFinderRef: (ref) => {
       dispatch(addShopFinderRef(ref))
     },
-    clearShopFinder: () => {dispatch(clearShopFinder())}
+    clearShopFinder: () => {dispatch(clearShopFinder())},
+    getMorePosts: () => {dispatch(pullMoreFrontPagePosts())},
   }
 }
 

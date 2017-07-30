@@ -15,7 +15,7 @@ import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
   from '../actions/MyShopsPageActions'
 import {SIGN_OUT_REQUEST, SIGN_OUT_RESPONSE} from '../actions/UserInfoActions'
 import {ADD_STORE_ICON_TO_FORM_DATA} from '../actions/NewStoreActions'
-
+import {MORE_POSTS_REQUEST, MORE_POSTS_RETURN} from '../actions/FrontPageActions'
 const initialState = {
   displayedPosts: [],
   displayedShops: [],
@@ -30,7 +30,9 @@ const initialState = {
   areShopsLoaded: false,
   formRefs: {},
   form: {},
-  isModerator: false
+  isModerator: false,
+  postsOffset: 0,
+  areMorePostsLoaded: true
 }
 
 
@@ -55,6 +57,7 @@ function lighthouse(state = initialState, action) {
     case REQUEST_POSTS:
       return Object.assign({}, state, {
         arePostsLoaded: false,
+        postsOffset: 10
       })
     case REQUEST_POSTS_RETURN:
       if(action.data.posts)
@@ -173,9 +176,36 @@ function lighthouse(state = initialState, action) {
           icon: action.data.icon
         })
       })
+    case MORE_POSTS_REQUEST:
+      return Object.assign({}, state, {
+        areMorePostsLoaded: false
+      })
+    case MORE_POSTS_RETURN:
+      let newPosts = getUniquePosts(action.data.posts, state.posts)
+      return Object.assign({}, state, {
+        areMorePostsLoaded: true,
+        postsOffset: state.postsOffset+10,
+        posts: state.posts.concat(newPosts)
+      })
     default:
       return state
   }
+}
+
+function getUniquePosts(newPosts, oldPosts){
+  let uniquePosts = []
+  newPosts.forEach(newPost => {
+    let addToPosts = true
+
+    oldPosts.forEach(oldPost => {
+      if(newPost.key === oldPost.key)
+        addToPosts = false
+    })
+
+    if(addToPosts)
+      uniquePosts.push(newPost)
+  })
+  return uniquePosts
 }
 
 export default lighthouse
