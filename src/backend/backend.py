@@ -229,7 +229,7 @@ class SinglePost(BaseHandler):
     def delete(self, url_key):
         user = self.user
         post = ndb.Key(urlsafe=url_key).get()
-        if user and user.key == post.author:
+        if user and (user.key == post.author or user.is_moderator):
             post.key.delete()
 
 
@@ -382,8 +382,11 @@ class Feed(BaseHandler):
 
         if user:
             post_dictionary['isLiked'] = post.key in user.liked_posts
+            post_dictionary['canDelete'] = user.key == post.author.key
         else:
             post_dictionary['isLiked'] = False
+            post_dictionary['canDelete'] = False
+
         return post_dictionary
 
     @staticmethod
