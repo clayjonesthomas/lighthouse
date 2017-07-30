@@ -9,22 +9,27 @@ const Menu =
     onAddAShop
   }) => (
     <div style={{'borderStyle': 'solid'}}>
-      {<button
+      {
+        <button
           type="button"
           onClick={() => onHome()}>
           Home
-      </button>}
-      {<button
+      </button>
+      }
+      {username &&
+        <button
         type="button"
         onClick={() => onMyShops()}>
         My Shops
-      </button>}
+      </button>
+      }
       {username &&
         <button
         type="button"
         onClick={() => onSelectNewPost()}>
         Submit a Sale
-      </button>}
+      </button>
+      }
       {username && isModerator &&
       <button
         type="button"

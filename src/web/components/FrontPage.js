@@ -15,6 +15,7 @@ const FrontPage =
      onMorePosts,
      areMorePostsLoaded,
      areMorePosts,
+     deletePost,
 
      shops,
      onAddNewShop,
@@ -34,7 +35,10 @@ const FrontPage =
               return <PostBox
                 post={post}
                 key={post.key}
+                post_key={post.key}
                 onLike={() => onLike(post.key)}
+                canDelete={post.canDelete}
+                onDelete={deletePost}
               />
             })
           }

@@ -1,10 +1,12 @@
-import {POSTS_URL} from '../constants/constants'
+import {POSTS_URL, POST_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const REQUEST_POSTS_RETURN = 'REQUEST_POSTS_RETURN'
 export const MORE_POSTS_REQUEST = 'MORE_POSTS_REQUEST'
 export const MORE_POSTS_RETURN = 'MORE_POSTS_RETURN'
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST'
+export const DELETE_POST_RETURN = 'DELETE_POST_RETURN'
 
 export const requestPosts = () => {
   return {
@@ -61,5 +63,31 @@ export function pullMoreFrontPagePosts() {
     return fetch(POSTS_URL+`/${offset}`, args)
       .then(response => response.json())
       .then(json => dispatch(morePostsReturn(json)))
+  }
+}
+
+export function deletePost(key){
+  const args = {
+    method: 'DELETE',
+    credentials: 'same-origin'
+  }
+
+  return dispatch => {
+    dispatch(deletePostRequest())
+    return fetch(POST_URL+`/${key}`, args)
+      .then(response => response.json())
+      .then(json => dispatch(deletePostReturn(json)))
+  }
+}
+
+const deletePostRequest = () => {
+  return {
+    type: DELETE_POST_REQUEST
+  }
+}
+
+const deletePostReturn = () => {
+  return {
+    type: DELETE_POST_RETURN
   }
 }

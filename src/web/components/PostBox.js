@@ -1,11 +1,15 @@
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 import LikeButton from './ui-kit/LikeButton'
+import SubmitButton from './ui-kit/SubmitButton'
 
 const PostBox = (
   {
     post,
-    onLike
+    post_key,
+    onLike,
+    canDelete,
+    onDelete
   }) => (
   <div style={{'borderStyle':'solid'}}>
     {
@@ -25,6 +29,12 @@ const PostBox = (
       <LikeButton
         onClick={() => onLike()}
         isPressed={post.isLiked}
+      />
+    }
+    {canDelete &&
+      <SubmitButton
+        onClick={() => onDelete(post_key)}
+        contents="delete"
       />
     }
   </div>

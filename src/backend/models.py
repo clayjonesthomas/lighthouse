@@ -54,6 +54,7 @@ class Post(ndb.Model):
 
         if user:
             post_dictionary['isLiked'] = self.key in user.liked_posts
+            post_dictionary['canDelete'] = user.is_moderator
             if self.author:
                 post_dictionary['canDelete'] = user.key == self.author.key
         else:
@@ -77,6 +78,7 @@ class Store(ndb.Model):
 
         if user:
             store_dict['isLiked'] = self.key in user.liked_stores
+            store_dict['canDelete'] = user.is_moderator
         else:
             store_dict['isLiked'] = False
 

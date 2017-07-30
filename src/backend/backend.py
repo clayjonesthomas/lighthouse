@@ -290,6 +290,7 @@ class SinglePost(BaseHandler):
         post = ndb.Key(urlsafe=url_key).get()
         if user and (user.key == post.author or user.is_moderator):
             post.key.delete()
+        self.response.write(json.dumps({'great': 'success'}))
 
 
 class LikePost(BaseHandler):
