@@ -12,3 +12,5 @@
 # handlers stop displaying.
 #
 # you're a dumbass, never forget that
+# gcloud deploys dont like bundle.js being in a directory,
+# so it's in root for now

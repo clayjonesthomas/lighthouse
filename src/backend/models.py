@@ -27,7 +27,7 @@ class Comment(ndb.Model):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    shop_keys = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
+    shop_key = ndb.KeyProperty(indexed=True, kind='Store')
     likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
@@ -38,13 +38,17 @@ class Post(ndb.Model):
         self.comment_amount += 1
         self.top_comments.append(comment.key)
 
+    @staticmethod
+    def order_posts(posts):
+        return sorted(posts, key=lambda post: post.likes/post.shop_key.get().likes)
+
 
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
     likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-    icon = ndb.BlobProperty(indexed=False)
+    icon_url = ndb.StringProperty(indexed=False)
 
 
 class User(webapp2_extras.appengine.auth.models.User):

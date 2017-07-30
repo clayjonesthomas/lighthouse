@@ -6,7 +6,7 @@ threadsafe: true
 handlers:
 
 - url: /bundle\.js
-  static_files: bundled_web/bundle.js
+  static_files: bundle.js
   upload: bundle\.js
 
 - url: /rest/posts
@@ -29,3 +29,6 @@ libraries:
 
 builtins:
 - remote_api: on
+
+env_variables:
+    CLOUD_STORAGE_BUCKET: lighthouse-149319.appspot.com

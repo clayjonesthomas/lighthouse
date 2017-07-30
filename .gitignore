@@ -23,3 +23,6 @@ src/bundled_web
 npm-debug.log
 node_modules
 coffee_src
+src/bundle.js
+lib
+src/backend/lib

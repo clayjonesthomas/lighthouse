@@ -5,7 +5,6 @@ import json
 import logging
 import os
 import datetime
-import cloudstorage as gcs
 
 import webapp2
 
@@ -22,10 +21,16 @@ from google.appengine.ext import deferred
 
 from models import Post, Store, get_entity_from_url_key
 
+
+from google.appengine.api import app_identity
+import lib.cloudstorage as gcs
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
+CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
@@ -178,6 +183,8 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 
     def get(self, *args):
+        if not Post.query().fetch(10):
+            populate_dummy_datastore()
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -218,6 +225,12 @@ class SinglePost(BaseHandler):
             'key': store.key.urlsafe()
         }
         self.response.write(json.dumps(post_dict))
+
+    def delete(self, url_key):
+        user = self.user
+        post = ndb.Key(urlsafe=url_key).get()
+        if user and user.key == post.author:
+            post.key.delete()
 
 
 class LikePost(BaseHandler):
@@ -280,18 +293,26 @@ class SingleStore(BaseHandler):
 
     def post(self):
         user = self.user
-        if user:
-            if user.is_moderator:
-                store = Store(
-                    name=self.request.get('name'),
-                    website=self.request.get('website')
-                )
-                store_key = store.put()
-                self.response.write(json.dumps({'key': store_key.urlsafe()}))
+        if user and user.is_moderator:
+            store = Store(
+                name=self.request.get('name'),
+                website=self.request.get('website')
+            )
+            store_key = store.put()
+            self.response.write(json.dumps({'key': store_key.urlsafe()}))
+
+    def delete(self, url_key):
+        user = self.user
+        if user and user.is_moderator:
+            ndb.Key(urlsafe=url_key).delete()
 
 
-class AddIconToStore(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-
+class AddIconToStore(BaseHandler):
+    '''
+    under severe construction, don't use unless you
+    figure out what the fuck is going on with python
+    gcs
+    '''
     def get(self, url_key):
         blob_key = ndb.key(urlsafe=url_key)
         img = images.Image(blob_key=blob_key)
@@ -302,21 +323,38 @@ class AddIconToStore(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
         self.response.out.write(img)
 
     def post(self, url_key):
-        import pdb; pdb.set_trace()
         user = self.user
-        if user:
-            if user.is_moderator:
-                store = ndb.Key(urlsafe=url_key)
-                uploads = self.get_uploads()[0]
-                # uploads.put()??
-                blob_key = uploads.key()
-                store.icon_key = blob_key
-                store_key = store.put()
-                self.response.write(json.dumps({'key': store_key.urlsafe()}))
+        if user and user.is_moderator:
+            icon = self.request.get('icon')
+            # storage_client = gcs.Client()
+            # bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
+            # blob = bucket.blob(url_key)  # url_key used here as the filename
+            #
+            # blob.upload_from_string(
+            #     icon,
+            #     content_type='image/jpeg'
+            # )
+            #
+            # store = ndb.Key(urlsafe=url_key)
+            # store.icon_url = blob.public_url
+            # store_key = store.put()
+            gcs.blob
+            file = gcs.open(
+                url_key,
+                'w',
+                content_type='image/jpeg'
+            )
+            file.write(icon)
+            file.close()
+            self.response.write(json.dumps({'key': url_key}))
 
 
 class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-
+    '''
+        under severe construction, don't use unless you
+        figure out what the fuck is going on with python
+        gcs
+        '''
     def get(self):
         upload_url = blobstore.create_upload_url('/upload_photo')
         self.response.write(json.dumps({'upload_url': upload_url}))
@@ -324,11 +362,9 @@ class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
 
 class Feed(BaseHandler):
 
-    def get(self):
-        if not Post.query().fetch(10):
-            populate_dummy_datastore()
+    def get(self, offset):
         user = self.user
-        raw_posts = self._get_posts(user)
+        raw_posts = self._get_posts(user, offset)
         fetched_posts = [self._prepare_post(post, user) for post in raw_posts]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
@@ -351,14 +387,18 @@ class Feed(BaseHandler):
         return post_dictionary
 
     @staticmethod
-    def _get_posts(user):
+    def _get_posts(user, offset):
         if user:
             liked_store_keys = user.liked_stores
             if liked_store_keys:
-                query = Post.query(Post.shop_keys.IN(liked_store_keys)).fetch(10)
-                return query
+                three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
+                query = Post.query(Post.shop_keys.IN(liked_store_keys))
+                filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
+                result = filter_old_posts.fetch(10, offset=offset)
+                ordered_result = Post.order_posts(result)
+                return ordered_result
             return []
-        return Post.query().fetch(10)
+        return Post.query().fetch(10, offset=offset)
 
 
 class MyStores(BaseHandler):
@@ -598,16 +638,16 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
 
     webapp2.Route('/rest/posts', Feed, name='feed'),
+    webapp2.Route('/rest/posts/<offset:[0-9]*>', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyStores, name='my_shops'),
     webapp2.Route('/rest/shops', Stores, name='shops'),
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
-    webapp2.Route('/rest/store/new', SingleStore, name='store_image'),
-    webapp2.Route('/rest/store/icon/<url_key:.*>', AddIconToStore, name='single_store'),
-    webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
+    # webapp2.Route('/rest/store/icon/<url_key:.*>', AddIconToStore, name='single_store'),
     webapp2.Route('/rest/store', SingleStore, name='single_store'),
+    webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
     # webapp2.Route('/rest/store_img/<url_key:.*>', StoreImage, name='store_image'),
     # webapp2.Route('/rest/store_img', StoreImage, name='store_image'),
 

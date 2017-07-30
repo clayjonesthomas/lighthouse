@@ -22,14 +22,14 @@ const NewStoreForm =
         refFunc={ref => onSaveWebsiteRef(ref)}
         label="Full Home Website Address: "
       />
-      <div>
-        Select an image file:
-        <input
-          type='file' label='Upload' accept='.jpeg'
-          ref={(ref) => onSaveIconRef(ref)}
-          onChange={(file) => onIconChange(file)}
-        />
-      </div>
+      {/*<div>*/}
+        {/*Select an image file:*/}
+        {/*<input*/}
+          {/*type='file' label='Upload' accept='.jpeg'*/}
+          {/*ref={(ref) => onSaveIconRef(ref)}*/}
+          {/*onChange={(file) => onIconChange(file)}*/}
+        {/*/>*/}
+      {/*</div>*/}
       <CancelButton
         onClick={onCancel}
       />
