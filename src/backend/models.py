@@ -42,6 +42,25 @@ class Post(ndb.Model):
     def order_posts(posts):
         return sorted(posts, key=lambda post: post.likes/post.shop_key.get().likes)
 
+    def prepare_post(self, user):
+        post_dictionary = self.to_dict()
+        # currently not actually supporting multiple shops on a post
+        post_dictionary['store'] = self.shop_key.get().to_dict()
+        del post_dictionary['store']['timestamp']
+        del post_dictionary['shop_keys']
+        post_dictionary['store_key'] = self.shop_key.urlsafe()
+        post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
+        post_dictionary['key'] = self.key.urlsafe()
+
+        if user:
+            post_dictionary['isLiked'] = self.key in user.liked_posts
+            post_dictionary['canDelete'] = user.key == self.author.key
+        else:
+            post_dictionary['isLiked'] = False
+            post_dictionary['canDelete'] = False
+
+        return post_dictionary
+
 
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
@@ -49,6 +68,18 @@ class Store(ndb.Model):
     likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
+
+    def prepare_store(self, user):
+        store_dict = self.to_dict()
+        store_dict['key'] = self.key.urlsafe()
+        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
+
+        if user:
+            store_dict['isLiked'] = self.key in user.liked_stores
+        else:
+            store_dict['isLiked'] = False
+
+        return store_dict
 
 
 class User(webapp2_extras.appengine.auth.models.User):

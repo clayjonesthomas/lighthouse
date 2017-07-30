@@ -189,19 +189,54 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 
+class Feed(BaseHandler):
+
+    def get(self, offset):
+        user = self.user
+        raw_posts = self._get_posts(user, offset)
+        fetched_posts = [post.prepare_post(user) for post in raw_posts]
+        logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
+        self.response.write(json.dumps(fetched_posts))
+
+    @staticmethod
+    def _get_posts(user, offset):
+        if user:
+            liked_store_keys = user.liked_stores
+            if liked_store_keys:
+                three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
+                query = Post.query(Post.shop_keys.IN(liked_store_keys))
+                filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
+                result = filter_old_posts.fetch(10, offset=offset)
+                ordered_result = Post.order_posts(result)
+                return ordered_result
+            return []
+        return Post.query().fetch(10, offset=offset)
+
+
+class MyPosts(BaseHandler):
+
+    def get(self):
+        user = self.user
+        fetched_posts = []
+        if user:
+            fetched_posts = [post_key.get().prepare_post(user)
+                             for post_key in user.liked_posts]
+            logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
+        self.response.write(json.dumps(fetched_posts))
+
+
 class SinglePost(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
         shops = body['shops']
         if shops:
-            shop_keys = []
+            post_keys = []
             for shop in shops:
-                shop_keys.append(ndb.Key(urlsafe=shop['key']))
-            post = Post(title=body['title'],
-                        shop_keys=shop_keys)
-            post_key = post.put()
-            self.response.write(json.dumps({'key': post_key.urlsafe()}))
+                post = Post(title=body['title'],
+                            shop_key=ndb.Key(urlsafe=shop['key']))
+                post_keys.append(post.put().urlsafe())
+            self.response.write(json.dumps({'keys': post_keys}))
         else:
             logging.info("post without a shop tried to save itself")
             self.response.write("a post needs a shop")
@@ -246,14 +281,36 @@ class LikePost(BaseHandler):
             user.put()
 
 
+class Stores(BaseHandler):
+
+    def get(self):
+        user = self.user
+        fetched_stores = [store.prepare_store(user) for store in Store.query().fetch(10)]
+        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
+        self.response.write(json.dumps({'shops': fetched_stores}))
+
+
+class MyStores(BaseHandler):
+
+    def get(self):
+        user = self.user
+        fetched_stores = []
+        if user:
+            fetched_stores = [store_key.get().prepare_store(user)
+                              for store_key in user.liked_stores]
+            logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
+        self.response.write(json.dumps(fetched_stores))
+
+
 class LikeStore(BaseHandler):
+
     def post(self):
         body = json.loads(self.request.body)
         stores = []
         if 'key' in body:
-            stores = [get_entity_from_url_key(body['key'])]
+            stores = [ndb.Key(urlsafe=body['key']).get()]
         if 'keys' in body:
-            stores = [get_entity_from_url_key(key)
+            stores = [ndb.Key(urlsafe=key).get()
                       for key in body['keys']]
         user = self.user
         if user:
@@ -271,7 +328,7 @@ class LikeStore(BaseHandler):
                     else:
                         user.liked_stores.append(store.key)
             user.put()
-            stores = [MyStores._prepare_store(store.key, user) for store in stores] # move this out
+            stores = [store.prepare_store(user) for store in stores]
             self.response.write(json.dumps(stores))
 
 
@@ -358,104 +415,6 @@ class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
     def get(self):
         upload_url = blobstore.create_upload_url('/upload_photo')
         self.response.write(json.dumps({'upload_url': upload_url}))
-
-
-class Feed(BaseHandler):
-
-    def get(self, offset):
-        user = self.user
-        raw_posts = self._get_posts(user, offset)
-        fetched_posts = [self._prepare_post(post, user) for post in raw_posts]
-        logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
-        self.response.write(json.dumps(fetched_posts))
-
-    @staticmethod
-    def _prepare_post(post, user):
-        post_dictionary = post.to_dict()
-        # currently not actually supporting multiple shops on a post
-        post_dictionary['store'] = post.shop_keys[0].get().to_dict()
-        del post_dictionary['store']['timestamp']
-        del post_dictionary['shop_keys']
-        post_dictionary['store_key'] = post.shop_keys[0].urlsafe()
-        post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
-        post_dictionary['key'] = post.key.urlsafe()
-
-        if user:
-            post_dictionary['isLiked'] = post.key in user.liked_posts
-            post_dictionary['canDelete'] = user.key == post.author.key
-        else:
-            post_dictionary['isLiked'] = False
-            post_dictionary['canDelete'] = False
-
-        return post_dictionary
-
-    @staticmethod
-    def _get_posts(user, offset):
-        if user:
-            liked_store_keys = user.liked_stores
-            if liked_store_keys:
-                three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
-                query = Post.query(Post.shop_keys.IN(liked_store_keys))
-                filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
-                result = filter_old_posts.fetch(10, offset=offset)
-                ordered_result = Post.order_posts(result)
-                return ordered_result
-            return []
-        return Post.query().fetch(10, offset=offset)
-
-
-class MyStores(BaseHandler):
-
-    def get(self):
-        user = self.user
-        fetched_stores = []
-        if user:
-            fetched_stores = [self._prepare_store(store_key, user)
-                              for store_key in user.liked_stores]
-            logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps(fetched_stores))
-
-    @staticmethod
-    def _prepare_store(store_key, user):
-        store = store_key.get()
-        store_dict = store.to_dict()
-        store_dict['key'] = store.key.urlsafe()
-        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
-
-        if user:
-            store_dict['isLiked'] = store.key in user.liked_stores
-        else:
-            store_dict['isLiked'] = False
-
-        return store_dict
-
-
-class Stores(BaseHandler):
-
-    # def post(self):
-    #     store = Store(name=self.request.get('name'),
-    #                   website=self.request.get('website'))
-    #     store_key = store.put()
-    #     self.response.write(json.dumps({'id': store_key.urlsafe()}))
-
-    def get(self):
-        user = self.user
-        fetched_stores = [self._prepare_store(store, user) for store in Store.query().fetch(10)]
-        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps({'shops': fetched_stores}))
-
-    @staticmethod
-    def _prepare_store(store, user):
-        store_dict = store.to_dict()
-        store_dict['key'] = store.key.urlsafe()
-        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
-
-        if user:
-            store_dict['isLiked'] = store.key in user.liked_stores
-        else:
-            store_dict['isLiked'] = False
-
-        return store_dict
 
 
 class SignupHandler(BaseHandler):
