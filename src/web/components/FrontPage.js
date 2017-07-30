@@ -46,8 +46,8 @@ const FrontPage =
               <SubmitButton
                 onClick={() => {
                   onMorePosts()
-                }
-                }
+                }}
+                contents="More Posts"
               />
             }
             {!areMorePostsLoaded && areMorePosts &&
