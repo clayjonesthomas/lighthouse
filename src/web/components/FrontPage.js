@@ -14,6 +14,7 @@ const FrontPage =
      arePostsLoaded,
      onMorePosts,
      areMorePostsLoaded,
+     areMorePosts,
 
      shops,
      onAddNewShop,
@@ -41,7 +42,7 @@ const FrontPage =
             <span>You'll see some posts once you follow some stores. add some here! --></span>
           }
           <Row>
-            {areMorePostsLoaded &&
+            {areMorePostsLoaded && areMorePosts &&
               <SubmitButton
                 onClick={() => {
                   onMorePosts()
@@ -49,8 +50,13 @@ const FrontPage =
                 }
               />
             }
-            {!areMorePostsLoaded &&
+            {!areMorePostsLoaded && areMorePosts &&
               <Spinner/>
+            }
+            {!areMorePosts &&
+              <div>
+                no more posts, come back later!
+              </div>
             }
           </Row>
         </Col>

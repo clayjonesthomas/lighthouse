@@ -32,7 +32,8 @@ const initialState = {
   form: {},
   isModerator: false,
   postsOffset: 0,
-  areMorePostsLoaded: true
+  areMorePostsLoaded: true,
+  areMorePosts: true
 }
 
 
@@ -181,11 +182,12 @@ function lighthouse(state = initialState, action) {
         areMorePostsLoaded: false
       })
     case MORE_POSTS_RETURN:
-      let newPosts = getUniquePosts(action.data.posts, state.posts)
+      let newPosts = getUniquePosts(action.data.posts, state.displayedPosts)
       return Object.assign({}, state, {
         areMorePostsLoaded: true,
         postsOffset: state.postsOffset+10,
-        posts: state.posts.concat(newPosts)
+        displayedPosts: state.displayedPosts.concat(newPosts),
+        areMorePosts: action.data.posts.length === 10
       })
     default:
       return state
@@ -198,8 +200,12 @@ function getUniquePosts(newPosts, oldPosts){
     let addToPosts = true
 
     oldPosts.forEach(oldPost => {
-      if(newPost.key === oldPost.key)
+      if(newPost.title === oldPost.title)
+        console.log(newPost.key + '\n' + oldPost.key)
+      if(newPost.key === oldPost.key) {
+        debugger
         addToPosts = false
+      }
     })
 
     if(addToPosts)

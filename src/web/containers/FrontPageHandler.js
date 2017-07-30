@@ -20,13 +20,15 @@ class FrontPageHandler extends Component {
         posts={this.props.posts}
         arePostsLoaded={this.props.arePostsLoaded}
         onLike={this.props.onLike}
+        onMorePosts={this.props.getMorePosts}
+        areMorePostsLoaded={this.props.areMorePostsLoaded}
+        areMorePosts={this.props.areMorePosts}
 
         shops={this.props.shops}
         onAddNewShop={this.props.onAddNewShop}
         onSubmitShops={this.props.onSubmitShops}
         onAddShopFinderRef={this.props.onAddShopFinderRef}
         clearShopFinder={this.props.clearShopFinder}
-        onMorePosts={this.props.getMorePosts}
       />
     )
   }
@@ -37,7 +39,8 @@ const mapStateToProps = (state) => {
     posts: state.displayedPosts,
     arePostsLoaded: state.arePostsLoaded,
     shops: state.shops,
-    areMorePostsLoaded: state.areMorePostsLoaded
+    areMorePostsLoaded: state.areMorePostsLoaded,
+    areMorePosts: state.areMorePosts
   }
 }
 
