@@ -330,6 +330,16 @@ class MyStores(BaseHandler):
         self.response.write(json.dumps(fetched_stores))
 
 
+class StorePosts(BaseHandler):
+
+    def get(self, url_key, offset):
+        user = self.user
+        store = ndb.Key(urlsafe=url_key).get()
+        posts = Post.query(Post.shop_key == store.key).fetch(10, offset=int(offset))
+        prepared_posts = [post.prepare_post(user) for post in posts]
+        self.response.write(json.dumps(prepared_posts))
+
+
 class LikeStore(BaseHandler):
 
     def post(self):
@@ -643,6 +653,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
     # webapp2.Route('/rest/store/icon/<url_key:.*>', AddIconToStore, name='single_store'),
     webapp2.Route('/rest/store', SingleStore, name='single_store'),
+    webapp2.Route('/rest/store/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', StorePosts, name='single_store'),
     webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
     # webapp2.Route('/rest/store_img/<url_key:.*>', StoreImage, name='store_image'),
     # webapp2.Route('/rest/store_img', StoreImage, name='store_image'),

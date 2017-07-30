@@ -8,8 +8,6 @@ import {Grid, Col, Row} from 'react-bootstrap'
 const FrontPage =
   ({
      posts,
-     onSelectNewPost,
-     username,
      onLike,
      arePostsLoaded,
      onMorePosts,
@@ -32,14 +30,14 @@ const FrontPage =
         <Col md={8}>
           {arePostsLoaded && posts &&
             posts.map(post => {
-              return <PostBox
+              return <Row><PostBox
                 post={post}
                 key={post.key}
                 post_key={post.key}
                 onLike={() => onLike(post.key)}
                 canDelete={post.canDelete}
                 onDelete={deletePost}
-              />
+              /></Row>
             })
           }
           {arePostsLoaded && !posts.length &&

@@ -1,5 +1,9 @@
 import React, {PropTypes} from 'react'
 import LikeButton from './ui-kit/LikeButton'
+import Spinner from './ui-kit/Spinner'
+import SubmitButton from './ui-kit/SubmitButton'
+import {Grid, Col, Row} from 'react-bootstrap'
+import PostBox from './PostBox'
 
 const StorePage =
   ({
@@ -7,18 +11,67 @@ const StorePage =
     website,
     likes,
     onLike,
-    isLiked
+    isLiked,
+
+    username,
+    deletePost,
+    shopPosts,
+    onLikePost,
+    arePostsLoaded,
+    onMorePosts,
+    areMorePostsLoaded,
+    areMorePosts
+
+
   }) => (
-    <div>
-      {
-        name + '   ' + website + '   ' + likes
-      }
-      <LikeButton
-        onClick={() => onLike()}
-        isPressed={isLiked}
-      />
-      <br/><br/>
-    </div>
+    <Grid>
+      <Row>
+        {
+          name + '   ' + website + '   ' + likes
+        }
+        <LikeButton
+          onClick={() => onLike()}
+          isPressed={isLiked}
+        />
+      </Row>
+      <Row>
+        <Col md={8}>
+          {!arePostsLoaded &&
+            <Spinner/>
+          }
+          {arePostsLoaded && shopPosts &&
+            shopPosts.map(post => {
+              return <Row><PostBox
+                post={post}
+                key={post.key}
+                post_key={post.key}
+                onLike={() => onLikePost(post.key)}
+                canDelete={post.canDelete}
+                onDelete={deletePost}
+              /></Row>
+            })
+          }
+          <Row>
+            {areMorePostsLoaded && areMorePosts &&
+              <SubmitButton
+                onClick={() => {
+                  onMorePosts()
+                }}
+                contents="More Posts"
+              />
+            }
+            {!areMorePostsLoaded && areMorePosts &&
+              <Spinner/>
+            }
+            {!areMorePosts &&
+              <div>
+                no more posts, come back later!
+              </div>
+            }
+          </Row>
+        </Col>
+      </Row>
+    </Grid>
   )
 
 StorePage.propTypes = {

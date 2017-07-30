@@ -16,6 +16,9 @@ import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
 import {SIGN_OUT_REQUEST, SIGN_OUT_RESPONSE} from '../actions/UserInfoActions'
 import {ADD_STORE_ICON_TO_FORM_DATA} from '../actions/NewStoreActions'
 import {MORE_POSTS_REQUEST, MORE_POSTS_RETURN} from '../actions/FrontPageActions'
+import {SHOP_POSTS_REQUEST, SHOP_POSTS_RETURN} from '../actions/StorePageActions'
+import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../actions/StorePageActions'
+
 const initialState = {
   displayedPosts: [],
   displayedShops: [],
@@ -33,7 +36,9 @@ const initialState = {
   isModerator: false,
   postsOffset: 0,
   areMorePostsLoaded: true,
-  areMorePosts: true
+  areMorePosts: true,
+  displayedShopPosts: [],
+  shopPostsOffset: 0
 }
 
 
@@ -188,6 +193,27 @@ function lighthouse(state = initialState, action) {
         postsOffset: state.postsOffset+10,
         displayedPosts: state.displayedPosts.concat(newPosts),
         areMorePosts: action.data.posts.length === 10
+      })
+    case SHOP_POSTS_REQUEST:
+      return Object.assign({}, state, {
+        arePostsLoaded: false
+      })
+    case SHOP_POSTS_RETURN:
+      return Object.assign({}, state, {
+        arePostsLoaded: true,
+        displayedShopPosts: action.data.shopPosts,
+        shopPostsOffset: 10
+      })
+    case MORE_SHOP_POSTS_REQUEST:
+      return Object.assign({}, state, {
+        areMorePostsLoaded: false
+      })
+    case MORE_SHOP_POSTS_RETURN:
+      let newShopPosts = getUniquePosts(action.data.shopPosts, state.displayedShopPosts)
+      return Object.assign({}, state, {
+        areMorePostsLoaded: true,
+        displayedShopPosts: newShopPosts,
+        shopPostsOffset: state.shopPostsOffset+10
       })
     default:
       return state
