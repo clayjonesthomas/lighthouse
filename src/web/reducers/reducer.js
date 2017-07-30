@@ -37,7 +37,6 @@ const initialState = {
   postsOffset: 0,
   areMorePostsLoaded: true,
   areMorePosts: true,
-  displayedShopPosts: [],
   shopPostsOffset: 0
 }
 
@@ -117,13 +116,18 @@ function lighthouse(state = initialState, action) {
         store: action.data.store
       })
     case LIKE_STORE:
-      return Object.assign({}, state, {
+      let newState = Object.assign({}, state, {
         displayedShops: state.displayedShops.map(shop => {
           if(shop.key === action.data.store_key)
             shop.isLiked = !shop.isLiked
           return shop
         })
       })
+      if(state.store) //hack because of overloaded toggleStoreLike
+        newState.store = Object.assign({}, state.store, {
+          isLiked: !state.store.isLiked
+        })
+      return newState
     case LIKE_STORE_RETURN:
       return state
     case REQUEST_MY_SHOPS:
@@ -201,7 +205,7 @@ function lighthouse(state = initialState, action) {
     case SHOP_POSTS_RETURN:
       return Object.assign({}, state, {
         arePostsLoaded: true,
-        displayedShopPosts: action.data.shopPosts,
+        displayedPosts: action.data.shopPosts,
         shopPostsOffset: 10
       })
     case MORE_SHOP_POSTS_REQUEST:
@@ -209,10 +213,10 @@ function lighthouse(state = initialState, action) {
         areMorePostsLoaded: false
       })
     case MORE_SHOP_POSTS_RETURN:
-      let newShopPosts = getUniquePosts(action.data.shopPosts, state.displayedShopPosts)
+      let newShopPosts = getUniquePosts(action.data.shopPosts, state.displayedPosts)
       return Object.assign({}, state, {
         areMorePostsLoaded: true,
-        displayedShopPosts: newShopPosts,
+        displayedPosts: newShopPosts,
         shopPostsOffset: state.shopPostsOffset+10
       })
     default:

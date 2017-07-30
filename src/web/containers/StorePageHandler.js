@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
     arePostsLoaded: state.arePostsLoaded,
     areMorePostsLoaded: state.areMorePostsLoaded,
     areMorePosts: state.areMorePosts,
-    shopPosts: state.displayedShopPosts,
+    shopPosts: state.displayedPosts,
   }
 }
 

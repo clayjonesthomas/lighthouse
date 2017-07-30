@@ -336,7 +336,8 @@ class StorePosts(BaseHandler):
         user = self.user
         store = ndb.Key(urlsafe=url_key).get()
         posts = Post.query(Post.shop_key == store.key).fetch(10, offset=int(offset))
-        prepared_posts = [post.prepare_post(user) for post in posts]
+        ordered_posts = Post.order_posts(posts)
+        prepared_posts = [post.prepare_post(user) for post in ordered_posts]
         self.response.write(json.dumps(prepared_posts))
 
 
