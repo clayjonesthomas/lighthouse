@@ -300,16 +300,19 @@ class LikePost(BaseHandler):
         if user:
             if post.key in user.liked_posts:
                 user.liked_posts.remove(post.key)
+                post.likes -= 1
             else:
                 user.liked_posts.append(post.key)
+                post.likes += 1
             user.put()
+            post.put()
 
 
 class Stores(BaseHandler):
 
     def get(self):
         user = self.user
-        fetched_stores = [store.prepare_store(user) for store in Store.query().fetch(10)]
+        fetched_stores = [store.prepare_store(user) for store in Store.query()]
         logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
         self.response.write(json.dumps({'shops': fetched_stores}))
 
@@ -344,13 +347,18 @@ class LikeStore(BaseHandler):
             if len(stores) > 1:
                 for store in stores:
                     user.liked_stores.append(store.key)
+                    store.likes += 1
+                    store.put()
             else:
                 # is this what it means, what it means to hack
                 for store in stores:
                     if store.key in user.liked_stores:
                         user.liked_stores.remove(store.key)
+                        store.likes -= 1
                     else:
                         user.liked_stores.append(store.key)
+                        store.likes += 1
+                    store.put()
             user.put()
             stores = [store.prepare_store(user) for store in stores]
             self.response.write(json.dumps(stores))
@@ -374,10 +382,11 @@ class SingleStore(BaseHandler):
 
     def post(self):
         user = self.user
+        body = json.loads(self.request.body)
         if user and user.is_moderator:
             store = Store(
-                name=self.request.get('name'),
-                website=self.request.get('website')
+                name=body['name'],
+                website=body['website']
             )
             store_key = store.put()
             self.response.write(json.dumps({'key': store_key.urlsafe()}))

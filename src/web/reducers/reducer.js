@@ -200,10 +200,7 @@ function getUniquePosts(newPosts, oldPosts){
     let addToPosts = true
 
     oldPosts.forEach(oldPost => {
-      if(newPost.title === oldPost.title)
-        console.log(newPost.key + '\n' + oldPost.key)
       if(newPost.key === oldPost.key) {
-        debugger
         addToPosts = false
       }
     })

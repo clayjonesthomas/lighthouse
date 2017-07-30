@@ -28,7 +28,7 @@ class Comment(ndb.Model):
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
     shop_key = ndb.KeyProperty(indexed=True, kind='Store')
-    likes = ndb.IntegerProperty(indexed=True, default=0)
+    likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
     comment_amount = ndb.IntegerProperty(indexed=True, default=0)
@@ -54,7 +54,8 @@ class Post(ndb.Model):
 
         if user:
             post_dictionary['isLiked'] = self.key in user.liked_posts
-            post_dictionary['canDelete'] = user.key == self.author.key
+            if self.author:
+                post_dictionary['canDelete'] = user.key == self.author.key
         else:
             post_dictionary['isLiked'] = False
             post_dictionary['canDelete'] = False
@@ -65,7 +66,7 @@ class Post(ndb.Model):
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
-    likes = ndb.IntegerProperty(indexed=True, default=0)
+    likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
 

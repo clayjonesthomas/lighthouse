@@ -11,7 +11,7 @@ export function submitStore() {
     const refs = state.formRefs
     const name = refs.store_name.value
     const website = refs.store_website.value
-    const icon = refs.icon
+    // const icon = refs.icon
     const body = {
       name: name,
       website: website,
@@ -26,23 +26,24 @@ export function submitStore() {
 
     return fetch(NEW_STORE_URL, formArgs)
       .then(response => response.json())
-      .then(json => {
-        let data = new FormData()
-        data.append('file',icon)
-        const iconArgs = {
-          method: 'POST',
-          credentials: 'same-origin',
-          enctype: "multipart/form-data",
-          body: data
-        }
-        fetch(ADD_STORE_ICON+`/${json.key}`, iconArgs)
-          .then(response => {
-            response.json()
-          })
-          .then(json => {
-            dispatch(onSubmitResponse(json))
-          })
-      })
+      .then(json => onSubmitResponse())
+      //   json => {
+      //   let data = new FormData()
+      //   data.append('file',icon)
+      //   const iconArgs = {
+      //     method: 'POST',
+      //     credentials: 'same-origin',
+      //     enctype: "multipart/form-data",
+      //     body: data
+      //   }
+      //   fetch(ADD_STORE_ICON+`/${json.key}`, iconArgs)
+      //     .then(response => {
+      //       response.json()
+      //     })
+      //     .then(json => {
+      //       dispatch(onSubmitResponse(json))
+      //     })
+      // })
 
   }
 }
