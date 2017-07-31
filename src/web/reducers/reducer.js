@@ -220,9 +220,9 @@ function lighthouse(state = initialState, action) {
       let newShopPosts = getUniquePosts(action.data.shopPosts, state.displayedPosts)
       return Object.assign({}, state, {
         areMorePostsLoaded: true,
-        displayedPosts: newShopPosts,
+        displayedPosts: state.displayedPosts.concat(newShopPosts),
         shopPostsOffset: state.shopPostsOffset+10,
-        areMorePosts: action.data.posts.length === 10
+        areMorePosts: newShopPosts.length === 10
       })
     case MY_POSTS_REQUEST:
       return Object.assign({}, state, {
@@ -244,7 +244,7 @@ function lighthouse(state = initialState, action) {
       return Object.assign({}, state, {
         areMorePostsLoaded: true,
         postsOffset: state.postsOffset+10,
-        displayedPosts: newMyPosts,
+        displayedPosts: state.displayedPosts.concat(newMyPosts),
         areMorePosts: action.data.posts.length === 10
       })
     default:
