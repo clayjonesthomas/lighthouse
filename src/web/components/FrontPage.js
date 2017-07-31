@@ -30,9 +30,8 @@ const FrontPage =
         <Col md={8}>
           {arePostsLoaded && posts &&
             posts.map(post => {
-              return <Row><PostBox
+              return <Row key={post.key}><PostBox
                 post={post}
-                key={post.key}
                 post_key={post.key}
                 onLike={() => onLike(post.key)}
                 canDelete={post.canDelete}

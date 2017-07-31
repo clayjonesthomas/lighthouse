@@ -26,11 +26,10 @@ const MyShopsPage =
           <Col md={8}>
             {areShopsLoaded && myShops &&
               myShops.map(shop => {
-                return <ShopBox
+                return <Row key={shop.key}><ShopBox
                   shop={shop}
-                  key={shop.key}
                   onLike={() => onLike(shop.key)}
-                />
+                /></Row>
               })
             }
             {areShopsLoaded && !myShops &&

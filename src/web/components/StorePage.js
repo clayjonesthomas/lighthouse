@@ -41,9 +41,8 @@ const StorePage =
           }
           {arePostsLoaded && shopPosts &&
             shopPosts.map(post => {
-              return <Row><PostBox
+              return <Row key={post.key}><PostBox
                 post={post}
-                key={post.key}
                 post_key={post.key}
                 onLike={() => onLikePost(post.key)}
                 canDelete={post.canDelete}
