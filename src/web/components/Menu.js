@@ -6,7 +6,8 @@ const Menu =
     onSelectNewPost,
     username,
     isModerator,
-    onAddAShop
+    onAddAShop,
+    onMyPosts
   }) => (
     <div style={{'borderStyle': 'solid'}}>
       {
@@ -20,7 +21,14 @@ const Menu =
         <button
         type="button"
         onClick={() => onMyShops()}>
-        My Shops
+        Liked Shops
+      </button>
+      }
+      {username &&
+      <button
+        type="button"
+        onClick={() => onMyPosts()}>
+        Liked Posts
       </button>
       }
       {username &&

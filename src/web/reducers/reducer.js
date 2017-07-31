@@ -18,6 +18,8 @@ import {ADD_STORE_ICON_TO_FORM_DATA} from '../actions/NewStoreActions'
 import {MORE_POSTS_REQUEST, MORE_POSTS_RETURN} from '../actions/FrontPageActions'
 import {SHOP_POSTS_REQUEST, SHOP_POSTS_RETURN} from '../actions/StorePageActions'
 import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../actions/StorePageActions'
+import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
+import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -62,7 +64,8 @@ function lighthouse(state = initialState, action) {
     case REQUEST_POSTS:
       return Object.assign({}, state, {
         arePostsLoaded: false,
-        postsOffset: 10
+        postsOffset: 10,
+        areMorePosts: true
       })
     case REQUEST_POSTS_RETURN:
       if(action.data.posts)
@@ -200,7 +203,8 @@ function lighthouse(state = initialState, action) {
       })
     case SHOP_POSTS_REQUEST:
       return Object.assign({}, state, {
-        arePostsLoaded: false
+        arePostsLoaded: false,
+        areMorePosts: true
       })
     case SHOP_POSTS_RETURN:
       return Object.assign({}, state, {
@@ -217,7 +221,31 @@ function lighthouse(state = initialState, action) {
       return Object.assign({}, state, {
         areMorePostsLoaded: true,
         displayedPosts: newShopPosts,
-        shopPostsOffset: state.shopPostsOffset+10
+        shopPostsOffset: state.shopPostsOffset+10,
+        areMorePosts: action.data.posts.length === 10
+      })
+    case MY_POSTS_REQUEST:
+      return Object.assign({}, state, {
+        arePostsLoaded: false,
+        areMorePosts: true
+      })
+    case MY_POSTS_RESPONSE:
+      return Object.assign({}, state, {
+        arePostsLoaded: true,
+        postsOffset: 10,
+        displayedPosts: action.data.posts
+      })
+    case MORE_MY_POSTS_REQUEST:
+      return Object.assign({}, state, {
+        areMorePostsLoaded: false
+      })
+    case MORE_MY_POSTS_RESPONSE:
+      let newMyPosts = getUniquePosts(action.data.posts, state.displayedPosts)
+      return Object.assign({}, state, {
+        areMorePostsLoaded: true,
+        postsOffset: state.postsOffset+10,
+        displayedPosts: newMyPosts,
+        areMorePosts: action.data.posts.length === 10
       })
     default:
       return state

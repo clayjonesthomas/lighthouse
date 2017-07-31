@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onAddAShop: () => {
       browserHistory.push('/new_shop')
+    },
+    onMyPosts: () => {
+      browserHistory.push('/posts')
     }
   }
 }
