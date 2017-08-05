@@ -20,6 +20,7 @@ import {SHOP_POSTS_REQUEST, SHOP_POSTS_RETURN} from '../actions/StorePageActions
 import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../actions/StorePageActions'
 import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
+import {IS_USER_MOBILE} from '../actions/UserActions'
 
 const initialState = {
   displayedPosts: [],
@@ -39,11 +40,12 @@ const initialState = {
   postsOffset: 0,
   areMorePostsLoaded: true,
   areMorePosts: true,
-  shopPostsOffset: 0
+  shopPostsOffset: 0,
+  isMobile: false
 }
 
 
-function lighthouse(state = initialState, action) {
+function store(state = initialState, action) {
   switch (action.type) {
     case SHOW_MODAL:
       switch (action.meta) {
@@ -247,6 +249,11 @@ function lighthouse(state = initialState, action) {
         displayedPosts: state.displayedPosts.concat(newMyPosts),
         areMorePosts: action.data.posts.length === 10
       })
+    case IS_USER_MOBILE:
+      console.log(action.data.isUserMobile)
+      return Object.assign({}, state, {
+        isMobile: action.data.isUserMobile
+      })
     default:
       return state
   }
@@ -269,4 +276,4 @@ function getUniquePosts(newPosts, oldPosts){
   return uniquePosts
 }
 
-export default lighthouse
+export default store
