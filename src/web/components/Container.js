@@ -6,6 +6,10 @@ import UserInfoHandler from '../containers/UserInfoHandler.js'
 import {Grid, Row, Col} from 'react-bootstrap'
 import {isUserMobile} from '../actions/UserActions'
 
+// mobile
+import MobileMenuHandler from '../containers/MobileMenuHandler'
+import "./MobileMenu.css"
+
 class Container extends Component {
 
   componentDidMount () {
@@ -16,20 +20,35 @@ class Container extends Component {
 
     return (
       <div>
-        <UserInfoHandler/>
+        {!this.props.isUserMobile &&
+          <UserInfoHandler/>
+        }
         <ModalHandler
           modal={this.props.modal}
         />
-        <Grid>
-          <Row>
-            <Col md={2}>
-              <MenuHandler/>
-            </Col>
-            <Col md={10}>
+
+        {this.props.isUserMobile &&
+          <MobileMenuHandler/>
+        }
+        {this.props.isUserMobile &&
+          <Grid id="mobile-children-grid">
+            <Row>
               {this.props.children}
-            </Col>
-          </Row>
-        </Grid>
+            </Row>
+          </Grid>
+        }
+        {!this.props.isUserMobile &&
+          <Grid>
+            <Row>
+              <Col md={2}>
+                <MenuHandler/>
+              </Col>
+              <Col md={10}>
+                {this.props.children}
+              </Col>
+            </Row>
+          </Grid>
+        }
       </div>
     )
   }

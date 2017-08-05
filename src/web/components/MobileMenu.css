@@ -1,0 +1,17 @@
+#hamburger-dropdown{
+}
+#mobile-menu{
+    position: fixed;
+    font-size: 3em;
+    background: black;
+    width: 100%;
+    z-index: 2;
+}
+#mobile-children-grid{
+    position: relative;
+    top: 100px;
+    font-size: 3em;
+}
+.menu-button{
+    margin: 1em 1em 1em 1em;
+}

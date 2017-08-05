@@ -21,6 +21,7 @@ import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../actions/StoreP
 import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 import {IS_USER_MOBILE} from '../actions/UserActions'
+import {SHOW_HAMBURGER_MENU, HIDE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
 
 const initialState = {
   displayedPosts: [],
@@ -41,7 +42,8 @@ const initialState = {
   areMorePostsLoaded: true,
   areMorePosts: true,
   shopPostsOffset: 0,
-  isMobile: false
+  isMobile: false,
+  displayHamburgerMenu: false
 }
 
 
@@ -253,6 +255,14 @@ function store(state = initialState, action) {
       console.log(action.data.isUserMobile)
       return Object.assign({}, state, {
         isMobile: action.data.isUserMobile
+      })
+    case SHOW_HAMBURGER_MENU:
+      return Object.assign({}, state, {
+        displayHamburgerMenu: true
+      })
+    case HIDE_HAMBURGER_MENU:
+      return Object.assign({}, state, {
+        displayHamburgerMenu: false
       })
     default:
       return state
