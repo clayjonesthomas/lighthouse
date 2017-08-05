@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import LoginModalHandler from './LoginHandler'
+import SignUpHandler from './SignUpHandler'
 import {connect} from 'react-redux'
 import {cancelModal} from '../actions/AuthActions'
 
 const MODAL_COMPONENTS = {
-  'LOGIN': LoginModalHandler
+  'LOGIN': LoginModalHandler,
+  'SIGN_UP': SignUpHandler
 }
 
 const ModalRoot = ({ modal, onCancel }) => {

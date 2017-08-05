@@ -20,13 +20,12 @@ class Container extends Component {
 
     return (
       <div>
-        {!this.props.isUserMobile &&
-          <UserInfoHandler/>
-        }
         <ModalHandler
           modal={this.props.modal}
         />
-
+        {!this.props.isUserMobile &&
+          <UserInfoHandler/>
+        }
         {this.props.isUserMobile &&
           <MobileMenuHandler/>
         }

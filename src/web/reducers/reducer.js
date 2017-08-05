@@ -22,6 +22,7 @@ import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions
 import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 import {IS_USER_MOBILE} from '../actions/UserActions'
 import {SHOW_HAMBURGER_MENU, HIDE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
+import {SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../actions/AuthActions'
 
 const initialState = {
   displayedPosts: [],
@@ -263,6 +264,11 @@ function store(state = initialState, action) {
     case HIDE_HAMBURGER_MENU:
       return Object.assign({}, state, {
         displayHamburgerMenu: false
+      })
+    case SIGN_UP_RESPONSE:
+      debugger
+      return Object.assign({}, state, {
+        username: action.data.username
       })
     default:
       return state

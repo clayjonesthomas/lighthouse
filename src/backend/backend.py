@@ -471,7 +471,7 @@ class SignupHandler(BaseHandler):
         password = self.request.get('password')
         unique_properties = ['email_address']  # username automatically unique
         is_moderator = False
-        if self.request.get('username') == 'admin':
+        if self.request.get('username') == 'admin':  # so, so bad
             is_moderator = True
         user_data = self.user_model.create_user(user_name,
                                                 unique_properties,
@@ -491,7 +491,10 @@ class SignupHandler(BaseHandler):
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
 
-        self.response.write(verification_url)
+        self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
+        # I'm sorry rivest
+        # self.response.write(verification_url)
+        self.response.write(json.dumps({'username': user.username}))
 
 
 class ForgotPasswordHandler(BaseHandler):

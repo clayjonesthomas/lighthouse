@@ -17,6 +17,7 @@ const MobileMenu =
 
 
      signOut,
+     onShowMobileSignUp,
      onShowMobileLogin
    }) => (
     <div id="mobile-menu">
@@ -25,7 +26,15 @@ const MobileMenu =
           className="menu-button"
           type="button"
           onClick={onShowMobileLogin}>
-          Sign in
+          Log in
+        </button>
+      }
+      {!username &&
+        <button
+          className="menu-button"
+          type="button"
+          onClick={onShowMobileSignUp}>
+          Sign up
         </button>
       }
       {username &&

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import MobileMenu from '../components/MobileMenu.js'
 import {goHome, goMyShops} from '../actions/MenuActions.js'
 import {pullUserInfo, signOut} from '../actions/UserInfoActions'
-import {showLogin} from '../actions/AuthActions'
+import {showSignUp, showLogin} from '../actions/AuthActions'
 import {showHamburgerMenu, hideHamburgerMenu} from '../actions/MobileMenuActions'
 
 const mapStateToProps = (state) => {
@@ -39,6 +39,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(pullUserInfo())
     },
     onShowMobileLogin: () => dispatch(showLogin()),
+    onShowMobileSignUp: () => dispatch(showSignUp()),
     signOut: () => dispatch(signOut()),
     showMenu: () => dispatch(showHamburgerMenu()),
     hideMenu: () => dispatch(hideHamburgerMenu()),
