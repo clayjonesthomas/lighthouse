@@ -5,25 +5,9 @@ import {Link} from 'react-router'
 import './LoginModal.css'
 
 import Modal from 'react-modal'
-import {Col, FormGroup} from 'react-bootstrap'
+import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
-
-const LOGIN_USERNAME = "LOGIN_USERNAME"
-const LOGIN_PASSWORD = "LOGIN_PASSWORD"
-const SIGN_UP_USERNAME = "SIGN_UP_USERNAME"
-const SIGN_UP_PASSWORD_1 = "SIGN_UP_PASSWORD_1"
-const SIGN_UP_PASSWORD_2 = "SIGN_UP_PASSWORD_2"
-
-// move me eventually
-var LoginStyle = {
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,.78)',
-  },
-  content: {
-    borderRadius: '8px',
-    backgroundColor: '#caffff'
-  }
-}
+import {GlobalModalStyle} from './GlobalModalStyle'
 
 class SignUpModal extends Component {
 
@@ -32,7 +16,7 @@ class SignUpModal extends Component {
       <Modal
         isOpen={true}
         contentLabel='Login'
-        style={LoginStyle}
+        style={GlobalModalStyle}
       >
         <button
           type="button"
@@ -41,24 +25,6 @@ class SignUpModal extends Component {
         </button>
         <p className='auth-title'> Login or Sign Up </p>
         <FormGroup>
-          <Col componentClass='login' sm={6}>
-            <TextBox
-              placeholder="username"
-              refFunc={ref => {
-                this.login_username = ref
-              }}
-            />
-            <br/>
-            <TextBox
-              placeholder="password"
-              refFunc={ref => this.login_password = ref}
-            />
-            <br/>
-            <SubmitButton
-              onClick={() => this.props.onLogin(this.login_username.value,
-                this.login_password.value)}
-            />
-          </Col>
           <Col componentClass='sign-up' sm={6}>
             <TextBox
               placeholder="choose a username"
