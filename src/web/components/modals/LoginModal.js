@@ -9,7 +9,7 @@ import Modal from 'react-modal'
 import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
 import XGraphic from '../ui-kit/XGraphic'
-import {USERNAME, PASSWORD_1} from '../../containers/LoginHandler'
+import {LOGIN_USERNAME, LOGIN_PASSWORD} from '../../actions/AuthActions'
 
 
 class LoginModal extends Component {
@@ -29,12 +29,12 @@ class LoginModal extends Component {
           <Col componentClass='login' sm={6}>
             <TextBox
               placeholder="username"
-              refFunc={ref => this.props.onSaveRef(ref, USERNAME)}
+              refFunc={ref => this.props.onSaveRef(ref, LOGIN_USERNAME)}
             />
             <br/>
             <TextBox
               placeholder="password"
-              refFunc={ref => this.props.onSaveRef(ref, USERNAME)}
+              refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
             />
             <br/>
             <SubmitButton
@@ -50,9 +50,7 @@ class LoginModal extends Component {
 
 LoginModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
-  onSignUp: PropTypes.func.isRequired
-
+  onLogin: PropTypes.func.isRequired
 }
 
 export default LoginModal

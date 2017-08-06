@@ -12,6 +12,12 @@ export const REF_FUNC_AUTH = 'REF_FUNC_AUTH'
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
 export const SIGN_UP_RESPONSE = 'SIGN_UP_RESPONSE'
 
+export const SIGN_UP_USERNAME = 'SIGN_UP_USERNAME'
+export const SIGN_UP_PASSWORD_1 = 'SIGN_UP_PASSWORD_1'
+export const SIGN_UP_PASSWORD_2 = 'SIGN_UP_PASSWORD_2'
+export const LOGIN_USERNAME = 'LOGIN_USERNAME'
+export const LOGIN_PASSWORD = 'LOGIN_PASSWORD'
+
 export const cancelModal = () => {
   return {
     type: SHOW_MODAL,
@@ -48,16 +54,20 @@ export const responseLogin = (username) => {
   }
 }
 
-export function logInUser(user, pass) {
-  const args = {
-    method: 'POST',
-    credentials: 'same-origin',
-    body: JSON.stringify({
-      username: user,
-      password: pass
-    })
-  }
-  return dispatch => {
+export function logInUser() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const refs = state.formRefs
+    const username = refs[LOGIN_USERNAME]
+    const password = refs[LOGIN_PASSWORD]
+    const args = {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
+    }
     dispatch(requestLogin())
     return fetch(LOGIN_URL, args)
       .then(response => response.json())
@@ -80,16 +90,20 @@ export const signUpResponse = (username) => {
   }
 }
 
-export function signUpUser(user, pass) {
-  const args = {
-    method: 'POST',
-    credentials: 'same-origin',
-    body: JSON.stringify({
-      username: user,
-      password: pass
-    })
-  }
-  return dispatch => {
+export function signUpUser() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const refs = state.formRefs
+    const username = refs[SIGN_UP_USERNAME]
+    const password = refs[SIGN_UP_PASSWORD_1]
+    const args = {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
+    }
     dispatch(signUpRequest())
     return fetch(SIGN_UP_URL, args)
       .then(response => response.json())
