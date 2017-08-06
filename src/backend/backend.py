@@ -480,8 +480,9 @@ class SignupHandler(BaseHandler):
                                                 verified=False,
                                                 is_moderator=is_moderator)
         if not user_data[0]:  # user_data is a tuple
-            self.response.write('Unable to create user for username %s because of '
-                                'duplicate keys %s' % (user_name, user_data[1]))
+            logging.info('Unable to create user for username %s because of '
+                         'duplicate keys %s' % (user_name, user_data[1]))
+            self.response.write(json.dumps({'error':'duplicate username'}))
             return
 
         user = user_data[1]

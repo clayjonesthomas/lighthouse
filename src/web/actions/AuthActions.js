@@ -58,8 +58,8 @@ export function logInUser() {
   return (dispatch, getState) => {
     const state = getState()
     const refs = state.formRefs
-    const username = refs[LOGIN_USERNAME]
-    const password = refs[LOGIN_PASSWORD]
+    const username = refs[LOGIN_USERNAME].value
+    const password = refs[LOGIN_PASSWORD].value
     const args = {
       method: 'POST',
       credentials: 'same-origin',

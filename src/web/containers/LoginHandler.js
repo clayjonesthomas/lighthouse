@@ -12,7 +12,8 @@ class LoginHandler extends Component {
         onLogin={this.props.onLogin}
         onCancel={this.props.onCancel}
         showSignUp={this.props.showSignUp}
-        isMoble={this.props.isMobile}
+        isMobile={this.props.isMobile}
+        onSaveRef={this.props.onSaveRef}
       />
     )
   }

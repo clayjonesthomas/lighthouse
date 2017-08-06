@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {showLogin, signUpUser} from '../actions/AuthActions'
 import SignUpModal from '../components/modals/SignUpModal'
+import {onSaveRef} from '../actions/NewPostActions'
 
 class SignUpHandler extends Component {
 
@@ -12,6 +13,7 @@ class SignUpHandler extends Component {
         onCancel={this.props.onCancel}
         showSignUp={this.props.showSignUp}
         isMobile={this.props.isMobile}
+        onSaveRef={this.props.onSaveRef}
       />
     )
   }
@@ -20,7 +22,8 @@ class SignUpHandler extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSignUp: () => dispatch(signUpUser()),
-    showLogin: () => dispatch(showLogin())
+    showLogin: () => dispatch(showLogin()),
+    onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type))
   }
 }
 
