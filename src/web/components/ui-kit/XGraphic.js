@@ -2,12 +2,16 @@ import React, {PropTypes} from 'react'
 
 const XGraphic = (
   {
-    color
+    color,
+    onClick
   }
 ) => (
   <svg
-    stroke={color}
-    viewBox="0 0 32 32">
+    stroke={color ? color : '#000000'}
+    width="50"
+    height="50"
+    onClick={onClick}
+  >
     <line
       strokeWidth="4"
       x1="2"
@@ -24,7 +28,8 @@ const XGraphic = (
 )
 
 XGraphic.PropTypes = {
-  color: PropTypes.string.isRequired
+  color: PropTypes.string,
+  onClick: PropTypes.func
 }
 
 export default XGraphic

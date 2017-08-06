@@ -8,6 +8,8 @@ import Modal from 'react-modal'
 import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
 import {GlobalModalStyle} from './GlobalModalStyle'
+import XGraphic from '../ui-kit/XGraphic'
+import {USERNAME, PASSWORD_1, PASSWORD_2} from '../../containers/LoginHandler'
 
 class SignUpModal extends Component {
 
@@ -18,34 +20,29 @@ class SignUpModal extends Component {
         contentLabel='Login'
         style={GlobalModalStyle}
       >
-        <button
-          type="button"
-          onClick={() => this.props.onCancel()}>
-          cancel
-        </button>
+        <XGraphic
+          onClick={() => this.props.onCancel()}
+        />
         <p className='auth-title'> Login or Sign Up </p>
         <FormGroup>
           <Col componentClass='sign-up' sm={6}>
             <TextBox
               placeholder="choose a username"
-              refFunc={ref => this.sign_up_username = ref}
+              refFunc={ref => this.props.onSaveRef(ref, USERNAME)}
             />
             <br/>
             <TextBox
               placeholder="enter a password"
-              refFunc={ref => this.sign_up_password_1 = ref}
+              refFunc={ref => this.props.onSaveRef(ref, PASSWORD_1)}
             />
             <br/>
             <TextBox
               placeholder="confirm your password"
-              refFunc={ref => this.sign_up_password_2 = ref}
+              refFunc={ref => this.props.onSaveRef(ref, PASSWORD_2)}
             />
             <br/>
             <SubmitButton
-              onClick={ () =>
-                this.props.onSignUp(this.sign_up_username.value,
-                  this.sign_up_password_1.value,
-                  this.sign_up_password_2.value)}
+              onClick={() => this.props.onSignUp()}
             />
           </Col>
         </FormGroup>

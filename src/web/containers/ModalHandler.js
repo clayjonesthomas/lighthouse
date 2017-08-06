@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react'
 import LoginModalHandler from './LoginHandler'
 import SignUpHandler from './SignUpHandler'
 import {connect} from 'react-redux'

@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import LoginModal from '../components/modals/LoginModal'
-import {cancelModal, logInUser, signUpUser} from '../actions/AuthActions'
+import {logInUser, signUpUser} from '../actions/AuthActions'
+import {onSaveRef} from '../actions/NewPostActions'
 
 class LoginHandler extends Component {
 
@@ -20,7 +21,8 @@ class LoginHandler extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (user, pass) => dispatch(logInUser(user, pass)),
-    showSignUp: () => dispatch(showSignUp())
+    showSignUp: () => dispatch(showSignUp()),
+    onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type))
   }
 }
 
@@ -30,6 +32,10 @@ const mapStateToProps = (state, ownProps) => {
     isMobile: state.isMobile
   }
 }
+
+export const USERNAME = 'USERNAME'
+export const PASSWORD_1 = 'PASSWORD_1'
+export const PASSWORD_2 = 'PASSWORD_2'
 
 export default connect(
   mapStateToProps,

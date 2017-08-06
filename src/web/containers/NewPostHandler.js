@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
 import {pushPost, cancelPost, onSaveRef, pullShops,
-  onUpdateFormShops} from '../actions/NewPostActions.js'
+  onUpdateFormShops} from '../actions/NewPostActions'
 
 class NewPostHandler extends Component {
 

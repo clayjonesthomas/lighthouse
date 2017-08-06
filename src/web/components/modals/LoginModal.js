@@ -8,6 +8,8 @@ import {GlobalModalStyle} from './GlobalModalStyle'
 import Modal from 'react-modal'
 import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
+import XGraphic from '../ui-kit/XGraphic'
+import {USERNAME, PASSWORD_1} from '../../containers/LoginHandler'
 
 
 class LoginModal extends Component {
@@ -19,29 +21,24 @@ class LoginModal extends Component {
         contentLabel='Login'
         style={GlobalModalStyle}
       >
-        <button
-          type="button"
-          onClick={() => this.props.onCancel()}>
-          cancel
-        </button>
+        <XGraphic
+          onClick={() => this.props.onCancel()}
+        />
         <p className='auth-title'> Login </p>
         <FormGroup>
           <Col componentClass='login' sm={6}>
             <TextBox
               placeholder="username"
-              refFunc={ref => {
-              this.login_username = ref
-              }}
+              refFunc={ref => this.props.onSaveRef(ref, USERNAME)}
             />
             <br/>
             <TextBox
               placeholder="password"
-              refFunc={ref => this.login_password = ref}
+              refFunc={ref => this.props.onSaveRef(ref, USERNAME)}
             />
             <br/>
             <SubmitButton
-              onClick={() => this.props.onLogin(this.login_username.value,
-                this.login_password.value)}
+              onClick={() => this.props.onLogin()}
             />
           </Col>
         </FormGroup>
