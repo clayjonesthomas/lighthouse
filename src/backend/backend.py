@@ -466,16 +466,18 @@ class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
 class SignupHandler(BaseHandler):
 
     def post(self):
-        user_name = self.request.get('username')
-        email = self.request.get('email')
-        password = self.request.get('password')
-        unique_properties = ['email_address']  # username automatically unique
+        import pdb; pdb.set_trace()
+        body = json.loads(self.request.body)
+        user_name = body['username']
+        # email = self.request.get('email')
+        password = body['password']
+        # unique_properties = ['email_address']  # username is automatically unique, we don't need it here too
         is_moderator = False
         if self.request.get('username') == 'admin':  # so, so bad
             is_moderator = True
         user_data = self.user_model.create_user(user_name,
-                                                unique_properties,
-                                                email_address=email,
+                                                # unique_properties,
+                                                # email_address=email,
                                                 password_raw=password,
                                                 verified=False,
                                                 is_moderator=is_moderator)

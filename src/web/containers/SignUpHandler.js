@@ -9,7 +9,7 @@ class SignUpHandler extends Component {
   render () {
     return (
       <SignUpModal
-        onSignUp={this.props.onLogin}
+        onSignUp={this.props.onSignUp}
         onCancel={this.props.onCancel}
         showSignUp={this.props.showSignUp}
         isMobile={this.props.isMobile}

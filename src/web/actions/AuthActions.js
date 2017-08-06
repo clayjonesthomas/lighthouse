@@ -94,8 +94,8 @@ export function signUpUser() {
   return (dispatch, getState) => {
     const state = getState()
     const refs = state.formRefs
-    const username = refs[SIGN_UP_USERNAME]
-    const password = refs[SIGN_UP_PASSWORD_1]
+    const username = refs[SIGN_UP_USERNAME].value
+    const password = refs[SIGN_UP_PASSWORD_1].value
     const args = {
       method: 'POST',
       credentials: 'same-origin',
