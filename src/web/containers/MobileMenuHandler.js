@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     onShowMobileLogin: () => dispatch(showLogin()),
     onShowMobileSignUp: () => dispatch(showSignUp()),
     signOut: () => dispatch(signOut()),
-    showMenu: () => dispatch(toggleHamburgerMenu())
+    toggleMenu: () => dispatch(toggleHamburgerMenu())
   }
 }
 

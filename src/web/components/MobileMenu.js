@@ -11,8 +11,7 @@ const MobileMenu =
      onAddAShop,
      onMyPosts,
 
-     showMenu,
-     hideMenu,
+     toggleMenu,
      isHamburgerMenuDisplayed,
 
 
@@ -38,48 +37,71 @@ const MobileMenu =
         </button>
       }
       {username &&
-      <button
-        className="menu-button"
-        type="button"
-        onClick={showMenu}>
-        hamburger
-      </button>
+        <span>Hi {username}!</span>
+      }
+      {username &&
+        <button
+          className="menu-button"
+          type="button"
+          onClick={() =>
+            toggleMenu()
+          }>
+          hamburger
+        </button>
       }
       {isHamburgerMenuDisplayed &&
         <ul id="hamburger-dropdown">
           {
             <li
-              onClick={() => onHome()}>
+              onClick={() =>{
+                toggleMenu()
+                onHome()
+              }}>
               Home
             </li>
           }
           {username &&
           <li
-            onClick={() => onMyShops()}>
+            onClick={() =>{
+              toggleMenu()
+              onMyShops()
+            }}>
             Liked Shops
           </li>
           }
           {username &&
           <li
-            onClick={() => onMyPosts()}>
+            onClick={() =>{
+              toggleMenu()
+              onMyPosts()
+            }}>
             Liked Posts
           </li>
           }
           {username &&
           <li
-            onClick={() => onSelectNewPost()}>
+            onClick={() =>{
+              toggleMenu()
+              onSelectNewPost()
+            }}>
             Submit a Sale
           </li>
           }
           {username && isModerator &&
           <li
-            onClick={() => onAddAShop()}>
+            onClick={() =>{
+              toggleMenu()
+              onAddAShop()
+            }}>
             Add a Store
           </li>
           }
           {username &&
           <li
-            onClick={signOut}>
+            onClick={() =>{
+              toggleMenu()
+              signOut()
+            }}>
             Log Out
           </li>
           }

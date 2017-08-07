@@ -483,7 +483,7 @@ class SignupHandler(BaseHandler):
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for username %s because of '
                          'duplicate keys %s' % (user_name, user_data[1]))
-            self.response.write(json.dumps({'error':'duplicate username'}))
+            self.response.write(json.dumps({'error': 'duplicate username'}))
             return
 
         user = user_data[1]
@@ -583,7 +583,7 @@ class VerificationHandler(BaseHandler):
             user.set_password(new_password)
             user.toggle_login(enable=True)
             user.put()
-            self.response.write("user {} has had their password updated".format(user.username))
+            self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -604,13 +604,16 @@ class LoginHandler(BaseHandler):
                     self.response.write(json.dumps({'username': self.user.username}))
                 else:
                     logging.info('Login failed for user %s because they reset their password', username)
-                    self.response.write('Login failed; {}'.format('login attempted during password reset'))
+                    self.response.write(json.dumps({'error': 'PASSWORD_RESET'}))
             else:
                 logging.info('Login failed for user %s because they are unverified', username)
-                self.response.write('Login failed; {}'.format('unverified'))
+                self.response.write(json.dumps({
+                    'username': self.user.username,
+                    'error': 'UNVERIFIED'
+                }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', username, type(e))
-            self.response.write('Login failed; bad username or password')
+            self.response.write(json.dumps({'error': 'INVALID_AUTH'}))
 
     def get(self):
         """

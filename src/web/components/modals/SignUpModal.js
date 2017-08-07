@@ -23,7 +23,10 @@ class SignUpModal extends Component {
         <XGraphic
           onClick={() => this.props.onCancel()}
         />
-        <p className='auth-title'> Login or Sign Up </p>
+        <p className='auth-title'> Sign Up </p>
+        {this.props.message &&
+          <span>{this.props.message}</span>
+        }
         <FormGroup>
           <Col componentClass='sign-up' sm={6}>
             <TextBox

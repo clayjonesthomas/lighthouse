@@ -14,6 +14,7 @@ class SignUpHandler extends Component {
         showSignUp={this.props.showSignUp}
         isMobile={this.props.isMobile}
         onSaveRef={this.props.onSaveRef}
+        message={this.props.message}
       />
     )
   }
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    message: state.serverMessage,
     onCancel: () => ownProps.onCancel(),
     isMobile: state.isMobile
   }

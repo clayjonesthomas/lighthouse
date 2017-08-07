@@ -18,6 +18,9 @@ export const SIGN_UP_PASSWORD_2 = 'SIGN_UP_PASSWORD_2'
 export const LOGIN_USERNAME = 'LOGIN_USERNAME'
 export const LOGIN_PASSWORD = 'LOGIN_PASSWORD'
 
+export const LOGIN_RESPONSE_FAILED = 'LOGIN_RESPONSE_FAILED'
+export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
+
 export const cancelModal = () => {
   return {
     type: SHOW_MODAL,
@@ -54,6 +57,15 @@ export const responseLogin = (username) => {
   }
 }
 
+export const loginResponseFailed = (error) => {
+  return {
+    type: LOGIN_RESPONSE_FAILED,
+    data: {
+      error: error
+    }
+  }
+}
+
 export function logInUser() {
   return (dispatch, getState) => {
     const state = getState()
@@ -71,7 +83,12 @@ export function logInUser() {
     dispatch(requestLogin())
     return fetch(LOGIN_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(responseLogin(json.username)))
+      .then(json => {
+        if(json.username)
+          dispatch(responseLogin(json.username))
+        else
+          dispatch(loginResponseFailed(json.error))
+      })
   }
 }
 
@@ -86,6 +103,15 @@ export const signUpResponse = (username) => {
     type: SIGN_UP_RESPONSE,
     data: {
       username: username
+    }
+  }
+}
+
+export const signUpResponseFailed = (error) => {
+  return {
+    type: SIGN_UP_RESPONSE_FAILED,
+    data: {
+      error: error
     }
   }
 }
@@ -107,6 +133,11 @@ export function signUpUser() {
     dispatch(signUpRequest())
     return fetch(SIGN_UP_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(signUpResponse(json.username)))
+      .then(json => {
+        if(json.username)
+          dispatch(signUpResponse(json.username))
+        else
+          dispatch(signUpResponseFailed(json.error))
+      })
   }
 }

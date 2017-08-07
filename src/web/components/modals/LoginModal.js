@@ -25,6 +25,9 @@ class LoginModal extends Component {
           onClick={() => this.props.onCancel()}
         />
         <p className='auth-title'> Login </p>
+        {this.props.message &&
+          <span>{this.props.message}</span>
+        }
         <FormGroup>
           <Col componentClass='login' sm={6}>
             <TextBox

@@ -55,8 +55,10 @@ class Container extends Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = (state) => {
+  return {
+    message: state.serverMessage
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
