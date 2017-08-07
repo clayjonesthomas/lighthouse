@@ -21,7 +21,7 @@ import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../actions/StoreP
 import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
 import {IS_USER_MOBILE} from '../actions/UserActions'
-import {SHOW_HAMBURGER_MENU, HIDE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
+import {TOGGLE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
 import {SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../actions/AuthActions'
 
 const initialState = {
@@ -258,16 +258,11 @@ function store(state = initialState, action) {
       return Object.assign({}, state, {
         isMobile: action.data.isUserMobile
       })
-    case SHOW_HAMBURGER_MENU:
+    case TOGGLE_HAMBURGER_MENU:
       return Object.assign({}, state, {
-        displayHamburgerMenu: true
-      })
-    case HIDE_HAMBURGER_MENU:
-      return Object.assign({}, state, {
-        displayHamburgerMenu: false
+        displayHamburgerMenu: !state.displayHamburgerMenu
       })
     case SIGN_UP_RESPONSE:
-      debugger
       return Object.assign({}, state, {
         username: action.data.username
       })

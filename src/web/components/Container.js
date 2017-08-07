@@ -5,6 +5,7 @@ import MenuHandler from '../containers/MenuHandler.js'
 import UserInfoHandler from '../containers/UserInfoHandler.js'
 import {Grid, Row, Col} from 'react-bootstrap'
 import {isUserMobile} from '../actions/UserActions'
+import {pullUserInfo} from '../actions/UserInfoActions'
 
 // mobile
 import MobileMenuHandler from '../containers/MobileMenuHandler'
@@ -14,6 +15,7 @@ class Container extends Component {
 
   componentDidMount () {
     this.props.isUserMobile()
+    this.props.getUserInfo()
   }
 
   render() {
@@ -59,7 +61,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    isUserMobile: () => dispatch(isUserMobile())
+    isUserMobile: () => dispatch(isUserMobile()),
+    getUserInfo: () => dispatch(pullUserInfo())
   }
 }
 

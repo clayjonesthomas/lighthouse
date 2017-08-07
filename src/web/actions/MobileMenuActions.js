@@ -1,14 +1,7 @@
-export const SHOW_HAMBURGER_MENU = 'SHOW_HAMBURGER_MENU'
-export const HIDE_HAMBURGER_MENU = 'HIDE_HAMBURGER_MENU'
+export const TOGGLE_HAMBURGER_MENU = 'TOGGLE_HAMBURGER_MENU'
 
-export const showHamburgerMenu = () => {
+export const toggleHamburgerMenu = () => {
   return {
-    type: SHOW_HAMBURGER_MENU
-  }
-}
-
-export const hideHamburgerMenu = () => {
-  return {
-    type: HIDE_HAMBURGER_MENU
+    type: TOGGLE_HAMBURGER_MENU
   }
 }

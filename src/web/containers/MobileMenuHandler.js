@@ -4,7 +4,7 @@ import MobileMenu from '../components/MobileMenu.js'
 import {goHome, goMyShops} from '../actions/MenuActions.js'
 import {pullUserInfo, signOut} from '../actions/UserInfoActions'
 import {showSignUp, showLogin} from '../actions/AuthActions'
-import {showHamburgerMenu, hideHamburgerMenu} from '../actions/MobileMenuActions'
+import {toggleHamburgerMenu} from '../actions/MobileMenuActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -41,8 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     onShowMobileLogin: () => dispatch(showLogin()),
     onShowMobileSignUp: () => dispatch(showSignUp()),
     signOut: () => dispatch(signOut()),
-    showMenu: () => dispatch(showHamburgerMenu()),
-    hideMenu: () => dispatch(hideHamburgerMenu()),
+    showMenu: () => dispatch(toggleHamburgerMenu())
   }
 }
 

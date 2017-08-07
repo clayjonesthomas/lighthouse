@@ -466,7 +466,6 @@ class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
 class SignupHandler(BaseHandler):
 
     def post(self):
-        import pdb; pdb.set_trace()
         body = json.loads(self.request.body)
         user_name = body['username']
         # email = self.request.get('email')
