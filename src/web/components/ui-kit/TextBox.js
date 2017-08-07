@@ -17,7 +17,7 @@ class TextBox extends Component {
       <FormControl
         type="text"
         placeholder={this.props.placeholder}
-        className={"text-box"+this.props.className}
+        className={"text-box "+this.props.className}
         inputRef={ref => this.props.refFunc(ref)}
       />
     </FormGroup>

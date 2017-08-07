@@ -11,6 +11,8 @@ import {GlobalModalStyle} from './GlobalModalStyle'
 import XGraphic from '../ui-kit/XGraphic'
 import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2} from '../../actions/AuthActions'
 
+import './LoginModal.css'
+
 class SignUpModal extends Component {
 
   render() {
@@ -30,16 +32,19 @@ class SignUpModal extends Component {
         <FormGroup>
           <Col componentClass='sign-up' sm={6}>
             <TextBox
+              className="mobile-textbox"
               placeholder="choose a username"
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
             />
             <br/>
             <TextBox
+              className="mobile-textbox"
               placeholder="enter a password"
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
             />
             <br/>
             <TextBox
+              className="mobile-textbox"
               placeholder="confirm your password"
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
             />

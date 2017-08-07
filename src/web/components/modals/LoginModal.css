@@ -23,3 +23,8 @@
 .auth-title{
     text-align: center;
 }
+
+.mobile-textbox{
+    font-size: 48px;
+    height: inherit;
+}

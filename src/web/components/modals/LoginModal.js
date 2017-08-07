@@ -11,6 +11,7 @@ import {Component} from 'react'
 import XGraphic from '../ui-kit/XGraphic'
 import {LOGIN_USERNAME, LOGIN_PASSWORD} from '../../actions/AuthActions'
 
+import './LoginModal.css'
 
 class LoginModal extends Component {
 
@@ -29,21 +30,21 @@ class LoginModal extends Component {
           <span>{this.props.message}</span>
         }
         <FormGroup>
-          <Col componentClass='login' sm={6}>
-            <TextBox
-              placeholder="username"
-              refFunc={ref => this.props.onSaveRef(ref, LOGIN_USERNAME)}
-            />
-            <br/>
-            <TextBox
-              placeholder="password"
-              refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
-            />
-            <br/>
-            <SubmitButton
-              onClick={() => this.props.onLogin()}
-            />
-          </Col>
+          <TextBox
+            className="mobile-textbox"
+            placeholder="username"
+            refFunc={ref => this.props.onSaveRef(ref, LOGIN_USERNAME)}
+          />
+          <br/>
+          <TextBox
+            className="mobile-textbox"
+            placeholder="password"
+            refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
+          />
+          <br/>
+          <SubmitButton
+            onClick={() => this.props.onLogin()}
+          />
         </FormGroup>
       </Modal>
     )
