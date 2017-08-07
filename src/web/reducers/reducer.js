@@ -23,7 +23,8 @@ import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsP
 import {IS_USER_MOBILE} from '../actions/UserActions'
 import {TOGGLE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
 import {SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../actions/AuthActions'
-import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED} from '../actions/AuthActions'
+import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE}
+  from '../actions/AuthActions'
 
 const initialState = {
   displayedPosts: [],
@@ -46,7 +47,8 @@ const initialState = {
   shopPostsOffset: 0,
   isMobile: false,
   displayHamburgerMenu: false,
-  authRefs: {}
+  authRefs: {},
+  serverMessage: null
 }
 
 
@@ -274,6 +276,10 @@ function store(state = initialState, action) {
     case LOGIN_RESPONSE_FAILED:
       return Object.assign({}, state, {
         serverMessage: action.data.error
+      })
+    case CLEAR_ERROR_MESSAGE:
+      return Object.assign({}, state, {
+        serverMessage: null
       })
     default:
       return state

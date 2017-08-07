@@ -20,6 +20,7 @@ export const LOGIN_PASSWORD = 'LOGIN_PASSWORD'
 
 export const LOGIN_RESPONSE_FAILED = 'LOGIN_RESPONSE_FAILED'
 export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
+export const CLEAR_ERROR_MESSAGE = 'CLEAR_ERROR_MESSAGE'
 
 export const cancelModal = () => {
   return {
@@ -139,5 +140,11 @@ export function signUpUser() {
         else
           dispatch(signUpResponseFailed(json.error))
       })
+  }
+}
+
+export const clearErrorMessage = () => {
+  return {
+    type: CLEAR_ERROR_MESSAGE
   }
 }

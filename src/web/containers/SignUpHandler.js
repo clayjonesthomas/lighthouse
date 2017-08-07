@@ -1,10 +1,14 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {showLogin, signUpUser} from '../actions/AuthActions'
+import {showLogin, signUpUser, clearErrorMessage}
+  from '../actions/AuthActions'
 import SignUpModal from '../components/modals/SignUpModal'
 import {onSaveRef} from '../actions/NewPostActions'
 
 class SignUpHandler extends Component {
+  componentDidMount() {
+    this.props.clearMessage()
+  }
 
   render () {
     return (
@@ -24,7 +28,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSignUp: () => dispatch(signUpUser()),
     showLogin: () => dispatch(showLogin()),
-    onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type))
+    onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type)),
+    clearMessage: () => dispatch(clearErrorMessage())
   }
 }
 
