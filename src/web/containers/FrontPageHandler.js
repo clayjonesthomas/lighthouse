@@ -24,6 +24,7 @@ class FrontPageHandler extends Component {
         areMorePostsLoaded={this.props.areMorePostsLoaded}
         areMorePosts={this.props.areMorePosts}
         deletePost={this.props.deletePost}
+        isMobile={this.props.isMobile}
 
         shops={this.props.shops}
         onAddNewShop={this.props.onAddNewShop}
@@ -41,7 +42,8 @@ const mapStateToProps = (state) => {
     arePostsLoaded: state.arePostsLoaded,
     shops: state.shops,
     areMorePostsLoaded: state.areMorePostsLoaded,
-    areMorePosts: state.areMorePosts
+    areMorePosts: state.areMorePosts,
+    isMobile: state.isMobile,
   }
 }
 

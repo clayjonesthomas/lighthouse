@@ -14,6 +14,7 @@ const FrontPage =
      areMorePostsLoaded,
      areMorePosts,
      deletePost,
+     isMobile,
 
      shops,
      onAddNewShop,
@@ -61,23 +62,25 @@ const FrontPage =
             }
           </Row>
         </Col>
-        <Col md={2}>
-          <ShopFinder
-            shops={shops}
-            onAddNewShop={(shop) => {
-              onAddNewShop(shop)
-            }}
-            onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-            placeholder="search for a shop..."
-          />
-          <SubmitButton
-            onClick={() => {
-              onSubmitShops()
-              clearShopFinder()
-            }
-            }
-          />
-        </Col>
+        {!isMobile &&
+          <Col md={2}>
+            <ShopFinder
+              shops={shops}
+              onAddNewShop={(shop) => {
+                onAddNewShop(shop)
+              }}
+              onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+              placeholder="search for a shop..."
+            />
+            <SubmitButton
+              onClick={() => {
+                onSubmitShops()
+                clearShopFinder()
+              }
+              }
+            />
+          </Col>
+        }
       </Row>
     </Grid>
   </div>

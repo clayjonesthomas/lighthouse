@@ -7,9 +7,11 @@ const ShopFinder = (
     submitShops,
     shops,
     onAddShopFinderRef,
-    placeholder
+    placeholder,
+    className
   }) => (
   <Typeahead
+    className={className}
     labelKey="name"
     multiple={true}
     options={shops}
