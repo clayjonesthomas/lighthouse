@@ -1,17 +1,17 @@
 import React, {PropTypes} from 'react'
 import {Typeahead} from 'react-bootstrap-typeahead'
 
+import "./ShopFinder.css"
 const ShopFinder = (
   {
     onAddNewShop,
     submitShops,
     shops,
     onAddShopFinderRef,
-    placeholder,
-    className
+    placeholder
   }) => (
   <Typeahead
-    className={className}
+    className="mobile-shop-finder"
     labelKey="name"
     multiple={true}
     options={shops}

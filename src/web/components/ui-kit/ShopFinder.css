@@ -1,0 +1,8 @@
+.mobile-shop-finder{
+    font-size: 48px;
+}
+
+.form-control{
+    /* form control be fucking things up yo */
+    font-size: inherit;
+}
