@@ -4,6 +4,7 @@ import Spinner from './ui-kit/Spinner'
 import ShopFinder from './ui-kit/ShopFinder'
 import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
+import Logo from './ui-kit/Logo'
 
 const MyShopsPage =
   ({
@@ -60,6 +61,7 @@ const MyShopsPage =
           </Col>
         </Row>
       </Grid>
+      <Logo/>
     </div>
   )
 
