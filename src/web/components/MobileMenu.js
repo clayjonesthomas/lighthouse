@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react'
+import Logo from './ui-kit/Logo'
+import {Grid, Col, Row} from 'react-bootstrap'
 
 import './MobileMenu.css'
 const MobileMenu =
@@ -21,20 +23,28 @@ const MobileMenu =
    }) => (
     <div id="mobile-menu">
       {!username &&
-        <button
-          className="menu-button"
-          type="button"
-          onClick={onShowMobileLogin}>
-          Log in
-        </button>
-      }
-      {!username &&
-        <button
-          className="menu-button"
-          type="button"
-          onClick={onShowMobileSignUp}>
-          Sign up
-        </button>
+          <Row>
+            <Col xs={4}>
+              <button
+                className="menu-button"
+                type="button"
+                onClick={onShowMobileLogin}>
+                Log in
+              </button>
+            </Col>
+            <Col xs={4}>
+              <Logo/>
+            </Col>
+            <Col xs={4}>
+              <button
+                id="sign-up-button"
+                className="menu-button"
+                type="button"
+                onClick={onShowMobileSignUp}>
+                Sign up
+              </button>
+            </Col>
+          </Row>
       }
       {username &&
         <span>Hi {username}!</span>

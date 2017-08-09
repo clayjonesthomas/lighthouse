@@ -3,7 +3,7 @@
 #mobile-menu{
     position: fixed;
     font-size: 3em;
-    background: black;
+    background: #2C2E32;
     width: 100%;
     z-index: 2;
 }
@@ -14,4 +14,12 @@
 }
 .menu-button{
     margin: 1em 1em 1em 1em;
+}
+
+#menu-logo{
+
+}
+
+#sign-up-button{
+    float: right;
 }
