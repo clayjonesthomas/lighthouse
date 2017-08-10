@@ -178,7 +178,7 @@ class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
     def session(self):
         """Shortcut to access the current session."""
-        return self.session_store.get_session(backend="datastore")
+        return self.session_store.get_session(backend="datastore", max_age=None)
 
     # def render_template(self, view_filename, params=None):
     #     if not params:
@@ -618,7 +618,7 @@ class LoginHandler(BaseHandler):
         lowkey just used to ensure a user is logged in after verification,
         but likely will be used in the future to pull login data
         """
-        if self.auth.get_user_by_session():
+        if self.user:
             self.response.write(json.dumps({
                 'username': self.user.username,
                 'isModerator': self.user.is_moderator
