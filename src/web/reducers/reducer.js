@@ -267,6 +267,7 @@ function store(state = initialState, action) {
       })
     case SIGN_UP_RESPONSE:
       return Object.assign({}, state, {
+        modal: null,
         username: action.data.username
       })
     case SIGN_UP_RESPONSE_FAILED:
