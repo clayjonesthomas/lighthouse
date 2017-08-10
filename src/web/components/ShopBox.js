@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import LikeButton from './ui-kit/LikeButton'
+import LikeButton from './ui-kit/deprecated/LikeButton'
 
 const ShopBox = (
   {

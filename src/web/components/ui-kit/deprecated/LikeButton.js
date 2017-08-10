@@ -1,11 +1,17 @@
 import React, {PropTypes} from 'react'
 import './LikeButton.css'
 
-const LikeButton = ({onClick, isPressed}) => (
+const LikeButton = (
+  {
+    onClick,
+    isPressed
+  }) => (
   <svg
+    className="like-button-svg"
     onClick={() => onClick()}
-    width="35"
-    height="35"
+    width={35*2+"px"}
+    height={35*2+"px"}
+    viewBox="0 0 35 35"
   >
     <path
       id="like"

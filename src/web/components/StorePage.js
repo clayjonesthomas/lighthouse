@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import LikeButton from './ui-kit/LikeButton'
+import LikeButton from './ui-kit/deprecated/LikeButton'
 import Spinner from './ui-kit/Spinner'
 import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
