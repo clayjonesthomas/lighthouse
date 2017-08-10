@@ -10,7 +10,6 @@ import {pullUserInfo} from '../actions/UserInfoActions'
 // mobile
 import MobileMenuHandler from '../containers/MobileMenuHandler'
 import "./MobileMenu.css"
-
 class Container extends Component {
 
   componentDidMount () {

@@ -12,7 +12,7 @@ import thunkMiddleware from 'redux-thunk'
 import Container from './Container.js'
 import NewStoreHandler from '../containers/NewStoreHandler'
 import MyPostsPageHandler from '../containers/MyPostsPageHandler'
-
+import "./Globals.css"
 
 let store = createStore(
   lighthouse,

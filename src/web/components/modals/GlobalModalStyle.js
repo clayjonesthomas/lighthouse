@@ -11,6 +11,7 @@ export const GlobalModalStyle = {
     bottom: '0',
     margin: '5%',
     width: '90%',
-    fontSize: '64px'
+    fontSize: '64px',
+    fontFamily: 'Roboto, sans-serif'
   }
 }
