@@ -1,15 +1,19 @@
 import React, {PropTypes} from 'react'
 
+import "./Logo.css"
 const Logo = (
   {
     onClick,
     isPressed
   }) => (
   <svg
+    className="logo-svg"
     width="69px"
     height="68px"
     viewBox="0 0 69 68"
-    version="1.1">
+    version="1.1"
+    onClick={() => onClick()}
+  >
     <g id="Page-1"
        stroke="none"
        strokeWidth="1"

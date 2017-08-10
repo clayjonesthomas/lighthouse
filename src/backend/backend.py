@@ -40,15 +40,12 @@ def populate_dummy_datastore():
 
 
 def _spawn_admin():
-    _contents = {'username': 'admin', 'email': 'ctjones@mit.edu',
-                 'password': '32hereford'}
-    request_signup = webapp2.Request.blank('/rest/signup', POST=_contents)
+    _contents = {'username': u'admin', 'email': u'ctjones@mit.edu',
+                 'password': u'32hereford'}
+    request_signup = webapp2.Request.blank('/rest/signup')
+    request_signup.method = 'POST'
+    request_signup.body = json.dumps(_contents)
     response_signup = request_signup.get_response(app)
-
-    request_verify = webapp2.Request.blank(response_signup.body)
-    request_verify.method = 'GET'
-
-    response_verify = request_verify.get_response(app)
 
 
 def _spawn_dummy_posts(store_keys):
@@ -606,6 +603,7 @@ class LoginHandler(BaseHandler):
                     logging.info('Login failed for user %s because they reset their password', username)
                     self.response.write(json.dumps({'error': 'PASSWORD_RESET'}))
             else:
+                # this still logs the user in
                 logging.info('Login failed for user %s because they are unverified', username)
                 self.response.write(json.dumps({
                     'username': self.user.username,

@@ -33,7 +33,9 @@ const MobileMenu =
               </button>
             </Col>
             <Col xs={4}>
-              <Logo/>
+              <Logo
+                onClick={() => onHome()}
+              />
             </Col>
             <Col xs={4}>
               <button
