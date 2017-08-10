@@ -30,29 +30,27 @@ class SignUpModal extends Component {
           <span>{this.props.message}</span>
         }
         <FormGroup>
-          <Col componentClass='sign-up' sm={6}>
-            <TextBox
-              className="mobile-textbox"
-              placeholder="choose a username"
-              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
-            />
-            <br/>
-            <TextBox
-              className="mobile-textbox"
-              placeholder="enter a password"
-              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
-            />
-            <br/>
-            <TextBox
-              className="mobile-textbox"
-              placeholder="confirm your password"
-              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
-            />
-            <br/>
-            <SubmitButton
-              onClick={() => this.props.onSignUp()}
-            />
-          </Col>
+          <TextBox
+            className="mobile-textbox"
+            placeholder="username"
+            refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
+          />
+          <br/>
+          <TextBox
+            className="mobile-textbox"
+            placeholder="password"
+            refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
+          />
+          <br/>
+          <TextBox
+            className="mobile-textbox"
+            placeholder="email"
+            refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
+          />
+          <br/>
+          <SubmitButton
+            onClick={() => this.props.onSignUp()}
+          />
         </FormGroup>
       </Modal>
     )
@@ -62,10 +60,9 @@ class SignUpModal extends Component {
 
 SignUpModal.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  showSignUp: PropTypes.func.isRequired,
   onSignUp: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired
-
+  isMobile: PropTypes.bool.isRequired,
+  message: PropTypes.string
 }
 
 export default SignUpModal

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import SubmitButton from './ui-kit/SubmitButton'
-import CancelButton from './CancelButton'
+import CancelButton from './ui-kit/CancelButton'
 import TextBox from './ui-kit/TextBox'
 
 const NewStoreForm =
