@@ -3,6 +3,7 @@ import {Link} from 'react-router'
 import LikeButton from './ui-kit/LikeButton'
 import SubmitButton from './ui-kit/SubmitButton'
 
+import "./PostBox.css"
 const PostBox = (
   {
     post,
@@ -11,32 +12,46 @@ const PostBox = (
     canDelete,
     onDelete
   }) => (
-  <div style={{'borderStyle':'solid'}}>
-    {
-      <Link to={"/store/" + post['store_key']}>
+  <div
+    className="post-box">
+    <div
+      className="post-box-inner">
+      <div
+        className="sale-title">
         {
-          post['store']['name']
+          <a href={"http://" + post.store.website}>
+            {
+              post['title']
+            }
+          </a>
         }
-      </Link>}
-    {
-      <a href={"http://" + post.store.website}>
+      </div>
+      <div
+        className="sale-options">
         {
-          post['title']
+          <LikeButton
+            onClick={() => onLike()}
+            isPressed={post.isLiked}
+          />
         }
-      </a>
-    }
-    {
-      <LikeButton
-        onClick={() => onLike()}
-        isPressed={post.isLiked}
-      />
-    }
-    {canDelete &&
-      <SubmitButton
-        onClick={() => onDelete(post_key)}
-        contents="delete"
-      />
-    }
+        {
+          <Link
+            to={"/store/" + post['store_key']}
+            className="shop-link">
+            {
+              post['store']['name']
+            }
+          </Link>
+        }
+        {canDelete &&
+          <SubmitButton
+            onClick={() => onDelete(post_key)}
+            contents="delete"
+          />
+        }
+      </div>
+    </div>
+    <hr className="post-line-break"/>
   </div>
 )
 
