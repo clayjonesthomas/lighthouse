@@ -11,8 +11,8 @@ import {Component} from 'react'
 import XGraphic from '../ui-kit/XGraphic'
 import {LOGIN_USERNAME, LOGIN_PASSWORD} from '../../actions/AuthActions'
 
+import "./ModalStyle.css"
 import './LoginModal.css'
-
 class LoginModal extends Component {
 
   render() {

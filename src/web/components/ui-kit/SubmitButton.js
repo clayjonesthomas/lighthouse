@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
-import './SubmitButton.css'
 
+import './SubmitButton.css'
 const SubmitButton = (
   {
     onClick,
@@ -10,12 +10,7 @@ const SubmitButton = (
     type="button"
     onClick={() => onClick()}
     className="submit-button">
-    {contents &&
-      contents
-    }
-    {!contents &&
-      "Submit"
-    }
+    {contents || "SUBMIT"}
   </button>
 )
 

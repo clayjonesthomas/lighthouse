@@ -11,8 +11,8 @@ import {GlobalModalStyle} from './GlobalModalStyle'
 import XGraphic from '../ui-kit/XGraphic'
 import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2} from '../../actions/AuthActions'
 
-import './LoginModal.css'
-
+import "./ModalStyle.css"
+import "./SignUpModal.css"
 class SignUpModal extends Component {
 
   render() {
@@ -29,25 +29,23 @@ class SignUpModal extends Component {
         {this.props.message &&
           <span>{this.props.message}</span>
         }
-        <FormGroup>
+        <FormGroup
+          className="sign-up-form-group">
           <TextBox
             className="mobile-textbox"
             placeholder="username"
             refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
           />
-          <br/>
           <TextBox
             className="mobile-textbox"
             placeholder="password"
             refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
           />
-          <br/>
           <TextBox
             className="mobile-textbox"
             placeholder="email"
             refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
           />
-          <br/>
           <SubmitButton
             onClick={() => this.props.onSignUp()}
           />

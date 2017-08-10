@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 
+import "./XGraphic.css"
 const XGraphic = (
   {
     color,
@@ -7,6 +8,7 @@ const XGraphic = (
   }
 ) => (
   <svg
+    className="x-graphic-svg"
     stroke={color ? color : '#000000'}
     width="50"
     height="50"

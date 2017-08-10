@@ -1,0 +1,12 @@
+.auth-title{
+    text-align: center;
+    font-size: 72px;
+    letter-spacing: .2em;
+    margin-top: .5em;
+}
+
+.mobile-textbox{
+    font-size: 48px;
+    height: inherit;
+    padding: .4em .4em .4em 0.8em;
+}

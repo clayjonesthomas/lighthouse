@@ -6,25 +6,6 @@
     background: aqua;
 }
 
-.login{
-    /*width: 50%;*/
-    /*display: inline-block;*/
-    /*text-align: center;*/
-    /*position: relative;*/
-    /*top: -20px;*/
-}
-
-.sign-up{
-    /*width: 50%;*/
-    /*display: inline-block;*/
-    /*text-align: center;*/
-}
-
-.auth-title{
-    text-align: center;
-}
-
-.mobile-textbox{
-    font-size: 48px;
-    height: inherit;
+.login-modal>input:focus{
+    outline: #00aaff;
 }
