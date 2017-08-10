@@ -97,6 +97,7 @@ function store(state = initialState, action) {
     case CANCEL_POST:
       return state
     case RESPONSE_LOGIN:
+      window.location.reload()
       return Object.assign({}, state, {
         modal: null,
         username: action.data.username
@@ -191,6 +192,7 @@ function store(state = initialState, action) {
         username: null
       })
     case SIGN_OUT_RESPONSE:
+      window.location.reload()
       return state
     case ADD_STORE_ICON_TO_FORM_DATA:
       return Object.assign({}, state, {
@@ -266,6 +268,7 @@ function store(state = initialState, action) {
         displayHamburgerMenu: !state.displayHamburgerMenu
       })
     case SIGN_UP_RESPONSE:
+      window.location.reload()
       return Object.assign({}, state, {
         modal: null,
         username: action.data.username
