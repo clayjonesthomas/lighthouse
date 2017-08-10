@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import Logo from './ui-kit/Logo'
 import {Grid, Col, Row} from 'react-bootstrap'
+import MinimalButton from "./ui-kit/MinimalButton"
 
 import './MobileMenu.css'
 const MobileMenu =
@@ -25,12 +26,11 @@ const MobileMenu =
       {!username &&
           <Row>
             <Col xs={4}>
-              <button
+              <MinimalButton
                 className="menu-button"
-                type="button"
-                onClick={onShowMobileLogin}>
-                Log in
-              </button>
+                onClick={onShowMobileLogin}
+                words="LOG IN"
+              />
             </Col>
             <Col xs={4}>
               <Logo
@@ -38,13 +38,11 @@ const MobileMenu =
               />
             </Col>
             <Col xs={4}>
-              <button
-                id="sign-up-button"
-                className="menu-button"
-                type="button"
-                onClick={onShowMobileSignUp}>
-                Sign up
-              </button>
+              <MinimalButton
+                className="menu-button sign-up-button"
+                onClick={onShowMobileSignUp}
+                words="SIGN UP"
+              />
             </Col>
           </Row>
       }
