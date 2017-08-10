@@ -1,0 +1,14 @@
+.more-content-button {
+    border-style: none;
+    width: 100%;
+    color: #2c2e32;
+    background: #e2e4eb;
+    margin-top: 1em;
+    height: 2em;
+    font-size: 1.3em;
+    font-weight: 400;
+    letter-spacing: .15em;
+    word-spacing: .8em;
+    border-radius: 15px;
+    border-width: 6px;
+}
