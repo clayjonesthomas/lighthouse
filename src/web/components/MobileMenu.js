@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import Logo from './ui-kit/Logo'
 import {Grid, Col, Row} from 'react-bootstrap'
 import MinimalButton from "./ui-kit/MinimalButton"
+import HamburgerMenu from "./ui-kit/HamburgerMenu"
 
 import './MobileMenu.css'
 const MobileMenu =
@@ -47,17 +48,19 @@ const MobileMenu =
           </Row>
       }
       {username &&
-        <span>Hi {username}!</span>
-      }
-      {username &&
-        <button
-          className="menu-button"
-          type="button"
-          onClick={() =>
-            toggleMenu()
-          }>
-          hamburger
-        </button>
+        <Row>
+          <Col xs={4}/>
+          <Col xs={4}>
+            <Logo
+              onClick={() => onHome()}
+            />
+          </Col>
+          <Col xs={4}>
+            <HamburgerMenu
+              className="menu-button"
+              onClick={toggleMenu}/>
+          </Col>
+        </Row>
       }
       {isHamburgerMenuDisplayed &&
         <ul id="hamburger-dropdown">
