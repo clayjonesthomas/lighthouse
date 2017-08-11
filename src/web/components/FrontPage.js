@@ -29,7 +29,7 @@ const FrontPage =
     }
     <Grid>
       <Row>
-        <Col md={8}>
+        <Col md={6}>
           {arePostsLoaded && posts &&
             posts.map(post => {
               return <Row key={post.key}><PostBox
@@ -62,7 +62,7 @@ const FrontPage =
           </Row>
         </Col>
         {!isMobile &&
-          <Col md={2}>
+          <Col md={4}>
             <ShopFinder
               shops={shops}
               onAddNewShop={(shop) => {
