@@ -12,7 +12,8 @@
 }
 
 .shop-options {
-    margin-top: 10px;
+    margin-bottom: 1em;
+    width: 100%;
 }
 
 .shop-like {
@@ -20,6 +21,28 @@
 }
 
 .go-to-site-link {
-    float:right;
+    float: right;
     padding-top: 15px;
+}
+
+.shop-title-bar {
+    margin-bottom: 1em;
+}
+
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+.shop-box {
+    margin-top: 1em;
 }
