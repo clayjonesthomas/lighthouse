@@ -6,6 +6,7 @@ import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import MoreContentButton from "./ui-kit/MoreContentButton"
 
+import "./FrontPage.css"
 const FrontPage =
   ({
      posts,
@@ -31,15 +32,19 @@ const FrontPage =
       <Row>
         <Col md={6}>
           {arePostsLoaded && posts &&
-            posts.map(post => {
-              return <Row key={post.key}><PostBox
-                post={post}
-                post_key={post.key}
-                onLike={() => onLike(post.key)}
-                canDelete={post.canDelete}
-                onDelete={deletePost}
-              /></Row>
-            })
+            <div className={isMobile? "":"desktop-content-box"}>
+              {
+                posts.map(post => {
+                  return <Row key={post.key}><PostBox
+                    post={post}
+                    post_key={post.key}
+                    onLike={() => onLike(post.key)}
+                    canDelete={post.canDelete}
+                    onDelete={deletePost}
+                  /></Row>
+                })
+              }
+            </div>
           }
           {arePostsLoaded && !posts.length &&
             <span>You'll see some posts once you follow some stores. add some using the store finder!</span>

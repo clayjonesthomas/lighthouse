@@ -6,6 +6,7 @@ import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from './ui-kit/Logo'
 
+import "./FrontPage.css"
 import "./MyShopsPage.css"
 const MyShopsPage =
   ({
@@ -30,7 +31,6 @@ const MyShopsPage =
           <Col md={2}>
             {areShopsLoaded &&
             <ShopFinder
-              className="mobile-shop-finder"
               shops={shops}
               onAddNewShop={(shop) => {
                 onAddNewShop(shop)
@@ -50,19 +50,20 @@ const MyShopsPage =
             }
           </Col>
           }
-          <Col
-            md={6}>
-            {areShopsLoaded && myShops &&
+          <Col md={6}>
+            <div className={isMobile ? "" : "desktop-content-box"}>
+              {areShopsLoaded && myShops &&
               myShops.map(shop => {
                 return <Row key={shop.key}><ShopBox
                   shop={shop}
                   onLike={() => onLike(shop.key)}
-                /></Row>
-              })
-            }
-            {areShopsLoaded && !myShops &&
-              "You're currently not following any shops. Go add some! -->"
-            }
+                  /></Row>
+                })
+              }
+              {areShopsLoaded && !myShops &&
+                "You're currently not following any shops. Go add some! -->"
+              }
+            </div>
           </Col>
           {!isMobile &&
             <Col md={4}>
@@ -78,6 +79,7 @@ const MyShopsPage =
               }
               {areShopsLoaded &&
               <SubmitButton
+                contents="ADD TO LIKED SHOPS"
                 onClick={
                   () => {
                     onSubmitShops()

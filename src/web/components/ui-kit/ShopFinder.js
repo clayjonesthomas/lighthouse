@@ -14,7 +14,7 @@ const ShopFinder = (
     isMultiple
   }) => (
   <Typeahead
-    className={"shop-finder " + className}
+    className={"shop-finder " + (className || "")}
     labelKey="name"
     multiple={isMultiple === "undefined" ? true : isMultiple}
     options={shops}

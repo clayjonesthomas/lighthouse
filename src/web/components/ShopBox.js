@@ -26,7 +26,7 @@ const ShopBox = (
           Go to site...
         </a>
       </div>
-      <div className="shop-options clearfix">
+      <div className="shop-options clear-fix">
         {
           <LikeButton
             onClick={() => onLike()}
