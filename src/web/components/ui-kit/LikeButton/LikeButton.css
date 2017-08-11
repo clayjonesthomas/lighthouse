@@ -6,7 +6,17 @@
 
 .like-count {
     display: inherit;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.like-count-right {
     position: relative;
     bottom: 18px;
-    left: 5px;
+    left: 10px;
+}
+
+.like-count-left {
+    float: left;
+    margin-right: 10px;
 }

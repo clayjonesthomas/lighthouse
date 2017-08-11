@@ -12,7 +12,7 @@
 }
 
 .shop-options {
-
+    margin-top: 10px;
 }
 
 .shop-like {
@@ -21,4 +21,5 @@
 
 .go-to-site-link {
     float:right;
+    padding-top: 15px;
 }

@@ -31,6 +31,8 @@ const PostBox = (
           <LikeButton
             onClick={() => onLike()}
             isPressed={post.isLiked}
+            likes={post.likes}
+            areLikesLeft={false}
           />
         }
         {

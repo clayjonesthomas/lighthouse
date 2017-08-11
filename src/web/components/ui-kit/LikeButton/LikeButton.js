@@ -18,9 +18,9 @@ const LikeButton = (
     onClick={onClick}>
     {areLikesLeft &&
       <div
-        className="like-count"
+        className="like-count like-count-left"
         style={isPressed ?
-          {"fill":"#ff4759"} : {"fill": "#0055ff"}}
+          {"color":"#ff4759"} : {"color": "#0055ff"}}
       >
         {
           likes
@@ -41,9 +41,9 @@ const LikeButton = (
     }
     {!areLikesLeft &&
       <div
-        className="like-count"
+        className="like-count like-count-right"
         style={isPressed ?
-          {"fill":"#ff4759"} : {"fill": "#0055ff"}}
+          {"color":"#ff4759"} : {"color": "#0055ff"}}
       >
         {
           likes
