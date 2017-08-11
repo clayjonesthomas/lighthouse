@@ -30,7 +30,8 @@ const mapStateToProps = (state) => {
     myPosts: state.displayedPosts,
     areMyPostsLoaded: state.arePostsLoaded,
     areMoreMyPosts: state.areMorePosts,
-    areMoreMyPostsLoaded: state.areMorePostsLoaded
+    areMoreMyPostsLoaded: state.areMorePostsLoaded,
+    isMobile: state.isMobile
   }
 }
 
