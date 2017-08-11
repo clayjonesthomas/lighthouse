@@ -22,7 +22,7 @@ class TextBox extends Component {
           </ControlLabel>
         }
         <FormControl
-          type="text"
+          type={this.props.inputType || "text"}
           placeholder={this.props.placeholder}
           className={"text-box-input "+this.props.className}
           inputRef={ref => this.props.refFunc(ref)}

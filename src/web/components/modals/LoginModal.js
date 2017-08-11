@@ -39,6 +39,7 @@ class LoginModal extends Component {
           <TextBox
             className="mobile-textbox"
             label="password"
+            inputType="password"
             refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
           />
           <SubmitButton
