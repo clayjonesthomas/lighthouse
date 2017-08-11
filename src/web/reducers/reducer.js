@@ -192,7 +192,6 @@ function store(state = initialState, action) {
         username: null
       })
     case SIGN_OUT_RESPONSE:
-      window.location.reload()
       return state
     case ADD_STORE_ICON_TO_FORM_DATA:
       return Object.assign({}, state, {

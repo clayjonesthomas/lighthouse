@@ -40,7 +40,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     onShowMobileLogin: () => dispatch(showLogin()),
     onShowMobileSignUp: () => dispatch(showSignUp()),
-    signOut: () => dispatch(signOut()),
+    signOut: () => {
+      dispatch(signOut())
+      browserHistory.push('/')
+    },
     toggleMenu: () => dispatch(toggleHamburgerMenu())
   }
 }
