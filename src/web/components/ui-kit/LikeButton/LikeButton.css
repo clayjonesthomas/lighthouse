@@ -1,9 +1,12 @@
 .like-svg {
     position: relative;
     top: 5px;
-    display: flex;
+    display: inline-block;
 }
 
 .like-count {
-
+    display: inherit;
+    position: relative;
+    bottom: 18px;
+    left: 5px;
 }

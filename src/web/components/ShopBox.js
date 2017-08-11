@@ -16,7 +16,10 @@ const ShopBox = (
         shop.name
       }
     </Link>
-    <a href={"http://" + shop.website}>
+    <a
+      href={"http://" + shop.website}
+      className="go-to-site-link"
+    >
       Go to site...
     </a>
     <div className="shop-options">
@@ -25,6 +28,8 @@ const ShopBox = (
           onClick={() => onLike()}
           isPressed={shop.isLiked}
           likes={shop.likes}
+          className="shop-like"
+          areLikesLeft={true}
         />
       }
     </div>

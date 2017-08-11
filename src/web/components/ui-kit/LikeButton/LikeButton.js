@@ -8,12 +8,25 @@ const LikeButton = (
     isPressed,
     onClick,
     size,
-    likes
+    likes,
+    className,
+    areLikesLeft
   }
 ) => (
   <span
-    className="like-svg"
+    className={"like-svg " + className}
     onClick={onClick}>
+    {areLikesLeft &&
+      <div
+        className="like-count"
+        style={isPressed ?
+          {"fill":"#ff4759"} : {"fill": "#0055ff"}}
+      >
+        {
+          likes
+        }
+      </div>
+    }
     {!isPressed &&
       <EmptyLikeButton
         width={size}
@@ -26,8 +39,12 @@ const LikeButton = (
         height={size}
       />
     }
-    {
-      <div className="like-count">
+    {!areLikesLeft &&
+      <div
+        className="like-count"
+        style={isPressed ?
+          {"fill":"#ff4759"} : {"fill": "#0055ff"}}
+      >
         {
           likes
         }
