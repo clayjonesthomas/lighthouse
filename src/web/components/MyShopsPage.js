@@ -91,7 +91,6 @@ const MyShopsPage =
           }
         </Row>
       </Grid>
-      <Logo/>
     </div>
   )
 
