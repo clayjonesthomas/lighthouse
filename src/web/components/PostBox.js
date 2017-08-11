@@ -26,8 +26,7 @@ const PostBox = (
           </a>
         }
       </div>
-      <div
-        className="sale-options">
+      <div className="sale-options">
         {
           <LikeButton
             onClick={() => onLike()}

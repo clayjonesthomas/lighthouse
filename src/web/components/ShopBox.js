@@ -1,21 +1,33 @@
 import React, {PropTypes} from 'react'
-import LikeButton from './ui-kit/deprecated/LikeButton'
+import LikeButton from './ui-kit/LikeButton/LikeButton'
+import {Link} from 'react-router'
 
+import "./ShopBox.css"
 const ShopBox = (
   {
     shop,
     onLike
   }) => (
-  <div style={{'borderStyle':'solid'}}>
-    {
-      shop.name + '   ' + shop.website + '   ' + shop.likes
-    }
-    {
-      <LikeButton
-        onClick={() => onLike()}
-        isPressed={shop.isLiked}
-      />
-    }
+  <div>
+    <Link
+      to={"/store/"+shop.key}
+      className="shop-name">
+      {
+        shop.name
+      }
+    </Link>
+    <a href={"http://" + shop.website}>
+      Go to site...
+    </a>
+    <div className="shop-options">
+      {
+        <LikeButton
+          onClick={() => onLike()}
+          isPressed={shop.isLiked}
+          likes={shop.likes}
+        />
+      }
+    </div>
   </div>
 )
 

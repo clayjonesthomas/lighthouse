@@ -7,7 +7,8 @@ const LikeButton = (
   {
     isPressed,
     onClick,
-    size
+    size,
+    likes
   }
 ) => (
   <span
@@ -24,6 +25,13 @@ const LikeButton = (
         width={size}
         height={size}
       />
+    }
+    {
+      <div className="like-count">
+        {
+          likes
+        }
+      </div>
     }
   </span>
 )

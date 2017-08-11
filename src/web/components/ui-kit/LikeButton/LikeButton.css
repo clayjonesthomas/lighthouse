@@ -1,4 +1,9 @@
 .like-svg {
     position: relative;
     top: 5px;
+    display: flex;
+}
+
+.like-count {
+
 }

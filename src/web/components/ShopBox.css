@@ -1,0 +1,16 @@
+.shop-name{
+    padding-bottom: 1em;
+    padding-top: 1em;
+    font-size: 1.4em;
+    letter-spacing: .02em;
+}
+
+.shop-site {
+    float: right;
+    font-style: italic;
+    font-size: 1em;
+}
+
+.shop-options {
+
+}
