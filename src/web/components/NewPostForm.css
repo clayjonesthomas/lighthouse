@@ -2,6 +2,10 @@
     font-size: 64px;
 }
 
+#new-post-form-desktop{
+    font-size: 28px;
+}
+
 .mobile-shop-finder>div>input {
     height: 90px;
 }
@@ -10,4 +14,14 @@
     width:90%;
     margin:auto;
     display: block;
+}
+
+.desktop-submit {
+    font-size: 14px;
+    width: 30%;
+    margin-right: 5%;
+}
+
+.submit-sale-desktop {
+    margin-left:5%;
 }

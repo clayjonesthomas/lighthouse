@@ -4,3 +4,7 @@
     margin: 40px auto 40px auto;
     display: block;
 }
+
+.shop-finder>ul{
+    width: 100%;
+}

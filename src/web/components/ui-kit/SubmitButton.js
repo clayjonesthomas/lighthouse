@@ -4,12 +4,13 @@ import './SubmitButton.css'
 const SubmitButton = (
   {
     onClick,
-    contents
+    contents,
+    className
   }) => (
   <button
     type="button"
     onClick={() => onClick()}
-    className="submit-button">
+    className={"submit-button " + className||""}>
     {contents || "SUBMIT"}
   </button>
 )

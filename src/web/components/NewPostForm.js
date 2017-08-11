@@ -4,7 +4,8 @@ import TextBox from './ui-kit/TextBox'
 import ShopFinder from './ui-kit/ShopFinder'
 import {ControlLabel} from 'react-bootstrap'
 
-import './ui-kit/TextBox.css'
+import "./FrontPage.css"
+import "./ui-kit/TextBox.css"
 import "./modals/ModalStyle.css"
 import "./NewPostForm.css"
 const NewPostForm = (
@@ -14,12 +15,16 @@ const NewPostForm = (
     onSaveTitleRef,
     onUpdateFormShops,
     shops,
+    isMobile
   }) => (
   <div
-    id="new-post-form">
-    Submit a Sale
+    id={isMobile?"new-post-form":"new-post-form-desktop"}
+    className={isMobile?"":"desktop-content-box"}>
+    <span className={isMobile?"":"submit-sale-desktop"}>
+      Submit a Sale
+    </span>
     <TextBox
-      className="mobile-textbox"
+      className={isMobile?"mobile-textbox":""}
       refFunc={ref => onSaveTitleRef(ref)}
       label="Sale Specifics: "
       componentClass={"textarea"}
@@ -28,12 +33,13 @@ const NewPostForm = (
       Shop:
     </ControlLabel>
     <ShopFinder
-      className="mobile-shop-finder"
+      className={isMobile?"mobile-shop-finder":""}
       isMultiple={false}
       shops={shops}
       onAddNewShop={onUpdateFormShops}
     />
     <SubmitButton
+      className={isMobile?"":"desktop-submit"}
       onClick={() => onSubmit()}
     />
   </div>

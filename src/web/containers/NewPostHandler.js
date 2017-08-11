@@ -32,7 +32,8 @@ const mapStateToProps = (state) => {
         key: shop.key,
         icon: ''
       }
-    })
+    }),
+    isMobile: state.isMobile
   }
 }
 
