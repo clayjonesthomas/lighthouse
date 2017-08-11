@@ -12,15 +12,23 @@ class TextBox extends Component {
   }
 
   render () {
-    return <FormGroup>
-      <ControlLabel>{this.props.label}</ControlLabel>
-      <FormControl
-        type="text"
-        placeholder={this.props.placeholder}
-        className={"text-box "+this.props.className}
-        inputRef={ref => this.props.refFunc(ref)}
-      />
-    </FormGroup>
+    return (
+      <FormGroup
+        className="text-box">
+        {this.props.label &&
+          <ControlLabel
+            className="text-box-label">
+            {this.props.label}
+          </ControlLabel>
+        }
+        <FormControl
+          type="text"
+          placeholder={this.props.placeholder}
+          className={"text-box-input "+this.props.className}
+          inputRef={ref => this.props.refFunc(ref)}
+        />
+      </FormGroup>
+    )
   }
 }
 

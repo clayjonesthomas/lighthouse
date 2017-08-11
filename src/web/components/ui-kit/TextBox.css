@@ -1,3 +1,12 @@
 .text-box{
+    margin: auto;
+    width: 90%;
+}
 
+.text-box-label{
+    margin-bottom: 0;
+    font-weight: 400;
+    letter-spacing: .05em;
+    font-size: .7em;
+    color: #2c2e32;
 }

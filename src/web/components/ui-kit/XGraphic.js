@@ -4,14 +4,16 @@ import "./XGraphic.css"
 const XGraphic = (
   {
     color,
-    onClick
+    onClick,
+    className
   }
 ) => (
   <svg
-    className="x-graphic-svg"
+    className={"x-graphic-svg " + className}
     stroke={color ? color : '#000000'}
-    width="50"
-    height="50"
+    width="60"
+    height="60"
+    viewBox="0 0 32 32"
     onClick={onClick}
   >
     <line

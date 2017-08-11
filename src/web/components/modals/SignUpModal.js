@@ -19,31 +19,32 @@ class SignUpModal extends Component {
     return (
       <Modal
         isOpen={true}
-        contentLabel='Login'
+        contentLabel='Sign up'
         style={GlobalModalStyle}
       >
         <XGraphic
+          className="x-modal"
           onClick={() => this.props.onCancel()}
         />
-        <p className='auth-title'> Sign Up </p>
-        {this.props.message &&
-          <span>{this.props.message}</span>
-        }
         <FormGroup
           className="sign-up-form-group">
+          <p className='auth-title'> Sign Up </p>
+          {this.props.message &&
+            <span>{this.props.message}</span>
+          }
           <TextBox
             className="mobile-textbox"
-            placeholder="username"
+            label="username"
             refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
           />
           <TextBox
             className="mobile-textbox"
-            placeholder="password"
+            label="password"
             refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
           />
           <TextBox
             className="mobile-textbox"
-            placeholder="email"
+            label="email"
             refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
           />
           <SubmitButton

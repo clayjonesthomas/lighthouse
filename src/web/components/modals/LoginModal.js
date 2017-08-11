@@ -23,25 +23,24 @@ class LoginModal extends Component {
         style={GlobalModalStyle}
       >
         <XGraphic
+          className="x-modal"
           onClick={() => this.props.onCancel()}
         />
-        <p className='auth-title'> Login </p>
-        {this.props.message &&
-          <span>{this.props.message}</span>
-        }
         <FormGroup>
+          <p className='auth-title'> Login </p>
+          {this.props.message &&
+            <span>{this.props.message}</span>
+          }
           <TextBox
             className="mobile-textbox"
-            placeholder="username"
+            label="username"
             refFunc={ref => this.props.onSaveRef(ref, LOGIN_USERNAME)}
           />
-          <br/>
           <TextBox
             className="mobile-textbox"
-            placeholder="password"
+            label="password"
             refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
           />
-          <br/>
           <SubmitButton
             onClick={() => this.props.onLogin()}
           />
