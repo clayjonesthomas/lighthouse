@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import Logo from './ui-kit/Logo'
-import {Grid, Col, Row} from 'react-bootstrap'
+import {Col, Row} from 'react-bootstrap'
 import MinimalButton from "./ui-kit/MinimalButton"
-import HamburgerMenu from "./ui-kit/HamburgerMenu"
+import MenuButton from "./ui-kit/MenuButton/MenuButton"
 
 import './MobileMenu.css'
 const MobileMenu =
@@ -56,9 +56,11 @@ const MobileMenu =
             />
           </Col>
           <Col xs={4}>
-            <HamburgerMenu
+            <MenuButton
               className="menu-button"
-              onClick={toggleMenu}/>
+              onClick={toggleMenu}
+              isMenuOpen={isHamburgerMenuDisplayed}
+            />
           </Col>
         </Row>
       }

@@ -1,8 +1,7 @@
 //from FlatIcon, purchased with subscription
 import React from 'react'
 
-import "./HamburgerMenu.css"
-const HamburgerMenu = (
+const HamburgerButton = (
   {
     width,
     height,
@@ -10,14 +9,12 @@ const HamburgerMenu = (
   }
 ) => (
   <svg
-    className="hamburger-menu-svg"
     x="0px"
     y="0px"
 	  width="50px"
     height="50px"
     viewBox="0 0 92.833 92.833"
     onClick={onClick}
-    style={{"enable-background":"new 0 0 92.833 92.833;"}}
 	 >
     <g>
       <g>
@@ -33,4 +30,4 @@ const HamburgerMenu = (
 
 )
 
-export default HamburgerMenu
+export default HamburgerButton
