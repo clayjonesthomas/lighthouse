@@ -72,6 +72,7 @@ const FrontPage =
               placeholder="search for a shop..."
             />
             <SubmitButton
+              contents="ADD TO LIKED SHOPS"
               onClick={() => {
                 onSubmitShops()
                 clearShopFinder()

@@ -41,7 +41,7 @@ const MyShopsPage =
             }
             {areShopsLoaded &&
             <SubmitButton
-              contents="ADD TO LIKED STORES"
+              contents="ADD TO LIKED SHOPS"
               onClick={() => {
                 onSubmitShops()
                 clearShopFinder()
@@ -51,7 +51,7 @@ const MyShopsPage =
           </Col>
           }
           <Col
-            md={8}>
+            md={6}>
             {areShopsLoaded && myShops &&
               myShops.map(shop => {
                 return <Row key={shop.key}><ShopBox
@@ -65,7 +65,7 @@ const MyShopsPage =
             }
           </Col>
           {!isMobile &&
-            <Col md={2}>
+            <Col md={4}>
               {areShopsLoaded &&
               <ShopFinder
                 shops={shops}
