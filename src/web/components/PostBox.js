@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 import SubmitButton from './ui-kit/SubmitButton'
 import LikeButton from './ui-kit/LikeButton/LikeButton'
+import {connect} from 'react-redux'
 
 import "./PostBox.css"
 const PostBox = (
@@ -10,7 +11,8 @@ const PostBox = (
     post_key,
     onLike,
     canDelete,
-    onDelete
+    onDelete,
+    isMobile
   }) => (
   <div
     className="post-box">
@@ -52,7 +54,8 @@ const PostBox = (
         }
       </div>
     </div>
-    <hr className="post-line-break"/>
+    <hr className={isMobile ? "post-line-break" :
+      "post-line-break-desktop"}/>
   </div>
 )
 
@@ -62,4 +65,13 @@ PostBox.propTypes = {
   }).isRequired
 }
 
-export default PostBox
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, ownProps, {
+    isMobile: state.isMobile
+  })
+}
+
+
+export default connect(
+  mapStateToProps
+)(PostBox)
