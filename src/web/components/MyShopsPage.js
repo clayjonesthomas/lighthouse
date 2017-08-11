@@ -50,7 +50,9 @@ const MyShopsPage =
             }
           </Col>
           }
-          <Col md={8}>
+          <Col
+            id="my-shops"
+            md={8}>
             {areShopsLoaded && myShops &&
               myShops.map(shop => {
                 return <Row key={shop.key}><ShopBox
