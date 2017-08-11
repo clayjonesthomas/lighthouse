@@ -1,4 +1,17 @@
 #hamburger-dropdown{
+    margin-bottom: 0;
+    background: #2222ff;
+    width: 100%;
+    text-align: center;
+    color: #fcfcfc;
+    font-weight: 600;
+    letter-spacing: .1em;
+}
+.menu-item{
+    margin: 10px;
+}
+.even-menu-item{
+    background: #0055ff;
 }
 #mobile-menu{
     position: fixed;
