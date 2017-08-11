@@ -65,76 +65,68 @@ const MobileMenu =
         </Row>
       }
       {isHamburgerMenuDisplayed &&
-        <table id="hamburger-dropdown">
+        <div id="hamburger-dropdown">
           {
-            <tr
+            <div
+              className="menu-item"
               onClick={() =>{
                 toggleMenu()
                 onHome()
               }}>
-              <div className="menu-item">
-                Home
-              </div>
-            </tr>
+              Home
+            </div>
           }
           {username &&
-          <tr
-            className="even-menu-item"
+          <div
+            className="even-menu-item menu-item"
             onClick={() =>{
               toggleMenu()
               onMyShops()
             }}>
-            <div className="menu-item">
-              Liked Shops
-            </div>
-          </tr>
+            Liked Shops
+          </div>
           }
           {username &&
-          <tr
+          <div
+            className="menu-item"
             onClick={() =>{
               toggleMenu()
               onMyPosts()
             }}>
-            <div className="menu-item">
-              Liked Posts
-            </div>
-          </tr>
+            Liked Posts
+          </div>
           }
           {username &&
-          <tr
-            className="even-menu-item"
+          <div
+            className="even-menu-item menu-item"
             onClick={() =>{
               toggleMenu()
               onSelectNewPost()
             }}>
-            <div className="menu-item">
-              Submit a Sale
-            </div>
-          </tr>
+            Submit a Sale
+          </div>
           }
           {username &&
-          <tr
+          <div
+            className="menu-item"
             onClick={() =>{
               toggleMenu()
               signOut()
             }}>
-            <div className="menu-item">
-              Log Out
-            </div>
-          </tr>
+            Log Out
+          </div>
           }
           {username && isModerator &&
-          <tr
+          <div
+            className="menu-item"
             onClick={() =>{
               toggleMenu()
               onAddAShop()
             }}>
-            <div className="menu-item">
-              Add a Store
-            </div>
-          </tr>
+            Add a Store
+          </div>
           }
-        </table>
+        </div>
       }
     </div>
   )

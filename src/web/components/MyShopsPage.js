@@ -11,6 +11,7 @@ const MyShopsPage =
      myShops,
      onLike,
      areShopsLoaded,
+     isMobile,
 
      shops,
      onAddNewShop,
@@ -24,6 +25,30 @@ const MyShopsPage =
       }
       <Grid>
         <Row>
+          {isMobile &&
+          <Col md={2}>
+            {areShopsLoaded &&
+            <ShopFinder
+              shops={shops}
+              onAddNewShop={(shop) => {
+                onAddNewShop(shop)
+              }}
+              onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+              placeholder="search for a shop..."
+            />
+            }
+            {areShopsLoaded &&
+            <SubmitButton
+              onClick={
+                () => {
+                  onSubmitShops()
+                  clearShopFinder()
+                }
+              }
+            />
+            }
+          </Col>
+          }
           <Col md={8}>
             {areShopsLoaded && myShops &&
               myShops.map(shop => {
@@ -37,18 +62,19 @@ const MyShopsPage =
               "You're currently not following any shops. Go add some! -->"
             }
           </Col>
-          <Col md={2}>
-            {areShopsLoaded &&
-            <ShopFinder
-              shops={shops}
-              onAddNewShop={(shop) => {
-                onAddNewShop(shop)
-              }}
-              onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-              placeholder="search for a shop..."
-            />
-            }
-            {areShopsLoaded &&
+          {!isMobile &&
+            <Col md={2}>
+              {areShopsLoaded &&
+              <ShopFinder
+                shops={shops}
+                onAddNewShop={(shop) => {
+                  onAddNewShop(shop)
+                }}
+                onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+                placeholder="search for a shop..."
+              />
+              }
+              {areShopsLoaded &&
               <SubmitButton
                 onClick={
                   () => {
@@ -57,8 +83,9 @@ const MyShopsPage =
                   }
                 }
               />
-            }
-          </Col>
+              }
+            </Col>
+          }
         </Row>
       </Grid>
       <Logo/>

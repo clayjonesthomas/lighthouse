@@ -20,6 +20,7 @@ class MyShopsPageHandler extends Component {
         onSelectShop={this.props.onSelectShop}
         areShopsLoaded={this.props.areMyShopsLoaded}
         onLike={this.props.onLike}
+        isMobile={this.props.isMobile}
 
         shops={this.props.shops}
         onAddNewShop={this.props.onAddNewShop}
@@ -35,7 +36,8 @@ const mapStateToProps = (state) => {
   return {
     myShops: state.displayedShops,
     areMyShopsLoaded: state.areMyShopsLoaded,
-    shops: state.shops
+    shops: state.shops,
+    isMobile: state.isMobile
   }
 }
 
