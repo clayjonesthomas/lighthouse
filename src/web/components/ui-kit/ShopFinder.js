@@ -9,10 +9,11 @@ const ShopFinder = (
     submitShops,
     shops,
     onAddShopFinderRef,
-    placeholder
+    placeholder,
+    className
   }) => (
   <Typeahead
-    className="mobile-shop-finder"
+    className={"shop-finder " + className}
     labelKey="name"
     multiple={true}
     options={shops}

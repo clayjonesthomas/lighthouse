@@ -6,6 +6,7 @@ import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from './ui-kit/Logo'
 
+import "./MyShopsPage.css"
 const MyShopsPage =
   ({
      myShops,
@@ -29,6 +30,7 @@ const MyShopsPage =
           <Col md={2}>
             {areShopsLoaded &&
             <ShopFinder
+              className="mobile-shop-finder"
               shops={shops}
               onAddNewShop={(shop) => {
                 onAddNewShop(shop)
@@ -39,12 +41,11 @@ const MyShopsPage =
             }
             {areShopsLoaded &&
             <SubmitButton
-              onClick={
-                () => {
-                  onSubmitShops()
-                  clearShopFinder()
-                }
-              }
+              contents="ADD TO LIKED STORES"
+              onClick={() => {
+                onSubmitShops()
+                clearShopFinder()
+              }}
             />
             }
           </Col>
