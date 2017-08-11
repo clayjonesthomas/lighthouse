@@ -1,0 +1,13 @@
+#new-post-form{
+    font-size: 64px;
+}
+
+.mobile-shop-finder>div>input {
+    height: 90px;
+}
+
+.label-new-shop-finder{
+    width:90%;
+    margin:auto;
+    display: block;
+}

@@ -26,6 +26,7 @@ class TextBox extends Component {
           placeholder={this.props.placeholder}
           className={"text-box-input "+this.props.className}
           inputRef={ref => this.props.refFunc(ref)}
+          componentClass={this.props.componentClass}
         />
       </FormGroup>
     )

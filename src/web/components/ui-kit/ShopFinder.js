@@ -10,12 +10,13 @@ const ShopFinder = (
     shops,
     onAddShopFinderRef,
     placeholder,
-    className
+    className,
+    isMultiple
   }) => (
   <Typeahead
     className={"shop-finder " + className}
     labelKey="name"
-    multiple={true}
+    multiple={isMultiple === "undefined" ? true : isMultiple}
     options={shops}
     placeholder={placeholder}
     onChange={onAddNewShop}

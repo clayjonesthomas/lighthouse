@@ -51,7 +51,6 @@ const MyShopsPage =
           </Col>
           }
           <Col
-            id="my-shops"
             md={8}>
             {areShopsLoaded && myShops &&
               myShops.map(shop => {
@@ -91,6 +90,7 @@ const MyShopsPage =
           }
         </Row>
       </Grid>
+      <Logo/>
     </div>
   )
 
