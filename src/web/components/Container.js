@@ -24,20 +24,20 @@ class Container extends Component {
         <ModalHandler
           modal={this.props.modal}
         />
-        {!this.props.isUserMobile &&
+        {!this.props.isMobile &&
           <UserInfoHandler/>
         }
-        {this.props.isUserMobile &&
+        {this.props.isMobile &&
           <MobileMenuHandler/>
         }
-        {this.props.isUserMobile &&
+        {this.props.isMobile &&
           <Grid id="mobile-children-grid">
             <Row>
               {this.props.children}
             </Row>
           </Grid>
         }
-        {!this.props.isUserMobile &&
+        {!this.props.isMobile &&
           <Grid>
             <Row>
               <Col md={2}>
@@ -56,7 +56,8 @@ class Container extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    message: state.serverMessage
+    message: state.serverMessage,
+    isMobile: state.isMobile
   }
 }
 

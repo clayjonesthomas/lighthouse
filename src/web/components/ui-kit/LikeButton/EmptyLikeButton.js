@@ -1,11 +1,14 @@
 //from FlatIcon, purchased with subscription
 import React from 'react'
+import {connect} from 'react-redux'
 
 import "./EmptyLikeButton.css"
 const EmptyLikeButton = (
   {
     width,
-    height
+    height,
+    defaultWidth,
+    defaultHeight
   }
 ) => (
   <svg
@@ -33,4 +36,22 @@ const EmptyLikeButton = (
 
 )
 
-export default EmptyLikeButton
+function mapStateToProps(state, ownProps) {
+  let defaultWidth;
+  let defaultHeight;
+  if(state.isMobile){
+    defaultWidth=defaultHeight="70px";
+  } else {
+    defaultWidth=defaultHeight="20px";
+  }
+  return {
+    isMobile: state.isMobile,
+    width: ownProps.width || defaultWidth,
+    height: ownProps.height || defaultHeight
+  }
+}
+
+
+export default connect(
+  mapStateToProps
+)(EmptyLikeButton)

@@ -1,5 +1,6 @@
 //from FlatIcon, purchased with subscription
 import React from 'react'
+import {connect} from 'react-redux'
 
 import "./FullLikeButton.css"
 const FullLikeButton = (
@@ -28,4 +29,23 @@ const FullLikeButton = (
   </svg>
 )
 
-export default FullLikeButton
+
+function mapStateToProps(state, ownProps) {
+  let defaultWidth;
+  let defaultHeight;
+  if(state.isMobile){
+    defaultWidth=defaultHeight="70px";
+  } else {
+    defaultWidth=defaultHeight="20px";
+  }
+  return {
+    isMobile: state.isMobile,
+    width: ownProps.width || defaultWidth,
+    height: ownProps.height || defaultHeight
+  }
+}
+
+
+export default connect(
+  mapStateToProps
+)(FullLikeButton)
