@@ -16,7 +16,7 @@ const LikeButton = (
   }
 ) => (
   <span
-    className={"like-svg " + className}
+    className={"like-svg " + (className || "")}
     onClick={onClick}>
     {areLikesLeft &&
       <div

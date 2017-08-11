@@ -1,5 +1,7 @@
 .like-svg {
     display: inline-block;
+    position: relative;
+    top: .25em;
 }
 
 .like-count {
