@@ -3,7 +3,7 @@ import TextBox from '../ui-kit/TextBox'
 import SubmitButton from '../ui-kit/SubmitButton'
 import {Link} from 'react-router'
 import './LoginModal.css'
-import {GlobalModalStyle} from './GlobalModalStyle'
+import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 
 import Modal from 'react-modal'
 import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
@@ -20,28 +20,37 @@ class LoginModal extends Component {
       <Modal
         isOpen={true}
         contentLabel='Login'
-        style={GlobalModalStyle}
+        style={this.props.isMobile?GlobalModalStyle:DesktopGlobalModalStyle}
       >
         <XGraphic
           className="x-modal"
           onClick={() => this.props.onCancel()}
         />
         <FormGroup>
-          <p className='auth-title'> Login </p>
+          <p className={"auth-title " + (this.props.isMobile?
+            "auth-title-mobile":"auth-title-desktop")}>
+            Login
+          </p>
           {this.props.message &&
             <span>{this.props.message}</span>
           }
-          <TextBox
-            className="mobile-textbox"
-            label="username"
-            refFunc={ref => this.props.onSaveRef(ref, LOGIN_USERNAME)}
-          />
-          <TextBox
-            className="mobile-textbox"
-            label="password"
-            inputType="password"
-            refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
-          />
+          <div className={this.props.isMobile?"":"text-boxes"}>
+            <TextBox
+              className="modal-textbox"
+              classNameLabel={(this.props.isMobile?
+                "mobile-textbox-label":"desktop-textbox-label")}
+              label="username"
+              refFunc={ref => this.props.onSaveRef(ref, LOGIN_USERNAME)}
+            />
+            <TextBox
+              className="modal-textbox"
+              classNameLabel={(this.props.isMobile?
+                "mobile-textbox-label":"desktop-textbox-label")}
+              label="password"
+              inputType="password"
+              refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
+            />
+          </div>
           <SubmitButton
             onClick={() => this.props.onLogin()}
           />

@@ -1,18 +1,45 @@
 .auth-title{
     text-align: center;
-    font-size: 72px;
     letter-spacing: .2em;
     padding-top: 0.5em;
     width: 50%;
     margin: auto;
 }
 
-.mobile-textbox{
-    font-size: 48px;
+.auth-title-mobile{
+    font-size: 72px;
+}
+
+.auth-title-desktop{
+    font-size:36px;
+}
+
+.modal-textbox{
     height: inherit;
     padding: .4em .4em .4em 0.8em;
     margin-bottom: 2em;
 }
 
 .x-modal{
+
+}
+
+.mobile-textbox {
+    font-size: 48px;
+}
+
+.desktop-textbox {
+    font-size: 28px;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.text-boxes {
+    margin-bottom: 4em;
+}
+
+.desktop-textbox-label {
+    font-size: 24px;
+    margin-top: 1em;
+    margin-bottom: .5em;
 }

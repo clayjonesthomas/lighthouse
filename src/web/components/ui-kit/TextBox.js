@@ -17,7 +17,7 @@ class TextBox extends Component {
         className="text-box">
         {this.props.label &&
           <ControlLabel
-            className="text-box-label">
+            className={"text-box-label "+(this.props.classNameLabel || "")}>
             {this.props.label}
           </ControlLabel>
         }

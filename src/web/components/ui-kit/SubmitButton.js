@@ -10,7 +10,7 @@ const SubmitButton = (
   <button
     type="button"
     onClick={() => onClick()}
-    className={"submit-button " + className||""}>
+    className={"submit-button " + (className || "")}>
     {contents || "SUBMIT"}
   </button>
 )

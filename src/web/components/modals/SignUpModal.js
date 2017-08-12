@@ -7,7 +7,7 @@ import './LoginModal.css'
 import Modal from 'react-modal'
 import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
-import {GlobalModalStyle} from './GlobalModalStyle'
+import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 import XGraphic from '../ui-kit/XGraphic'
 import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2} from '../../actions/AuthActions'
 
@@ -20,7 +20,7 @@ class SignUpModal extends Component {
       <Modal
         isOpen={true}
         contentLabel='Sign up'
-        style={GlobalModalStyle}
+        style={this.props.isMobile?GlobalModalStyle:DesktopGlobalModalStyle}
       >
         <XGraphic
           className="x-modal"
@@ -28,26 +28,37 @@ class SignUpModal extends Component {
         />
         <FormGroup
           className="sign-up-form-group">
-          <p className='auth-title'> Sign Up </p>
+          <p className={"auth-title " + (this.props.isMobile?
+            "auth-title-mobile":"auth-title-desktop")}>
+            Sign Up
+          </p>
           {this.props.message &&
             <span>{this.props.message}</span>
           }
-          <TextBox
-            className="mobile-textbox"
-            label="username"
-            refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
-          />
-          <TextBox
-            className="mobile-textbox"
-            label="password"
-            inputType="password"
-            refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
-          />
-          <TextBox
-            className="mobile-textbox"
-            label="email"
-            refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
-          />
+          <div className={this.props.isMobile?"":"text-boxes"}>
+            <TextBox
+              className="modal-textbox"
+              classNameLabel={(this.props.isMobile?
+                "mobile-textbox-label":"desktop-textbox-label")}
+              label="username"
+              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
+            />
+            <TextBox
+              className="modal-textbox"
+              classNameLabel={(this.props.isMobile?
+                "mobile-textbox-label":"desktop-textbox-label")}
+              label="password"
+              inputType="password"
+              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
+            />
+            <TextBox
+              className="modal-textbox"
+              classNameLabel={(this.props.isMobile?
+                "mobile-textbox-label":"desktop-textbox-label")}
+              label="email"
+              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
+            />
+          </div>
           <SubmitButton
             onClick={() => this.props.onSignUp()}
           />
