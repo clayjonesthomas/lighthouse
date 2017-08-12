@@ -19,6 +19,7 @@ class NewPostHandler extends Component {
         onCancel={this.props.onCancel}
         onSaveTitleRef={this.props.onSaveTitleRef}
         onUpdateFormShops={this.props.onUpdateFormShops}
+        isMobile={this.props.isMobile}
       />
     )
   }

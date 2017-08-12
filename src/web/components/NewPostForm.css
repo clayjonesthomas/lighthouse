@@ -10,6 +10,10 @@
     height: 90px;
 }
 
+.mobile-shop-finder {
+    font-size: 48px;
+}
+
 .label-new-shop-finder{
     width:90%;
     margin:auto;
@@ -24,4 +28,12 @@
 
 .submit-sale-desktop {
     margin-left:5%;
+}
+
+.label-new-shop-desktop{
+    margin-top: 1em;
+}
+
+.form-contents-desktop {
+    margin-top: 1em;
 }
