@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import datetime
+import time
 
 import webapp2
 
@@ -206,6 +207,7 @@ class MainPage(webapp2.RequestHandler):
     def get(self, *args):
         if not Post.query().fetch(10):
             populate_dummy_datastore()
+            time.sleep(2)  # hack to prevent this from running more than once
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
