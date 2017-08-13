@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 
+import "./Menu.css"
 const Menu =
   ({onHome,
     onMyShops,
@@ -9,41 +10,41 @@ const Menu =
     onAddAShop,
     onMyPosts
   }) => (
-    <div style={{'borderStyle': 'solid'}}>
+    <div className="menu-container-desktop">
       {
-        <button
-          type="button"
+        <div
+          className="menu-option menu-option-first"
           onClick={() => onHome()}>
           Home
-      </button>
+        </div>
       }
       {username &&
-        <button
-        type="button"
-        onClick={() => onMyShops()}>
-        Liked Shops
-      </button>
+        <div
+          className="menu-option"
+          onClick={() => onMyShops()}>
+          Liked Shops
+        </div>
       }
       {username &&
-      <button
-        type="button"
-        onClick={() => onMyPosts()}>
-        Liked Posts
-      </button>
+        <div
+          className="menu-option"
+          onClick={() => onMyPosts()}>
+          Liked Posts
+        </div>
       }
       {username &&
-        <button
-        type="button"
-        onClick={() => onSelectNewPost()}>
-        Submit a Sale
-      </button>
+        <div
+          className="menu-option"
+          onClick={() => onSelectNewPost()}>
+          Submit a Sale
+        </div>
       }
       {username && isModerator &&
-      <button
-        type="button"
-        onClick={() => onAddAShop()}>
-        Add a Store
-      </button>
+        <div
+          className="menu-option"
+          onClick={() => onAddAShop()}>
+          Add a Store
+        </div>
       }
     </div>
   )

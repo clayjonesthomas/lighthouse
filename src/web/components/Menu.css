@@ -1,0 +1,29 @@
+.menu-container-desktop{
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 2em;
+    border-radius: .3em;
+    padding: 1.5em;
+    position: relative;
+    left: -3em;
+    border: 1px solid #e2e4eb;
+}
+
+.menu-option {
+    color: #0055ff;
+    margin-top: 2em;
+    font-size: 20px;
+}
+
+.menu-option-first {
+    margin-top: 0;
+}
+
+.menu-option:hover {
+    cursor: pointer;
+    color: #2c2e32;
+}
+
+.desktop-container{
+    display: inline-block;
+}
