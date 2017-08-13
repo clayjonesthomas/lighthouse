@@ -5,14 +5,16 @@ const XGraphic = (
   {
     color,
     onClick,
-    className
+    className,
+    width,
+    height
   }
 ) => (
   <svg
     className={"x-graphic-svg " + className}
     stroke={color ? color : '#000000'}
-    width="60"
-    height="60"
+    width={width || "60"}
+    height={height || "60"}
     viewBox="0 0 32 32"
     onClick={onClick}
   >

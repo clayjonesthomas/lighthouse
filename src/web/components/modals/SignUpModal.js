@@ -24,6 +24,8 @@ class SignUpModal extends Component {
       >
         <XGraphic
           className="x-modal"
+          width="30"
+          height="30"
           onClick={() => this.props.onCancel()}
         />
         <FormGroup
