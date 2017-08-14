@@ -21,7 +21,8 @@ const PostBox = (
       <div
         className="sale-title">
         {
-          <a href={"http://" + post.store.website}>
+          <a
+            href={"http://" + post.store.website}>
             {
               post['title']
             }

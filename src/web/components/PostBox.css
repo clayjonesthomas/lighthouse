@@ -9,6 +9,11 @@
     color: #006fff;
 }
 
+.sale-title>a:hover {
+    text-decoration: none;
+    color: #2c2e32;
+}
+
 .sale-title {
     padding-bottom: 1em;
 }
@@ -20,6 +25,11 @@
 .shop-link {
     float: right;
     font-style: italic;
+}
+
+.shop-link:hover {
+    text-decoration: none;
+    color: #2c2e32;
 }
 
 .post-line-break {

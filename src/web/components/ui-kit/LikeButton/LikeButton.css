@@ -4,6 +4,10 @@
     top: .25em;
 }
 
+.like-svg:hover {
+    cursor: pointer;
+}
+
 .like-count {
     display: inherit;
     font-weight: 600;
