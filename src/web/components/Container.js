@@ -24,9 +24,6 @@ class Container extends Component {
         <ModalHandler
           modal={this.props.modal}
         />
-        {!this.props.isMobile &&
-          <UserInfoHandler/>
-        }
         {this.props.isMobile &&
           <MobileMenuHandler/>
         }
@@ -39,6 +36,9 @@ class Container extends Component {
         }
         {!this.props.isMobile &&
           <Grid>
+            <Row>
+              <UserInfoHandler/>
+            </Row>
             <Row>
               <Col md={2}>
                 <MenuHandler/>

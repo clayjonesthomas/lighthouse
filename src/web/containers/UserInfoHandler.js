@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import {pullUserInfo, signOut} from '../actions/UserInfoActions'
-import {showLogin} from '../actions/AuthActions'
+import {showLogin, showSignUp} from '../actions/AuthActions'
 import UserInfo from '../components/UserInfo'
 
 class UserInfoHandler extends Component {
@@ -16,7 +16,9 @@ class UserInfoHandler extends Component {
         username={this.props.username}
         isUserInfoLoaded={this.props.isUserInfoLoaded}
         onShowLogin={this.props.onShowLogin}
+        onShopSignUp={this.props.onShowSignUp}
         signOut={this.props.signOut}
+        onHome={this.props.onHome}
       />
     )
   }
@@ -35,10 +37,12 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(pullUserInfo())
     },
     onShowLogin: () => dispatch(showLogin()),
+    onShowSignUp: () => dispatch(showSignUp()),
     signOut: () => {
       browserHistory.push('/')
       dispatch(signOut())
-    }
+    },
+    onHome: () => browserHistory.push('/')
   }
 }
 

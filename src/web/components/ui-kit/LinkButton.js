@@ -1,16 +1,22 @@
 import React, {PropTypes} from 'react'
 
-const LinkButton = ({onClick}) => (
-  <button
+import "./LinkButton.css"
+const LinkButton = (
+  {
+    onClick,
+    contents
+  }) => (
+  <a
     type="button"
     onClick={() => onClick()}
     className="link-button">
-    Log out
-  </button>
+    {contents || "Log in"}
+  </a>
 )
 
 LinkButton.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  contents: PropTypes.string
 }
 
 export default LinkButton

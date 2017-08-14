@@ -3,8 +3,7 @@ import React, {PropTypes} from 'react'
 import "./Logo.css"
 const Logo = (
   {
-    onClick,
-    isPressed
+    onClick
   }) => (
   <svg
     className="logo-svg"

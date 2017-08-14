@@ -1,0 +1,27 @@
+.user-info {
+    float: right;
+}
+
+.user-info-container {
+    width: 100%;
+    padding-right: 20px;
+}
+
+.user-greeting {
+    margin-right: 1em;
+    display: inline-block;
+}
+
+#auth-break {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+#auth-break:hover {
+    cursor: default;
+}
+
+#logo-container {
+    position: relative;
+    left: -2em;
+}
