@@ -68,22 +68,24 @@ const FrontPage =
         </Col>
         {!isMobile &&
           <Col md={4}>
-            <ShopFinder
-              shops={shops}
-              onAddNewShop={(shop) => {
-                onAddNewShop(shop)
-              }}
-              onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-              placeholder="search for a shop..."
-            />
-            <SubmitButton
-              contents="ADD TO LIKED SHOPS"
-              onClick={() => {
-                onSubmitShops()
-                clearShopFinder()
-              }
-              }
-            />
+            <div id="shop-finder-container">
+              <ShopFinder
+                shops={shops}
+                onAddNewShop={(shop) => {
+                  onAddNewShop(shop)
+                }}
+                onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+                placeholder="search for a shop..."
+              />
+              <SubmitButton
+                contents="ADD TO LIKED SHOPS"
+                onClick={() => {
+                  onSubmitShops()
+                  clearShopFinder()
+                }
+                }
+              />
+            </div>
           </Col>
         }
       </Row>

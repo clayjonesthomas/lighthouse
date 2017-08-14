@@ -10,6 +10,7 @@ const FullLogo = (
     height="69px"
     viewBox="0 0 385 69"
     onClick={onClick}
+    id="full-logo"
   >
     <g
       stroke="none"
@@ -28,7 +29,7 @@ const FullLogo = (
 )
 
 FullLogo.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func.isRequired
 }
 
 export default FullLogo
