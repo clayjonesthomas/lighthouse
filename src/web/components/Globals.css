@@ -16,10 +16,8 @@ h1 {
 }
 
 .mobile-h1{
-    position: relative;
-    left: -.1em;
 }
 
 .desktop-h1{
-
+    margin-top: .8em;
 }

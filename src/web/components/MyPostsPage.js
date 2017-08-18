@@ -3,6 +3,7 @@ import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
 import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
+import ShopFinder from './ui-kit/ShopFinder'
 
 import "./FrontPage.css"
 const MyPostsPage =
@@ -14,7 +15,13 @@ const MyPostsPage =
      areMoreMyPostsLoaded,
      getMoreMyPosts,
      areMoreMyPosts,
-     isMobile
+     isMobile,
+
+     shops,
+     onAddNewShop,
+     onSubmitShops,
+     onAddShopFinderRef,
+     clearShopFinder
    }) => (
     <div>
       {!areMyPostsLoaded &&
@@ -23,9 +30,11 @@ const MyPostsPage =
       <Grid>
         <Row>
           <Col md={6}>
-            <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
-              My Posts
-            </h1>
+            <Row>
+              <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
+                My Posts
+              </h1>
+            </Row>
             <div className={isMobile? "":"desktop-content-box"}>
               {areMyPostsLoaded && myPosts &&
               myPosts.map(post => {
@@ -51,11 +60,31 @@ const MyPostsPage =
                   contents="More Posts"
                 />
               }
-              {areMoreMyPostsLoaded && !areMoreMyPosts &&
-                "That's all! Like more posts and come back!"
-              }
             </div>
           </Col>
+          {!isMobile &&
+            <Col md={4}>
+              <div className="shop-finder-container">
+                <ShopFinder
+                  shops={shops}
+                  onAddNewShop={(shop) => {
+                    onAddNewShop(shop)
+                  }}
+                  onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+                  placeholder="search for a shop..."
+                />
+                <SubmitButton
+                  contents="ADD TO LIKED SHOPS"
+                  onClick={
+                    () => {
+                      onSubmitShops()
+                      clearShopFinder()
+                    }
+                  }
+                />
+              </div>
+            </Col>
+          }
         </Row>
       </Grid>
     </div>

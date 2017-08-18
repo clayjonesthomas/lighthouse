@@ -68,7 +68,7 @@ const FrontPage =
         </Col>
         {!isMobile &&
           <Col md={4}>
-            <div id="shop-finder-container">
+            <div className="shop-finder-container">
               <ShopFinder
                 shops={shops}
                 onAddNewShop={(shop) => {

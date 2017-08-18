@@ -1,3 +1,4 @@
+import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import StorePage from '../components/StorePage'
 import {pullStore} from '../actions/StorePageActions'
@@ -6,10 +7,16 @@ import {toggleStoreLike} from '../actions/StorePageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullShopPosts, pullMoreShopPosts} from '../actions/StorePageActions'
 
+
+import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
+  from '../actions/MyShopsPageActions'
+import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
+
 class StorePageHandler extends Component {
   componentDidMount () {
     this.props.getStore(this.props.params.url_key)
     this.props.getStorePosts(this.props.params.url_key)
+    this.props.getAllShops()
   }
 
   render () {
@@ -29,6 +36,13 @@ class StorePageHandler extends Component {
         onMorePosts={this.props.onMorePosts}
         areMorePostsLoaded={this.props.areMorePostsLoaded}
         areMorePosts={this.props.areMorePosts}
+
+        isMobile={this.props.isMobile}
+        shops={this.props.shops}
+        onAddNewShop={this.props.onAddNewShop}
+        onSubmitShops={this.props.onSubmitShops}
+        onAddShopFinderRef={this.props.onAddShopFinderRef}
+        clearShopFinder={this.props.clearShopFinder}
       />
     )
   }
@@ -46,6 +60,8 @@ const mapStateToProps = (state) => {
     areMorePostsLoaded: state.areMorePostsLoaded,
     areMorePosts: state.areMorePosts,
     shopPosts: state.displayedPosts,
+    isMobile: state.isMobile,
+    shops: state.shops,
   }
 }
 
@@ -56,6 +72,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onLikePost: (post_key) => dispatch(togglePostLike(post_key)),
     onMorePosts: () => dispatch(pullMoreShopPosts(ownProps.params.url_key)),
     getStorePosts: () => dispatch(pullShopPosts(ownProps.params.url_key)),
+
+    onAddNewShop: (shops) => {
+      dispatch(onUpdateFormShops(shops))
+    },
+    getAllShops: () => {
+      dispatch(pullShops())
+    },
+    onSubmitShops: () => {
+      dispatch(addShopsToMyShops())
+      browserHistory.push('/shops')
+    },
+    onAddShopFinderRef: (ref) => {
+      dispatch(addShopFinderRef(ref))
+    },
+    clearShopFinder: () => {dispatch(clearShopFinder())}
   }
 }
 

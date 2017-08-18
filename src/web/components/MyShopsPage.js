@@ -23,9 +23,6 @@ const MyShopsPage =
      clearShopFinder
    }) => (
     <div>
-      <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
-        My Shops
-      </h1>
       {!areShopsLoaded &&
         <Spinner/>
       }
@@ -59,6 +56,11 @@ const MyShopsPage =
           </Col>
           }
           <Col md={6}>
+            <Row>
+              <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
+                My Shops
+              </h1>
+            </Row>
             <div className={isMobile ? "" : "desktop-content-box"}>
               {areShopsLoaded && myShops &&
               myShops.map(shop => {
@@ -75,27 +77,25 @@ const MyShopsPage =
           </Col>
           {!isMobile &&
             <Col md={4}>
-              {areShopsLoaded &&
-              <ShopFinder
-                shops={shops}
-                onAddNewShop={(shop) => {
-                  onAddNewShop(shop)
-                }}
-                onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-                placeholder="search for a shop..."
-              />
-              }
-              {areShopsLoaded &&
-              <SubmitButton
-                contents="ADD TO LIKED SHOPS"
-                onClick={
-                  () => {
-                    onSubmitShops()
-                    clearShopFinder()
+              <div className="shop-finder-container">
+                <ShopFinder
+                  shops={shops}
+                  onAddNewShop={(shop) => {
+                    onAddNewShop(shop)
+                  }}
+                  onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+                  placeholder="search for a shop..."
+                />
+                <SubmitButton
+                  contents="ADD TO LIKED SHOPS"
+                  onClick={
+                    () => {
+                      onSubmitShops()
+                      clearShopFinder()
+                    }
                   }
-                }
-              />
-              }
+                />
+              </div>
             </Col>
           }
         </Row>
