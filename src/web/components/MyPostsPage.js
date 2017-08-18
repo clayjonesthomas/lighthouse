@@ -23,6 +23,9 @@ const MyPostsPage =
       <Grid>
         <Row>
           <Col md={6}>
+            <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
+              My Posts
+            </h1>
             <div className={isMobile? "":"desktop-content-box"}>
               {areMyPostsLoaded && myPosts &&
               myPosts.map(post => {

@@ -20,6 +20,7 @@ class MyPostsPageHandler extends Component {
         areMoreMyPostsLoaded={this.props.areMoreMyPostsLoaded}
         getMoreMyPosts={this.props.getMoreMyPosts}
         areMoreMyPosts={this.props.areMorePosts}
+        isMobile={this.props.isMobile}
       />
     )
   }

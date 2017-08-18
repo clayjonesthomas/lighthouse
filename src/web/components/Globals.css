@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Zilla+Slab');
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -6,4 +7,19 @@ body {
 
 a {
     color: #006fff;
+}
+
+h1 {
+    font-size: 3em;
+    color: #2c2e32;
+    font-family: 'Zilla Slab', sans-serif;
+}
+
+.mobile-h1{
+    position: relative;
+    left: -.1em;
+}
+
+.desktop-h1{
+
 }

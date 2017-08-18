@@ -7,6 +7,7 @@ import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from './ui-kit/Logo'
 
 import "./FrontPage.css"
+import "./PostBox.css"
 import "./MyShopsPage.css"
 const MyShopsPage =
   ({
@@ -22,6 +23,9 @@ const MyShopsPage =
      clearShopFinder
    }) => (
     <div>
+      <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
+        My Shops
+      </h1>
       {!areShopsLoaded &&
         <Spinner/>
       }
@@ -30,24 +34,27 @@ const MyShopsPage =
           {isMobile &&
           <Col md={2}>
             {areShopsLoaded &&
-            <ShopFinder
-              className={isMobile?"mobile-shop-finder":""}
-              shops={shops}
-              onAddNewShop={(shop) => {
-                onAddNewShop(shop)
-              }}
-              onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-              placeholder="search for a shop..."
-            />
-            }
-            {areShopsLoaded &&
-            <SubmitButton
-              contents="ADD TO LIKED SHOPS"
-              onClick={() => {
-                onSubmitShops()
-                clearShopFinder()
-              }}
-            />
+              <div>
+                <div className={isMobile?"mobile-shop-finder-container":""}>
+                  <ShopFinder
+                    className={isMobile?"mobile-shop-finder":""}
+                    shops={shops}
+                    onAddNewShop={(shop) => {
+                      onAddNewShop(shop)
+                    }}
+                    onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
+                    placeholder="search for a shop..."
+                  />
+                  <SubmitButton
+                    contents="ADD TO LIKED SHOPS"
+                    onClick={() => {
+                      onSubmitShops()
+                      clearShopFinder()
+                    }}
+                  />
+                </div>
+                <hr className="post-line-break"/>
+              </div>
             }
           </Col>
           }

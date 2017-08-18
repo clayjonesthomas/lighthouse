@@ -83,7 +83,7 @@ const MobileMenu =
               toggleMenu()
               onMyShops()
             }}>
-            Liked Shops
+            My Shops
           </div>
           }
           {username &&
@@ -93,7 +93,7 @@ const MobileMenu =
               toggleMenu()
               onMyPosts()
             }}>
-            Liked Posts
+            My Posts
           </div>
           }
           {username &&
