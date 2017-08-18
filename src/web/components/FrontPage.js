@@ -31,26 +31,26 @@ const FrontPage =
     <Grid>
       <Row>
         <Col md={6}>
-          {arePostsLoaded && posts &&
-            <div className={isMobile? "":"desktop-content-box"}>
-              {
-                posts.map(post => {
-                  return <Row key={post.key}><PostBox
-                    post={post}
-                    post_key={post.key}
-                    onLike={() => onLike(post.key)}
-                    canDelete={post.canDelete}
-                    onDelete={deletePost}
-                  /></Row>
-                })
-              }
-            </div>
-          }
-          {arePostsLoaded && !posts.length &&
-            <span>You'll see some posts once you follow some stores. add some using the store finder!</span>
-          }
+          <div className={isMobile? "":"desktop-content-box"}>
+            {arePostsLoaded && posts &&
+              posts.map(post => {
+                return <Row key={post.key}><PostBox
+                  post={post}
+                  post_key={post.key}
+                  onLike={() => onLike(post.key)}
+                  canDelete={post.canDelete}
+                  onDelete={deletePost}
+                /></Row>
+              })
+            }
+            {arePostsLoaded && !posts.length &&
+              <div id={isMobile? "":"desktop-no-posts"}>
+                You'll see some posts once you follow some stores. add some using the store finder!
+              </div>
+            }
+          </div>
           <Row>
-            {areMorePostsLoaded && areMorePosts &&
+            {arePostsLoaded && posts.length !== 0 && areMorePostsLoaded && areMorePosts &&
               <MoreContentButton
                 onClick={onMorePosts}
                 words="MORE POSTS"
