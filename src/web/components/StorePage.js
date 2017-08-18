@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import LikeButton from './ui-kit/deprecated/LikeButton'
 import Spinner from './ui-kit/Spinner'
-import SubmitButton from './ui-kit/SubmitButton'
+import MoreContentButton from './ui-kit/MoreContentButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import PostBox from './PostBox'
 
@@ -52,11 +52,9 @@ const StorePage =
           }
           <Row>
             {areMorePostsLoaded && areMorePosts &&
-              <SubmitButton
-                onClick={() => {
-                  onMorePosts()
-                }}
-                contents="More Posts"
+              <MoreContentButton
+                onClick={onMorePosts}
+                words="MORE POSTS"
               />
             }
             {!areMorePostsLoaded && areMorePosts &&

@@ -31,6 +31,7 @@ const MyShopsPage =
           <Col md={2}>
             {areShopsLoaded &&
             <ShopFinder
+              className={isMobile?"mobile-shop-finder":""}
               shops={shops}
               onAddNewShop={(shop) => {
                 onAddNewShop(shop)
