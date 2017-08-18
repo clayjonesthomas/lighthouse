@@ -26,6 +26,7 @@
 
 .mobile-textbox {
     font-size: 48px;
+    height: 82px;
 }
 
 .desktop-textbox {
@@ -42,4 +43,9 @@
     font-size: 24px;
     margin-top: 1em;
     margin-bottom: .5em;
+}
+
+.mobile-form-contents {
+    margin-top: .5em;
+    margin-bottom: 1em;
 }

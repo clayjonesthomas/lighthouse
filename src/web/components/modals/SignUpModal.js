@@ -24,8 +24,8 @@ class SignUpModal extends Component {
       >
         <XGraphic
           className="x-modal"
-          width="30"
-          height="30"
+          width={this.props.isMobile?"60":"30"}
+          height={this.props.isMobile?"60":"30"}
           onClick={() => this.props.onCancel()}
         />
         <FormGroup
@@ -37,16 +37,18 @@ class SignUpModal extends Component {
           {this.props.message &&
             <span>{this.props.message}</span>
           }
-          <div className={this.props.isMobile?"":"text-boxes"}>
+          <div className={this.props.isMobile?"mobile-form-contents":"text-boxes"}>
             <TextBox
-              className="modal-textbox"
+              className={"modal-textbox " + this.props.isMobile?
+                "mobile-textbox":"desktop-textbox"}
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="username"
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
             />
             <TextBox
-              className="modal-textbox"
+              className={"modal-textbox " + this.props.isMobile?
+                "mobile-textbox":"desktop-textbox"}
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="password"
@@ -54,7 +56,8 @@ class SignUpModal extends Component {
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
             />
             <TextBox
-              className="modal-textbox"
+              className={"modal-textbox " + this.props.isMobile?
+                "mobile-textbox":"desktop-textbox"}
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="email"
