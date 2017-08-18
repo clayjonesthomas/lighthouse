@@ -16,7 +16,7 @@ class UserInfoHandler extends Component {
         username={this.props.username}
         isUserInfoLoaded={this.props.isUserInfoLoaded}
         onShowLogin={this.props.onShowLogin}
-        onShopSignUp={this.props.onShowSignUp}
+        onShowSignUp={this.props.onShowSignUp}
         signOut={this.props.signOut}
         onHome={this.props.onHome}
       />
