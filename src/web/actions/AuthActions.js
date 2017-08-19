@@ -20,6 +20,8 @@ export const LOGIN_PASSWORD = 'LOGIN_PASSWORD'
 
 export const LOGIN_RESPONSE_FAILED = 'LOGIN_RESPONSE_FAILED'
 export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
+export const DUPLICATE_USERNAME_ERROR = 'DUPLICATE_USERNAME_ERROR'
+export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 export const CLEAR_ERROR_MESSAGE = 'CLEAR_ERROR_MESSAGE'
 
 export const cancelModal = () => {
@@ -88,7 +90,7 @@ export function logInUser() {
         if(json.username)
           dispatch(responseLogin(json.username))
         else
-          dispatch(loginResponseFailed(json.error))
+          dispatch(loginResponseFailed(json))
       })
   }
 }
@@ -140,7 +142,7 @@ export function signUpUser() {
         if(json.username)
           dispatch(signUpResponse(json.username))
         else
-          dispatch(signUpResponseFailed(json.error))
+          dispatch(signUpResponseFailed(json))
       })
   }
 }

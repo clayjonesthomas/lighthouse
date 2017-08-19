@@ -33,8 +33,8 @@ class LoginModal extends Component {
             "auth-title-mobile":"auth-title-desktop")}>
             Login
           </p>
-          {this.props.message &&
-            <span>{this.props.message}</span>
+          {this.props.messages &&
+            <span>{this.props.messages}</span>
           }
           <div className={this.props.isMobile?"mobile-form-contents":"text-boxes"}>
             <TextBox

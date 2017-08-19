@@ -24,10 +24,10 @@ import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsP
 import {IS_USER_MOBILE} from '../actions/UserActions'
 import {TOGGLE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
 import {SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../actions/AuthActions'
-import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE}
+import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE,
+  DUPLICATE_USERNAME_ERROR, AUTHENTICATION_ERROR}
   from '../actions/AuthActions'
-import {ADD_POST_FAILURE, ADD_POST_RETURN, NO_TITLE_ERROR, NO_SHOPS_ERROR,
-  VALIDATION_ERROR} from '../actions/NewPostActions'
+import {ADD_POST_FAILURE, ADD_POST_RETURN, VALIDATION_ERROR} from '../actions/NewPostActions'
 
 const initialState = {
   displayedPosts: [],
@@ -51,11 +51,13 @@ const initialState = {
   isMobile: false,
   displayHamburgerMenu: false,
   authRefs: {},
-  serverMessage: null
+  serverMessage: null,
+  serverMessageArray: []
 }
 
 
 function store(state = initialState, action) {
+  let serverMessageArray = []
   switch (action.type) {
     case SHOW_MODAL:
       switch (action.meta) {
@@ -276,19 +278,52 @@ function store(state = initialState, action) {
         username: action.data.username
       })
     case SIGN_UP_RESPONSE_FAILED:
+      switch (action.data.error.error) {
+        case VALIDATION_ERROR:
+          if (!action.data.error.isUsernamePresent) {
+            serverMessageArray.push("you must enter a username")
+          }
+          if (!action.data.error.isEmailPresent) {
+            serverMessageArray.push("you must enter an email")
+          } else if (!action.data.error.isEmailValid) {
+            serverMessageArray.push("you must enter a valid email")
+          }
+          if (!action.data.error.isPasswordPresent) {
+            serverMessageArray.push("you must enter a password")
+          }
+          break
+        case DUPLICATE_USERNAME_ERROR:
+          serverMessageArray.push("the username is already taken," +
+            " please select another")
+          break
+      }
       return Object.assign({}, state, {
-        serverMessage: action.data.error
+        serverMessageArray: serverMessageArray
       })
     case LOGIN_RESPONSE_FAILED:
+      switch (action.data.error.error) {
+        case VALIDATION_ERROR:
+          if (!action.data.error.isUsernamePresent) {
+            serverMessageArray.push("you must enter a username")
+          }
+          if (!action.data.error.isPasswordPresent) {
+            serverMessageArray.push("you must enter a password")
+          }
+          break
+        case AUTHENTICATION_ERROR:
+          serverMessageArray.push("The username or password was " +
+            "entered incorrectly.")
+          break
+      }
       return Object.assign({}, state, {
-        serverMessage: action.data.error
+        serverMessageArray: serverMessageArray
       })
     case CLEAR_ERROR_MESSAGE:
       return Object.assign({}, state, {
-        serverMessage: null
+        serverMessage: null,
+        serverMessageArray: []
       })
     case ADD_POST_RETURN:
-      let serverMessageArray = []
       if (action.data.error) {
         switch (action.data.error) {
           case VALIDATION_ERROR:

@@ -17,7 +17,7 @@ class LoginHandler extends Component {
         onCancel={this.props.onCancel}
         isMobile={this.props.isMobile}
         onSaveRef={this.props.onSaveRef}
-        message={this.props.message}
+        messages={this.props.messages}
       />
     )
   }
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    message: state.serverMessage,
+    messages: state.serverMessageArray,
     onCancel: () => ownProps.onCancel(),
     isMobile: state.isMobile
   }

@@ -483,7 +483,7 @@ class SignupHandler(BaseHandler):
         if (not is_username_present or not is_email_present
                 or not is_password_present or not is_email_valid):
             self.response.write(json.dumps({
-                'error': 'VALIDATION_FAILURE',
+                'error': 'VALIDATION_ERROR',
                 'isUsernamePresent': is_username_present,
                 'isEmailPresent': is_email_present,
                 'isPasswordPresent': is_password_present,
@@ -621,7 +621,7 @@ class LoginHandler(BaseHandler):
         is_password_present = len(password) > 0
         if not is_username_present or not is_password_present:
             self.response.write(json.dumps({
-                'error': 'VALIDATION_FAILURE',
+                'error': 'VALIDATION_ERROR',
                 'isUsernamePresent': is_username_present,
                 'isPasswordPresent': is_password_present,
             }))
@@ -646,7 +646,7 @@ class LoginHandler(BaseHandler):
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', username, type(e))
-            self.response.write(json.dumps({'error': 'INVALID_AUTH'}))
+            self.response.write(json.dumps({'error': 'AUTHENTICATION_ERROR'}))
 
     def get(self):
         """
