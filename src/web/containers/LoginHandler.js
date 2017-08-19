@@ -11,6 +11,7 @@ class LoginHandler extends Component {
   }
 
   render () {
+    debugger
     return (
       <LoginModal
         onLogin={this.props.onLogin}

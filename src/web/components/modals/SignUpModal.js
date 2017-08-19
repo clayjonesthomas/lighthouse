@@ -35,23 +35,23 @@ class SignUpModal extends Component {
             Sign Up
           </p>
           {this.props.messages.length > 0 &&
-            <ErrorMessages
-              className={this.props.isMobile?
-                "mobile-error-messages":"desktop-error-messages"}
-              messages={this.props.messages}/>
+          <ErrorMessages
+            className={(this.props.isMobile?
+              "mobile-error-messages":"desktop-error-messages")}
+            messages={this.props.messages}/>
           }
-          <div className={this.props.isMobile?"mobile-form-contents":"text-boxes"}>
+          <div className={(this.props.isMobile?"mobile-form-contents":"text-boxes")}>
             <TextBox
-              className={"modal-textbox " + this.props.isMobile?
-                "mobile-textbox":"desktop-textbox"}
+              className={"modal-textbox " + (this.props.isMobile?
+                "mobile-textbox":"desktop-textbox")}
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="username"
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_USERNAME)}
             />
             <TextBox
-              className={"modal-textbox " + this.props.isMobile?
-                "mobile-textbox":"desktop-textbox"}
+              className={"modal-textbox " + (this.props.isMobile?
+                "mobile-textbox":"desktop-textbox")}
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="password"
@@ -59,8 +59,8 @@ class SignUpModal extends Component {
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD)}
             />
             <TextBox
-              className={"modal-textbox " + this.props.isMobile?
-                "mobile-textbox":"desktop-textbox"}
+              className={"modal-textbox " + (this.props.isMobile?
+                "mobile-textbox":"desktop-textbox")}
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="email"
