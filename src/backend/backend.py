@@ -25,6 +25,7 @@ from models import Post, Store, get_entity_from_url_key
 
 from google.appengine.api import app_identity
 import lib.cloudstorage as gcs
+from lib.validate_email import validate_email
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -467,22 +468,38 @@ class SignupHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
         user_name = body['username']
-        # email = self.request.get('email')
+        email = body['email']
         password = body['password']
-        # unique_properties = ['email_address']  # username is automatically unique, we don't need it here too
+
+        is_username_present = len(user_name) > 0
+        is_email_present = len(email) > 0
+        is_password_present = len(password) > 0
+        is_email_valid = validate_email(email, verify=True)
+        if (not is_username_present or not is_email_present
+                or not is_password_present or not is_email_valid):
+            self.response.write(json.dumps({
+                'error': 'VALIDATION_FAILURE',
+                'isUsernamePresent': is_username_present,
+                'isEmailPresent': is_email_present,
+                'isPasswordPresent': is_password_present,
+                'isEmailValid': is_email_valid
+            }))
+            return
+
+        unique_properties = ['email_address']  # username is automatically unique, we don't need it here too
         is_moderator = False
         if self.request.get('username') == 'admin':  # so, so bad
             is_moderator = True
         user_data = self.user_model.create_user(user_name,
-                                                # unique_properties,
-                                                # email_address=email,
+                                                unique_properties,
+                                                email_address=email,
                                                 password_raw=password,
                                                 verified=False,
                                                 is_moderator=is_moderator)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for username %s because of '
                          'duplicate keys %s' % (user_name, user_data[1]))
-            self.response.write(json.dumps({'error': 'duplicate username'}))
+            self.response.write(json.dumps({'error': 'DUPLICATE_USERNAME'}))
             return
 
         user = user_data[1]

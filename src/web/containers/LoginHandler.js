@@ -15,7 +15,6 @@ class LoginHandler extends Component {
       <LoginModal
         onLogin={this.props.onLogin}
         onCancel={this.props.onCancel}
-        showSignUp={this.props.showSignUp}
         isMobile={this.props.isMobile}
         onSaveRef={this.props.onSaveRef}
         message={this.props.message}
@@ -27,7 +26,6 @@ class LoginHandler extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (user, pass) => dispatch(logInUser(user, pass)),
-    showSignUp: () => dispatch(showSignUp()),
     onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type)),
     clearMessage: () => dispatch(clearErrorMessage())
   }
