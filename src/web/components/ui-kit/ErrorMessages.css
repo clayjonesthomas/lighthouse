@@ -1,0 +1,12 @@
+.error-message-container {
+    font-size: .8em;
+    background: #ffc4c4;
+    border-radius: .3em;
+    padding: 1em;
+    width: 90%;
+    margin: auto;
+}
+
+.error-message-li {
+    display: inherit
+}

@@ -9,6 +9,7 @@ import {Component} from 'react'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 import XGraphic from '../ui-kit/XGraphic'
 import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD, SIGN_UP_EMAIL} from '../../actions/AuthActions'
+import ErrorMessages from '../ui-kit/ErrorMessages'
 
 import "./ModalStyle.css"
 import "./SignUpModal.css"
@@ -33,8 +34,11 @@ class SignUpModal extends Component {
             "auth-title-mobile":"auth-title-desktop")}>
             Sign Up
           </p>
-          {this.props.messages &&
-            <span>{this.props.messages}</span>
+          {this.props.messages.length > 0 &&
+            <ErrorMessages
+              className={this.props.isMobile?
+                "mobile-error-messages":"desktop-error-messages"}
+              messages={this.props.messages}/>
           }
           <div className={this.props.isMobile?"mobile-form-contents":"text-boxes"}>
             <TextBox

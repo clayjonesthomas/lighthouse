@@ -10,6 +10,7 @@ import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
 import XGraphic from '../ui-kit/XGraphic'
 import {LOGIN_USERNAME, LOGIN_PASSWORD} from '../../actions/AuthActions'
+import ErrorMessages from '../ui-kit/ErrorMessages'
 
 import "./ModalStyle.css"
 import './LoginModal.css'
@@ -33,8 +34,11 @@ class LoginModal extends Component {
             "auth-title-mobile":"auth-title-desktop")}>
             Login
           </p>
-          {this.props.messages &&
-            <span>{this.props.messages}</span>
+          {this.props.messages.length > 0 &&
+            <ErrorMessages
+              className={this.props.isMobile?
+                "mobile-error-messages":"desktop-error-messages"}
+              messages={this.props.messages}/>
           }
           <div className={this.props.isMobile?"mobile-form-contents":"text-boxes"}>
             <TextBox
