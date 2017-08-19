@@ -493,7 +493,7 @@ class SignupHandler(BaseHandler):
 
         unique_properties = ['email_address']  # username is automatically unique, we don't need it here too
         is_moderator = False
-        if self.request.get('username') == 'admin':  # so, so bad
+        if user_name == 'admin':  # so, so bad
             is_moderator = True
         user_data = self.user_model.create_user(user_name,
                                                 unique_properties,
@@ -633,7 +633,10 @@ class LoginHandler(BaseHandler):
 
             if user.verified:
                 if user.is_login_enabled:
-                    self.response.write(json.dumps({'username': self.user.username}))
+                    self.response.write(json.dumps({
+                        'username': self.user.username,
+                        'isModerator': self.user.is_moderator
+                    }))
                 else:
                     logging.info('Login failed for user %s because they reset their password', username)
                     self.response.write(json.dumps({'error': 'PASSWORD_RESET'}))
@@ -642,7 +645,8 @@ class LoginHandler(BaseHandler):
                 logging.info('Login failed for user %s because they are unverified', username)
                 self.response.write(json.dumps({
                     'username': self.user.username,
-                    'error': 'UNVERIFIED'
+                    'error': 'UNVERIFIED',
+                    'isModerator': self.user.is_moderator
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', username, type(e))
