@@ -255,16 +255,19 @@ class SinglePost(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
         shops = body['shops']
-        if shops:
-            post_keys = []
-            for shop in shops:
-                post = Post(title=body['title'],
-                            shop_key=ndb.Key(urlsafe=shop['key']))
-                post_keys.append(post.put().urlsafe())
-            self.response.write(json.dumps({'keys': post_keys}))
-        else:
-            logging.info("post without a shop tried to save itself")
-            self.response.write("a post needs a shop")
+        title = body['title']
+        if not shops or not title:
+            self.response.write(json.dumps({
+                'error': 'VALIDATION_ERROR',
+                'isShopsValid': shops is True,
+                'isTitleValid': title is True
+            }))
+        post_keys = []
+        for shop in shops:
+            post = Post(title=title,
+                        shop_key=ndb.Key(urlsafe=shop['key']))
+            post_keys.append(post.put().urlsafe())
+        self.response.write(json.dumps({'keys': post_keys}))
 
     def get(self, url_key):
         post = get_entity_from_url_key(url_key)

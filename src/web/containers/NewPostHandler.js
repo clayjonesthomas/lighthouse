@@ -4,11 +4,16 @@ import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
 import {pushPost, cancelPost, onSaveRef, pullShops,
   onUpdateFormShops} from '../actions/NewPostActions'
+import {clearErrorMessage} from'../actions/AuthActions'
 
 class NewPostHandler extends Component {
 
   componentDidMount () {
     this.props.getShops()
+  }
+
+  componentWillUnmount () {
+    this.props.clearErrorMessage()
   }
 
   render () {
@@ -20,6 +25,7 @@ class NewPostHandler extends Component {
         onSaveTitleRef={this.props.onSaveTitleRef}
         onUpdateFormShops={this.props.onUpdateFormShops}
         isMobile={this.props.isMobile}
+        errors={this.props.errors}
       />
     )
   }
@@ -34,7 +40,8 @@ const mapStateToProps = (state) => {
         icon: ''
       }
     }),
-    isMobile: state.isMobile
+    isMobile: state.isMobile,
+    errors: state.serverMessageArray
   }
 }
 
@@ -47,10 +54,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSubmit: () => {
       dispatch(pushPost())
-        .then(response => browserHistory.push(`/`))
     },
     onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),
-    onUpdateFormShops: (shops) => dispatch(onUpdateFormShops(shops))
+    onUpdateFormShops: (shops) => dispatch(onUpdateFormShops(shops)),
+    clearErrorMessage: () => dispatch(clearErrorMessage())
   }
 }
 

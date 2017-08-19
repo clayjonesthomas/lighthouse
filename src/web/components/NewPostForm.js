@@ -16,7 +16,8 @@ const NewPostForm = (
     onSaveTitleRef,
     onUpdateFormShops,
     shops,
-    isMobile
+    isMobile,
+    errors
   }) => (
   <Col md={8}>
     <div
@@ -25,6 +26,9 @@ const NewPostForm = (
       <span className={isMobile?"":"submit-sale-desktop"}>
         Submit a Sale
       </span>
+      {errors &&
+        errors
+      }
       <div className={isMobile?"":"form-contents-desktop"}>
         <TextBox
           className={isMobile?"mobile-textbox":""}

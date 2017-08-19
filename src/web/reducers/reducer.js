@@ -1,3 +1,4 @@
+import {browserHistory} from 'react-router'
 import {ADD_POST, CANCEL_POST, SAVE_NEW_POST_FORM_REF,
 REQUEST_SHOPS, REQUEST_SHOPS_RETURN, UPDATE_FORM_SHOPS}
   from '../actions/NewPostActions.js'
@@ -25,6 +26,8 @@ import {TOGGLE_HAMBURGER_MENU} from '../actions/MobileMenuActions'
 import {SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../actions/AuthActions'
 import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE}
   from '../actions/AuthActions'
+import {ADD_POST_FAILURE, ADD_POST_RETURN, NO_TITLE_ERROR, NO_SHOPS_ERROR,
+  VALIDATION_ERROR} from '../actions/NewPostActions'
 
 const initialState = {
   displayedPosts: [],
@@ -283,6 +286,31 @@ function store(state = initialState, action) {
     case CLEAR_ERROR_MESSAGE:
       return Object.assign({}, state, {
         serverMessage: null
+      })
+    case ADD_POST_RETURN:
+      let serverMessageArray = []
+      if (action.data.error) {
+        switch (action.data.error) {
+          case VALIDATION_ERROR:
+          default:
+            if (action.data.isShopsValid) {
+              serverMessageArray.push("please make sure " +
+                "you have added at least one valid shop")
+            }
+            if (action.data.isTitleValid) {
+              serverMessageArray.push("please make sure " +
+                "you have added a title")
+            }
+        }
+      } else {
+        browserHistory.push('/')
+      }
+      return Object.assign({}, state, {
+        serverMessageArray: serverMessageArray
+      })
+    case ADD_POST_FAILURE:
+      return Object.assign({}, state, {
+        serverMessageArray: action.data.messages
       })
     default:
       return state

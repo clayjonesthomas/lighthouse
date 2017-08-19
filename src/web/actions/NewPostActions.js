@@ -3,11 +3,16 @@ import {POST_URL, SHOPS_URL} from '../constants/constants'
 
 export const ADD_POST = 'ADD_POST'
 export const ADD_POST_RETURN = 'ADD_POST_RETURN'
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE'
 export const CANCEL_POST = 'CANCEL_POST'
 export const SAVE_NEW_POST_FORM_REF = 'SAVE_NEW_POST_FORM_REF'
 export const REQUEST_SHOPS = "REQUEST_SHOPS"
 export const REQUEST_SHOPS_RETURN = "REQUEST_SHOPS_RETURN"
 export const UPDATE_FORM_SHOPS = "UPDATE_FORM_SHOPS"
+
+export const NO_SHOPS_ERROR = "NO_SHOPS_ERROR"
+export const NO_TITLE_ERROR = "NO_TITLE_ERROR"
+export const VALIDATION_ERROR = "VALIDATION_ERROR"
 
 export const onSaveRef = (ref, type) => {
   return {
@@ -28,10 +33,14 @@ export const addPost = (post) => {
   }
 }
 
-export const addPostReturn = (postKey) => {
+export const addPostReturn = (data) => {
   return {
     type: ADD_POST_RETURN,
-    postKey: postKey
+    data: {
+      error: data.error,
+      isShopsValid: data.isShopsValid,
+      isTitleValid: data.isTitleValid
+    }
   }
 }
 
@@ -41,16 +50,38 @@ export const cancelPost = () => {
   }
 }
 
+export const addPostFailure = (messages) => {
+  return {
+    type: ADD_POST_FAILURE,
+    data: {
+      messages: messages
+    }
+  }
+}
+
 export function pushPost() {
   return (dispatch, getState) => {
     const state = getState()
     const refs = state.formRefs
+    const title = refs.title.value
+
+    let errorMessages = []
+    if (!state.form.shops) {
+      errorMessages.push(NO_SHOPS_ERROR)
+    }
+    if (!title) {
+      errorMessages.push(NO_TITLE_ERROR)
+    }
+    if(errorMessages){
+      dispatch(addPostFailure(errorMessages))
+      return
+    }
+
     const shops = state.form.shops.map(shop => {
       return {
         key: shop.key
       }
     })
-    const title = refs.title.value
     const post_data = {
       title: title,
       shops: shops
@@ -64,7 +95,7 @@ export function pushPost() {
     dispatch(addPost(post_data))
     return fetch(POST_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(addPostReturn(json.key)))
+      .then(json => {dispatch(addPostReturn(json))})
   }
 }
 
