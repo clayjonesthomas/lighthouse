@@ -1,4 +1,3 @@
-import {browserHistory} from 'react-router'
 import {ADD_POST, CANCEL_POST, SAVE_NEW_POST_FORM_REF,
 REQUEST_SHOPS, REQUEST_SHOPS_RETURN, UPDATE_FORM_SHOPS}
   from '../actions/NewPostActions.js'
@@ -337,15 +336,19 @@ function store(state = initialState, action) {
                 "you have added a title")
             }
         }
-      } else {
-        browserHistory.push('/')
       }
       return Object.assign({}, state, {
         serverMessageArray: serverMessageArray
       })
     case ADD_POST_FAILURE:
+      if (action.data.messages.noShopsError) {
+        serverMessageArray.push("You need to add at least one shop")
+      }
+      if (action.data.messages.noTitleError) {
+        serverMessageArray.push("You need to give the post a descriptive title")
+      }
       return Object.assign({}, state, {
-        serverMessageArray: action.data.messages
+        serverMessageArray: serverMessageArray
       })
     default:
       return state

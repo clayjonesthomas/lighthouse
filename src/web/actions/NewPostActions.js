@@ -1,3 +1,4 @@
+import {browserHistory} from 'react-router'
 import fetch from 'isomorphic-fetch'
 import {POST_URL, SHOPS_URL} from '../constants/constants'
 
@@ -10,8 +11,6 @@ export const REQUEST_SHOPS = "REQUEST_SHOPS"
 export const REQUEST_SHOPS_RETURN = "REQUEST_SHOPS_RETURN"
 export const UPDATE_FORM_SHOPS = "UPDATE_FORM_SHOPS"
 
-export const NO_SHOPS_ERROR = "NO_SHOPS_ERROR"
-export const NO_TITLE_ERROR = "NO_TITLE_ERROR"
 export const VALIDATION_ERROR = "VALIDATION_ERROR"
 
 export const onSaveRef = (ref, type) => {
@@ -65,14 +64,14 @@ export function pushPost() {
     const refs = state.formRefs
     const title = refs.title.value
 
-    let errorMessages = []
+    let errorMessages = {}
     if (!state.form.shops) {
-      errorMessages.push(NO_SHOPS_ERROR)
+      errorMessages.noShopsError = true
     }
     if (!title) {
-      errorMessages.push(NO_TITLE_ERROR)
+      errorMessages.noTitleError = true
     }
-    if(errorMessages){
+    if(Object.keys(errorMessages).length){
       dispatch(addPostFailure(errorMessages))
       return
     }
@@ -95,7 +94,12 @@ export function pushPost() {
     dispatch(addPost(post_data))
     return fetch(POST_URL, args)
       .then(response => response.json())
-      .then(json => {dispatch(addPostReturn(json))})
+      .then(json => {
+        dispatch(addPostReturn(json))
+        if (!json.error){
+          browserHistory.push('/')
+        }
+      })
   }
 }
 

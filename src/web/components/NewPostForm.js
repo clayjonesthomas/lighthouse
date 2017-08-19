@@ -4,6 +4,7 @@ import TextBox from './ui-kit/TextBox'
 import ShopFinder from './ui-kit/ShopFinder'
 import {ControlLabel} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
+import ErrorMessages from './ui-kit/ErrorMessages'
 
 import "./FrontPage.css"
 import "./ui-kit/TextBox.css"
@@ -26,8 +27,11 @@ const NewPostForm = (
       <span className={isMobile?"":"submit-sale-desktop"}>
         Submit a Sale
       </span>
-      {errors &&
-        errors
+      {errors.length > 0 &&
+        <ErrorMessages
+          className={isMobile?
+            "mobile-error-messages":"desktop-error-messages"}
+          messages={errors}/>
       }
       <div className={isMobile?"":"form-contents-desktop"}>
         <TextBox
