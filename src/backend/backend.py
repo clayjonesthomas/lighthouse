@@ -611,6 +611,17 @@ class LoginHandler(BaseHandler):
         body = json.loads(self.request.body)
         username = body['username']
         password = body['password']
+
+        is_username_present = len(username) > 0
+        is_password_present = len(password) > 0
+        if not is_username_present or not is_password_present:
+            self.response.write(json.dumps({
+                'error': 'VALIDATION_FAILURE',
+                'isUsernamePresent': is_username_present,
+                'isPasswordPresent': is_password_present,
+            }))
+            return
+
         try:
             user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
