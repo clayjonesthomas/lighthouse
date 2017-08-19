@@ -9,7 +9,7 @@ import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 import XGraphic from '../ui-kit/XGraphic'
-import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD_1, SIGN_UP_PASSWORD_2} from '../../actions/AuthActions'
+import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD, SIGN_UP_EMAIL} from '../../actions/AuthActions'
 
 import "./ModalStyle.css"
 import "./SignUpModal.css"
@@ -53,7 +53,7 @@ class SignUpModal extends Component {
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="password"
               inputType="password"
-              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_1)}
+              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD)}
             />
             <TextBox
               className={"modal-textbox " + this.props.isMobile?
@@ -61,7 +61,7 @@ class SignUpModal extends Component {
               classNameLabel={(this.props.isMobile?
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="email"
-              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_PASSWORD_2)}
+              refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_EMAIL)}
             />
           </div>
           <SubmitButton

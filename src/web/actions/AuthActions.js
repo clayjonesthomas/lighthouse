@@ -13,8 +13,8 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
 export const SIGN_UP_RESPONSE = 'SIGN_UP_RESPONSE'
 
 export const SIGN_UP_USERNAME = 'SIGN_UP_USERNAME'
-export const SIGN_UP_PASSWORD_1 = 'SIGN_UP_PASSWORD_1'
-export const SIGN_UP_PASSWORD_2 = 'SIGN_UP_PASSWORD_2'
+export const SIGN_UP_PASSWORD = 'SIGN_UP_PASSWORD'
+export const SIGN_UP_EMAIL = 'SIGN_UP_EMAIL'
 export const LOGIN_USERNAME = 'LOGIN_USERNAME'
 export const LOGIN_PASSWORD = 'LOGIN_PASSWORD'
 
@@ -122,13 +122,15 @@ export function signUpUser() {
     const state = getState()
     const refs = state.formRefs
     const username = refs[SIGN_UP_USERNAME].value
-    const password = refs[SIGN_UP_PASSWORD_1].value
+    const password = refs[SIGN_UP_PASSWORD].value
+    const email = refs[SIGN_UP_EMAIL].value
     const args = {
       method: 'POST',
       credentials: 'same-origin',
       body: JSON.stringify({
         username: username,
-        password: password
+        password: password,
+        email: email
       })
     }
     dispatch(signUpRequest())
