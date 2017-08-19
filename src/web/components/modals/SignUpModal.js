@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import TextBox from '../ui-kit/TextBox'
 import SubmitButton from '../ui-kit/SubmitButton'
-import {Link} from 'react-router'
 import './LoginModal.css'
 
 import Modal from 'react-modal'

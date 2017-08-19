@@ -6,6 +6,7 @@ import logging
 import os
 import datetime
 import time
+import re
 
 import webapp2
 
@@ -25,7 +26,6 @@ from models import Post, Store, get_entity_from_url_key
 
 from google.appengine.api import app_identity
 import lib.cloudstorage as gcs
-from lib.validate_email import validate_email
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -474,7 +474,9 @@ class SignupHandler(BaseHandler):
         is_username_present = len(user_name) > 0
         is_email_present = len(email) > 0
         is_password_present = len(password) > 0
-        is_email_valid = validate_email(email, verify=True)
+        # won't work because of unsupported GAE modules
+        # is_email_valid = validate_email(email, verify=True)
+        is_email_valid = re.match(r"[^@]+@[^@]+\.[^@]+", email)
         if (not is_username_present or not is_email_present
                 or not is_password_present or not is_email_valid):
             self.response.write(json.dumps({
