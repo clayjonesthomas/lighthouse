@@ -1,6 +1,7 @@
 import {MY_SHOPS_URL, LIKE_STORE_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 import {pullFrontPagePosts} from '../actions/FrontPageActions'
+import {pullShops} from '../actions/NewPostActions'
 
 export const REQUEST_MY_SHOPS = 'REQUEST_MY_SHOPS'
 export const REQUEST_MY_SHOPS_RETURN = 'REQUEST_MY_SHOPS_RETURN'
@@ -73,6 +74,7 @@ export function addShopsToMyShops(){
         .then(json => {
           dispatch(AddShopsToMyShopsReturn(json))
           dispatch(pullFrontPagePosts())
+          dispatch(pullShops())
         })
     }
   }

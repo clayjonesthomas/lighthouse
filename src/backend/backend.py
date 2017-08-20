@@ -315,9 +315,15 @@ class LikePost(BaseHandler):
 
 class Stores(BaseHandler):
 
+    # currently gets stores a user doesn't want
     def get(self):
         user = self.user
-        fetched_stores = [store.prepare_store(user) for store in Store.query()]
+        fetched_stores = [store.prepare_store(user)
+                          for store in Store.query()]
+        if user:
+            fetched_stores = list(filter((lambda s:
+                                         ndb.Key(urlsafe=s['key']) not in user.liked_stores),
+                                         fetched_stores))
         logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
         self.response.write(json.dumps({'shops': fetched_stores}))
 
