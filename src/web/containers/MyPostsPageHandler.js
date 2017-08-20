@@ -9,6 +9,7 @@ import MyPostsPage from '../components/MyPostsPage'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
+import {pullNotMyShops} from '../actions/FrontPageActions'
 
 class MyPostsPageHandler extends Component {
   componentDidMount () {
@@ -63,7 +64,7 @@ const mapDispatchToProps = (dispatch) => {
 
     onAddNewShop: (shops) => dispatch(onUpdateFormShops(shops)),
     getAllShops: () => {
-      dispatch(pullShops())
+      dispatch(pullNotMyShops())
     },
     onSubmitShops: () => {
       dispatch(addShopsToMyShops())

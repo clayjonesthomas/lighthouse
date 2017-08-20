@@ -1,5 +1,6 @@
-import {POSTS_URL, POST_URL} from '../constants/constants'
+import {POSTS_URL, POST_URL, NOT_MY_SHOPS_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
+import {requestShops, requestShopsReturn} from './NewPostActions'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const REQUEST_POSTS_RETURN = 'REQUEST_POSTS_RETURN'
@@ -89,5 +90,22 @@ const deletePostRequest = () => {
 const deletePostReturn = () => {
   return {
     type: DELETE_POST_RETURN
+  }
+}
+
+export function pullNotMyShops() {
+  return (dispatch) => {
+    const args = {
+      method: 'GET',
+      credentials: 'same-origin'
+    }
+
+    // add unique actions for this action, or maybe not?
+    dispatch(requestShops())
+    return fetch(NOT_MY_SHOPS_URL, args)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(requestShopsReturn(json.shops))
+      })
   }
 }

@@ -7,6 +7,7 @@ import {togglePostLike} from '../actions/PostPageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
+import {pullNotMyShops} from '../actions/FrontPageActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
@@ -56,7 +57,7 @@ const mapDispatchToProps = (dispatch) => {
 
     onAddNewShop: (shops) => dispatch(onUpdateFormShops(shops)),
     getAllShops: () => {
-      dispatch(pullShops())
+      dispatch(pullNotMyShops())
     },
     onSubmitShops: () => {
       dispatch(addShopsToMyShops())

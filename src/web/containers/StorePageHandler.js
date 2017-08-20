@@ -6,7 +6,7 @@ import React, {Component} from 'react'
 import {toggleStoreLike} from '../actions/StorePageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullShopPosts, pullMoreShopPosts} from '../actions/StorePageActions'
-
+import {pullNotMyShops} from '../actions/FrontPageActions'
 
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(onUpdateFormShops(shops))
     },
     getAllShops: () => {
-      dispatch(pullShops())
+      dispatch(pullNotMyShops())
     },
     onSubmitShops: () => {
       dispatch(addShopsToMyShops())

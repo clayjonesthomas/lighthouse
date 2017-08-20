@@ -6,6 +6,7 @@ import {pullMyShops, addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
 import {toggleStoreLike} from '../actions/StorePageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
+import {pullNotMyShops} from '../actions/FrontPageActions'
 
 class MyShopsPageHandler extends Component {
   componentDidMount () {
@@ -51,7 +52,7 @@ const mapDispatchToProps = (dispatch) => {
 
     onAddNewShop: (shops) => dispatch(onUpdateFormShops(shops)),
     getAllShops: () => {
-      dispatch(pullShops())
+      dispatch(pullNotMyShops())
     },
     onSubmitShops: () => {
       dispatch(addShopsToMyShops())
