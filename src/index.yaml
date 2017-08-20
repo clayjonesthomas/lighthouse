@@ -1,6 +1,5 @@
 indexes:
-- kind: Greeting
-  ancestor: yes
+- kind: Post
   properties:
-  - name: date
-    direction: desc
+  - name: shop_key
+  - name: timestamp

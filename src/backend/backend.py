@@ -36,8 +36,8 @@ CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
-    store_keys = _spawn_dummy_stores()
-    _spawn_dummy_posts(store_keys)
+    # store_keys = _spawn_dummy_stores()
+    # _spawn_dummy_posts(store_keys)
     _spawn_admin()
 
 
