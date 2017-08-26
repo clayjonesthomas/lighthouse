@@ -22,7 +22,7 @@ const ShopBox = (
           }
         </Link>
         <a
-          href={"http://" + shop.website}
+          href={shop.website}
           className="go-to-site-link"
         >
           Go to site...
