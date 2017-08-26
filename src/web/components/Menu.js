@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import {Link} from 'react-router'
 
 import "./Menu.css"
 const Menu =
@@ -12,39 +13,41 @@ const Menu =
   }) => (
     <div className="menu-container-desktop">
       {
-        <div
-          className="menu-option menu-option-first"
-          onClick={() => onHome()}>
-          Home
-        </div>
+        <Link
+          to="/"
+          className="menu-option menu-option-first">
+          {
+            "Home"
+          }
+        </Link>
       }
       {username &&
-        <div
+        <Link
           className="menu-option"
-          onClick={() => onMyShops()}>
+          to="/shops">
           Liked Shops
-        </div>
+        </Link>
       }
       {username &&
-        <div
+        <Link
           className="menu-option"
-          onClick={() => onMyPosts()}>
+          to="/posts">
           Liked Posts
-        </div>
+        </Link>
       }
       {username &&
-        <div
+        <Link
           className="menu-option"
-          onClick={() => onSelectNewPost()}>
-          Submit a Sale
-        </div>
+          to="/new">
+          Submit a Post
+        </Link>
       }
       {username && isModerator &&
-        <div
+        <Link
           className="menu-option"
-          onClick={() => onAddAShop()}>
-          Add a Store
-        </div>
+          to="/new_shop">
+          Add a Shop
+        </Link>
       }
     </div>
   )

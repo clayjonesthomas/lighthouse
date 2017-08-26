@@ -13,11 +13,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onHome: () => {
-      dispatch(goHome())
+      // dispatch(goHome())
       browserHistory.push('/')
     },
     onMyShops: () => {
-      dispatch(goMyShops)
+      // dispatch(goMyShops)
       browserHistory.push('/shops')
     },
     onSelectNewPost: () => {
