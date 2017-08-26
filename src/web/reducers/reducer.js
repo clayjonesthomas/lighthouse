@@ -119,8 +119,10 @@ function store(state = initialState, action) {
     case LIKE_POST:
       return Object.assign({}, state, {
         displayedPosts: state.displayedPosts.map(post => {
-          if(post.key === action.data.post_key)
+          if(post.key === action.data.post_key) {
+            post.likes += post.isLiked ? -1 : 1
             post.isLiked = !post.isLiked
+          }
           return post
         })
       })
@@ -135,13 +137,16 @@ function store(state = initialState, action) {
     case LIKE_STORE:
       let newState = Object.assign({}, state, {
         displayedShops: state.displayedShops.map(shop => {
-          if(shop.key === action.data.store_key)
+          if(shop.key === action.data.store_key) {
+            shop.likes += shop.isLiked ? -1 : 1
             shop.isLiked = !shop.isLiked
+          }
           return shop
         })
       })
       if(state.store) //hack because of overloaded toggleStoreLike
         newState.store = Object.assign({}, state.store, {
+          likes: state.store.likes += state.store.isLiked ? -1 : 1,
           isLiked: !state.store.isLiked
         })
       return newState
