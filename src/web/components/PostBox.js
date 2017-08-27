@@ -3,6 +3,8 @@ import {Link} from 'react-router'
 import SubmitButton from './ui-kit/SubmitButton'
 import LikeButton from './ui-kit/LikeButton/LikeButton'
 import {connect} from 'react-redux'
+import {setMustBeSignedInNotification}
+  from '../actions/NotificationActions'
 
 import "./PostBox.css"
 const PostBox = (
@@ -12,7 +14,10 @@ const PostBox = (
     onLike,
     canDelete,
     onDelete,
-    isMobile
+    isMobile,
+
+    username,
+    fireMustSignIn
   }) => (
   <div
     className="post-box">
@@ -32,7 +37,12 @@ const PostBox = (
       <div className="sale-options">
         {
           <LikeButton
-            onClick={() => onLike()}
+            onClick={() => {
+              if(username)
+                onLike()
+              else
+                fireMustSignIn()
+            }}
             isPressed={post.isLiked}
             likes={post.likes}
             areLikesLeft={false}
@@ -66,13 +76,25 @@ PostBox.propTypes = {
   }).isRequired
 }
 
+// throw this in a handler class
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
-    isMobile: state.isMobile
+    isMobile: state.isMobile,
+    username: state.username
   })
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fireMustSignIn: () =>
+      dispatch(setMustBeSignedInNotification(undefined,
+        "to like a post"
+      ))
+  }
 }
 
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(PostBox)

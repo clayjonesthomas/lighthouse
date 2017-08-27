@@ -7,18 +7,19 @@ import {showSignUp, showLogin} from '../actions/AuthActions'
 
 const NotificationRoot = (
   {
-    notificationType,
+    notification,
     onSignUp,
     onLogin,
     exitNotification
   }) => {
-  if (!notificationType) {
+  if (!notification) {
     return <span />
   }
     return (
       <MustSignInNotification
         onSignUp={onSignUp}
         onLogin={onLogin}
+        intendedAction={notification.intendedAction}
         exitNotification={() =>
           exitNotification()}
       />
@@ -35,7 +36,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    notificationType: state.notificationType
+    notification: state.notification
   }
 }
 

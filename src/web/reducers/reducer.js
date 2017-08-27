@@ -55,7 +55,7 @@ const initialState = {
   authRefs: {},
   serverMessage: null,
   serverMessageArray: [],
-  notificationType: null
+  notification: null
 }
 
 
@@ -361,18 +361,23 @@ function store(state = initialState, action) {
       })
     case SET_NOTIFICATION:
       return Object.assign({}, state, {
-        notificationType: action.data.notification
+        notification: {
+          type: action.data.notification
+      }
       })
     case REMOVE_NOTIFICATION:
       return Object.assign({}, state, {
-        notificationType: null
+        notification: null
       })
     case SET_MUST_BE_SIGNED_IN_NOTIFICATION:
       if (!state.username) {
         if (action.data.event)
           action.data.event.preventDefault()
         return Object.assign({}, state, {
-          notificationType: MUST_SIGN_IN
+          notification: {
+            type: MUST_SIGN_IN,
+            intendedAction: action.data.intendedAction
+          }
         })
       }
       return state

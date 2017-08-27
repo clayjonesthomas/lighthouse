@@ -7,6 +7,7 @@ const MustSignInNotification = (
   {
     onSignUp,
     onLogin,
+    intendedAction,
     exitNotification
   }) => (
   <div className="base-notification">
@@ -25,7 +26,7 @@ const MustSignInNotification = (
     />
     <div className="notification-message">
       {
-        "to use this feature"
+        (intendedAction || "to use this feature")
       }
     </div>
     <XGraphic
@@ -40,7 +41,8 @@ const MustSignInNotification = (
 
 MustSignInNotification.propTypes = {
   onSignUp: PropTypes.func.isRequired,
-  exitNotification: PropTypes.func.isRequired
+  exitNotification: PropTypes.func.isRequired,
+  intendedAction: PropTypes.string
 }
 
 export default MustSignInNotification
