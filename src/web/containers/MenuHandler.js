@@ -1,7 +1,7 @@
-import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import Menu from '../components/Menu.js'
-import {goHome, goMyShops} from '../actions/MenuActions.js'
+import {setMustBeSignedInNotification}
+  from '../actions/NotificationActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -12,22 +12,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onHome: () => {
-      // dispatch(goHome())
-      browserHistory.push('/')
-    },
-    onMyShops: () => {
-      // dispatch(goMyShops)
-      browserHistory.push('/shops')
-    },
-    onSelectNewPost: () => {
-      browserHistory.push('/new')
-    },
-    onAddAShop: () => {
-      browserHistory.push('/new_shop')
-    },
-    onMyPosts: () => {
-      browserHistory.push('/posts')
+    setMustBeSignedInNotification: (e) => {
+      dispatch(setMustBeSignedInNotification(e))
     }
   }
 }

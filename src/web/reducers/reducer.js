@@ -27,6 +27,9 @@ import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE,
   DUPLICATE_USERNAME_ERROR, AUTHENTICATION_ERROR}
   from '../actions/AuthActions'
 import {ADD_POST_FAILURE, ADD_POST_RETURN, VALIDATION_ERROR} from '../actions/NewPostActions'
+import {SET_NOTIFICATION, REMOVE_NOTIFICATION,
+  SET_MUST_BE_SIGNED_IN_NOTIFICATION}
+  from "../actions/NotificationActions"
 
 const initialState = {
   displayedPosts: [],
@@ -51,7 +54,8 @@ const initialState = {
   displayHamburgerMenu: false,
   authRefs: {},
   serverMessage: null,
-  serverMessageArray: []
+  serverMessageArray: [],
+  notification: null
 }
 
 
@@ -355,6 +359,26 @@ function store(state = initialState, action) {
       return Object.assign({}, state, {
         serverMessageArray: serverMessageArray
       })
+    case SET_NOTIFICATION:
+      return Object.assign({}, state, {
+        notification: action.data.notification
+      })
+    case REMOVE_NOTIFICATION:
+      return Object.assign({}, state, {
+        notification: null
+      })
+    case SET_MUST_BE_SIGNED_IN_NOTIFICATION:
+      if (!state.username) {
+        action.data.event.preventDefault()
+        return Object.assign({}, state, {
+          notification: {
+            message: "Sign up to use this feature",
+            showSignUp: true,
+            canExit: true
+          }
+        })
+      }
+      return state
     default:
       return state
   }

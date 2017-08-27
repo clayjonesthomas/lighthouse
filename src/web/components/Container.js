@@ -6,6 +6,7 @@ import UserInfoHandler from '../containers/UserInfoHandler.js'
 import {Grid, Row, Col} from 'react-bootstrap'
 import {isUserMobile} from '../actions/UserActions'
 import {pullUserInfo} from '../actions/UserInfoActions'
+import NotificationHandler from '../containers/NotificationHandler'
 
 // mobile
 import MobileMenuHandler from '../containers/MobileMenuHandler'
@@ -24,6 +25,7 @@ class Container extends Component {
         <ModalHandler
           modal={this.props.modal}
         />
+        <NotificationHandler/>
         {this.props.isMobile &&
           <MobileMenuHandler/>
         }

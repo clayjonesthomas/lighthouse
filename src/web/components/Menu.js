@@ -9,7 +9,8 @@ const Menu =
     username,
     isModerator,
     onAddAShop,
-    onMyPosts
+    onMyPosts,
+    setMustBeSignedInNotification
   }) => (
     <div className="menu-container-desktop">
       {
@@ -21,10 +22,13 @@ const Menu =
           }
         </Link>
       }
-      {username &&
+      {
         <Link
           to="/my_feed"
-          className="menu-option">
+          className="menu-option"
+          onClick={(e) =>
+            setMustBeSignedInNotification(e)}
+        >
           {
             "My Feed"
           }
