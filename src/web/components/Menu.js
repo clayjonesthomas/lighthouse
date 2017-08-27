@@ -17,7 +17,16 @@ const Menu =
           to="/"
           className="menu-option menu-option-first">
           {
-            "Home"
+            "All Posts"
+          }
+        </Link>
+      }
+      {username &&
+        <Link
+          to="/my_feed"
+          className="menu-option">
+          {
+            "My Feed"
           }
         </Link>
       }

@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {createStore, applyMiddleware} from 'redux'
-import FrontPageHandler from '../containers/FrontPageHandler'
 import StorePageHandler from '../containers/StorePageHandler'
 import PostPageHandler from '../containers/PostPageHandler'
 import MyShopsPageHandler from '../containers/MyShopsPageHandler'
@@ -13,6 +12,8 @@ import Container from './Container.js'
 import NewStoreHandler from '../containers/NewStoreHandler'
 import MyPostsPageHandler from '../containers/MyPostsPageHandler'
 import "./Globals.css"
+import AllPostsPageHandler from '../containers/AllPostsPageHandler'
+import MyFeedPageHandler from '../containers/MyFeedPageHandler'
 
 let store = createStore(
   lighthouse,
@@ -25,7 +26,8 @@ const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Container}>
-        <IndexRoute component={FrontPageHandler} />
+        <IndexRoute component={AllPostsPageHandler} />
+        <Route path="my_feed" component={MyFeedPageHandler} />
         <Route path="/new_shop" component={NewStoreHandler} />
         <Route path="/new" component={NewPostHandler} />
         <Route path="/store/:url_key" component={StorePageHandler}/>
@@ -37,4 +39,4 @@ const Root = () => (
   </Provider>
 );
 
-export default Root;
+export default Root

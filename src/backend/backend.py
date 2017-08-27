@@ -36,8 +36,8 @@ CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
-    # store_keys = _spawn_dummy_stores()
-    # _spawn_dummy_posts(store_keys)
+    store_keys = _spawn_dummy_stores()
+    _spawn_dummy_posts(store_keys)
     _spawn_admin()
 
 
@@ -206,7 +206,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 
     def get(self, *args):
-        if not Post.query().fetch(10):
+        if not Post.query().fetch(1):
             populate_dummy_datastore()
             time.sleep(2)  # hack to prevent this from running more than once
         template = JINJA_ENVIRONMENT.get_template('index.html')
@@ -215,26 +215,30 @@ class MainPage(webapp2.RequestHandler):
 
 class Feed(BaseHandler):
 
-    def get(self, offset):
+    def get(self, offset, _should_get_all_posts):
         user = self.user
-        raw_posts = self._get_posts(user, int(offset))
+        # convert from '0' or '1' to True or False
+        should_get_all_posts = bool(int(_should_get_all_posts))
+        raw_posts = self._get_posts(user, should_get_all_posts, int(offset))
         fetched_posts = [post.prepare_post(user) for post in raw_posts]
         logging.info("pulling posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
     @staticmethod
-    def _get_posts(user, offset):
-        if user:
+    def _get_posts(user, should_get_all_posts, offset):
+        if not should_get_all_posts and user:
             liked_store_keys = user.liked_stores
             if liked_store_keys:
-                three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
                 query = Post.query(Post.shop_key.IN(liked_store_keys))
-                filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
-                result = filter_old_posts.fetch(10, offset=offset)
-                ordered_result = Post.order_posts(result)
-                return ordered_result
-            return []
-        return Post.query().fetch(10, offset=offset)
+            else:
+                return []
+        else:
+            query = Post.query()
+        three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
+        filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
+        result = filter_old_posts.fetch(10, offset=offset)
+        ordered_result = Post.order_posts(result)
+        return ordered_result
 
 
 class MyPosts(BaseHandler):
@@ -707,7 +711,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
 
     webapp2.Route('/rest/posts', Feed, name='feed'),
-    webapp2.Route('/rest/posts/<offset:[0-9]*>', Feed, name='feed'),
+    webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),

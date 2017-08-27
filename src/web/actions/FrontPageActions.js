@@ -24,14 +24,15 @@ export const requestPostsReturn = (posts) => {
   }
 }
 
-export function pullFrontPagePosts() {
+export function pullFrontPagePosts(shouldPullAllPosts) {
   const args = {
     method: 'GET',
     credentials: 'same-origin',
   }
   return dispatch => {
     dispatch(requestPosts())
-    return fetch(POSTS_URL+`/${0}`, args)
+    let shouldPullAllPostsNum = shouldPullAllPosts ? 1 : 0
+    return fetch(POSTS_URL+`/0-${shouldPullAllPostsNum}`, args)
       .then(response => response.json())
       .then(json => dispatch(requestPostsReturn(json)))
   }
@@ -52,7 +53,7 @@ export const morePostsReturn = (posts) => {
   }
 }
 
-export function pullMoreFrontPagePosts() {
+export function pullMoreFrontPagePosts(shouldPullAllPosts) {
   const args = {
     method: 'GET',
     credentials: 'same-origin',
@@ -61,7 +62,8 @@ export function pullMoreFrontPagePosts() {
     const state = getState()
     const offset = state.postsOffset
     dispatch(morePostsRequest())
-    return fetch(POSTS_URL+`/${offset}`, args)
+    let shouldPullAllPostsNum = shouldPullAllPosts ? 1 : 0
+    return fetch(POSTS_URL+`/${offset}-${shouldPullAllPostsNum}`, args)
       .then(response => response.json())
       .then(json => dispatch(morePostsReturn(json)))
   }
