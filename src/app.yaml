@@ -9,6 +9,10 @@ handlers:
   static_files: bundle.js
   upload: bundle\.js
 
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
 - url: /rest/posts
   script: backend.backend.app
 
