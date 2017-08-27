@@ -3,13 +3,9 @@ import {Link} from 'react-router'
 
 import "./Menu.css"
 const Menu =
-  ({onHome,
-    onMyShops,
-    onSelectNewPost,
+  ({
     username,
     isModerator,
-    onAddAShop,
-    onMyPosts,
     setMustBeSignedInNotification
   }) => (
     <div className="menu-container-desktop">
@@ -34,24 +30,33 @@ const Menu =
           }
         </Link>
       }
-      {username &&
+      {
         <Link
           className="menu-option"
-          to="/shops">
+          to="/shops"
+          onClick={(e) =>
+            setMustBeSignedInNotification(e)}
+        >
           Liked Shops
         </Link>
       }
-      {username &&
+      {
         <Link
           className="menu-option"
-          to="/posts">
+          to="/posts"
+          onClick={(e) =>
+            setMustBeSignedInNotification(e)}
+        >
           Liked Posts
         </Link>
       }
-      {username &&
+      {
         <Link
           className="menu-option"
-          to="/new">
+          to="/new"
+          onClick={(e) =>
+            setMustBeSignedInNotification(e)}
+        >
           Submit a Post
         </Link>
       }

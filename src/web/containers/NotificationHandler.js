@@ -28,7 +28,7 @@ const NotificationRoot = (
 const mapDispatchToProps = (dispatch) => {
   return {
     exitNotification: () => dispatch(removeNotification()),
-    onSignUp: () => dispatch(showSignUp)
+    onSignUp: () => dispatch(showSignUp())
   }
 }
 

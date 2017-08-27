@@ -18,7 +18,7 @@
 
 .notification-message {
     display: inline-block;
-    padding-right: 3em;
+    padding-right: .3em;
 }
 
 .notification-x {

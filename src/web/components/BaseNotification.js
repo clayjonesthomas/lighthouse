@@ -14,7 +14,15 @@ const BaseNotification = (
     <LinkButton
       className="notification-link"
       onClick={onSignUp}
-      contents="Sign up"
+      contents="Log in"
+    />
+    <div className="notification-message">
+      {"or"}
+    </div>
+    <LinkButton
+      className="notification-link"
+      onClick={onSignUp}
+      contents="sign up"
     />
     <div className="notification-message">
       {
