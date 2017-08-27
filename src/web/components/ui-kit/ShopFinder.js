@@ -16,7 +16,15 @@ const ShopFinder = (
     className={"shop-finder " + (className || "")}
     labelKey="name"
     multiple={isMultiple === "undefined" ? true : isMultiple}
-    options={shops}
+    options={shops.sort((a, b) => {
+      let aName = a.name.toUpperCase()
+      let bName = b.name.toUpperCase()
+      if (aName < bName)
+        return -1
+      if (aName > bName)
+        return 1
+      return 0
+    })}
     placeholder={placeholder}
     onChange={onAddNewShop}
     ref={ref => {
