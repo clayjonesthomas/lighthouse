@@ -22,7 +22,10 @@ const FrontPage =
      onAddNewShop,
      onSubmitShops,
      onAddShopFinderRef,
-     clearShopFinder
+     clearShopFinder,
+
+     fireMustSignIn,
+     username
   }) => (
   <div>
     {!arePostsLoaded &&
@@ -80,10 +83,13 @@ const FrontPage =
               <SubmitButton
                 contents="ADD TO LIKED SHOPS"
                 onClick={() => {
-                  onSubmitShops()
-                  clearShopFinder()
-                }
-                }
+                  if(username) {
+                    onSubmitShops()
+                    clearShopFinder()
+                  } else {
+                    fireMustSignIn()
+                  }
+                }}
               />
             </div>
           </Col>

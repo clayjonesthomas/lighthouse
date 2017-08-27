@@ -369,7 +369,8 @@ function store(state = initialState, action) {
       })
     case SET_MUST_BE_SIGNED_IN_NOTIFICATION:
       if (!state.username) {
-        action.data.event.preventDefault()
+        if (action.data.event)
+          action.data.event.preventDefault()
         return Object.assign({}, state, {
           notificationType: MUST_SIGN_IN
         })

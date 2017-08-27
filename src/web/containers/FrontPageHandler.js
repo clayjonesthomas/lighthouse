@@ -3,10 +3,12 @@ import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 import {deletePost} from '../actions/FrontPageActions'
 import {togglePostLike} from '../actions/PostPageActions'
-import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
+import {onUpdateFormShops} from '../actions/NewPostActions'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
 import {pullNotMyShops} from '../actions/FrontPageActions'
+import {setMustBeSignedInNotification}
+  from '../actions/NotificationActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
@@ -31,6 +33,8 @@ class FrontPageHandler extends Component {
         onSubmitShops={this.props.onSubmitShops}
         onAddShopFinderRef={this.props.onAddShopFinderRef}
         clearShopFinder={this.props.clearShopFinder}
+
+        fireMustSignIn={this.props.fireMustSignIn}
       />
     )
   }
@@ -44,6 +48,7 @@ const mapStateToProps = (state) => {
     areMorePostsLoaded: state.areMorePostsLoaded,
     areMorePosts: state.areMorePosts,
     isMobile: state.isMobile,
+    username: state.username
   }
 }
 
@@ -62,9 +67,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onAddShopFinderRef: (ref) => {
       dispatch(addShopFinderRef(ref))
     },
-    clearShopFinder: () => {dispatch(clearShopFinder())},
+    clearShopFinder: () => dispatch(clearShopFinder()),
     getMorePosts: () => ownProps.getMorePosts(),
-    deletePost: (key) => {dispatch(deletePost(key))}
+    deletePost: (key) => dispatch(deletePost(key)),
+    fireMustSignIn: () => dispatch(setMustBeSignedInNotification())
+
   }
 }
 
