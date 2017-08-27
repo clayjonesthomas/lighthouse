@@ -5,7 +5,7 @@
     color: #fcfcfc;
     z-index: 2;
     text-align: center;
-    padding: .5em;
+    padding: .8em;
     font-size: 1.4em;
     letter-spacing: .02em;
 }
@@ -19,4 +19,13 @@
 .notification-message {
     display: inline-block;
     padding-right: 3em;
+}
+
+.notification-x {
+    margin: 0 10px 0 0;
+}
+
+.notification-link {
+    text-decoration: underline;
+    padding-right: .3em;
 }

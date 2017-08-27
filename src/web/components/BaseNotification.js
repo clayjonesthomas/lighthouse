@@ -1,26 +1,33 @@
 import React, {PropTypes} from 'react'
-import SubmitButton from '../components/ui-kit/SubmitButton'
+import LinkButton from '../components/ui-kit/LinkButton'
+import XGraphic from '../components/ui-kit/XGraphic'
 
 import "./BaseNotification.css"
 const BaseNotification = (
   {
     message,
-    showSignUpButton,
     onSignUp,
     canExit,
     exitNotification
   }) => (
   <div className="base-notification">
+    <LinkButton
+      className="notification-link"
+      onClick={onSignUp}
+      contents="Sign up"
+    />
     <div className="notification-message">
       {
-        message
+        "to use this feature"
       }
     </div>
-    {showSignUpButton &&
-      <SubmitButton
-        className="notification-sign-up-button"
-        contents="SIGN UP"
-        onClick={onSignUp}
+    {canExit &&
+      <XGraphic
+        className="notification-x"
+        color="#fcfcfc"
+        onClick={exitNotification}
+        width="20"
+        height="20"
       />
     }
   </div>
