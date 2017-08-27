@@ -2,10 +2,13 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {removeNotification} from '../actions/NotificationActions'
 import BaseNotification from '../components/BaseNotification'
+import {showSignUp} from '../actions/AuthActions'
 
 const NotificationRoot = (
   {
-    notification
+    notification,
+    onSignUp,
+    exitNotification
   }) => {
   if (!notification) {
     return <span />
@@ -13,17 +16,19 @@ const NotificationRoot = (
     return (
       <BaseNotification
         message={notification.message}
-        showSignUp={notification.showSignUp}
+        showSignUpButton={notification.showSignUp}
+        onSignUp={onSignUp}
         canExit={notification.canExit}
         exitNotification={() =>
-          this.props.exitNotification()}
+          exitNotification()}
       />
   )
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    exitNotification: () => dispatch(removeNotification())
+    exitNotification: () => dispatch(removeNotification()),
+    onSignUp: () => dispatch(showSignUp)
   }
 }
 

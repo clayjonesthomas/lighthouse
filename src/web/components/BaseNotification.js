@@ -1,15 +1,28 @@
 import React, {PropTypes} from 'react'
+import SubmitButton from '../components/ui-kit/SubmitButton'
 
 import "./BaseNotification.css"
 const BaseNotification = (
   {
     message,
-    showSignUp,
+    showSignUpButton,
+    onSignUp,
     canExit,
     exitNotification
   }) => (
-  <div>
-    message
+  <div className="base-notification">
+    <div className="notification-message">
+      {
+        message
+      }
+    </div>
+    {showSignUpButton &&
+      <SubmitButton
+        className="notification-sign-up-button"
+        contents="SIGN UP"
+        onClick={onSignUp}
+      />
+    }
   </div>
 )
 
