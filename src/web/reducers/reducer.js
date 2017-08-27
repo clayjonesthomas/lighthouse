@@ -28,7 +28,7 @@ import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE,
   from '../actions/AuthActions'
 import {ADD_POST_FAILURE, ADD_POST_RETURN, VALIDATION_ERROR} from '../actions/NewPostActions'
 import {SET_NOTIFICATION, REMOVE_NOTIFICATION,
-  SET_MUST_BE_SIGNED_IN_NOTIFICATION}
+  SET_MUST_BE_SIGNED_IN_NOTIFICATION, MUST_SIGN_IN}
   from "../actions/NotificationActions"
 
 const initialState = {
@@ -55,7 +55,7 @@ const initialState = {
   authRefs: {},
   serverMessage: null,
   serverMessageArray: [],
-  notification: null
+  notificationType: null
 }
 
 
@@ -361,21 +361,17 @@ function store(state = initialState, action) {
       })
     case SET_NOTIFICATION:
       return Object.assign({}, state, {
-        notification: action.data.notification
+        notificationType: action.data.notification
       })
     case REMOVE_NOTIFICATION:
       return Object.assign({}, state, {
-        notification: null
+        notificationType: null
       })
     case SET_MUST_BE_SIGNED_IN_NOTIFICATION:
       if (!state.username) {
         action.data.event.preventDefault()
         return Object.assign({}, state, {
-          notification: {
-            message: "Sign up to use this feature",
-            showSignUp: true,
-            canExit: true
-          }
+          notificationType: MUST_SIGN_IN
         })
       }
       return state

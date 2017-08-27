@@ -2,6 +2,7 @@ export const REMOVE_NOTIFICATION = "REMOVE_NOTIFICATION"
 export const SET_NOTIFICATION = "SET_NOTIFICATION"
 export const SET_MUST_BE_SIGNED_IN_NOTIFICATION =
   "SET_MUST_BE_SIGNED_IN_NOTIFICATION"
+export const MUST_SIGN_IN = "MUST_SIGN_IN"
 
 export const removeNotification = () => {
   return {
@@ -9,11 +10,11 @@ export const removeNotification = () => {
   }
 }
 
-export const setNotification = (notification) => {
+export const setNotification = (notificationType) => {
   return {
     type: SET_NOTIFICATION,
     data: {
-      notification: notification
+      notificationType: notificationType
     }
   }
 }

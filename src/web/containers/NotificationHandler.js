@@ -1,24 +1,22 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {removeNotification} from '../actions/NotificationActions'
-import BaseNotification from '../components/BaseNotification'
+import MustSignInNotification
+  from '../components/MustSignInNotification'
 import {showSignUp} from '../actions/AuthActions'
 
 const NotificationRoot = (
   {
-    notification,
+    notificationType,
     onSignUp,
     exitNotification
   }) => {
-  if (!notification) {
+  if (!notificationType) {
     return <span />
   }
     return (
-      <BaseNotification
-        message={notification.message}
-        showSignUpButton={notification.showSignUp}
+      <MustSignInNotification
         onSignUp={onSignUp}
-        canExit={notification.canExit}
         exitNotification={() =>
           exitNotification()}
       />
@@ -34,7 +32,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    notification: state.notification
+    notificationType: state.notificationType
   }
 }
 

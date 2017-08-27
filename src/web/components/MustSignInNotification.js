@@ -2,12 +2,10 @@ import React, {PropTypes} from 'react'
 import LinkButton from '../components/ui-kit/LinkButton'
 import XGraphic from '../components/ui-kit/XGraphic'
 
-import "./BaseNotification.css"
-const BaseNotification = (
+import "./MustSignInNotification.css"
+const MustSignInNotification = (
   {
-    message,
     onSignUp,
-    canExit,
     exitNotification
   }) => (
   <div className="base-notification">
@@ -29,23 +27,19 @@ const BaseNotification = (
         "to use this feature"
       }
     </div>
-    {canExit &&
-      <XGraphic
-        className="notification-x"
-        color="#fcfcfc"
-        onClick={exitNotification}
-        width="20"
-        height="20"
-      />
-    }
+    <XGraphic
+      className="notification-x"
+      color="#fcfcfc"
+      onClick={exitNotification}
+      width="20"
+      height="20"
+    />
   </div>
 )
 
-BaseNotification.propTypes = {
-  message: PropTypes.string.isRequired,
-  showSignUp: PropTypes.bool,
-  canExit: PropTypes.bool,
+MustSignInNotification.propTypes = {
+  onSignUp: PropTypes.func.isRequired,
   exitNotification: PropTypes.func.isRequired
 }
 
-export default BaseNotification
+export default MustSignInNotification
