@@ -3,12 +3,13 @@ import {connect} from 'react-redux'
 import {removeNotification} from '../actions/NotificationActions'
 import MustSignInNotification
   from '../components/MustSignInNotification'
-import {showSignUp} from '../actions/AuthActions'
+import {showSignUp, showLogin} from '../actions/AuthActions'
 
 const NotificationRoot = (
   {
     notificationType,
     onSignUp,
+    onLogin,
     exitNotification
   }) => {
   if (!notificationType) {
@@ -17,6 +18,7 @@ const NotificationRoot = (
     return (
       <MustSignInNotification
         onSignUp={onSignUp}
+        onLogin={onLogin}
         exitNotification={() =>
           exitNotification()}
       />
@@ -26,7 +28,8 @@ const NotificationRoot = (
 const mapDispatchToProps = (dispatch) => {
   return {
     exitNotification: () => dispatch(removeNotification()),
-    onSignUp: () => dispatch(showSignUp())
+    onSignUp: () => dispatch(showSignUp()),
+    onLogin: () => dispatch(showLogin())
   }
 }
 

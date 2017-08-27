@@ -6,12 +6,13 @@ import "./MustSignInNotification.css"
 const MustSignInNotification = (
   {
     onSignUp,
+    onLogin,
     exitNotification
   }) => (
   <div className="base-notification">
     <LinkButton
       className="notification-link"
-      onClick={onSignUp}
+      onClick={onLogin}
       contents="Log in"
     />
     <div className="notification-message">

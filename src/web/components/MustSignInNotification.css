@@ -1,5 +1,6 @@
 .base-notification {
-    position: absolute;
+    position: fixed;
+    left: 0;
     background-color: #00aaff;
     width: 100%;
     color: #fcfcfc;
