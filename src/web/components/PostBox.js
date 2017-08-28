@@ -24,8 +24,15 @@ const PostBox = (
     className="post-box">
     <div
       className="post-box-inner">
-      <div
-        className="sale-title">
+      <div className="sale-shop">
+        <Link
+          to={"/store/" + post['store_key']}>
+          {
+            post['store']['name']
+          }
+        </Link>
+      </div>
+      <div className="sale-title">
         {
           <a
             href={post.store.website}>
@@ -36,41 +43,35 @@ const PostBox = (
         }
       </div>
       <div className="sale-options">
-        {
-          <LikeButton
-            onClick={() => {
-              if(username)
-                onLike()
-              else
-                fireMustSignIn()
-            }}
-            isPressed={post.isLiked}
-            likes={post.likes}
-            areLikesLeft={false}
-          />
-        }
-        {
-          <Link
-            to={"/store/" + post['store_key']}
-            className="shop-link">
-            {
-              post['store']['name']
-            }
-          </Link>
-        }
-        {isModerator &&
-        <div className="admin-tools">
-          <SubmitButton
-            className="admin-button"
-            onClick={() => onDelete(post_key)}
-            contents="delete"
-          />
-          <SubmitButton
-            className="admin-button"
-            onClick={() => onArchive(post_key)}
-            contents="archive"
-          />
+        <LikeButton
+          onClick={() => {
+            if(username)
+              onLike()
+            else
+              fireMustSignIn()
+          }}
+          isPressed={post.isLiked}
+          likes={post.likes}
+          areLikesLeft={false}
+        />
+        <div className="post-timestamp">
+          {
+            "Posted " + post.timestring
+          }
         </div>
+        {isModerator &&
+          <div className="admin-tools">
+            <SubmitButton
+              className="admin-button"
+              onClick={() => onDelete(post_key)}
+              contents="delete"
+            />
+            <SubmitButton
+              className="admin-button"
+              onClick={() => onArchive(post_key)}
+              contents="archive"
+            />
+          </div>
         }
       </div>
     </div>

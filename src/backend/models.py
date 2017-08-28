@@ -1,5 +1,7 @@
 from webapp2_extras import auth
 import time
+import datetime
+import logging
 import webapp2_extras.appengine.auth.models
 
 from google.appengine.ext import ndb
@@ -50,7 +52,8 @@ class Post(ndb.Model):
         del post_dictionary['store']['timestamp']
         del post_dictionary['shop_key']
         post_dictionary['store_key'] = self.shop_key.urlsafe()
-        post_dictionary['timestamp'] = post_dictionary['timestamp'].isoformat(' ')
+        post_dictionary['timestring'] = self._prepare_timestring()
+        del post_dictionary['timestamp']
         post_dictionary['key'] = self.key.urlsafe()
 
         if user:
@@ -63,6 +66,34 @@ class Post(ndb.Model):
             post_dictionary['canDelete'] = False
 
         return post_dictionary
+
+    def _prepare_timestring(self):
+        diff = datetime.datetime.now() - self.timestamp
+        if diff.days > 365 + 183:
+            return str(int(round(diff.days/365))) + " years ago"
+        if diff.days > 365:
+            return "a year ago"
+        if diff.days > 30 + 15:
+            return str(int(round(diff.days/30.5))) + " months ago"
+        if diff.days > 30:
+            return "a month ago"
+        if diff.days > 7 + 3:
+            return str(int(round(diff.days/7))) + " weeks ago"
+        if diff.days > 7:
+            return "a week ago"
+        if diff.seconds > 86400 + 43200:
+            return str(int(round(diff.seconds/86400))) + " days ago"
+        if diff.seconds > 86400:
+            return "a day ago"
+        if diff.seconds > 3600 + 1800:
+            return str(int(round(diff.seconds/3600))) + " hours ago"
+        if diff.seconds > 3600:
+            return "an hour ago"
+        if diff.seconds > 60 + 30:
+            return str(int(round(diff.seconds/60))) + " minutes ago"
+        if diff.seconds > 60:
+            return "a minute ago"
+        return "just now"
 
 
 class Store(ndb.Model):

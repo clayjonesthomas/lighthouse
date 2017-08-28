@@ -1,6 +1,6 @@
 .post-box-inner {
-    padding-bottom: 1em;
-    padding-top: 1em;
+    padding-bottom: .5em;
+    padding-top: .5em;
     font-size: 1.4em;
     letter-spacing: .02em;
 }
@@ -15,7 +15,7 @@
 }
 
 .sale-title {
-    padding-bottom: 1em;
+    padding-bottom: .5em;
 }
 
 .sale-options {
@@ -38,6 +38,8 @@
 
 .post-line-break-desktop {
     border-top: 1px solid #e2e4eb;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .admin-tools {
@@ -47,4 +49,19 @@
     display: inline-block;
     width: 20%;
     margin: 0 1em 0 1em;
+}
+
+.sale-shop{
+    font-size: 1.3em;
+}
+
+.sale-shop>a{
+    color: #2c2e32;
+}
+
+.post-timestamp{
+    font-style: italic;
+    font-size: .8em;
+    display: inline-block;
+    float: right;
 }
