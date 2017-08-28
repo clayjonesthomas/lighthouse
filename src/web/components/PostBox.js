@@ -20,18 +20,8 @@ const PostBox = (
     username,
     fireMustSignIn
   }) => (
-  <div
-    className="post-box">
-    <div
-      className="post-box-inner">
-      <div className="sale-shop">
-        <Link
-          to={"/store/" + post['store_key']}>
-          {
-            post['store']['name']
-          }
-        </Link>
-      </div>
+  <div className="post-box">
+    <div className="post-box-inner">
       <div className="sale-title">
         {
           <a
@@ -41,6 +31,14 @@ const PostBox = (
             }
           </a>
         }
+      </div>
+      <div className="sale-shop">
+        <Link
+          to={"/store/" + post['store_key']}>
+          {
+            post['store']['name']
+          }
+        </Link>
       </div>
       <div className="sale-options">
         <LikeButton

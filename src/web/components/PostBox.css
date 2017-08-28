@@ -15,7 +15,6 @@
 }
 
 .sale-title {
-    padding-bottom: .5em;
 }
 
 .sale-options {
@@ -52,7 +51,8 @@
 }
 
 .sale-shop{
-    font-size: 1.3em;
+    font-size: 1em;
+    padding-bottom: .5em;
 }
 
 .sale-shop>a{
