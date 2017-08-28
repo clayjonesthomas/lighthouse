@@ -11,6 +11,7 @@ import {pullNotMyShops} from '../actions/FrontPageActions'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
+import Spinner from '../components/ui-kit/Spinner'
 
 class StorePageHandler extends Component {
   componentDidMount () {
@@ -20,31 +21,36 @@ class StorePageHandler extends Component {
   }
 
   render () {
-    return (
-      <StorePage
-        name={this.props.name}
-        website={this.props.website}
-        likes={this.props.likes}
-        onLike={this.props.onLike}
-        isLiked={this.props.isLiked}
+    if (!this.props.name){
+      return <Spinner/>
+    }
+    else {
+      return (
+        <StorePage
+          name={this.props.name}
+          website={this.props.website}
+          likes={this.props.likes}
+          onLike={this.props.onLike}
+          isLiked={this.props.isLiked}
 
-        username={this.props.username}
-        deletePost={this.props.deletePost}
-        shopPosts={this.props.shopPosts}
-        onLikePost={this.props.onLikePost}
-        arePostsLoaded={this.props.arePostsLoaded}
-        onMorePosts={this.props.onMorePosts}
-        areMorePostsLoaded={this.props.areMorePostsLoaded}
-        areMorePosts={this.props.areMorePosts}
+          username={this.props.username}
+          deletePost={this.props.deletePost}
+          shopPosts={this.props.shopPosts}
+          onLikePost={this.props.onLikePost}
+          arePostsLoaded={this.props.arePostsLoaded}
+          onMorePosts={this.props.onMorePosts}
+          areMorePostsLoaded={this.props.areMorePostsLoaded}
+          areMorePosts={this.props.areMorePosts}
 
-        isMobile={this.props.isMobile}
-        shops={this.props.shops}
-        onAddNewShop={this.props.onAddNewShop}
-        onSubmitShops={this.props.onSubmitShops}
-        onAddShopFinderRef={this.props.onAddShopFinderRef}
-        clearShopFinder={this.props.clearShopFinder}
-      />
-    )
+          isMobile={this.props.isMobile}
+          shops={this.props.shops}
+          onAddNewShop={this.props.onAddNewShop}
+          onSubmitShops={this.props.onSubmitShops}
+          onAddShopFinderRef={this.props.onAddShopFinderRef}
+          clearShopFinder={this.props.clearShopFinder}
+        />
+      )
+    }
   }
 }
 

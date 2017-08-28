@@ -71,11 +71,9 @@ const Menu =
   )
 
 Menu.propTypes = {
-  onHome: PropTypes.func.isRequired,
-  onMyShops: PropTypes.func.isRequired,
-  onSelectNewPost: PropTypes.func.isRequired,
   username: PropTypes.string,
-  isModerator: PropTypes.bool
+  isModerator: PropTypes.bool,
+  setMustBeSignedInNotification: PropTypes.func.isRequired
 }
 
 export default Menu
