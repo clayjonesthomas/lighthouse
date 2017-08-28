@@ -39,8 +39,9 @@ const mapDispatchToProps = (dispatch) => {
     onShowLogin: () => dispatch(showLogin()),
     onShowSignUp: () => dispatch(showSignUp()),
     signOut: () => {
-      browserHistory.push('/')
       dispatch(signOut())
+      browserHistory.push('/')
+      window.location.reload()
     },
     onHome: () => browserHistory.push('/')
   }
