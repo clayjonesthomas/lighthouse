@@ -33,6 +33,7 @@ class Post(ndb.Model):
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
     comment_amount = ndb.IntegerProperty(indexed=True, default=0)
     author = ndb.KeyProperty(indexed=True, kind='User')
+    isArchived = ndb.BooleanProperty(indexed=True, default=False)
 
     def add_top_comment(self, comment):
         self.comment_amount += 1

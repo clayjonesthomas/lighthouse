@@ -301,6 +301,15 @@ class SinglePost(BaseHandler):
         self.response.write(json.dumps({'great': 'success'}))
 
 
+class ArchivePost(BaseHandler):
+    def post(self):
+        body = json.loads(self.request.body)
+        post_key = body['key']
+        post = ndb.Key(urlsafe=post_key).get()
+        post.isArchived = not post.isArchived
+        self.response.write(json.dumps({'isArchived': True}))
+
+
 class LikePost(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
@@ -713,6 +722,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
+    webapp2.Route('/rest/post/archive', ArchivePost, name='archive_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyStores, name='my_shops'),

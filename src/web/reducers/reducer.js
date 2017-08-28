@@ -30,6 +30,7 @@ import {ADD_POST_FAILURE, ADD_POST_RETURN, VALIDATION_ERROR} from '../actions/Ne
 import {SET_NOTIFICATION, REMOVE_NOTIFICATION,
   SET_MUST_BE_SIGNED_IN_NOTIFICATION, MUST_SIGN_IN}
   from "../actions/NotificationActions"
+import {ARCHIVE_POST_RETURN} from '../actions/PostPageActions'
 
 const initialState = {
   displayedPosts: [],
@@ -378,6 +379,17 @@ function store(state = initialState, action) {
             type: MUST_SIGN_IN,
             intendedAction: action.data.intendedAction
           }
+        })
+      }
+      return state
+    case ARCHIVE_POST_RETURN:
+      if (action.data.isArchived) {
+        let indexOfArchivedObject = state.displayedPosts
+          .findIndex(post => post.key === action.data.postKey)
+        let newDisplayedPosts = state.displayedPosts.slice()
+        newDisplayedPosts.splice(indexOfArchivedObject, 1)
+        return Object.assign({}, state, {
+          displayedPosts: newDisplayedPosts
         })
       }
       return state

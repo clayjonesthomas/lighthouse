@@ -5,6 +5,7 @@ import LikeButton from './ui-kit/LikeButton/LikeButton'
 import {connect} from 'react-redux'
 import {setMustBeSignedInNotification}
   from '../actions/NotificationActions'
+import {archivePost} from '../actions/PostPageActions'
 
 import "./PostBox.css"
 const PostBox = (
@@ -12,10 +13,10 @@ const PostBox = (
     post,
     post_key,
     onLike,
-    canDelete,
+    isModerator,
     onDelete,
     isMobile,
-
+    onArchive,
     username,
     fireMustSignIn
   }) => (
@@ -57,11 +58,19 @@ const PostBox = (
             }
           </Link>
         }
-        {canDelete &&
+        {isModerator &&
+        <div className="admin-tools">
           <SubmitButton
+            className="admin-button"
             onClick={() => onDelete(post_key)}
             contents="delete"
           />
+          <SubmitButton
+            className="admin-button"
+            onClick={() => onArchive(post_key)}
+            contents="archive"
+          />
+        </div>
         }
       </div>
     </div>
@@ -80,7 +89,8 @@ PostBox.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return Object.assign({}, ownProps, {
     isMobile: state.isMobile,
-    username: state.username
+    username: state.username,
+    isModerator: state.isModerator
   })
 }
 
@@ -89,10 +99,11 @@ const mapDispatchToProps = (dispatch) => {
     fireMustSignIn: () =>
       dispatch(setMustBeSignedInNotification(undefined,
         "to like a post"
-      ))
+      )),
+    onArchive: (postKey) => dispatch(archivePost(postKey))
+
   }
 }
-
 
 export default connect(
   mapStateToProps,

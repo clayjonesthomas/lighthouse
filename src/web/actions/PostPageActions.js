@@ -1,10 +1,13 @@
-import {POST_URL, LIKE_POST_URL} from '../constants/constants'
+import {POST_URL, LIKE_POST_URL, ARCHIVE_POST_URL}
+  from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 
 export const REQUEST_SINGLE_POST = 'REQUEST_POSTS'
 export const REQUEST_SINGLE_POST_RETURN = 'REQUEST_POSTS_RETURN'
 export const LIKE_POST = 'LIKE_POST'
 export const LIKE_POST_RETURN = 'LIKE_POST_RETURN'
+export const ARCHIVE_POST_RETURN = "ARCHIVE_POST_RETURN"
+
 
 export const requestSinglePost = () => {
   return {
@@ -58,6 +61,31 @@ export function togglePostLike(post_key) {
   return dispatch => {
     dispatch(likePost(post_key))
     return fetch(LIKE_POST_URL, args)
-      .then(likePostReturn())
+      .then(dispatch(likePostReturn()))
+  }
+}
+
+export const archivePostReturn = (postKey, isArchived) => {
+  return {
+    type: ARCHIVE_POST_RETURN,
+    data: {
+      postKey: postKey,
+      isArchived: isArchived
+    }
+  }
+}
+
+export function archivePost(postKey) {
+  let args = {
+    method: 'POST',
+    credentials: 'same-origin',
+    body: JSON.stringify({
+      key: postKey
+    })
+  }
+  return dispatch => {
+    return fetch(ARCHIVE_POST_URL, args)
+      .then(response => response.json())
+      .then(json => dispatch(archivePostReturn(postKey, json.isArchived)))
   }
 }

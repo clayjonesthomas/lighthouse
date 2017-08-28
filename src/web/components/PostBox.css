@@ -39,3 +39,12 @@
 .post-line-break-desktop {
     border-top: 1px solid #e2e4eb;
 }
+
+.admin-tools {
+}
+
+.admin-button {
+    display: inline-block;
+    width: 20%;
+    margin: 0 1em 0 1em;
+}
