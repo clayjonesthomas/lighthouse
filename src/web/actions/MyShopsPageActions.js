@@ -73,7 +73,6 @@ export function addShopsToMyShops(){
         .then(response => response.json())
         .then(json => {
           dispatch(AddShopsToMyShopsReturn(json))
-          dispatch(pullFrontPagePosts())
           dispatch(pullNotMyShops())
         })
     }

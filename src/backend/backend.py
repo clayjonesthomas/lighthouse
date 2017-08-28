@@ -234,11 +234,11 @@ class Feed(BaseHandler):
                 return []
         else:
             query = Post.query()
-        three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
         filter_archived_posts = query.filter(Post.isArchived == False)
-        result = filter_archived_posts.fetch(10, offset=offset)
-        ordered_result = Post.order_posts(result)
-        return ordered_result
+        # ordered_posts = filter_archived_posts.order(Post.timestamp)
+        # result = ordered_posts.fetch(10, offset=offset)
+        result = filter_archived_posts.fetch(19, offset=offset)
+        return result
 
 
 class MyPosts(BaseHandler):

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import FrontPage from '../components/FrontPage'
 import {deletePost} from '../actions/FrontPageActions'
@@ -35,6 +36,7 @@ class FrontPageHandler extends Component {
         clearShopFinder={this.props.clearShopFinder}
 
         fireMustSignIn={this.props.fireMustSignIn}
+        username={this.props.username}
       />
     )
   }
@@ -63,6 +65,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onSubmitShops: () => {
       dispatch(addShopsToMyShops())
+      browserHistory.push("/my_feed")
     },
     onAddShopFinderRef: (ref) => {
       dispatch(addShopFinderRef(ref))
