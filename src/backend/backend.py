@@ -235,8 +235,8 @@ class Feed(BaseHandler):
         else:
             query = Post.query()
         three_days_ago = datetime.datetime.today() - datetime.timedelta(days=3)
-        filter_old_posts = query.filter(Post.timestamp >= three_days_ago)
-        result = filter_old_posts.fetch(10, offset=offset)
+        filter_archived_posts = query.filter(Post.isArchived == False)
+        result = filter_archived_posts.fetch(10, offset=offset)
         ordered_result = Post.order_posts(result)
         return ordered_result
 
@@ -307,6 +307,7 @@ class ArchivePost(BaseHandler):
         post_key = body['key']
         post = ndb.Key(urlsafe=post_key).get()
         post.isArchived = not post.isArchived
+        post.put()
         self.response.write(json.dumps({'isArchived': True}))
 
 
@@ -368,7 +369,9 @@ class StorePosts(BaseHandler):
     def get(self, url_key, offset):
         user = self.user
         store = ndb.Key(urlsafe=url_key).get()
-        posts = Post.query(Post.shop_key == store.key).fetch(10, offset=int(offset))
+        shop_posts_query = Post.query(Post.shop_key == store.key)
+        unarchived_posts_query = shop_posts_query.filter(Post.isArchived == False)
+        posts = unarchived_posts_query.fetch(10, offset=int(offset))
         ordered_posts = Post.order_posts(posts)
         prepared_posts = [post.prepare_post(user) for post in ordered_posts]
         self.response.write(json.dumps(prepared_posts))
