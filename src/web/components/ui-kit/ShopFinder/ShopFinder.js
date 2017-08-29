@@ -74,7 +74,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(pullNotMyShops())
     },
     onSubmitSearch: () => {
-      debugger
       dispatch(goToShop())
     },
     onSubmitLike: () => {

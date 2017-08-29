@@ -6,18 +6,12 @@ import React, {Component} from 'react'
 import {toggleStoreLike} from '../actions/StorePageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullShopPosts, pullMoreShopPosts} from '../actions/StorePageActions'
-import {pullNotMyShops} from '../actions/FrontPageActions'
-
-import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
-  from '../actions/MyShopsPageActions'
-import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
 import Spinner from '../components/ui-kit/Spinner'
 
 class StorePageHandler extends Component {
   componentDidMount () {
     this.props.getStore(this.props.params.url_key)
     this.props.getStorePosts(this.props.params.url_key)
-    this.props.getAllShops()
   }
 
   render () {
@@ -43,11 +37,6 @@ class StorePageHandler extends Component {
           areMorePosts={this.props.areMorePosts}
 
           isMobile={this.props.isMobile}
-          shops={this.props.shops}
-          onAddNewShop={this.props.onAddNewShop}
-          onSubmitShops={this.props.onSubmitShops}
-          onAddShopFinderRef={this.props.onAddShopFinderRef}
-          clearShopFinder={this.props.clearShopFinder}
         />
       )
     }
@@ -67,7 +56,6 @@ const mapStateToProps = (state) => {
     areMorePosts: state.areMorePosts,
     shopPosts: state.displayedPosts,
     isMobile: state.isMobile,
-    shops: state.shops,
   }
 }
 
@@ -78,21 +66,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onLikePost: (post_key) => dispatch(togglePostLike(post_key)),
     onMorePosts: () => dispatch(pullMoreShopPosts(ownProps.params.url_key)),
     getStorePosts: () => dispatch(pullShopPosts(ownProps.params.url_key)),
-
-    onAddNewShop: (shops) => {
-      dispatch(onUpdateFormShops(shops))
-    },
-    getAllShops: () => {
-      dispatch(pullNotMyShops())
-    },
-    onSubmitShops: () => {
-      dispatch(addShopsToMyShops())
-      browserHistory.push('/shops')
-    },
-    onAddShopFinderRef: (ref) => {
-      dispatch(addShopFinderRef(ref))
-    },
-    clearShopFinder: () => {dispatch(clearShopFinder())}
   }
 }
 

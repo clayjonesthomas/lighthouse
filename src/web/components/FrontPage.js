@@ -66,7 +66,7 @@ const FrontPage =
         {!isMobile &&
           <Col md={4}>
             <div className="shop-finder-container">
-              <ShopFinder isSearch="true"/>
+              <ShopFinder isSearch={true}/>
             </div>
           </Col>
         }

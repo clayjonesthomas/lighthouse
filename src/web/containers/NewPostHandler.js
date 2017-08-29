@@ -8,10 +8,6 @@ import {clearErrorMessage} from'../actions/AuthActions'
 
 class NewPostHandler extends Component {
 
-  componentDidMount () {
-    this.props.getShops()
-  }
-
   componentWillUnmount () {
     this.props.clearErrorMessage()
   }
@@ -19,7 +15,6 @@ class NewPostHandler extends Component {
   render () {
     return (
       <NewPostForm
-        shops={this.props.shops}
         onSubmit={this.props.onSubmit}
         onCancel={this.props.onCancel}
         onSaveTitleRef={this.props.onSaveTitleRef}

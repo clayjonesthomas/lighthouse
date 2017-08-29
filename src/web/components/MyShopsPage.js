@@ -15,12 +15,6 @@ const MyShopsPage =
      onLike,
      areShopsLoaded,
      isMobile,
-
-     shops,
-     onAddNewShop,
-     onSubmitShops,
-     onAddShopFinderRef,
-     clearShopFinder
    }) => (
     <div>
       {!areShopsLoaded &&
@@ -33,29 +27,14 @@ const MyShopsPage =
             {areShopsLoaded &&
               <div>
                 <div className={isMobile?"mobile-shop-finder-container":""}>
-                  <ShopFinder
-                    className={isMobile?"mobile-shop-finder":""}
-                    shops={shops}
-                    onAddNewShop={(shop) => {
-                      onAddNewShop(shop)
-                    }}
-                    onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-                    placeholder="search for a shop..."
-                  />
-                  <SubmitButton
-                    contents="ADD TO LIKED SHOPS"
-                    onClick={() => {
-                      onSubmitShops()
-                      clearShopFinder()
-                    }}
-                  />
+                  <ShopFinder isSearch={true}/>
                 </div>
                 <hr className="post-line-break"/>
               </div>
             }
           </Col>
           }
-          <Col md={6}>
+          <Col md={6} className={isMobile?"":"mid-block-desktop"}>
             <Row>
               <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
                 My Shops
@@ -78,23 +57,7 @@ const MyShopsPage =
           {!isMobile &&
             <Col md={4}>
               <div className="shop-finder-container">
-                <ShopFinder
-                  shops={shops}
-                  onAddNewShop={(shop) => {
-                    onAddNewShop(shop)
-                  }}
-                  onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-                  placeholder="search for a shop..."
-                />
-                <SubmitButton
-                  contents="ADD TO LIKED SHOPS"
-                  onClick={
-                    () => {
-                      onSubmitShops()
-                      clearShopFinder()
-                    }
-                  }
-                />
+                <ShopFinder isSearch={true}/>
               </div>
             </Col>
           }
@@ -105,13 +68,6 @@ const MyShopsPage =
   )
 
 MyShopsPage.propTypes = {
-  shops: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    website: PropTypes.string.isRequired,
-    likes: PropTypes.number.isRequired,
-    isLiked: PropTypes.bool.isRequired,
-    key: PropTypes.string.isRequired
-  })).isRequired,
   myShops: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     website: PropTypes.string.isRequired,

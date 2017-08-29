@@ -15,13 +15,7 @@ const MyPostsPage =
      areMoreMyPostsLoaded,
      getMoreMyPosts,
      areMoreMyPosts,
-     isMobile,
-
-     shops,
-     onAddNewShop,
-     onSubmitShops,
-     onAddShopFinderRef,
-     clearShopFinder
+     isMobile
    }) => (
     <div>
       {!areMyPostsLoaded &&
@@ -29,7 +23,7 @@ const MyPostsPage =
       }
       <Grid>
         <Row>
-          <Col md={6}>
+          <Col md={6} className={isMobile?"":"mid-block-desktop"}>
             <Row>
               <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
                 My Posts
@@ -65,23 +59,7 @@ const MyPostsPage =
           {!isMobile &&
             <Col md={4}>
               <div className="shop-finder-container">
-                <ShopFinder
-                  shops={shops}
-                  onAddNewShop={(shop) => {
-                    onAddNewShop(shop)
-                  }}
-                  onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-                  placeholder="search for a shop..."
-                />
-                <SubmitButton
-                  contents="ADD TO LIKED SHOPS"
-                  onClick={
-                    () => {
-                      onSubmitShops()
-                      clearShopFinder()
-                    }
-                  }
-                />
+                <ShopFinder isSearch={true}/>
               </div>
             </Col>
           }

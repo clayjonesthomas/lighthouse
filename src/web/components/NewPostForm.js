@@ -16,11 +16,10 @@ const NewPostForm = (
     onCancel,
     onSaveTitleRef,
     onUpdateFormShops,
-    shops,
     isMobile,
     errors
   }) => (
-  <Col md={8}>
+  <Col md={8} className={isMobile?"":"form-block-desktop"}>
     <div
       id={isMobile?"new-post-form":"new-post-form-desktop"}
       className={isMobile?"":"desktop-content-box"}>
@@ -44,12 +43,7 @@ const NewPostForm = (
           +(isMobile?"":"label-new-shop-desktop")}>
           Shop:
         </ControlLabel>
-        <ShopFinder
-          className={isMobile?"mobile-shop-finder":""}
-          isMultiple={false}
-          shops={shops}
-          onAddNewShop={onUpdateFormShops}
-        />
+        <ShopFinder isSearch={true}/>
         <SubmitButton
           className={isMobile?"":"desktop-submit"}
           onClick={() => onSubmit()}

@@ -14,7 +14,6 @@ import {pullNotMyShops} from '../actions/FrontPageActions'
 class MyPostsPageHandler extends Component {
   componentDidMount () {
     this.props.getMyPosts()
-    this.props.getAllShops()
   }
 
   render () {
@@ -28,12 +27,6 @@ class MyPostsPageHandler extends Component {
         getMoreMyPosts={this.props.getMoreMyPosts}
         areMoreMyPosts={this.props.areMorePosts}
         isMobile={this.props.isMobile}
-
-        shops={this.props.shops}
-        onAddNewShop={this.props.onAddNewShop}
-        onSubmitShops={this.props.onSubmitShops}
-        onAddShopFinderRef={this.props.onAddShopFinderRef}
-        clearShopFinder={this.props.clearShopFinder}
       />
     )
   }
@@ -46,8 +39,6 @@ const mapStateToProps = (state) => {
     areMoreMyPosts: state.areMorePosts,
     areMoreMyPostsLoaded: state.areMorePostsLoaded,
     isMobile: state.isMobile,
-
-    shops: state.shops,
   }
 }
 
@@ -61,19 +52,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     onLike: (post_key) => dispatch(togglePostLike(post_key)),
     deletePost: (post_key) => dispatch(deletePost(post_key)),
-
-    onAddNewShop: (shops) => dispatch(onUpdateFormShops(shops)),
-    getAllShops: () => {
-      dispatch(pullNotMyShops())
-    },
-    onSubmitShops: () => {
-      dispatch(addShopsToMyShops())
-      browserHistory.push('/shops')
-    },
-    onAddShopFinderRef: (ref) => {
-      dispatch(addShopFinderRef(ref))
-    },
-    clearShopFinder: () => {dispatch(clearShopFinder())}
   }
 }
 

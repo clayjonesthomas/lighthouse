@@ -4,6 +4,7 @@
 
 #new-post-form-desktop{
     font-size: 28px;
+    margin-top: 1.2em;
 }
 
 .mobile-shop-finder>div>input {
@@ -16,18 +17,17 @@
 
 .label-new-shop-finder{
     width:90%;
-    margin:auto;
     display: block;
 }
 
 .desktop-submit {
     font-size: 14px;
     width: 30%;
-    margin-right: 5%;
+    margin-right: 10%;
+    margin-top: 3em;
 }
 
 .submit-sale-desktop {
-    margin-left:5%;
 }
 
 .label-new-shop-desktop{
@@ -36,4 +36,8 @@
 
 .form-contents-desktop {
     margin-top: 1em;
+}
+
+.form-block-desktop {
+    margin-left: 3%;
 }
