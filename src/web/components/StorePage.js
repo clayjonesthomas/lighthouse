@@ -4,8 +4,8 @@ import Spinner from './ui-kit/Spinner'
 import MoreContentButton from './ui-kit/MoreContentButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import PostBox from './PostBox'
-import ShopFinder from './ui-kit/ShopFinder/ShopFinder'
-import SubmitButton from './ui-kit/SubmitButton'
+import ShopFinder, {FINDER_SEARCH}
+  from './ui-kit/ShopFinder/ShopFinder'
 
 import './StorePage.css'
 const StorePage =
@@ -76,7 +76,7 @@ const StorePage =
         {!isMobile &&
           <Col md={4}>
             <div className="shop-finder-container">
-              <ShopFinder isSearch={true}/>
+              <ShopFinder finderType={FINDER_SEARCH}/>
             </div>
           </Col>
         }

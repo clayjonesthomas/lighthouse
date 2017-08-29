@@ -3,7 +3,8 @@ import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
 import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
-import ShopFinder from './ui-kit/ShopFinder/ShopFinder'
+import ShopFinder, {FINDER_SEARCH}
+  from './ui-kit/ShopFinder/ShopFinder'
 
 import "./FrontPage.css"
 const MyPostsPage =
@@ -59,7 +60,7 @@ const MyPostsPage =
           {!isMobile &&
             <Col md={4}>
               <div className="shop-finder-container">
-                <ShopFinder isSearch={true}/>
+                <ShopFinder finderType={FINDER_SEARCH}/>
               </div>
             </Col>
           }

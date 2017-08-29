@@ -41,3 +41,12 @@
 .form-block-desktop {
     margin-left: 3%;
 }
+
+.desktop-form-error-messages{
+    font-size: initial;
+    margin: initial;
+}
+
+.desktop-form-error-messages>ul{
+    padding-left: 0;
+}

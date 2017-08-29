@@ -30,7 +30,6 @@ const ShopFinder = (
           return 0
         })}
         placeholder={placeholder}
-        onChange={onAddNewShop}
         ref={ref => {
           if(onAddShopFinderRef)
             onAddShopFinderRef(ref)

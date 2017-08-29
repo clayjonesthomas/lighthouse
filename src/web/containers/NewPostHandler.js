@@ -28,13 +28,6 @@ class NewPostHandler extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    shops: state.shops.map(shop => {
-      return {
-        name: shop.name,
-        key: shop.key,
-        icon: ''
-      }
-    }),
     isMobile: state.isMobile,
     errors: state.serverMessageArray
   }
@@ -47,11 +40,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(cancelPost())
       browserHistory.push('/')
     },
-    onSubmit: () => {
-      dispatch(pushPost())
-    },
+    onSubmit: () => dispatch(pushPost()),
     onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),
-    onUpdateFormShops: (shops) => dispatch(onUpdateFormShops(shops)),
     clearErrorMessage: () => dispatch(clearErrorMessage())
   }
 }

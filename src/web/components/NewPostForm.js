@@ -1,7 +1,8 @@
 import React, {PropTypes} from 'react'
 import SubmitButton from './ui-kit/SubmitButton'
 import TextBox from './ui-kit/TextBox'
-import ShopFinder from './ui-kit/ShopFinder/ShopFinder'
+import ShopFinder, {FINDER_FORM}
+  from './ui-kit/ShopFinder/ShopFinder'
 import {ControlLabel} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
 import ErrorMessages from './ui-kit/ErrorMessages'
@@ -29,7 +30,7 @@ const NewPostForm = (
       {errors.length > 0 &&
         <ErrorMessages
           className={isMobile?
-            "mobile-error-messages":"desktop-error-messages"}
+            "mobile-form-error-messages":"desktop-form-error-messages"}
           messages={errors}/>
       }
       <div className={isMobile?"":"form-contents-desktop"}>
@@ -43,7 +44,7 @@ const NewPostForm = (
           +(isMobile?"":"label-new-shop-desktop")}>
           Shop:
         </ControlLabel>
-        <ShopFinder isSearch={true}/>
+        <ShopFinder finderType={FINDER_FORM}/>
         <SubmitButton
           className={isMobile?"":"desktop-submit"}
           onClick={() => onSubmit()}
@@ -56,8 +57,7 @@ const NewPostForm = (
 NewPostForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onSaveTitleRef: PropTypes.func.isRequired,
-  onUpdateFormShops: PropTypes.func.isRequired
+  onSaveTitleRef: PropTypes.func.isRequired
 }
 
 export default NewPostForm
