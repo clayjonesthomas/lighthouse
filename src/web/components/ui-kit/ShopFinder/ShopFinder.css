@@ -1,9 +1,12 @@
 .shop-finder{
     width: 90%;
-    margin: 0 auto 2em auto;
     display: block;
 }
 
-.shop-finder>ul{
+.shop-finder>span>div>ul{
     width: 100%;
+}
+
+.shop-finder-title{
+    padding-bottom: .5em;
 }

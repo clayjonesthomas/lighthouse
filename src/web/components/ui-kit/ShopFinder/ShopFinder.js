@@ -7,6 +7,7 @@ import {addShopsToMyShops, addShopFinderRef, clearShopFinder, goToShop}
   from '../../../actions/MyShopsPageActions'
 import {pullNotMyShops} from '../../../actions/FrontPageActions'
 
+import "./ShopFinder.css"
 class ShopFinder extends Component {
 
   componentDidMount () {
@@ -26,16 +27,21 @@ class ShopFinder extends Component {
     } = this.props
     if (isSearch)
       return (
-        <ShopFinderComponent
-          className={(className || "")}
-          shops={shops}
-          onAddNewShop={shop => {
-            onAddNewShop(shop)}}
-          onAddShopFinderRef={ref =>
-            onAddShopFinderRef(ref)}
-          placeholder={placeholder}
-          onSubmit={onSubmitSearch}
-        />
+        <div>
+          <h2 className="shop-finder-title">
+            {"Search for a shop"}
+          </h2>
+          <ShopFinderComponent
+            className={(className || "")}
+            shops={shops}
+            onAddNewShop={shop => {
+              onAddNewShop(shop)}}
+            onAddShopFinderRef={ref =>
+              onAddShopFinderRef(ref)}
+            placeholder={placeholder}
+            onSubmit={onSubmitSearch}
+          />
+        </div>
       )
     else // it's a like
       return (

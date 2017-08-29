@@ -1,6 +1,5 @@
 import {MY_SHOPS_URL, LIKE_STORE_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
-import {pullFrontPagePosts} from '../actions/FrontPageActions'
 import {pullNotMyShops} from '../actions/FrontPageActions'
 import {browserHistory} from 'react-router'
 
