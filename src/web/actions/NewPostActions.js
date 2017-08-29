@@ -97,6 +97,7 @@ export function pushPost() {
       .then(json => {
         dispatch(addPostReturn(json))
         if (!json.error){
+          debugger
           browserHistory.push('/')
         }
       })

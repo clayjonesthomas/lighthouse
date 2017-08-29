@@ -89,10 +89,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-
   return {
     onAddNewShop: (shops) => {
-      debugger
       dispatch(onUpdateFormShops(shops))},
     getAllShops: () => {
       dispatch(pullNotMyShops())
@@ -108,7 +106,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(addShopFinderRef(ref))
     },
     clearShopFinder: () => dispatch(clearShopFinder()),
-    onSubmitForm: () => dispatch(pushPost()),
+    onSubmitForm: (e) => {
+      dispatch(pushPost())
+      e.preventDefault()
+    },
   }
 }
 

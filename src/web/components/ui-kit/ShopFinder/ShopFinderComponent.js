@@ -15,7 +15,7 @@ const ShopFinder = (
   }) => (
   <form
     className={"shop-finder " + (className || "")}
-    onSubmit={() => {onSubmit()}}>
+    onSubmit={(e) => {onSubmit(e)}}>
     <InputGroup>
       <Typeahead
         labelKey="name"
@@ -30,6 +30,7 @@ const ShopFinder = (
           return 0
         })}
         placeholder={placeholder}
+        onChange={onAddNewShop}
         ref={ref => {
           if(onAddShopFinderRef)
             onAddShopFinderRef(ref)
