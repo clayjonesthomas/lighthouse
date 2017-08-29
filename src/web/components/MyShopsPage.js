@@ -1,7 +1,7 @@
 import ShopBox from './ShopBox'
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
-import ShopFinder from './ui-kit/ShopFinder'
+import ShopFinder from './ui-kit/ShopFinder/ShopFinder'
 import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from './ui-kit/Logo'

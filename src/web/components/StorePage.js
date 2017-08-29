@@ -4,7 +4,7 @@ import Spinner from './ui-kit/Spinner'
 import MoreContentButton from './ui-kit/MoreContentButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import PostBox from './PostBox'
-import ShopFinder from './ui-kit/ShopFinder'
+import ShopFinder from './ui-kit/ShopFinder/ShopFinder'
 import SubmitButton from './ui-kit/SubmitButton'
 
 import './StorePage.css'

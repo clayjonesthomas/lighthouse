@@ -1,7 +1,7 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
-import ShopFinder from './ui-kit/ShopFinder'
+import ShopFinder from './ui-kit/ShopFinder/ShopFinder'
 import SubmitButton from './ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import MoreContentButton from "./ui-kit/MoreContentButton"
@@ -17,12 +17,6 @@ const FrontPage =
      areMorePosts,
      deletePost,
      isMobile,
-
-     shops,
-     onAddNewShop,
-     onSubmitShops,
-     onAddShopFinderRef,
-     clearShopFinder,
 
      fireMustSignIn,
      username
@@ -72,25 +66,8 @@ const FrontPage =
         {!isMobile &&
           <Col md={4}>
             <div className="shop-finder-container">
-              <ShopFinder
-                shops={shops}
-                onAddNewShop={(shop) => {
-                  onAddNewShop(shop)
-                }}
-                onAddShopFinderRef={ref => onAddShopFinderRef(ref)}
-                placeholder="search for a shop..."
-              />
-              <SubmitButton
-                contents="ADD TO LIKED SHOPS"
-                onClick={() => {
-                  if(username) {
-                    onSubmitShops()
-                    clearShopFinder()
-                  } else {
-                    fireMustSignIn()
-                  }
-                }}
-              />
+              <ShopFinder isSearch="true"/>
+
             </div>
           </Col>
         }

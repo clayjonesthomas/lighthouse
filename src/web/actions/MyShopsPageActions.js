@@ -2,6 +2,7 @@ import {MY_SHOPS_URL, LIKE_STORE_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 import {pullFrontPagePosts} from '../actions/FrontPageActions'
 import {pullNotMyShops} from '../actions/FrontPageActions'
+import {browserHistory} from 'react-router'
 
 export const REQUEST_MY_SHOPS = 'REQUEST_MY_SHOPS'
 export const REQUEST_MY_SHOPS_RETURN = 'REQUEST_MY_SHOPS_RETURN'
@@ -9,6 +10,7 @@ export const ADD_SHOPS_TO_MY_SHOPS_REQUEST = 'ADD_SHOPS_TO_MY_SHOPS_REQUEST'
 export const ADD_SHOPS_TO_MY_SHOPS_RETURN = 'ADD_SHOPS_TO_MY_SHOPS_RETURN'
 export const ADD_SHOP_FINDER_REF = 'ADD_SHOP_FINDER_REF'
 export const CLEAR_SHOP_FINDER = 'CLEAR_SHOP_FINDER'
+export const GO_TO_SHOP = 'GO_TO_SHOP'
 
 export const requestMyShops = () => {
   return {
@@ -94,6 +96,16 @@ export function clearShopFinder() {
     const shopFinder = state.formRefs.shopFinder
     if(shopFinder){
       shopFinder.getInstance().clear()
+    }
+  }
+}
+
+export function goToShop() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const shops = state.form.shops
+    if (shops) {
+      browserHistory.push(`/store/${shops[0].key}`)
     }
   }
 }
