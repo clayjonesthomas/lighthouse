@@ -35,8 +35,13 @@
     padding: .5em;
 }
 
-.text-boxes {
+.modal-text-boxes {
     margin-bottom: 4em;
+}
+
+.modal-text-boxes>.text-box{
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .desktop-textbox-label {

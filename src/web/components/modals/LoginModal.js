@@ -1,19 +1,20 @@
 import React, {PropTypes} from 'react'
 import TextBox from '../ui-kit/TextBox'
 import SubmitButton from '../ui-kit/SubmitButton'
-import {Link} from 'react-router'
 import './LoginModal.css'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 
 import Modal from 'react-modal'
-import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
+import {FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
 import XGraphic from '../ui-kit/XGraphic'
 import {LOGIN_USERNAME, LOGIN_PASSWORD} from '../../actions/AuthActions'
 import ErrorMessages from '../ui-kit/ErrorMessages'
+import {USERNAME, PASSWORD} from '../../containers/LoginHandler'
 
 import "./ModalStyle.css"
 import './LoginModal.css'
+
 class LoginModal extends Component {
 
   render() {
@@ -40,7 +41,7 @@ class LoginModal extends Component {
                 "mobile-error-messages":"desktop-error-messages")}
               messages={this.props.messages}/>
           }
-          <div className={(this.props.isMobile?"mobile-form-contents":"text-boxes")}>
+          <div className={(this.props.isMobile?"mobile-form-contents":"modal-text-boxes")}>
             <TextBox
               className={"modal-textbox " + (this.props.isMobile?
                 "mobile-textbox":"desktop-textbox")}
@@ -57,6 +58,7 @@ class LoginModal extends Component {
               label="password"
               inputType="password"
               refFunc={ref => this.props.onSaveRef(ref, LOGIN_PASSWORD)}
+              onEnter={this.props.onLogin}
             />
           </div>
           <SubmitButton

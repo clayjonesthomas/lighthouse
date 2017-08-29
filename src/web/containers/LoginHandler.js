@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import LoginModal from '../components/modals/LoginModal'
-import {logInUser, signUpUser, showSignUp, clearErrorMessage}
+import {logInUser, clearErrorMessage}
   from '../actions/AuthActions'
 import {onSaveRef} from '../actions/NewPostActions'
 
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (user, pass) => dispatch(logInUser(user, pass)),
     onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type)),
-    clearMessage: () => dispatch(clearErrorMessage())
+    clearMessage: () => dispatch(clearErrorMessage()),
   }
 }
 

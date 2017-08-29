@@ -11,6 +11,12 @@ class TextBox extends Component {
         this.props.className !== nextProps.className
   }
 
+  handleKeyPress(target) {
+    if (this.props.onEnter && target.charCode === 13) {
+      this.props.onEnter()
+    }
+  }
+
   render () {
     return (
       <FormGroup
@@ -27,6 +33,7 @@ class TextBox extends Component {
           className={"text-box-input "+this.props.className}
           inputRef={ref => this.props.refFunc(ref)}
           componentClass={this.props.componentClass}
+          onKeyPress={(target) => this.handleKeyPress(target)}
         />
       </FormGroup>
     )

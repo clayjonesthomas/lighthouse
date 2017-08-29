@@ -40,7 +40,7 @@ class SignUpModal extends Component {
               "mobile-error-messages":"desktop-error-messages")}
             messages={this.props.messages}/>
           }
-          <div className={(this.props.isMobile?"mobile-form-contents":"text-boxes")}>
+          <div className={(this.props.isMobile?"mobile-form-contents":"modal-text-boxes")}>
             <TextBox
               className={"modal-textbox " + (this.props.isMobile?
                 "mobile-textbox":"desktop-textbox")}
@@ -65,6 +65,7 @@ class SignUpModal extends Component {
                 "mobile-textbox-label":"desktop-textbox-label")}
               label="email"
               refFunc={ref => this.props.onSaveRef(ref, SIGN_UP_EMAIL)}
+              onEnter={this.props.onSignUp}
             />
           </div>
           <SubmitButton
