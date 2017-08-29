@@ -105,6 +105,7 @@ export function goToShop() {
     const shops = state.form.shops
     if (shops) {
       browserHistory.push(`/store/${shops[0].key}`)
+      window.location.reload()
     }
   }
 }

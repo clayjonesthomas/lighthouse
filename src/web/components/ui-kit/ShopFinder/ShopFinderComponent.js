@@ -15,7 +15,10 @@ const ShopFinder = (
   }) => (
   <form
     className={"shop-finder " + (className || "")}
-    onSubmit={(e) => {onSubmit(e)}}>
+    onSubmit={(e) => {
+      onSubmit(e)
+      e.preventDefault()
+    }}>
     <InputGroup>
       <Typeahead
         labelKey="name"

@@ -3,7 +3,8 @@ import {browserHistory} from 'react-router'
 import ShopFinderComponent from "./ShopFinderComponent"
 import {connect} from 'react-redux'
 import {onUpdateFormShops} from '../../../actions/NewPostActions'
-import {addShopsToMyShops, addShopFinderRef, clearShopFinder, goToShop}
+import {addShopsToMyShops, addShopFinderRef, clearShopFinder,
+  goToShop}
   from '../../../actions/MyShopsPageActions'
 import {pullNotMyShops} from '../../../actions/FrontPageActions'
 import {pushPost} from '../../../actions/NewPostActions'
@@ -37,7 +38,7 @@ class ShopFinder extends Component {
         return (
           <div>
             <h2 className="shop-finder-title">
-              {"Search for a shop"}
+              {"Search For a Shop"}
             </h2>
             <ShopFinderComponent
               className={(className || "")}
@@ -53,16 +54,21 @@ class ShopFinder extends Component {
         )
       case FINDER_LIKE:
         return (
-          <ShopFinderComponent
-            className={(className || "")}
-            shops={shops}
-            onAddNewShop={shop => {
-              onAddNewShop(shop)}}
-            onAddShopFinderRef={ref =>
-              onAddShopFinderRef(ref)}
-            placeholder={placeholder}
-            onSubmit={onSubmitLike}
-          />
+          <div>
+            <h2 className="shop-finder-title">
+              {"Like a Shop"}
+            </h2>
+            <ShopFinderComponent
+              className={(className || "")}
+              shops={shops}
+              onAddNewShop={shop => {
+                onAddNewShop(shop)}}
+              onAddShopFinderRef={ref =>
+                onAddShopFinderRef(ref)}
+              placeholder={"find a shop to like..."}
+              onSubmit={onSubmitLike}
+            />
+          </div>
         )
       case FINDER_FORM:
         return (
@@ -91,24 +97,24 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     onAddNewShop: (shops) => {
-      dispatch(onUpdateFormShops(shops))},
+      dispatch(onUpdateFormShops(shops))
+    },
     getAllShops: () => {
       dispatch(pullNotMyShops())
-    },
-    onSubmitSearch: () => {
-      dispatch(goToShop())
-    },
-    onSubmitLike: () => {
-      dispatch(addShopsToMyShops)
-      browserHistory.push("/my_feed")
     },
     onAddShopFinderRef: (ref) => {
       dispatch(addShopFinderRef(ref))
     },
     clearShopFinder: () => dispatch(clearShopFinder()),
-    onSubmitForm: (e) => {
+    onSubmitSearch: () => {
+      dispatch(goToShop())
+    },
+    onSubmitLike: () => {
+      dispatch(addShopsToMyShops)
+      browserHistory.push("/my_shops")
+    },
+    onSubmitForm: () => {
       dispatch(pushPost())
-      e.preventDefault()
     },
   }
 }

@@ -1,7 +1,7 @@
 import ShopBox from './ShopBox'
 import React, {PropTypes} from 'react'
 import Spinner from './ui-kit/Spinner'
-import ShopFinder, {FINDER_SEARCH} from './ui-kit/ShopFinder/ShopFinder'
+import ShopFinder, {FINDER_LIKE} from './ui-kit/ShopFinder/ShopFinder'
 import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from './ui-kit/Logo'
 
@@ -26,7 +26,7 @@ const MyShopsPage =
             {areShopsLoaded &&
               <div>
                 <div className={isMobile?"mobile-shop-finder-container":""}>
-                  <ShopFinder finderType={FINDER_SEARCH}/>
+                  <ShopFinder finderType={FINDER_LIKE}/>
                 </div>
                 <hr className="post-line-break"/>
               </div>
@@ -56,7 +56,7 @@ const MyShopsPage =
           {!isMobile &&
             <Col md={4}>
               <div className="shop-finder-container">
-                <ShopFinder finderType={FINDER_SEARCH}/>
+                <ShopFinder finderType={FINDER_LIKE}/>
               </div>
             </Col>
           }
