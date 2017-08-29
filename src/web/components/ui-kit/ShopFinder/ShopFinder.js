@@ -110,8 +110,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(goToShop())
     },
     onSubmitLike: () => {
-      dispatch(addShopsToMyShops)
-      browserHistory.push("/my_shops")
+      dispatch(addShopsToMyShops())
+      browserHistory.push("/shops")
+      window.location.reload()
     },
     onSubmitForm: () => {
       dispatch(pushPost())
