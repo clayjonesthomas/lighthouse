@@ -27,7 +27,7 @@ const FrontPage =
     }
     <Grid>
       <Row>
-        <Col md={6}>
+        <Col md={6} className={isMobile?"":"mid-block-desktop"}>
           <div className={isMobile? "":"desktop-content-box"}>
             {arePostsLoaded && posts &&
               posts.map(post => {
@@ -67,7 +67,6 @@ const FrontPage =
           <Col md={4}>
             <div className="shop-finder-container">
               <ShopFinder isSearch="true"/>
-
             </div>
           </Col>
         }

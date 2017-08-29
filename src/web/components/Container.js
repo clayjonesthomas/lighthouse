@@ -45,9 +45,9 @@ class Container extends Component {
               <Col md={2}>
                 <MenuHandler/>
               </Col>
-              <Col md={10}>
-                {this.props.children}
-              </Col>
+              {
+                this.props.children
+              }
             </Row>
           </Grid>
         }
