@@ -25,7 +25,8 @@ const PostBox = (
       <div className="sale-title">
         {
           <a
-            href={post.store.website}>
+            href={post.store.website}
+            target="_blank">
             {
               post['title']
             }
