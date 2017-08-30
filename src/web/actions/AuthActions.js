@@ -7,6 +7,7 @@ export const SHOW_MODAL = 'SHOW_MODEL'
 export const CANCEL = 'CANCEL'
 export const SIGN_UP = 'SIGN_UP'
 export const LOGIN = 'LOGIN'
+export const INFO = "INFO"
 export const REF_FUNC_AUTH = 'REF_FUNC_AUTH'
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
@@ -42,6 +43,13 @@ export const showLogin = () => {
   return {
     type: SHOW_MODAL,
     meta: LOGIN
+  }
+}
+
+export const showInfo = () => {
+  return {
+    type: SHOW_MODAL,
+    meta: INFO
   }
 }
 

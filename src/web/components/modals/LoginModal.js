@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import TextBox from '../ui-kit/TextBox'
 import SubmitButton from '../ui-kit/SubmitButton'
-import './LoginModal.css'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 
 import Modal from 'react-modal'
@@ -10,7 +9,6 @@ import {Component} from 'react'
 import XGraphic from '../ui-kit/XGraphic'
 import {LOGIN_USERNAME, LOGIN_PASSWORD} from '../../actions/AuthActions'
 import ErrorMessages from '../ui-kit/ErrorMessages'
-import {USERNAME, PASSWORD} from '../../containers/LoginHandler'
 
 import "./ModalStyle.css"
 import './LoginModal.css'

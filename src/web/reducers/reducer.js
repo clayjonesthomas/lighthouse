@@ -4,7 +4,7 @@ REQUEST_SHOPS, REQUEST_SHOPS_RETURN, UPDATE_FORM_SHOPS}
 import {GO_HOME, GO_MY_SHOPS} from '../actions/MenuActions.js'
 import {REQUEST_POSTS, REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
 import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
-import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, CANCEL}
+import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, INFO, CANCEL}
   from '../actions/AuthActions.js'
 import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/UserInfoActions'
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
@@ -77,6 +77,10 @@ function store(state = initialState, action) {
         case LOGIN:
           return Object.assign({}, state, {
             modal: LOGIN,
+          })
+        case INFO:
+          return Object.assign({}, state, {
+            modal: INFO,
           })
       }
     case REQUEST_POSTS:

@@ -1,12 +1,14 @@
 import React from 'react'
 import LoginModalHandler from './LoginHandler'
 import SignUpHandler from './SignUpHandler'
+import InfoHandler from './InfoHandler'
 import {connect} from 'react-redux'
 import {cancelModal} from '../actions/AuthActions'
 
 const MODAL_COMPONENTS = {
   'LOGIN': LoginModalHandler,
-  'SIGN_UP': SignUpHandler
+  'SIGN_UP': SignUpHandler,
+  'INFO': InfoHandler
 }
 
 const ModalRoot = ({ modal, onCancel }) => {

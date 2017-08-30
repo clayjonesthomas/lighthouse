@@ -8,6 +8,7 @@ import {isUserMobile} from '../actions/UserActions'
 import {pullUserInfo} from '../actions/UserInfoActions'
 import NotificationHandler from '../containers/NotificationHandler'
 import ContactUs from './ui-kit/ContactUs'
+import {showInfo} from '../actions/AuthActions'
 
 // mobile
 import MobileMenuHandler from '../containers/MobileMenuHandler'
@@ -18,6 +19,7 @@ class Container extends Component {
   componentDidMount () {
     this.props.isUserMobile()
     this.props.getUserInfo()
+    this.props.showInfoModalIfAppropriate()
   }
 
   render() {
@@ -71,7 +73,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     isUserMobile: () => dispatch(isUserMobile()),
-    getUserInfo: () => dispatch(pullUserInfo())
+    getUserInfo: () => dispatch(pullUserInfo()),
+    showInfoModalIfAppropriate: () => dispatch(showInfo())
   }
 }
 
