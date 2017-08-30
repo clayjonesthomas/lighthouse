@@ -44,7 +44,7 @@ def populate_dummy_datastore():
 
 def _spawn_admin():
     _contents = {'username': u'admin', 'email': u'ctjones@mit.edu',
-                 'password': u'32hereford'}
+                 'password': config.admin_pass}
     request_signup = webapp2.Request.blank('/rest/signup')
     request_signup.method = 'POST'
     request_signup.body = json.dumps(_contents)
