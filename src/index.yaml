@@ -1,5 +1,14 @@
 indexes:
+
 - kind: Post
   properties:
   - name: shop_key
+  - name: isArchived
   - name: timestamp
+    direction: desc
+
+- kind: Post
+  properties:
+  - name: isArchived
+  - name: timestamp
+    direction: desc

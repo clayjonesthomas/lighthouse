@@ -230,15 +230,15 @@ class Feed(BaseHandler):
         if not should_get_all_posts and user:
             liked_store_keys = user.liked_stores
             if liked_store_keys:
-                query = Post.query(Post.shop_key.IN(liked_store_keys))
+                query = Post.query(ndb.AND(Post.shop_key.IN(liked_store_keys),
+                                           Post.isArchived == False))
             else:
                 return []
         else:
-            query = Post.query()
-        filter_archived_posts = query.filter(Post.isArchived == False)
-        # ordered_posts = filter_archived_posts.order(Post.timestamp)
-        # result = ordered_posts.fetch(10, offset=offset)
-        result = filter_archived_posts.fetch(19, offset=offset)
+            query = Post.query(Post.isArchived == False)
+        ordered_posts = query.order(-Post.timestamp)
+        result = ordered_posts.fetch(10, offset=offset)
+        # result = filter_archived_posts.fetch(19, offset=offset)
         return result
 
 
