@@ -26,3 +26,4 @@ coffee_src
 src/bundle.js
 lib
 src/backend/lib
+src/backend/config.py

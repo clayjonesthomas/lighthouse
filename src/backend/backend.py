@@ -7,6 +7,7 @@ import os
 import datetime
 import time
 import re
+import config
 
 import webapp2
 
@@ -710,7 +711,7 @@ config = {
         'user_attributes': [] # used for caching properties
     },
     'webapp2_extras.sessions': {
-        'secret_key': ",9XgK[}5D7*-wAi0e{a)V$O83P5tL*=y17kmx8ID0!U}q?e;mH(@L'*(qOGp#1M"
+        'secret_key': config.secret_key
     }
 }
 
@@ -742,6 +743,7 @@ app = webapp2.WSGIApplication([
 
 
 
+    webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
     webapp2.Route('/shops', MainPage, name='stores'),
     webapp2.Route('/posts', MainPage, name='posts'),
