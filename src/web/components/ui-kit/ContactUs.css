@@ -1,0 +1,19 @@
+.contact-us-box {
+    font-size: 12px;
+    color: #8f92a6;
+    float: right;
+    padding: 0 1em 1em 0;
+}
+
+.contact-us-text {
+}
+
+.contact-us-link {
+    float: right;
+}
+
+.contact-us-wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

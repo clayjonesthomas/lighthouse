@@ -3,6 +3,15 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    min-height: 100%;
+}
+
+html {
+    min-height: 100%;
+}
+
+#root {
+    min-height: 100%;
 }
 
 a {

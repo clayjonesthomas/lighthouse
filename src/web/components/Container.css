@@ -1,0 +1,8 @@
+#body-container-wrapper {
+    min-height: 800px;
+    position: relative;
+}
+
+#body-container-contents {
+    padding-bottom: 60px;
+}

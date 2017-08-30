@@ -7,10 +7,12 @@ import {Grid, Row, Col} from 'react-bootstrap'
 import {isUserMobile} from '../actions/UserActions'
 import {pullUserInfo} from '../actions/UserInfoActions'
 import NotificationHandler from '../containers/NotificationHandler'
+import ContactUs from './ui-kit/ContactUs'
 
 // mobile
 import MobileMenuHandler from '../containers/MobileMenuHandler'
 import "./MobileMenu.css"
+import "./Container.css"
 class Container extends Component {
 
   componentDidMount () {
@@ -21,36 +23,39 @@ class Container extends Component {
   render() {
 
     return (
-      <div>
-        <ModalHandler
-          modal={this.props.modal}
-        />
-        <NotificationHandler/>
-        {this.props.isMobile &&
-          <MobileMenuHandler/>
-        }
-        {this.props.isMobile &&
-          <Grid id="mobile-children-grid">
-            <Row>
-              {this.props.children}
-            </Row>
-          </Grid>
-        }
-        {!this.props.isMobile &&
-          <Grid>
-            <Row>
-              <UserInfoHandler/>
-            </Row>
-            <Row>
-              <Col md={2}>
-                <MenuHandler/>
-              </Col>
-              {
-                this.props.children
-              }
-            </Row>
-          </Grid>
-        }
+      <div id="body-container-wrapper">
+        <div id="body-container-contents">
+          <ModalHandler
+            modal={this.props.modal}
+          />
+          <NotificationHandler/>
+          {this.props.isMobile &&
+            <MobileMenuHandler/>
+          }
+          {this.props.isMobile &&
+            <Grid id="mobile-children-grid">
+              <Row>
+                {this.props.children}
+              </Row>
+            </Grid>
+          }
+          {!this.props.isMobile &&
+            <Grid>
+              <Row>
+                <UserInfoHandler/>
+              </Row>
+              <Row>
+                <Col md={2}>
+                  <MenuHandler/>
+                </Col>
+                {
+                  this.props.children
+                }
+              </Row>
+            </Grid>
+          }
+        </div>
+        <ContactUs/>
       </div>
     )
   }
