@@ -1,12 +1,17 @@
 import React from 'react'
 import LinkButton from './ui-kit/LinkButton'
+import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 
 import "./Footer.css"
-const ContactUs = () => (
+const Footer =
+  ({
+     goToPrivacyPolicy
+  }) => (
   <div className="contact-us-wrapper">
     <LinkButton
       contents="Privacy Policy"
-      onClick={() => {debugger}}
+      onClick={() => {goToPrivacyPolicy()}}
       className="privacy-company-link"
     />
     <div className="contact-us-box">
@@ -24,4 +29,16 @@ const ContactUs = () => (
   </div>
 )
 
-export default ContactUs
+const mapStateToProps = () => {return {}}
+const mapDispatchToProps = () => {
+  return {
+    goToPrivacyPolicy: () => {
+      browserHistory.push('/privacy_policy')
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Footer)

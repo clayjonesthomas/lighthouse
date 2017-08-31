@@ -1,15 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {browserHistory} from 'react-router'
 import {deletePost} from '../actions/FrontPageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullMyPosts, pullMoreMyPosts} from '../actions/MyPostsPageActions'
 import MyPostsPage from '../components/MyPostsPage'
-
-import {addShopsToMyShops, addShopFinderRef, clearShopFinder}
-  from '../actions/MyShopsPageActions'
-import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
-import {pullNotMyShops} from '../actions/FrontPageActions'
 
 class MyPostsPageHandler extends Component {
   componentDidMount () {

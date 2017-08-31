@@ -14,6 +14,7 @@ import MyPostsPageHandler from '../containers/MyPostsPageHandler'
 import "./Globals.css"
 import AllPostsPageHandler from '../containers/AllPostsPageHandler'
 import MyFeedPageHandler from '../containers/MyFeedPageHandler'
+import PrivacyPolicyPage from "./PrivacyPolicyPage"
 
 let store = createStore(
   lighthouse,
@@ -34,6 +35,7 @@ const Root = () => (
         <Route path="/post/:url_key" component={PostPageHandler}/>
         <Route path="/shops" component={MyShopsPageHandler}/>
         <Route path="/posts" component={MyPostsPageHandler}/>
+        <Route path="/privacy_policy" component={PrivacyPolicyPage}/>
       </Route>
     </Router>
   </Provider>
