@@ -1,4 +1,4 @@
-import React, {PropTypes, Component} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ModalHandler from '../containers/ModalHandler.js'
 import MenuHandler from '../containers/MenuHandler.js'
@@ -7,7 +7,7 @@ import {Grid, Row, Col} from 'react-bootstrap'
 import {isUserMobile} from '../actions/UserActions'
 import {pullUserInfo} from '../actions/UserInfoActions'
 import NotificationHandler from '../containers/NotificationHandler'
-import ContactUs from './ui-kit/ContactUs'
+import Footer from './Footer'
 import {showInfo} from '../actions/AuthActions'
 
 // mobile
@@ -57,7 +57,7 @@ class Container extends Component {
             </Grid>
           }
         </div>
-        <ContactUs/>
+        <Footer/>
       </div>
     )
   }

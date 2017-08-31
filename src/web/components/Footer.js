@@ -1,8 +1,14 @@
 import React from 'react'
+import LinkButton from './ui-kit/LinkButton'
 
-import "./ContactUs.css"
+import "./Footer.css"
 const ContactUs = () => (
   <div className="contact-us-wrapper">
+    <LinkButton
+      contents="Privacy Policy"
+      onClick={() => {debugger}}
+      className="privacy-company-link"
+    />
     <div className="contact-us-box">
       <div className="contact-us-text">
         Questions, comments, concerns?

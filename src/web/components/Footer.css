@@ -1,5 +1,4 @@
 .contact-us-box {
-    font-size: 12px;
     color: #8f92a6;
     float: right;
     padding: 0 1em 1em 0;
@@ -13,7 +12,14 @@
 }
 
 .contact-us-wrapper {
+    font-size: 12px;
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+.privacy-company-link {
+    padding: 0 0 1em 1em;
+    position: absolute;
+    bottom: 0;
 }
