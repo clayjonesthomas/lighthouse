@@ -23,12 +23,13 @@
 }
 
 #sign-up-button-wrapper, .info-cancel-button {
-    width: 40%;
+    width: 49%;
     display: inline-block;
 }
 
 .info-submit-button {
     margin: 1em 0 1em 0;
+    width: 100%;
 }
 
 .info-cancel-button {
@@ -41,7 +42,6 @@
 
 #info-login {
     text-align: center;
-    width: 90%;
 }
 
 

@@ -21,6 +21,7 @@ class SignUpModal extends Component {
         isOpen={true}
         contentLabel='Sign up'
         style={this.props.isMobile?GlobalModalStyle:DesktopGlobalModalStyle}
+        onRequestClose={this.props.onCancel}
       >
         <XGraphic
           className="x-modal"

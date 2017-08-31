@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import TextBox from '../ui-kit/TextBox'
 import SubmitButton from '../ui-kit/SubmitButton'
 import LinkButton from '../ui-kit/LinkButton'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
@@ -23,6 +22,7 @@ class InfoModal extends Component {
         isOpen={true}
         contentLabel='Info'
         style={isMobile?GlobalModalStyle:DesktopGlobalModalStyle}
+        onRequestClose={onCancel}
       >
         <XGraphic
           className="x-modal x-info"
@@ -47,7 +47,7 @@ class InfoModal extends Component {
           <div id="sign-up-button-wrapper">
             <SubmitButton
               onClick={onShowSignUp}
-              contents="Sign up"
+              contents="Create an account"
               className="info-submit-button"
             />
             <div id="info-login">
