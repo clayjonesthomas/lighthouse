@@ -9,7 +9,6 @@ import XGraphic from '../ui-kit/XGraphic'
 
 import "./ModalStyle.css"
 import './InfoModal.css'
-
 class InfoModal extends Component {
 
   render () {
@@ -26,13 +25,15 @@ class InfoModal extends Component {
         style={isMobile?GlobalModalStyle:DesktopGlobalModalStyle}
       >
         <XGraphic
-          className="x-modal"
+          className="x-modal x-info"
           width={isMobile?"60":"30"}
           height={isMobile?"60":"30"}
           onClick={() => onCancel()}
         />
-        <h1>{"Welcome to Lightho.us"}</h1>
-        <p>
+        <h1 id="info-modal-title">
+          {"Welcome to Lightho.us"}
+        </h1>
+        <p id="info-paragraph">
           {
             "Lightho.us gathers all the clothing sales " +
             "from across the web into one place. With Lightho.us " +
@@ -42,18 +43,28 @@ class InfoModal extends Component {
             "We hope you enjoy it!"
           }
         </p>
-        <SubmitButton
-          onClick={onShowSignUp}
-          contents="Sign up"
-        />
-        <span>or</span>
-        <LinkButton
-          onClick={onShowLogin}
-          contents="Log in"/>
-        <SubmitButton
-          onClick={onCancel}
-          contents="Maybe later"
-        />
+        <div className="info-buttons">
+          <div id="sign-up-button-wrapper">
+            <SubmitButton
+              onClick={onShowSignUp}
+              contents="Sign up"
+              className="info-submit-button"
+            />
+            <div id="info-login">
+              or&nbsp;
+              <LinkButton
+                onClick={onShowLogin}
+                contents="Log in"
+                className="info-link"
+              />
+            </div>
+          </div>
+          <SubmitButton
+            onClick={onCancel}
+            contents="Maybe later"
+            className="info-cancel-button"
+          />
+        </div>
       </Modal>
     )
   }

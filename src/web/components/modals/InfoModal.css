@@ -1,0 +1,50 @@
+#info-modal-title {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.x-info {
+    margin: 0;
+}
+
+#info-paragraph {
+    width: 90%;
+    margin: 1.5em auto 3em auto;
+    text-align: justify;
+}
+
+.info-buttons {
+    width: 90%;
+    margin: auto;
+}
+
+#sign-up-button-wrapper {
+
+}
+
+#sign-up-button-wrapper, .info-cancel-button {
+    width: 40%;
+    display: inline-block;
+}
+
+.info-submit-button {
+    margin: 1em 0 1em 0;
+}
+
+.info-cancel-button {
+    float: right;
+    background: #e2e4eb;
+    color: #2c2e32;
+    border: 1px solid #8f92a6;
+    margin: 1em 0 1em 0;
+}
+
+#info-login {
+    text-align: center;
+    width: 90%;
+}
+
+
+.info-link {
+
+}
