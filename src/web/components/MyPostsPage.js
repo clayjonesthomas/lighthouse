@@ -27,11 +27,11 @@ const MyPostsPage =
           <Col md={6} className={isMobile?"":"mid-block-desktop"}>
             <Row>
               <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
-                My Posts
+                Liked Posts
               </h1>
             </Row>
             <div className={isMobile? "":"desktop-content-box"}>
-              {areMyPostsLoaded && myPosts &&
+              {areMyPostsLoaded && (myPosts.length > 0) &&
               myPosts.map(post => {
                 return <Row key={post.key}>
                   <PostBox
@@ -43,8 +43,9 @@ const MyPostsPage =
                 /></Row>
               })
               }
-              {areMyPostsLoaded && !myPosts &&
-                "Posts you have liked will end up here"
+              {areMyPostsLoaded && (myPosts.length === 0) &&
+                "You haven't liked any posts yet. " +
+                "like some and they'll show up here!"
               }
               {!areMoreMyPostsLoaded &&
                 <Spinner/>

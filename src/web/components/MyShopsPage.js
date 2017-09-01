@@ -36,20 +36,22 @@ const MyShopsPage =
           <Col md={6} className={isMobile?"":"mid-block-desktop"}>
             <Row>
               <h1 className={isMobile?"mobile-h1":"desktop-h1"}>
-                My Shops
+                Liked Shops
               </h1>
             </Row>
             <div className={isMobile ? "" : "desktop-content-box"}>
-              {areShopsLoaded && myShops &&
-              myShops.map(shop => {
-                return <Row key={shop.key}><ShopBox
-                  shop={shop}
-                  onLike={() => onLike(shop.key)}
-                  /></Row>
-                })
+              {console.log(myShops)}
+              {areShopsLoaded && (myShops.length > 0) &&
+                myShops.map(shop => {
+                  return <Row key={shop.key}><ShopBox
+                    shop={shop}
+                    onLike={() => onLike(shop.key)}
+                    /></Row>
+                  })
               }
-              {areShopsLoaded && !myShops &&
-                "You're currently not following any shops. Go add some! -->"
+              {areShopsLoaded && (myShops.length === 0) &&
+                "You haven't liked any shops yet.  " +
+                "Like some and they'll show up here!"
               }
             </div>
           </Col>

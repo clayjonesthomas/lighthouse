@@ -10,13 +10,16 @@ class MyFeedPageHandler extends Component {
       <FrontPageHandler
         getPosts={this.props.getPosts}
         getMorePosts={this.props.getMorePosts}
+        isMyFeed={this.props.isMyFeed}
       />
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return state
+  return {
+    isMyFeed: true
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

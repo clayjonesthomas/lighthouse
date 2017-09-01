@@ -19,7 +19,8 @@ const FrontPage =
      isMobile,
 
      fireMustSignIn,
-     username
+     username,
+     isMyFeed
   }) => (
   <div>
     {!arePostsLoaded &&
@@ -28,7 +29,15 @@ const FrontPage =
     <Grid>
       <Row>
         <Col md={6} className={isMobile?"":"mid-block-desktop"}>
-          <div className={isMobile? "":"desktop-content-box"}>
+          {isMyFeed &&
+            <Row>
+              <h1 id="my-feed-title">
+                My Feed
+              </h1>
+            </Row>
+          }
+          <div className={isMobile? "":
+            isMyFeed?"desktop-content-feed-box":"desktop-content-box"}>
             {arePostsLoaded && posts &&
               posts.map(post => {
                 return <Row key={post.key}><PostBox
@@ -40,9 +49,9 @@ const FrontPage =
                 /></Row>
               })
             }
-            {arePostsLoaded && !posts.length &&
+            {arePostsLoaded && !posts.length && isMyFeed &&
               <div id={isMobile? "":"desktop-no-posts"}>
-                You'll see some posts once you follow some stores. add some using the store finder!
+                You'll see some posts once you like some stores. The posts from your liked stores will show up here!
               </div>
             }
           </div>

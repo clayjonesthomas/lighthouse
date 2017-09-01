@@ -26,6 +26,7 @@ class FrontPageHandler extends Component {
 
         fireMustSignIn={this.props.fireMustSignIn}
         username={this.props.username}
+        isMyFeed={this.props.isMyFeed}
       />
     )
   }
