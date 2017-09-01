@@ -52,6 +52,9 @@ const UserInfo =
         <FullLogo
           onClick={onHome}
         />
+        <span id="beta-version">
+          BETA
+        </span>
       </div>
     </div>
   )
