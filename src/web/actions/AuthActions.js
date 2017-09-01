@@ -53,6 +53,33 @@ export const showInfo = () => {
   }
 }
 
+export function showInfoIfAppropriate() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const username = state.username
+    if(!username && !isFirstTimeVisitor()) {
+      const date = new Date()
+      date.setTime(date.getTime() +
+      7*24*60*60*1000)
+      const expires = date.toGMTString()
+      document.cookie = "isFirstTimeVisitor=false; " +
+        "expires=" + expires + "; path=/"
+      dispatch(showInfo())
+    }
+  }
+}
+
+// somewhat borrowed from
+// https://stackoverflow.com/questions/10730362/get-cookie-by-name
+function isFirstTimeVisitor(){
+  const value = "; " + document.cookie
+  const parts = value.split("; " + "isFirstTimeVisitor" + "=")
+  return parts.length === 2
+}
+
+
+
+
 export const requestLogin = () => {
   return {
     type: REQUEST_LOGIN

@@ -8,7 +8,7 @@ import {isUserMobile} from '../actions/UserActions'
 import {pullUserInfo} from '../actions/UserInfoActions'
 import NotificationHandler from '../containers/NotificationHandler'
 import Footer from './Footer'
-import {showInfo} from '../actions/AuthActions'
+import {showInfoIfAppropriate} from '../actions/AuthActions'
 
 // mobile
 import MobileMenuHandler from '../containers/MobileMenuHandler'
@@ -74,7 +74,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     isUserMobile: () => dispatch(isUserMobile()),
     getUserInfo: () => dispatch(pullUserInfo()),
-    showInfoModalIfAppropriate: () => dispatch(showInfo())
+    showInfoModalIfAppropriate: () => {
+      dispatch(showInfoIfAppropriate())
+    }
   }
 }
 
