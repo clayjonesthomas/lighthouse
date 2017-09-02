@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import {Typeahead} from 'react-bootstrap-typeahead'
 import {InputGroup, Button} from 'react-bootstrap'
+import ShopRecommenderBox from '../ShopRecommenderBox'
 
 import "./ShopFinder.css"
 const ShopFinder = (
@@ -21,6 +22,7 @@ const ShopFinder = (
     }}>
     <InputGroup>
       <Typeahead
+        emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         multiple={isMultiple === "undefined" ? true : isMultiple}
         options={shops.sort((a, b) => {
