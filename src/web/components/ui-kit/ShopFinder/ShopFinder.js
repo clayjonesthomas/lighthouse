@@ -7,7 +7,8 @@ import {addShopsToMyShops, addShopFinderRef, clearShopFinder,
   goToShop}
   from '../../../actions/MyShopsPageActions'
 import {pullNotMyShops} from '../../../actions/FrontPageActions'
-import {pushPost} from '../../../actions/NewPostActions'
+import {pullShops, pushPost} from '../../../actions/NewPostActions'
+
 
 import "./ShopFinder.css"
 
@@ -18,6 +19,15 @@ export const FINDER_FORM = "FINDER_FORM"
 class ShopFinder extends Component {
 
   componentDidMount () {
+    switch (this.props.finderType) {
+      case FINDER_SEARCH:
+      case FINDER_FORM:
+        this.props.getAllShops()
+        break
+      case FINDER_LIKE:
+        this.props.getNotMyShops()
+        break
+    }
     this.props.getAllShops()
   }
 
@@ -100,6 +110,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(onUpdateFormShops(shops))
     },
     getAllShops: () => {
+      dispatch(pullShops())
+    },
+    getNotMyShops: () => {
       dispatch(pullNotMyShops())
     },
     onAddShopFinderRef: (ref) => {

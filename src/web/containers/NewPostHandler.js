@@ -35,7 +35,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getShops: () => dispatch(pullShops()),
     onCancel: () => {
       dispatch(cancelPost())
       browserHistory.push('/')

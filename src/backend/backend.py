@@ -7,7 +7,7 @@ import os
 import datetime
 import time
 import re
-import config
+import auth_config
 
 import webapp2
 
@@ -37,14 +37,14 @@ CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
-    store_keys = _spawn_dummy_stores()
-    _spawn_dummy_posts(store_keys)
+    # store_keys = _spawn_dummy_stores()
+    # _spawn_dummy_posts(store_keys)
     _spawn_admin()
 
 
 def _spawn_admin():
     _contents = {'username': u'admin', 'email': u'ctjones@mit.edu',
-                 'password': config.admin_pass}
+                 'password': auth_config.admin_pass}
     request_signup = webapp2.Request.blank('/rest/signup')
     request_signup.method = 'POST'
     request_signup.body = json.dumps(_contents)
@@ -207,9 +207,9 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 
     def get(self, *args):
-        if not Post.query().fetch(1):
-            populate_dummy_datastore()
-            time.sleep(2)  # hack to prevent this from running more than once
+        # if not Post.query().fetch(1):
+        #     populate_dummy_datastore()
+        #     time.sleep(2)  # hack to prevent this from running more than once
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -711,7 +711,7 @@ config = {
         'user_attributes': [] # used for caching properties
     },
     'webapp2_extras.sessions': {
-        'secret_key': config.secret_key
+        'secret_key': auth_config.secret_key
     }
 }
 
