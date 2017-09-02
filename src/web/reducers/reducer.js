@@ -276,7 +276,6 @@ function store(state = initialState, action) {
         areMorePosts: action.data.posts.length === 10
       })
     case IS_USER_MOBILE:
-      console.log(action.data.isUserMobile)
       return Object.assign({}, state, {
         isMobile: action.data.isUserMobile
       })

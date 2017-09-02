@@ -40,7 +40,6 @@ const MyShopsPage =
               </h1>
             </Row>
             <div className={isMobile ? "" : "desktop-content-box"}>
-              {console.log(myShops)}
               {areShopsLoaded && (myShops.length > 0) &&
                 myShops.map(shop => {
                   return <Row key={shop.key}><ShopBox
