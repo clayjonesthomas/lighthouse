@@ -3,6 +3,12 @@
     margin-top: 30px;
 }
 
+#info-modal-title-mobile {
+    font-size: 1.5em;
+    text-align: center;
+    margin-top: 30px;
+}
+
 .x-info {
     margin: 0;
 }
@@ -13,6 +19,12 @@
     text-align: justify;
 }
 
+#info-paragraph-mobile {
+    width: 90%;
+    margin: 1em auto 1em auto;
+    text-align: justify;
+    font-size: .6em;
+}
 .info-buttons {
     width: 90%;
     margin: auto;

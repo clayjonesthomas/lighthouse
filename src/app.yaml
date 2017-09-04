@@ -8,19 +8,24 @@ handlers:
 - url: /bundle\.js
   static_files: bundle.js
   upload: bundle\.js
+#  secure: always
 
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon.ico
+#  secure: always
 
 - url: /rest/posts
   script: backend.backend.app
+#  secure: always
 
 - url: /.*
   script: backend.backend.app
+#  secure: always
 
 - url: /*
   script: backend.backend.app
+  secure: always
 # [END handlers]
 
 # [START libraries]

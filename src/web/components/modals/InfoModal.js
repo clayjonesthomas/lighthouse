@@ -30,10 +30,10 @@ class InfoModal extends Component {
           height={isMobile?"60":"30"}
           onClick={() => onCancel()}
         />
-        <h1 id="info-modal-title">
+        <h1 id={isMobile?"info-modal-title-mobile":"info-modal-title"}>
           {"Welcome to Lightho.us"}
         </h1>
-        <p id="info-paragraph">
+        <p id={isMobile?"info-paragraph-mobile":"info-paragraph"}>
           {
             "Lightho.us gathers all the clothing sales " +
             "from across the web into one place. With Lightho.us " +
