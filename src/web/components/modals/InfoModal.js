@@ -39,7 +39,7 @@ class InfoModal extends Component {
             "from across the web into one place. With Lightho.us " +
             "you can browse sales from all stores or just " +
             "the ones you like. You can also search for new " +
-            "shops, save sales for later, and so much more. " +
+            "shops, save sales for later, and much more. " +
             "We hope you enjoy it!"
           }
         </p>
