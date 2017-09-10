@@ -1,9 +1,9 @@
-import {NEW_STORE_URL, ADD_STORE_ICON} from '../constants/constants'
+import {NEW_SHOP_URL, ADD_SHOP_ICON} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 
-export const NEW_STORE_REQUEST = 'NEW_STORE_REQUEST'
-export const NEW_STORE_RESPONSE = 'NEW_STORE_RESPONSE'
-export const ADD_STORE_ICON_TO_FORM_DATA = 'ADD_STORE_ICON_TO_FORM_DATA'
+export const NEW_SHOP_REQUEST = 'NEW_SHOP_REQUEST'
+export const NEW_SHOP_RESPONSE = 'NEW_SHOP_RESPONSE'
+export const ADD_SHOP_ICON_TO_FORM_DATA = 'ADD_SHOP_ICON_TO_FORM_DATA'
 
 export function submitShop() {
   return (dispatch, getState) => {
@@ -24,7 +24,7 @@ export function submitShop() {
 
     dispatch(onSubmitRequest())
 
-    return fetch(NEW_STORE_URL, formArgs)
+    return fetch(NEW_SHOP_URL, formArgs)
       .then(response => response.json())
       .then(json => onSubmitResponse())
       //   json => {
@@ -36,7 +36,7 @@ export function submitShop() {
       //     enctype: "multipart/form-data",
       //     body: data
       //   }
-      //   fetch(ADD_STORE_ICON+`/${json.key}`, iconArgs)
+      //   fetch(ADD_SHOP_ICON+`/${json.key}`, iconArgs)
       //     .then(response => {
       //       response.json()
       //     })
@@ -50,13 +50,13 @@ export function submitShop() {
 
 export const onSubmitRequest = () => {
   return {
-    type: NEW_STORE_REQUEST
+    type: NEW_SHOP_REQUEST
   }
 }
 
 export const onSubmitResponse = () => {
   return {
-    type: NEW_STORE_RESPONSE
+    type: NEW_SHOP_RESPONSE
   }
 }
 
@@ -77,7 +77,7 @@ export function onIconChange(file) {
 
 const addShopIconToFormData = (icon_data) => {
   return {
-    type: ADD_STORE_ICON_TO_FORM_DATA,
+    type: ADD_SHOP_ICON_TO_FORM_DATA,
     data: {
       icon: icon_data
     }

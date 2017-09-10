@@ -1,10 +1,10 @@
 import fetch from 'isomorphic-fetch'
-import {STORE_URL, STORE_POST_URL, LIKE_STORE_URL} from '../constants/constants'
+import {SHOP_URL, SHOP_POST_URL, LIKE_SHOP_URL} from '../constants/constants'
 
-export const REQUEST_STORE = "REQUEST_STORE"
-export const REQUEST_STORE_RETURN = "REQUEST_STORE_RETURN"
-export const LIKE_STORE = "LIKE_STORE"
-export const LIKE_STORE_RETURN = "LIKE_STORE_RETURN"
+export const REQUEST_SHOP = "REQUEST_SHOP"
+export const REQUEST_SHOP_RETURN = "REQUEST_SHOP_RETURN"
+export const LIKE_SHOP = "LIKE_SHOP"
+export const LIKE_SHOP_RETURN = "LIKE_SHOP_RETURN"
 export const SHOP_POSTS_REQUEST = 'SHOP_POSTS_REQUEST'
 export const SHOP_POSTS_RETURN = 'SHOP_POSTS_RETURN'
 export const MORE_SHOP_POSTS_REQUEST = 'MORE_SHOP_POSTS_REQUEST'
@@ -13,13 +13,13 @@ export const MORE_SHOP_POSTS_RETURN = 'MORE_SHOP_POSTS_RETURN'
 
 export const requestShop = () => {
   return {
-    type: REQUEST_STORE
+    type: REQUEST_SHOP
   }
 }
 
 export const responseShop = (store) => {
   return {
-    type: REQUEST_STORE_RETURN,
+    type: REQUEST_SHOP_RETURN,
     data: {
       store: store
     }
@@ -33,7 +33,7 @@ export function pullShop(url_key) {
   }
   return dispatch => {
     dispatch(requestShop())
-    return fetch(STORE_URL+`/${url_key}`, args)
+    return fetch(SHOP_URL+`/${url_key}`, args)
       .then(response => response.json())
       .then(json => dispatch(responseShop(json.shop)))
   }
@@ -41,7 +41,7 @@ export function pullShop(url_key) {
 
 export const likeShop = (store_key) => {
   return {
-    type: LIKE_STORE,
+    type: LIKE_SHOP,
     data: {
       store_key: store_key
     }
@@ -50,7 +50,7 @@ export const likeShop = (store_key) => {
 
 export const likeShopReturn = (json) => {
   return {
-    type: LIKE_STORE_RETURN,
+    type: LIKE_SHOP_RETURN,
     data: json
   }
 }
@@ -66,7 +66,7 @@ export function toggleShopLike(store_key) {
   }
   return dispatch => {
     dispatch(likeShop(store_key))
-    return fetch(LIKE_STORE_URL, args)
+    return fetch(LIKE_SHOP_URL, args)
       .then(likeShopReturn())
   }
 }
@@ -78,7 +78,7 @@ export function pullShopPosts(url_key) {
   }
   return dispatch => {
     dispatch(shopPostsRequest())
-    return fetch(STORE_POST_URL+`/${url_key}/${0}`, args)
+    return fetch(SHOP_POST_URL+`/${url_key}/${0}`, args)
       .then(response => response.json())
       .then(json => dispatch(shopPostsReturn(json)))
   }
@@ -108,7 +108,7 @@ export function pullMoreShopPosts(url_key) {
     const state = getState()
     const offset = state.shopPostsOffset
     dispatch(moreShopPostsRequest())
-    return fetch(STORE_POST_URL+`/${url_key}/${offset}`, args)
+    return fetch(SHOP_POST_URL+`/${url_key}/${offset}`, args)
       .then(response => response.json())
       .then(json => dispatch(moreShopPostsReturn(json)))
   }

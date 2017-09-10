@@ -8,13 +8,13 @@ import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, INFO, CANCEL}
   from '../actions/AuthActions.js'
 import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../actions/UserInfoActions'
 import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
-import {REQUEST_STORE, REQUEST_STORE_RETURN} from '../actions/ShopPageActions'
-import {LIKE_STORE, LIKE_STORE_RETURN} from '../actions/ShopPageActions'
+import {REQUEST_SHOP, REQUEST_SHOP_RETURN} from '../actions/ShopPageActions'
+import {LIKE_SHOP, LIKE_SHOP_RETURN} from '../actions/ShopPageActions'
 import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
   ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN, ADD_SHOP_FINDER_REF}
   from '../actions/MyShopsPageActions'
 import {SIGN_OUT_REQUEST, SIGN_OUT_RESPONSE} from '../actions/UserInfoActions'
-import {ADD_STORE_ICON_TO_FORM_DATA} from '../actions/NewShopActions'
+import {ADD_SHOP_ICON_TO_FORM_DATA} from '../actions/NewShopActions'
 import {MORE_POSTS_REQUEST, MORE_POSTS_RETURN} from '../actions/FrontPageActions'
 import {SHOP_POSTS_REQUEST, SHOP_POSTS_RETURN} from '../actions/ShopPageActions'
 import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../actions/ShopPageActions'
@@ -137,13 +137,13 @@ function store(state = initialState, action) {
       })
     case LIKE_POST_RETURN:
       return state
-    case REQUEST_STORE:
+    case REQUEST_SHOP:
       return state
-    case REQUEST_STORE_RETURN:
+    case REQUEST_SHOP_RETURN:
       return Object.assign({}, state, {
         store: action.data.store
       })
-    case LIKE_STORE:
+    case LIKE_SHOP:
       let newState = Object.assign({}, state, {
         displayedShops: state.displayedShops.map(shop => {
           if(shop.key === action.data.store_key) {
@@ -159,7 +159,7 @@ function store(state = initialState, action) {
           isLiked: !state.store.isLiked
         })
       return newState
-    case LIKE_STORE_RETURN:
+    case LIKE_SHOP_RETURN:
       return state
     case REQUEST_MY_SHOPS:
       return Object.assign({}, state, {
@@ -211,7 +211,7 @@ function store(state = initialState, action) {
       })
     case SIGN_OUT_RESPONSE:
       return state
-    case ADD_STORE_ICON_TO_FORM_DATA:
+    case ADD_SHOP_ICON_TO_FORM_DATA:
       return Object.assign({}, state, {
         formRefs: Object.assign({}, state.formRefs, {
           icon: action.data.icon

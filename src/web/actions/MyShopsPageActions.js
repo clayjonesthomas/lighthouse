@@ -1,4 +1,4 @@
-import {MY_SHOPS_URL, LIKE_STORE_URL} from '../constants/constants'
+import {MY_SHOPS_URL, LIKE_SHOP_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 import {pullNotMyShops} from '../actions/FrontPageActions'
 import {browserHistory} from 'react-router'
@@ -70,7 +70,7 @@ export function addShopsToMyShops(){
         body: JSON.stringify(body)
       }
       dispatch(AddShopsToMyShopsRequest())
-      return fetch(LIKE_STORE_URL, args)
+      return fetch(LIKE_SHOP_URL, args)
         .then(response => response.json())
         .then(json => {
           dispatch(AddShopsToMyShopsReturn(json))
