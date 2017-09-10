@@ -1,14 +1,13 @@
-import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
-import StorePage from '../components/StorePage'
-import {pullStore} from '../actions/StorePageActions'
+import ShopPage from '../components/ShopPage'
+import {pullStore} from '../actions/ShopPageActions'
 import React, {Component} from 'react'
-import {toggleStoreLike} from '../actions/StorePageActions'
+import {toggleStoreLike} from '../actions/ShopPageActions'
 import {togglePostLike} from '../actions/PostPageActions'
-import {pullShopPosts, pullMoreShopPosts} from '../actions/StorePageActions'
+import {pullShopPosts, pullMoreShopPosts} from '../actions/ShopPageActions'
 import Spinner from '../components/ui-kit/Spinner'
 
-class StorePageHandler extends Component {
+class ShopPageHandler extends Component {
   componentDidMount () {
     this.props.getStore(this.props.params.url_key)
     this.props.getStorePosts(this.props.params.url_key)
@@ -20,7 +19,7 @@ class StorePageHandler extends Component {
     }
     else {
       return (
-        <StorePage
+        <ShopPage
           name={this.props.name}
           website={this.props.website}
           likes={this.props.likes}
@@ -72,4 +71,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(StorePageHandler)
+)(ShopPageHandler)

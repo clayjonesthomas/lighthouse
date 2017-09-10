@@ -7,8 +7,8 @@ import PostBox from './PostBox'
 import ShopFinder, {FINDER_SEARCH}
   from './ui-kit/ShopFinder/ShopFinder'
 
-import './StorePage.css'
-const StorePage =
+import './ShopPage.css'
+const ShopPage =
   ({
     name,
     website,
@@ -84,7 +84,7 @@ const StorePage =
     </Grid>
   )
 
-StorePage.propTypes = {
+ShopPage.propTypes = {
   name: PropTypes.string.isRequired,
   website: PropTypes.string.isRequired,
   likes: PropTypes.number.isRequired,
@@ -92,4 +92,4 @@ StorePage.propTypes = {
   isLiked: PropTypes.bool.isRequired
 }
 
-export default StorePage
+export default ShopPage

@@ -126,7 +126,7 @@ class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
 
     # outdated naming, should be liked_shops, but will need to update prod datastore for that
-    liked_stores = ndb.KeyProperty(indexed=True, kind='shop', repeated=True)
+    liked_stores = ndb.KeyProperty(indexed=True, kind='Shop', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
 

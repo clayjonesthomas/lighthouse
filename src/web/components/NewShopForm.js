@@ -3,7 +3,7 @@ import SubmitButton from './ui-kit/SubmitButton'
 import CancelButton from './ui-kit/CancelButton'
 import TextBox from './ui-kit/TextBox'
 
-const NewStoreForm =
+const NewShopForm =
   ({
     onSaveNameRef,
     onSaveWebsiteRef,
@@ -16,7 +16,7 @@ const NewStoreForm =
       Submit a Sale
       <TextBox
         refFunc={ref => onSaveNameRef(ref)}
-        label="Store Name: "
+        label="Shop Name: "
       />
       <TextBox
         refFunc={ref => onSaveWebsiteRef(ref)}
@@ -39,7 +39,7 @@ const NewStoreForm =
     </div>
   )
 
-NewStoreForm.propTypes = {
+NewShopForm.propTypes = {
   onSaveNameRef: PropTypes.func.isRequired,
   onSaveWebsiteRef: PropTypes.func.isRequired,
   onSaveIconRef: PropTypes.func.isRequired,
@@ -48,4 +48,4 @@ NewStoreForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-export default NewStoreForm
+export default NewShopForm

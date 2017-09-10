@@ -123,7 +123,7 @@ const MobileMenu =
               toggleMenu()
               onAddAShop()
             }}>
-            Add a Store
+            Add a Shop
           </div>
           }
         </div>

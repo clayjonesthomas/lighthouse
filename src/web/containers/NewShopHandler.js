@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import NewStoreForm from '../components/NewStoreForm'
+import NewShopForm from '../components/NewShopForm'
 import {onSaveRef} from '../actions/NewPostActions'
-import {submitStore} from '../actions/NewStoreActions'
+import {submitStore} from '../actions/NewShopActions'
 
 
 const mapStateToProps = () => {
@@ -23,9 +23,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const NewStoreHandler = connect(
+const NewShopHandler = connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewStoreForm)
+)(NewShopForm)
 
-export default NewStoreHandler
+export default NewShopHandler
