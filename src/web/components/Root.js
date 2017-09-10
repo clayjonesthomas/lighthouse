@@ -31,7 +31,7 @@ const Root = () => (
         <Route path="my_feed" component={MyFeedPageHandler} />
         <Route path="/new_shop" component={NewStoreHandler} />
         <Route path="/new" component={NewPostHandler} />
-        <Route path="/store/:url_key" component={StorePageHandler}/>
+        <Route path="/shop/:url_key" component={StorePageHandler}/>
         <Route path="/post/:url_key" component={PostPageHandler}/>
         <Route path="/shops" component={MyShopsPageHandler}/>
         <Route path="/posts" component={MyPostsPageHandler}/>

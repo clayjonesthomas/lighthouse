@@ -25,7 +25,7 @@ const PostBox = (
       <div className="sale-title">
         {
           <a
-            href={post.store.website}
+            href={post.shop.website}
             target="_blank">
             {
               post['title']
@@ -35,9 +35,9 @@ const PostBox = (
       </div>
       <div className="sale-shop">
         <Link
-          to={"/store/" + post['store_key']}>
+          to={"/shop/" + post['shop_key']}>
           {
-            post['store']['name']
+            post['shop']['name']
           }
         </Link>
       </div>

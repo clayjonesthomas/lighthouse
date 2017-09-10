@@ -35,7 +35,7 @@ export function pullStore(url_key) {
     dispatch(requestStore())
     return fetch(STORE_URL+`/${url_key}`, args)
       .then(response => response.json())
-      .then(json => dispatch(responseStore(json.store)))
+      .then(json => dispatch(responseStore(json.shop)))
   }
 }
 

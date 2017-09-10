@@ -22,7 +22,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Store, get_entity_from_url_key
+from models import Post, Shop, get_entity_from_url_key
 
 
 from google.appengine.api import app_identity
@@ -37,8 +37,8 @@ CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
-    # store_keys = _spawn_dummy_stores()
-    # _spawn_dummy_posts(store_keys)
+    shop_keys = _spawn_dummy_shops()
+    _spawn_dummy_posts(shop_keys)
     _spawn_admin()
 
 
@@ -51,76 +51,76 @@ def _spawn_admin():
     response_signup = request_signup.get_response(app)
 
 
-def _spawn_dummy_posts(store_keys):
+def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
-                  shop_key=store_keys[0],
+                  shop_key=shop_keys[0],
                   likes=25074,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  shop_key=store_keys[1],
+                  shop_key=shop_keys[1],
                   likes=14543,
                   timestamp=datetime.datetime.now()-datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  shop_key=store_keys[1],
+                  shop_key=shop_keys[1],
                   likes=30210,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  shop_key=store_keys[1],
+                  shop_key=shop_keys[1],
                   likes=12532,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  shop_key=store_keys[2],
+                  shop_key=shop_keys[2],
                   likes=2664,
                   timestamp=datetime.datetime.now()-datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=store_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now()-datetime.timedelta(.1))
              ]
     ndb.put_multi(posts)
 
 
-def _spawn_dummy_stores():
-    stores = [Store(name='American Eagle',
-                    website='www.ae.com',
-                    likes=302470),
-              Store(name='JCrew',
-                    website='www.jcrew.com',
-                    likes=493218),
-              Store(name="Levi's Jeans",
-                    website='www.levis.com',
-                    likes=124341),
-              Store(name='Lulu Lemon',
-                    website='www.lululemon.com',
-                    likes=295831),
-              Store(name='Old Navy',
-                    website='www.oldnavy.com',
-                    likes=324319)]
-    return ndb.put_multi(stores)
+def _spawn_dummy_shops():
+    shops = [Shop(name='American Eagle',
+                  website='www.ae.com',
+                  likes=302470),
+             Shop(name='JCrew',
+                  website='www.jcrew.com',
+                  likes=493218),
+             Shop(name="Levi's Jeans",
+                  website='www.levis.com',
+                  likes=124341),
+             Shop(name='Lulu Lemon',
+                  website='www.lululemon.com',
+                  likes=295831),
+             Shop(name='Old Navy',
+                  website='www.oldnavy.com',
+                  likes=324319)]
+    return ndb.put_multi(shops)
 
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
@@ -207,9 +207,12 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(webapp2.RequestHandler):
 
     def get(self, *args):
-        # if not Post.query().fetch(1):
-        #     populate_dummy_datastore()
-        #     time.sleep(2)  # hack to prevent this from running more than once
+        if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+            # development, otherwise prod
+            if not Post.query().fetch(1):
+                populate_dummy_datastore()
+                time.sleep(2)  # hack to prevent this from running more than once
+
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -228,9 +231,9 @@ class Feed(BaseHandler):
     @staticmethod
     def _get_posts(user, should_get_all_posts, offset):
         if not should_get_all_posts and user:
-            liked_store_keys = user.liked_stores
-            if liked_store_keys:
-                query = Post.query(ndb.AND(Post.shop_key.IN(liked_store_keys),
+            liked_shop_keys = user.liked_stores
+            if liked_shop_keys:
+                query = Post.query(ndb.AND(Post.shop_key.IN(liked_shop_keys),
                                            Post.isArchived == False))
             else:
                 return []
@@ -286,11 +289,11 @@ class SinglePost(BaseHandler):
         else:
             post_dict['isLiked'] = False
 
-        store = get_entity_from_url_key(post_dict['store_key'])
-        post_dict['store'] = {
-            'name': store.name,
-            'website': store.website,
-            'key': store.key.urlsafe()
+        shop = get_entity_from_url_key(post_dict['shop_key'])
+        post_dict['shop'] = {
+            'name': shop.name,
+            'website': shop.website,
+            'key': shop.key.urlsafe()
         }
         self.response.write(json.dumps(post_dict))
 
@@ -328,49 +331,49 @@ class LikePost(BaseHandler):
             post.put()
 
 
-class Stores(BaseHandler):
+class Shops(BaseHandler):
 
-    # currently gets stores a user doesn't want
+    # currently gets shops a user doesn't want
     def get(self):
         user = self.user
-        fetched_stores = [store.prepare_store(user)
-                          for store in Store.query()]
-        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps({'shops': fetched_stores}))
+        fetched_shops = [shop.prepare_shop(user)
+                          for shop in Shop.query()]
+        logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
+        self.response.write(json.dumps({'shops': fetched_shops}))
 
 
-class NotMyStores(BaseHandler):
-    # currently gets stores a user doesn't want
+class NotMyShops(BaseHandler):
+    # currently gets shops a user doesn't want
     def get(self):
         user = self.user
-        fetched_stores = [store.prepare_store(user)
-                          for store in Store.query()]
+        fetched_shops = [shop.prepare_shop(user)
+                          for shop in Shop.query()]
         if user:
-            fetched_stores = list(filter((lambda s:
+            fetched_shops = list(filter((lambda s:
                                           ndb.Key(urlsafe=s['key']) not in user.liked_stores),
-                                         fetched_stores))
-        logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps({'shops': fetched_stores}))
+                                         fetched_shops))
+        logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
+        self.response.write(json.dumps({'shops': fetched_shops}))
 
 
-class MyStores(BaseHandler):
+class MyShops(BaseHandler):
 
     def get(self):
         user = self.user
-        fetched_stores = []
+        fetched_shops = []
         if user:
-            fetched_stores = [store_key.get().prepare_store(user)
-                              for store_key in user.liked_stores]
-            logging.info("pulling stores from the datastore, {}".format(str(len(fetched_stores))))
-        self.response.write(json.dumps(fetched_stores))
+            fetched_shops = [shop_key.get().prepare_shop(user)
+                              for shop_key in user.liked_stores]
+            logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
+        self.response.write(json.dumps(fetched_shops))
 
 
-class StorePosts(BaseHandler):
+class ShopPosts(BaseHandler):
 
     def get(self, url_key, offset):
         user = self.user
-        store = ndb.Key(urlsafe=url_key).get()
-        shop_posts_query = Post.query(Post.shop_key == store.key)
+        shop = ndb.Key(urlsafe=url_key).get()
+        shop_posts_query = Post.query(Post.shop_key == shop.key)
         unarchived_posts_query = shop_posts_query.filter(Post.isArchived == False)
         posts = unarchived_posts_query.fetch(10, offset=int(offset))
         ordered_posts = Post.order_posts(posts)
@@ -378,67 +381,67 @@ class StorePosts(BaseHandler):
         self.response.write(json.dumps(prepared_posts))
 
 
-class LikeStore(BaseHandler):
+class LikeShop(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        stores = []
+        shops = []
         if 'key' in body:
-            stores = [ndb.Key(urlsafe=body['key']).get()]
+            shops = [ndb.Key(urlsafe=body['key']).get()]
         if 'keys' in body:
-            stores = [ndb.Key(urlsafe=key).get()
+            shops = [ndb.Key(urlsafe=key).get()
                       for key in body['keys']]
         user = self.user
         if user:
             # stupid amount of ifs here, but we dont want a user to
-            # remove stores they add in a group on accident. We should
-            # probably send only unliked stores in this case or something
-            if len(stores) > 1:
-                for store in stores:
-                    user.liked_stores.append(store.key)
-                    store.likes += 1
-                    store.put()
+            # remove shops they add in a group on accident. We should
+            # probably send only unliked shops in this case or something
+            if len(shops) > 1:
+                for shop in shops:
+                    user.liked_stores.append(shop.key)
+                    shop.likes += 1
+                    shop.put()
             else:
                 # is this what it means, what it means to hack
-                for store in stores:
-                    if store.key in user.liked_stores:
-                        user.liked_stores.remove(store.key)
-                        store.likes -= 1
+                for shop in shops:
+                    if shop.key in user.liked_stores:
+                        user.liked_stores.remove(shop.key)
+                        shop.likes -= 1
                     else:
-                        user.liked_stores.append(store.key)
-                        store.likes += 1
-                    store.put()
+                        user.liked_stores.append(shop.key)
+                        shop.likes += 1
+                    shop.put()
             user.put()
-            stores = [store.prepare_store(user) for store in stores]
-            self.response.write(json.dumps(stores))
+            shops = [shop.prepare_shop(user) for shop in shops]
+            self.response.write(json.dumps(shops))
 
 
-class SingleStore(BaseHandler):
+class SingleShop(BaseHandler):
 
     def get(self, url_key):
-        store = get_entity_from_url_key(url_key)
-        store_dict = store.to_dict()
-        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
-        # do a query to get posts associated with the store
+        shop = get_entity_from_url_key(url_key)
+        shop_dict = shop.to_dict()
+        shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
+        # do a query to get posts associated with the shop
 
         user = self.user
         if user:
-            store_dict['isLiked'] = store.key in user.liked_stores
+            shop_dict['isLiked'] = shop.key in user.liked_stores
         else:
-            store_dict['isLiked'] = False
+            shop_dict['isLiked'] = False
 
-        self.response.write(json.dumps({'store': store_dict}))
+        self.response.write(json.dumps({'shop': shop_dict}))
 
     def post(self):
         user = self.user
         body = json.loads(self.request.body)
         if user and user.is_moderator:
-            store = Store(
+            shop = Shop(
                 name=body['name'],
                 website=body['website']
             )
-            store_key = store.put()
-            self.response.write(json.dumps({'key': store_key.urlsafe()}))
+            shop_key = shop.put()
+            self.response.write(json.dumps({'key': shop_key.urlsafe()}))
 
     def delete(self, url_key):
         user = self.user
@@ -446,7 +449,7 @@ class SingleStore(BaseHandler):
             ndb.Key(urlsafe=url_key).delete()
 
 
-class AddIconToStore(BaseHandler):
+class AddIconToShop(BaseHandler):
     '''
     under severe construction, don't use unless you
     figure out what the fuck is going on with python
@@ -474,9 +477,9 @@ class AddIconToStore(BaseHandler):
             #     content_type='image/jpeg'
             # )
             #
-            # store = ndb.Key(urlsafe=url_key)
-            # store.icon_url = blob.public_url
-            # store_key = store.put()
+            # shop = ndb.Key(urlsafe=url_key)
+            # shop.icon_url = blob.public_url
+            # shop_key = shop.put()
             gcs.blob
             file = gcs.open(
                 url_key,
@@ -488,7 +491,7 @@ class AddIconToStore(BaseHandler):
             self.response.write(json.dumps({'key': url_key}))
 
 
-class StoreUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
+class ShopUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
     '''
         under severe construction, don't use unless you
         figure out what the fuck is going on with python
@@ -729,16 +732,16 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/post/archive', ArchivePost, name='archive_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
-    webapp2.Route('/rest/my_shops', MyStores, name='my_shops'),
-    webapp2.Route('/rest/not_my_shops', NotMyStores, name='not_my_shops'),
-    webapp2.Route('/rest/shops', Stores, name='shops'),
-    webapp2.Route('/rest/store/like', LikeStore, name='like_store'),
-    # webapp2.Route('/rest/store/icon/<url_key:.*>', AddIconToStore, name='single_store'),
-    webapp2.Route('/rest/store', SingleStore, name='single_store'),
-    webapp2.Route('/rest/store/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', StorePosts, name='single_store'),
-    webapp2.Route('/rest/store/<url_key:.*>', SingleStore, name='single_store'),
-    # webapp2.Route('/rest/store_img/<url_key:.*>', StoreImage, name='store_image'),
-    # webapp2.Route('/rest/store_img', StoreImage, name='store_image'),
+    webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
+    webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
+    webapp2.Route('/rest/shops', Shops, name='shops'),
+    webapp2.Route('/rest/shop/like', LikeShop, name='like_shop'),
+    # webapp2.Route('/rest/shop/icon/<url_key:.*>', AddIconToShop, name='single_shop'),
+    webapp2.Route('/rest/shop', SingleShop, name='single_shop'),
+    webapp2.Route('/rest/shop/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', ShopPosts, name='single_shop'),
+    webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),
+    # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
+    # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
 
 
@@ -746,9 +749,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
-    webapp2.Route('/shops', MainPage, name='stores'),
+    webapp2.Route('/shops', MainPage, name='shops'),
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
-    webapp2.Route('/store/<:.*>', MainPage, name='single_store_view'),
+    webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)

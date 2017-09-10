@@ -15,7 +15,7 @@ const ShopBox = (
     <div className="shop-box-inner">
       <div className="shop-title-bar">
         <Link
-          to={"/store/"+shop.key}
+          to={"/shop/"+shop.key}
           className="shop-name">
           {
             shop.name

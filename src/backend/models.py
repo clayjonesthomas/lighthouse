@@ -29,7 +29,7 @@ class Comment(ndb.Model):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    shop_key = ndb.KeyProperty(indexed=True, kind='Store')
+    shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
@@ -48,10 +48,10 @@ class Post(ndb.Model):
     def prepare_post(self, user):
         post_dictionary = self.to_dict()
         # currently not actually supporting multiple shops on a post
-        post_dictionary['store'] = self.shop_key.get().to_dict()
-        del post_dictionary['store']['timestamp']
+        post_dictionary['shop'] = self.shop_key.get().to_dict()
+        del post_dictionary['shop']['timestamp']
         del post_dictionary['shop_key']
-        post_dictionary['store_key'] = self.shop_key.urlsafe()
+        post_dictionary['shop_key'] = self.shop_key.urlsafe()
         post_dictionary['timestring'] = self._prepare_timestring()
         del post_dictionary['timestamp']
         post_dictionary['key'] = self.key.urlsafe()
@@ -101,31 +101,32 @@ class Post(ndb.Model):
             return "just now"
 
 
-class Store(ndb.Model):
+class Shop(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
 
-    def prepare_store(self, user):
-        store_dict = self.to_dict()
-        store_dict['key'] = self.key.urlsafe()
-        store_dict['timestamp'] = store_dict['timestamp'].isoformat(' ')
+    def prepare_shop(self, user):
+        shop_dict = self.to_dict()
+        shop_dict['key'] = self.key.urlsafe()
+        shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
 
         if user:
-            store_dict['isLiked'] = self.key in user.liked_stores
-            store_dict['canDelete'] = user.is_moderator
+            shop_dict['isLiked'] = self.key in user.liked_stores
+            shop_dict['canDelete'] = user.is_moderator
         else:
-            store_dict['isLiked'] = False
+            shop_dict['isLiked'] = False
 
-        return store_dict
+        return shop_dict
 
 
 class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
 
-    liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
+    # outdated naming, should be liked_shops, but will need to update prod datastore for that
+    liked_stores = ndb.KeyProperty(indexed=True, kind='shop', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
 
