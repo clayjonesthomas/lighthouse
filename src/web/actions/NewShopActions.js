@@ -5,7 +5,7 @@ export const NEW_STORE_REQUEST = 'NEW_STORE_REQUEST'
 export const NEW_STORE_RESPONSE = 'NEW_STORE_RESPONSE'
 export const ADD_STORE_ICON_TO_FORM_DATA = 'ADD_STORE_ICON_TO_FORM_DATA'
 
-export function submitStore() {
+export function submitShop() {
   return (dispatch, getState) => {
     const state = getState()
     const refs = state.formRefs
@@ -69,13 +69,13 @@ export function onIconChange(file) {
     let reader = new FileReader();
 
     reader.onload = function(event) {
-      dispatch(addStoreIconToFormData(event.currentTarget.result))
+      dispatch(addShopIconToFormData(event.currentTarget.result))
     };
     reader.readAsDataURL(icon_file);
   }
 }
 
-const addStoreIconToFormData = (icon_data) => {
+const addShopIconToFormData = (icon_data) => {
   return {
     type: ADD_STORE_ICON_TO_FORM_DATA,
     data: {

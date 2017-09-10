@@ -1,16 +1,16 @@
 import {connect} from 'react-redux'
 import ShopPage from '../components/ShopPage'
-import {pullStore} from '../actions/ShopPageActions'
+import {pullShop} from '../actions/ShopPageActions'
 import React, {Component} from 'react'
-import {toggleStoreLike} from '../actions/ShopPageActions'
+import {toggleShopLike} from '../actions/ShopPageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullShopPosts, pullMoreShopPosts} from '../actions/ShopPageActions'
 import Spinner from '../components/ui-kit/Spinner'
 
 class ShopPageHandler extends Component {
   componentDidMount () {
-    this.props.getStore(this.props.params.url_key)
-    this.props.getStorePosts(this.props.params.url_key)
+    this.props.getShop(this.props.params.url_key)
+    this.props.getShopPosts(this.props.params.url_key)
   }
 
   render () {
@@ -60,11 +60,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    getStore: (url_key) => dispatch(pullStore(url_key)),
-    onLike: () => dispatch(toggleStoreLike(ownProps.params.url_key)),
+    getShop: (url_key) => dispatch(pullShop(url_key)),
+    onLike: () => dispatch(toggleShopLike(ownProps.params.url_key)),
     onLikePost: (post_key) => dispatch(togglePostLike(post_key)),
     onMorePosts: () => dispatch(pullMoreShopPosts(ownProps.params.url_key)),
-    getStorePosts: () => dispatch(pullShopPosts(ownProps.params.url_key)),
+    getShopPosts: () => dispatch(pullShopPosts(ownProps.params.url_key)),
   }
 }
 

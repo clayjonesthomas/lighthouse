@@ -11,13 +11,13 @@ export const MORE_SHOP_POSTS_REQUEST = 'MORE_SHOP_POSTS_REQUEST'
 export const MORE_SHOP_POSTS_RETURN = 'MORE_SHOP_POSTS_RETURN'
 
 
-export const requestStore = () => {
+export const requestShop = () => {
   return {
     type: REQUEST_STORE
   }
 }
 
-export const responseStore = (store) => {
+export const responseShop = (store) => {
   return {
     type: REQUEST_STORE_RETURN,
     data: {
@@ -26,20 +26,20 @@ export const responseStore = (store) => {
   }
 }
 
-export function pullStore(url_key) {
+export function pullShop(url_key) {
   const args = {
     method: 'GET',
     credentials: 'same-origin'
   }
   return dispatch => {
-    dispatch(requestStore())
+    dispatch(requestShop())
     return fetch(STORE_URL+`/${url_key}`, args)
       .then(response => response.json())
-      .then(json => dispatch(responseStore(json.shop)))
+      .then(json => dispatch(responseShop(json.shop)))
   }
 }
 
-export const likeStore = (store_key) => {
+export const likeShop = (store_key) => {
   return {
     type: LIKE_STORE,
     data: {
@@ -48,7 +48,7 @@ export const likeStore = (store_key) => {
   }
 }
 
-export const likeStoreReturn = (json) => {
+export const likeShopReturn = (json) => {
   return {
     type: LIKE_STORE_RETURN,
     data: json
@@ -56,7 +56,7 @@ export const likeStoreReturn = (json) => {
 }
 
 
-export function toggleStoreLike(store_key) {
+export function toggleShopLike(store_key) {
   let args = {
     method: 'POST',
     credentials: 'same-origin',
@@ -65,9 +65,9 @@ export function toggleStoreLike(store_key) {
     })
   }
   return dispatch => {
-    dispatch(likeStore(store_key))
+    dispatch(likeShop(store_key))
     return fetch(LIKE_STORE_URL, args)
-      .then(likeStoreReturn())
+      .then(likeShopReturn())
   }
 }
 

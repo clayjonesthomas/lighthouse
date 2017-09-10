@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import NewShopForm from '../components/NewShopForm'
 import {onSaveRef} from '../actions/NewPostActions'
-import {submitStore} from '../actions/NewShopActions'
+import {submitShop} from '../actions/NewShopActions'
 
 
 const mapStateToProps = () => {
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => {
     onSaveNameRef: (ref) => dispatch(onSaveRef(ref, 'store_name')),
     onSaveWebsiteRef: (ref) => dispatch(onSaveRef(ref, 'store_website')),
     // onSaveIconRef: (ref) => dispatch(onSaveRef(ref, 'store_icon')),
-    onSubmit: () => dispatch(submitStore()),
+    onSubmit: () => dispatch(submitShop()),
     onCancel: () => {
       browserHistory.push('/')
     },

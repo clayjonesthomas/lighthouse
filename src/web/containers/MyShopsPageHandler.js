@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import MyShopsPage from '../components/MyShopsPage'
 import {pullMyShops, addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
-import {toggleStoreLike} from '../actions/ShopPageActions'
+import {toggleShopLike} from '../actions/ShopPageActions'
 import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
 import {pullNotMyShops} from '../actions/FrontPageActions'
 
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     getMyShops: () => {
       dispatch(pullMyShops())
     },
-    onLike: (shop_url) => dispatch(toggleStoreLike(shop_url)),
+    onLike: (shop_url) => dispatch(toggleShopLike(shop_url)),
     onSelectShop: (shop_url) => browserHistory.push(`/store/${shop_url}`),
   }
 }

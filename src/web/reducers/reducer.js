@@ -153,7 +153,7 @@ function store(state = initialState, action) {
           return shop
         })
       })
-      if(state.store) //hack because of overloaded toggleStoreLike
+      if(state.store) //hack because of overloaded toggleShopLike
         newState.store = Object.assign({}, state.store, {
           likes: state.store.likes += state.store.isLiked ? -1 : 1,
           isLiked: !state.store.isLiked
