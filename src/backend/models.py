@@ -29,7 +29,7 @@ class Comment(ndb.Model):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
+    shop_key = ndb.KeyProperty(indexed=True, kind='Store')
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
@@ -101,7 +101,9 @@ class Post(ndb.Model):
             return "just now"
 
 
-class Shop(ndb.Model):
+# needs to be renamed to Shop but that would require a migration with
+# existing entities in prod
+class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
     likes = ndb.IntegerProperty(indexed=True, default=1)
@@ -126,7 +128,7 @@ class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
 
     # outdated naming, should be liked_shops, but will need to update prod datastore for that
-    liked_stores = ndb.KeyProperty(indexed=True, kind='Shop', repeated=True)
+    liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
 

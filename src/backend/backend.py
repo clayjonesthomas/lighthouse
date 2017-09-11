@@ -22,7 +22,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Shop, get_entity_from_url_key
+from models import Post, Store, get_entity_from_url_key
 
 
 from google.appengine.api import app_identity
@@ -105,19 +105,19 @@ def _spawn_dummy_posts(shop_keys):
 
 
 def _spawn_dummy_shops():
-    shops = [Shop(name='American Eagle',
+    shops = [Store(name='American Eagle',
                   website='www.ae.com',
                   likes=302470),
-             Shop(name='JCrew',
+             Store(name='JCrew',
                   website='www.jcrew.com',
                   likes=493218),
-             Shop(name="Levi's Jeans",
+             Store(name="Levi's Jeans",
                   website='www.levis.com',
                   likes=124341),
-             Shop(name='Lulu Lemon',
+             Store(name='Lulu Lemon',
                   website='www.lululemon.com',
                   likes=295831),
-             Shop(name='Old Navy',
+             Store(name='Old Navy',
                   website='www.oldnavy.com',
                   likes=324319)]
     return ndb.put_multi(shops)
@@ -337,7 +337,7 @@ class Shops(BaseHandler):
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
-                          for shop in Shop.query()]
+                          for shop in Store.query()]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
@@ -347,7 +347,7 @@ class NotMyShops(BaseHandler):
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
-                          for shop in Shop.query()]
+                          for shop in Store.query()]
         if user:
             fetched_shops = list(filter((lambda s:
                                           ndb.Key(urlsafe=s['key']) not in user.liked_stores),
@@ -436,7 +436,7 @@ class SingleShop(BaseHandler):
         user = self.user
         body = json.loads(self.request.body)
         if user and user.is_moderator:
-            shop = Shop(
+            shop = Store(
                 name=body['name'],
                 website=body['website']
             )
