@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 import NewShopForm from '../components/NewShopForm'
 import {onSaveRef} from '../actions/NewPostActions'
 import {submitShop} from '../actions/NewShopActions'
@@ -16,9 +16,7 @@ const mapDispatchToProps = (dispatch) => {
     onSaveWebsiteRef: (ref) => dispatch(onSaveRef(ref, 'shop_website')),
     // onSaveIconRef: (ref) => dispatch(onSaveRef(ref, 'shop_icon')),
     onSubmit: () => dispatch(submitShop()),
-    onCancel: () => {
-      browserHistory.push('/')
-    },
+    onCancel: () => {dispatch(push('/'))},
     // onIconChange: (ref) => dispatch(onIconChange(ref))
   }
 }

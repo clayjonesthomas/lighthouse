@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import PostPage from '../components/PostPage'
 

@@ -1,7 +1,7 @@
 import {MY_SHOPS_URL, LIKE_SHOP_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 import {pullNotMyShops} from '../actions/FrontPageActions'
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 
 export const REQUEST_MY_SHOPS = 'REQUEST_MY_SHOPS'
 export const REQUEST_MY_SHOPS_RETURN = 'REQUEST_MY_SHOPS_RETURN'
@@ -104,7 +104,7 @@ export function goToShop() {
     const state = getState()
     const shops = state.form.shops
     if (shops) {
-      browserHistory.push(`/shop/${shops[0].key}`)
+      dispatch(push(`/shop/${shops[0].key}`))
       window.location.reload()
     }
   }

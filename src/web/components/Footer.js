@@ -1,7 +1,7 @@
 import React from 'react'
 import LinkButton from './ui-kit/LinkButton'
 import {connect} from 'react-redux'
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 
 import "./Footer.css"
 const Footer =
@@ -30,10 +30,10 @@ const Footer =
 )
 
 const mapStateToProps = () => {return {}}
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch) => {
   return {
     goToPrivacyPolicy: () => {
-      browserHistory.push('/privacy_policy')
+      dispatch(push('/privacy_policy'))
     }
   }
 }

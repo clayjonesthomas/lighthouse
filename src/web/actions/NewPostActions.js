@@ -1,4 +1,4 @@
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 import fetch from 'isomorphic-fetch'
 import {POST_URL, SHOPS_URL} from '../constants/constants'
 
@@ -97,7 +97,7 @@ export function pushPost() {
       .then(json => {
         dispatch(addPostReturn(json))
         if (!json.error){
-          browserHistory.push('/')
+          dispatch(push('/'))
         }
       })
   }

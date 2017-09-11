@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 import ShopFinderComponent from "./ShopFinderComponent"
 import {connect} from 'react-redux'
 import {onUpdateFormShops} from '../../../actions/NewPostActions'
@@ -124,8 +124,7 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmitLike: () => {
       dispatch(addShopsToMyShops())
-      browserHistory.push("/shops")
-      window.location.reload()
+      dispatch(push("/shops"))
     },
     onSubmitForm: () => {
       dispatch(pushPost())

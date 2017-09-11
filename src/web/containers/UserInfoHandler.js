@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import {pullUserInfo, signOut} from '../actions/UserInfoActions'
 import {showLogin, showSignUp} from '../actions/AuthActions'
@@ -40,10 +40,8 @@ const mapDispatchToProps = (dispatch) => {
     onShowSignUp: () => dispatch(showSignUp()),
     signOut: () => {
       dispatch(signOut())
-      browserHistory.push('/')
-      window.location.reload()
     },
-    onHome: () => browserHistory.push('/')
+    onHome: () => dispatch(push('/'))
   }
 }
 

@@ -1,4 +1,4 @@
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import MobileMenu from '../components/MobileMenu.js'
 import {goHome, goMyShops} from '../actions/MenuActions.js'
@@ -18,20 +18,20 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onHome: () => {
       dispatch(goHome())
-      browserHistory.push('/')
+      dispatch(push('/'))
     },
     onMyShops: () => {
       dispatch(goMyShops)
-      browserHistory.push('/shops')
+      dispatch(push('/shops'))
     },
     onSelectNewPost: () => {
-      browserHistory.push('/new')
+      dispatch(push('/new'))
     },
     onAddAShop: () => {
-      browserHistory.push('/new_shop')
+      dispatch(push('/new_shop'))
     },
     onMyPosts: () => {
-      browserHistory.push('/posts')
+      dispatch(push('/posts'))
     },
 
     //temporarily borrowed from UserInfoHandler
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     onShowMobileSignUp: () => dispatch(showSignUp()),
     signOut: () => {
       dispatch(signOut())
-      browserHistory.push('/')
+      dispatch(push('/'))
     },
     toggleMenu: () => dispatch(toggleHamburgerMenu())
   }

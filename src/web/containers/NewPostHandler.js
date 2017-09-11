@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {browserHistory} from 'react-router'
+import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
 import {pushPost, cancelPost, onSaveRef, pullShops,
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCancel: () => {
       dispatch(cancelPost())
-      browserHistory.push('/')
+      dispatch(push('/'))
     },
     onSubmit: () => dispatch(pushPost()),
     onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),

@@ -207,10 +207,14 @@ function store(state = initialState, action) {
       })
     case SIGN_OUT_REQUEST:
       return Object.assign({}, state, {
-        username: null
+        username: null,
+        isModerator: false,
+        isUserInfoLoaded: false
       })
     case SIGN_OUT_RESPONSE:
-      return state
+      return Object.assign({}, state, {
+        isUserInfoLoaded: true
+      })
     case ADD_SHOP_ICON_TO_FORM_DATA:
       return Object.assign({}, state, {
         formRefs: Object.assign({}, state.formRefs, {

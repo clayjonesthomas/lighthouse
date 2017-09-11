@@ -1,3 +1,4 @@
+import {push} from 'react-router-redux'
 import {LOGIN_URL, LOGOUT_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
 
@@ -45,6 +46,7 @@ export function signOut() {
       .then(response => response.json())
       .then(json => {
         dispatch(signOutResponse(json))
+        dispatch(push('/'))
       })
   }
 }
