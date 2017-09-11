@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(pullMyShops())
     },
     onLike: (shop_url) => dispatch(toggleShopLike(shop_url)),
-    onSelectShop: (shop_url) => browserHistory.push(`/store/${shop_url}`),
+    onSelectShop: (shop_url) => browserHistory.push(`/shop/${shop_url}`),
   }
 }
 

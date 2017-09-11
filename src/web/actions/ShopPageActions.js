@@ -17,11 +17,11 @@ export const requestShop = () => {
   }
 }
 
-export const responseShop = (store) => {
+export const responseShop = (shop) => {
   return {
     type: REQUEST_SHOP_RETURN,
     data: {
-      store: store
+      shop: shop
     }
   }
 }
@@ -39,11 +39,11 @@ export function pullShop(url_key) {
   }
 }
 
-export const likeShop = (store_key) => {
+export const likeShop = (shop_key) => {
   return {
     type: LIKE_SHOP,
     data: {
-      store_key: store_key
+      shop_key: shop_key
     }
   }
 }
@@ -56,16 +56,16 @@ export const likeShopReturn = (json) => {
 }
 
 
-export function toggleShopLike(store_key) {
+export function toggleShopLike(shop_key) {
   let args = {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      key: store_key
+      key: shop_key
     })
   }
   return dispatch => {
-    dispatch(likeShop(store_key))
+    dispatch(likeShop(shop_key))
     return fetch(LIKE_SHOP_URL, args)
       .then(likeShopReturn())
   }

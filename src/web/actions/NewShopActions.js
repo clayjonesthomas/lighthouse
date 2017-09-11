@@ -9,8 +9,8 @@ export function submitShop() {
   return (dispatch, getState) => {
     const state = getState()
     const refs = state.formRefs
-    const name = refs.store_name.value
-    const website = refs.store_website.value
+    const name = refs.shop_name.value
+    const website = refs.shop_website.value
     // const icon = refs.icon
     const body = {
       name: name,
@@ -65,7 +65,7 @@ export function onIconChange(file) {
   return (dispatch, getState) => {
     const state = getState()
     const refs = state.formRefs
-    const icon_file = refs.store_icon.files[0]
+    const icon_file = refs.shop_icon.files[0]
     let reader = new FileReader();
 
     reader.onload = function(event) {

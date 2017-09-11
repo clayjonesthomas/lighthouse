@@ -45,10 +45,10 @@ class ShopPageHandler extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    name: state.store.name,
-    website: state.store.website,
-    likes: state.store.likes,
-    isLiked: state.store.isLiked,
+    name: state.shop.name,
+    website: state.shop.website,
+    likes: state.shop.likes,
+    isLiked: state.shop.isLiked,
     username: state.username,
     arePostsLoaded: state.arePostsLoaded,
     areMorePostsLoaded: state.areMorePostsLoaded,

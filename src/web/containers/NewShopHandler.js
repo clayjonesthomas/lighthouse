@@ -12,9 +12,9 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSaveNameRef: (ref) => dispatch(onSaveRef(ref, 'store_name')),
-    onSaveWebsiteRef: (ref) => dispatch(onSaveRef(ref, 'store_website')),
-    // onSaveIconRef: (ref) => dispatch(onSaveRef(ref, 'store_icon')),
+    onSaveNameRef: (ref) => dispatch(onSaveRef(ref, 'shop_name')),
+    onSaveWebsiteRef: (ref) => dispatch(onSaveRef(ref, 'shop_website')),
+    // onSaveIconRef: (ref) => dispatch(onSaveRef(ref, 'shop_icon')),
     onSubmit: () => dispatch(submitShop()),
     onCancel: () => {
       browserHistory.push('/')

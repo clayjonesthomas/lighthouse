@@ -39,7 +39,7 @@ const initialState = {
   jwt: null,
   modal: null,
   username: null,
-  store: {},
+  shop: {},
   isUserInfoLoaded: false,
   arePostsLoaded: false,
   areMyShopsLoaded: false,
@@ -102,7 +102,7 @@ function store(state = initialState, action) {
         likes: action.data.likes,
         timestamp: action.data.timestamp,
         author: action.data.author,
-        store: action.data.store
+        shop: action.data.shop
       })
     case GO_MY_SHOPS:
     case GO_HOME:
@@ -141,22 +141,22 @@ function store(state = initialState, action) {
       return state
     case REQUEST_SHOP_RETURN:
       return Object.assign({}, state, {
-        store: action.data.store
+        shop: action.data.shop
       })
     case LIKE_SHOP:
       let newState = Object.assign({}, state, {
         displayedShops: state.displayedShops.map(shop => {
-          if(shop.key === action.data.store_key) {
+          if(shop.key === action.data.shop_key) {
             shop.likes += shop.isLiked ? -1 : 1
             shop.isLiked = !shop.isLiked
           }
           return shop
         })
       })
-      if(state.store) //hack because of overloaded toggleShopLike
-        newState.store = Object.assign({}, state.store, {
-          likes: state.store.likes += state.store.isLiked ? -1 : 1,
-          isLiked: !state.store.isLiked
+      if(state.shop) //hack because of overloaded toggleShopLike
+        newState.shop = Object.assign({}, state.shop, {
+          likes: state.shop.likes += state.shop.isLiked ? -1 : 1,
+          isLiked: !state.shop.isLiked
         })
       return newState
     case LIKE_SHOP_RETURN:

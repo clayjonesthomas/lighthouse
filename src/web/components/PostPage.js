@@ -6,9 +6,9 @@ const PostPage =
     author,
     likes,
     timestamp,
-    store_name,
-    store_website,
-    store_url_key
+    shop_name,
+    shop_website,
+    shop_url_key
   }) => (
     <div>
       {
@@ -16,9 +16,9 @@ const PostPage =
         author + '   ' +
         likes + '   ' +
         timestamp + '   ' +
-        store_name + '   ' +
-        store_website + '   ' +
-        store_url_key
+        shop_name + '   ' +
+        shop_website + '   ' +
+        shop_url_key
       }
       <br/><br/>
     </div>
@@ -29,11 +29,9 @@ PostPage.propTypes = {
   author: PropTypes.string.isRequired,
   likes: PropTypes.number.isRequired,
   timestamp: PropTypes.number.isRequired,
-  store_name: PropTypes.string.isRequired,
-  store_website: PropTypes.number.isRequired,
-  store_url_key: PropTypes.string.isRequired,
-  //comments
-
+  shop_name: PropTypes.string.isRequired,
+  shop_website: PropTypes.number.isRequired,
+  shop_url_key: PropTypes.string.isRequired,
 }
 
 export default PostPage
