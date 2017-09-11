@@ -7,9 +7,7 @@ const NewShopForm =
   ({
     onSaveNameRef,
     onSaveWebsiteRef,
-    onSaveIconRef,
     onCancel,
-    onIconChange,
     onSubmit
    }) => (
     <div>
@@ -42,9 +40,7 @@ const NewShopForm =
 NewShopForm.propTypes = {
   onSaveNameRef: PropTypes.func.isRequired,
   onSaveWebsiteRef: PropTypes.func.isRequired,
-  onSaveIconRef: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onIconChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 }
 

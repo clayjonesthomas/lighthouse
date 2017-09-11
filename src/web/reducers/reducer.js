@@ -208,8 +208,7 @@ function store(state = initialState, action) {
     case SIGN_OUT_REQUEST:
       return Object.assign({}, state, {
         username: null,
-        isModerator: false,
-        isUserInfoLoaded: false
+        isModerator: false
       })
     case SIGN_OUT_RESPONSE:
       return Object.assign({}, state, {
