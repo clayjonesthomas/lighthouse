@@ -1,5 +1,5 @@
 import React from 'react'
-import LinkButton from './ui-kit/LinkButton'
+import LinkButton from 'ui-kit/LinkButton'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 

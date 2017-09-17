@@ -1,10 +1,10 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
-import Spinner from './ui-kit/Spinner'
-import SubmitButton from './ui-kit/SubmitButton'
+import Spinner from 'ui-kit/Spinner'
+import SubmitButton from 'ui-kit/SubmitButton'
 import {Grid, Col, Row} from 'react-bootstrap'
 import ShopFinder, {FINDER_SEARCH}
-  from './ui-kit/ShopFinder/ShopFinder'
+  from 'ui-kit/ShopFinder/ShopFinder'
 
 import "./FrontPage.css"
 const MyPostsPage =

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
-import LinkButton from '../components/ui-kit/LinkButton'
-import XGraphic from '../components/ui-kit/XGraphic'
+import LinkButton from 'ui-kit/LinkButton'
+import XGraphic from 'ui-kit/XGraphic'
 
 import "./MustSignInNotification.css"
 const MustSignInNotification = (

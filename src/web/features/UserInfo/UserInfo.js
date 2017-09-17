@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
-import Spinner from 'components/ui-kit/Spinner'
-import LinkButton from 'components/ui-kit/LinkButton'
-import FullLogo from 'components/ui-kit/FullLogo'
+import Spinner from 'ui-kit/Spinner'
+import LinkButton from 'ui-kit/LinkButton'
+import FullLogo from 'ui-kit/FullLogo'
 
 import "./UserInfo.css"
 import "components/ShopBox.css"

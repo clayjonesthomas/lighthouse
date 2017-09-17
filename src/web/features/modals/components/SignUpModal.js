@@ -1,15 +1,15 @@
 import React, {PropTypes} from 'react'
-import TextBox from 'components/ui-kit/TextBox'
-import SubmitButton from 'components/ui-kit/SubmitButton'
+import TextBox from 'ui-kit/TextBox'
+import SubmitButton from 'ui-kit/SubmitButton'
 import './LoginModal.css'
 
 import Modal from 'react-modal'
 import {Grid, Row, Col, FormGroup} from 'react-bootstrap'
 import {Component} from 'react'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
-import XGraphic from 'components/ui-kit/XGraphic'
+import XGraphic from 'ui-kit/XGraphic'
 import {SIGN_UP_USERNAME, SIGN_UP_PASSWORD, SIGN_UP_EMAIL} from '../AuthActions'
-import ErrorMessages from 'components/ui-kit/ErrorMessages'
+import ErrorMessages from 'ui-kit/ErrorMessages'
 
 import "./ModalStyle.css"
 import "./SignUpModal.css"

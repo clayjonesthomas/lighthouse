@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import {toggleShopLike} from '../actions/ShopPageActions'
 import {togglePostLike} from '../actions/PostPageActions'
 import {pullShopPosts, pullMoreShopPosts} from '../actions/ShopPageActions'
-import Spinner from '../components/ui-kit/Spinner'
+import Spinner from 'ui-kit/Spinner'
 
 class ShopPageHandler extends Component {
   componentDidMount () {

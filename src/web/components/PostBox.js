@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
-import SubmitButton from './ui-kit/SubmitButton'
-import LikeButton from './ui-kit/LikeButton/LikeButton'
+import SubmitButton from 'ui-kit/SubmitButton'
+import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import {connect} from 'react-redux'
 import {setMustBeSignedInNotification}
   from '../actions/NotificationActions'

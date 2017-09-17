@@ -1,8 +1,8 @@
 import PostBox from './PostBox'
 import React, {PropTypes} from 'react'
-import Spinner from './ui-kit/Spinner'
+import Spinner from 'ui-kit/Spinner'
 import ShopFinder, {FINDER_SEARCH}
-  from './ui-kit/ShopFinder/ShopFinder'
+  from 'ui-kit/ShopFinder/ShopFinder'
 import {Grid, Col, Row} from 'react-bootstrap'
 import MoreContentButton from "./ui-kit/MoreContentButton"
 

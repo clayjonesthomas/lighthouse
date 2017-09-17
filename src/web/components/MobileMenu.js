@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import Logo from './ui-kit/Logo'
+import Logo from 'ui-kit/Logo'
 import {Col, Row} from 'react-bootstrap'
 import MinimalButton from "./ui-kit/MinimalButton"
 import MenuButton from "./ui-kit/MenuButton/MenuButton"

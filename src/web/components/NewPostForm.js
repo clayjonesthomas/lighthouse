@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react'
-import SubmitButton from './ui-kit/SubmitButton'
-import TextBox from './ui-kit/TextBox'
+import SubmitButton from 'ui-kit/SubmitButton'
+import TextBox from 'ui-kit/TextBox'
 import ShopFinder, {FINDER_FORM}
-  from './ui-kit/ShopFinder/ShopFinder'
+  from 'ui-kit/ShopFinder/ShopFinder'
 import {ControlLabel} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
-import ErrorMessages from './ui-kit/ErrorMessages'
+import ErrorMessages from 'ui-kit/ErrorMessages'
 
 import "./FrontPage.css"
 import "./ui-kit/TextBox.css"

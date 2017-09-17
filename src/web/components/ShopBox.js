@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import LikeButton from './ui-kit/LikeButton/LikeButton'
+import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
