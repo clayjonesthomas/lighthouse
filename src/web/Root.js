@@ -1,21 +1,21 @@
 import React, {PropTypes} from 'react'
 import {createStore, applyMiddleware} from 'redux'
-import ShopPageHandler from '../scenes/ShopPage/ShopPageHandler'
-import PostPageHandler from '../containers/PostPageHandler'
-import MyShopsPageHandler from '../containers/MyShopsPageHandler'
+import ShopPageHandler from 'scenes/ShopPage/ShopPageHandler'
+import PostPageHandler from 'scenes/PostPage/PostPageHandler'
+import MyShopsPageHandler from 'scenes/MyShopsPage/MyShopsPageHandler'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {routerMiddleware} from 'react-router-redux'
-import lighthouse from '../reducers/reducer.js'
-import NewPostHandler from '../scenes/NewPostPage/NewPostHandler'
+import lighthouse from 'reducers/reducer.js'
+import NewPostHandler from 'scenes/NewPostPage/NewPostHandler'
 import thunkMiddleware from 'redux-thunk'
-import Container from './Container.js'
-import NewShopHandler from '../containers/NewShopHandler'
-import MyPostsPageHandler from '../containers/MyPostsPageHandler'
-import "./Globals.css"
-import AllPostsPageHandler from '../containers/AllPostsPageHandler'
-import MyFeedPageHandler from '../containers/MyFeedPageHandler'
-import PrivacyPolicyPage from "./PrivacyPolicyPage"
+import Container from 'scenes/Container/Container.js'
+import NewShopHandler from 'scenes/NewShopPage/NewShopHandler'
+import MyPostsPageHandler from 'scenes/MyPostsPage/MyPostsPageHandler'
+import "scenes/Container/Globals.css"
+import AllPostsPageHandler from 'scenes/AllPostsPage/AllPostsPageHandler'
+import MyFeedPageHandler from 'scenes/MyFeedPage/MyFeedPageHandler'
+import PrivacyPolicyPage from "scenes/PrivacyPolicyPage/PrivacyPolicyPage"
 
 let store = createStore(
   lighthouse,

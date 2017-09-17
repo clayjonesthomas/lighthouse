@@ -3,7 +3,7 @@ import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
-import "./PostBox.css"
+import "../PostBox/PostBox.css"
 import "./ShopBox.css"
 const ShopBox = (
   {

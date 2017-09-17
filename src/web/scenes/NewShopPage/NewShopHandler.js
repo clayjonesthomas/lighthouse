@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
-import NewShopForm from '../components/NewShopForm'
-import {onSaveRef} from '../scenes/NewPostPage/NewPostActions'
-import {submitShop} from '../actions/NewShopActions'
+import NewShopForm from './NewShopForm'
+import {onSaveRef} from '../NewPostPage/NewPostActions'
+import {submitShop} from './NewShopActions'
 
 
 const mapStateToProps = () => {

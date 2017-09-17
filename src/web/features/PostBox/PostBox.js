@@ -4,8 +4,8 @@ import SubmitButton from 'ui-kit/SubmitButton'
 import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import {connect} from 'react-redux'
 import {setMustBeSignedInNotification}
-  from '../actions/NotificationActions'
-import {archivePost} from '../actions/PostPageActions'
+  from '../../scenes/notifications/NotificationActions'
+import {archivePost} from '../../scenes/MyPostsPage/PostPageActions'
 
 import "./PostBox.css"
 const PostBox = (

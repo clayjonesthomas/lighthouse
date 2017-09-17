@@ -1,6 +1,8 @@
+//currently not in use
+
 import $ from 'jquery'
 import {connect} from 'react-redux'
-import PostPage from '../components/PostPage'
+import PostPage from './PostPage'
 
 const mapStateToProps = (state, ownProps) => {
   $.ajax({

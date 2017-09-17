@@ -1,25 +1,25 @@
 import {ADD_POST, CANCEL_POST, SAVE_NEW_POST_FORM_REF,
 REQUEST_SHOPS, REQUEST_SHOPS_RETURN, UPDATE_FORM_SHOPS}
   from '../scenes/NewPostPage/NewPostActions.js'
-import {GO_HOME, GO_MY_SHOPS} from '../actions/MenuActions.js'
-import {REQUEST_POSTS, REQUEST_POSTS_RETURN} from '../actions/FrontPageActions'
-import {REQUEST_SINGLE_POST_RETURN} from '../actions/PostPageActions'
+import {GO_HOME, GO_MY_SHOPS} from '../features/Menu/MenuActions.js'
+import {REQUEST_POSTS, REQUEST_POSTS_RETURN} from '../scenes/FrontPage/FrontPageActions'
+import {REQUEST_SINGLE_POST_RETURN} from '../scenes/MyPostsPage/PostPageActions'
 import {RESPONSE_LOGIN, SHOW_MODAL, LOGIN, SIGN_UP, INFO, CANCEL}
   from '../scenes/modals/AuthActions.js'
 import {REQUEST_USER_INFO, REQUEST_USER_INFO_RETURN} from '../features/UserInfo/UserInfoActions'
-import {LIKE_POST, LIKE_POST_RETURN} from '../actions/PostPageActions'
+import {LIKE_POST, LIKE_POST_RETURN} from '../scenes/MyPostsPage/PostPageActions'
 import {REQUEST_SHOP, REQUEST_SHOP_RETURN} from '../scenes/ShopPage/ShopPageActions'
 import {LIKE_SHOP, LIKE_SHOP_RETURN} from '../scenes/ShopPage/ShopPageActions'
 import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
   ADD_SHOPS_TO_MY_SHOPS_REQUEST, ADD_SHOPS_TO_MY_SHOPS_RETURN, ADD_SHOP_FINDER_REF}
-  from '../actions/MyShopsPageActions'
+  from '../scenes/MyShopsPage/MyShopsPageActions'
 import {SIGN_OUT_REQUEST, SIGN_OUT_RESPONSE} from '../features/UserInfo/UserInfoActions'
-import {ADD_SHOP_ICON_TO_FORM_DATA} from '../actions/NewShopActions'
-import {MORE_POSTS_REQUEST, MORE_POSTS_RETURN} from '../actions/FrontPageActions'
+import {ADD_SHOP_ICON_TO_FORM_DATA} from '../scenes/NewShopPage/NewShopActions'
+import {MORE_POSTS_REQUEST, MORE_POSTS_RETURN} from '../scenes/FrontPage/FrontPageActions'
 import {SHOP_POSTS_REQUEST, SHOP_POSTS_RETURN} from '../scenes/ShopPage/ShopPageActions'
 import {MORE_SHOP_POSTS_REQUEST, MORE_SHOP_POSTS_RETURN} from '../scenes/ShopPage/ShopPageActions'
-import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
-import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../actions/MyPostsPageActions'
+import {MY_POSTS_REQUEST, MY_POSTS_RESPONSE} from '../scenes/MyPostsPage/MyPostsPageActions'
+import {MORE_MY_POSTS_REQUEST, MORE_MY_POSTS_RESPONSE} from '../scenes/MyPostsPage/MyPostsPageActions'
 import {IS_USER_MOBILE} from '../features/UserInfo/UserActions'
 import {TOGGLE_HAMBURGER_MENU} from '../features/mobile/MobileMenu/MobileMenuActions'
 import {SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../scenes/modals/AuthActions'
@@ -29,8 +29,8 @@ import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE,
 import {ADD_POST_FAILURE, ADD_POST_RETURN, VALIDATION_ERROR} from '../scenes/NewPostPage/NewPostActions'
 import {SET_NOTIFICATION, REMOVE_NOTIFICATION,
   SET_MUST_BE_SIGNED_IN_NOTIFICATION, MUST_SIGN_IN}
-  from "../actions/NotificationActions"
-import {ARCHIVE_POST_RETURN} from '../actions/PostPageActions'
+  from "../scenes/notifications/NotificationActions"
+import {ARCHIVE_POST_RETURN} from '../scenes/MyPostsPage/PostPageActions'
 
 const initialState = {
   displayedPosts: [],

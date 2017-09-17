@@ -1,4 +1,4 @@
-import PostBox from './PostBox'
+import PostBox from '../../features/PostBox/PostBox'
 import React, {PropTypes} from 'react'
 import Spinner from 'ui-kit/Spinner'
 import ShopFinder, {FINDER_SEARCH}

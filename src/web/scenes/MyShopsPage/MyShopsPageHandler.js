@@ -1,12 +1,12 @@
 import {push} from 'react-router-redux'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import MyShopsPage from '../components/MyShopsPage'
+import MyShopsPage from './MyShopsPage'
 import {pullMyShops, addShopsToMyShops, addShopFinderRef, clearShopFinder}
-  from '../actions/MyShopsPageActions'
-import {toggleShopLike} from '../scenes/ShopPage/ShopPageActions'
-import {pullShops, onUpdateFormShops} from '../scenes/NewPostPage/NewPostActions'
-import {pullNotMyShops} from '../actions/FrontPageActions'
+  from './MyShopsPageActions'
+import {toggleShopLike} from '../ShopPage/ShopPageActions'
+import {pullShops, onUpdateFormShops} from '../NewPostPage/NewPostActions'
+import {pullNotMyShops} from '../FrontPage/FrontPageActions'
 
 class MyShopsPageHandler extends Component {
   componentDidMount () {

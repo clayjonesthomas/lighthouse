@@ -1,6 +1,6 @@
-import {MY_SHOPS_URL, LIKE_SHOP_URL} from '../constants/constants'
+import {MY_SHOPS_URL, LIKE_SHOP_URL} from '../../constants/constants'
 import fetch from 'isomorphic-fetch'
-import {pullNotMyShops} from '../actions/FrontPageActions'
+import {pullNotMyShops} from '../FrontPage/FrontPageActions'
 import {push} from 'react-router-redux'
 
 export const REQUEST_MY_SHOPS = 'REQUEST_MY_SHOPS'

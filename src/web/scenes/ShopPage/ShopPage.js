@@ -3,7 +3,7 @@ import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import Spinner from 'ui-kit/Spinner'
 import MoreContentButton from 'ui-kit/MoreContentButton'
 import {Grid, Col, Row} from 'react-bootstrap'
-import PostBox from 'components/PostBox'
+import PostBox from 'features/PostBox/PostBox'
 import ShopFinder, {FINDER_SEARCH}
   from 'features/ShopFinder/ShopFinder'
 

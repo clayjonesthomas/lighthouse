@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {removeNotification} from '../actions/NotificationActions'
+import {removeNotification} from './NotificationActions'
 import MustSignInNotification
-  from '../components/MustSignInNotification'
-import {showSignUp, showLogin} from '../scenes/modals/AuthActions'
+  from './MustSignInNotification'
+import {showSignUp, showLogin} from '../modals/AuthActions'
 
 const NotificationRoot = (
   {

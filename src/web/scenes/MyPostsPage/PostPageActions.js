@@ -1,5 +1,5 @@
 import {POST_URL, LIKE_POST_URL, ARCHIVE_POST_URL}
-  from '../constants/constants'
+  from '../../constants/constants'
 import fetch from 'isomorphic-fetch'
 
 export const REQUEST_SINGLE_POST = 'REQUEST_POSTS'

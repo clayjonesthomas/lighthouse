@@ -4,7 +4,7 @@ import LinkButton from 'ui-kit/LinkButton'
 import FullLogo from 'ui-kit/FullLogo'
 
 import "./UserInfo.css"
-import "components/ShopBox.css"
+import "features/ShopBox/ShopBox.css"
 const UserInfo =
   ({
      onShowLogin,

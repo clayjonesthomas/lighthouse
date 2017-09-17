@@ -1,34 +1,35 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import FrontPageHandler from './FrontPageHandler'
+import FrontPageHandler from '../FrontPage/FrontPageHandler'
 import {pullFrontPagePosts, pullMoreFrontPagePosts}
-  from '../actions/FrontPageActions'
+  from '../FrontPage/FrontPageActions'
 
-class AllPostsPageHandler extends Component {
+class MyFeedPageHandler extends Component {
   render () {
     return (
       <FrontPageHandler
         getPosts={this.props.getPosts}
         getMorePosts={this.props.getMorePosts}
+        isMyFeed={this.props.isMyFeed}
       />
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return state
+  return {
+    isMyFeed: true
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPosts: () => dispatch(pullFrontPagePosts(true)),
-    getMorePosts: () => { 
-      dispatch(pullMoreFrontPagePosts(true))
-    }
+    getPosts: () => dispatch(pullFrontPagePosts(false)),
+    getMorePosts: () => dispatch(pullMoreFrontPagePosts(false))
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AllPostsPageHandler)
+)(MyFeedPageHandler)

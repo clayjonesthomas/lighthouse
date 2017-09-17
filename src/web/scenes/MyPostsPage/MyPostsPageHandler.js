@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {deletePost} from '../actions/FrontPageActions'
-import {togglePostLike} from '../actions/PostPageActions'
-import {pullMyPosts, pullMoreMyPosts} from '../actions/MyPostsPageActions'
-import MyPostsPage from '../components/MyPostsPage'
+import {deletePost} from '../FrontPage/FrontPageActions'
+import {togglePostLike} from './PostPageActions'
+import {pullMyPosts, pullMoreMyPosts} from './MyPostsPageActions'
+import MyPostsPage from './MyPostsPage'
 
 class MyPostsPageHandler extends Component {
   componentDidMount () {

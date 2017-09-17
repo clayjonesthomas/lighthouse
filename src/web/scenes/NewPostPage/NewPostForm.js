@@ -7,7 +7,7 @@ import {ControlLabel} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
 import ErrorMessages from 'ui-kit/ErrorMessages'
 
-import "components/FrontPage.css"
+import "scenes/FrontPage/FrontPage.css"
 import "ui-kit/TextBox.css"
 import "scenes/modals/components/ModalStyle.css"
 import "./NewPostForm.css"

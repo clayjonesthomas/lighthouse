@@ -1,4 +1,4 @@
-import {NEW_SHOP_URL, ADD_SHOP_ICON} from '../constants/constants'
+import {NEW_SHOP_URL, ADD_SHOP_ICON} from '../../constants/constants'
 import fetch from 'isomorphic-fetch'
 
 export const NEW_SHOP_REQUEST = 'NEW_SHOP_REQUEST'

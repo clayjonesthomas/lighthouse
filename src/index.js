@@ -1,4 +1,4 @@
-import Root from './web/components/Root'
+import Root from './web/Root'
 import React from 'react'
 import ReactDOM from 'react-dom'
 

@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import {MY_POSTS_URL} from '../constants/constants'
+import {MY_POSTS_URL} from '../../constants/constants'
 
 export const MY_POSTS_REQUEST = 'MY_POSTS_REQUEST'
 export const MY_POSTS_RESPONSE = 'MY_POSTS_RESPONSE'

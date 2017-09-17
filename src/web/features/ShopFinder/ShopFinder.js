@@ -5,9 +5,8 @@ import {connect} from 'react-redux'
 import {onUpdateFormShops, pullShops, pushPost} from 'scenes/NewPostPage/NewPostActions'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder,
   goToShop}
-  from 'actions/MyShopsPageActions'
-import {pullNotMyShops} from 'actions/FrontPageActions'
-
+  from 'scenes/MyShopsPage/MyShopsPageActions'
+import {pullNotMyShops} from 'scenes/FrontPage/FrontPageActions'
 
 import "./ShopFinder.css"
 

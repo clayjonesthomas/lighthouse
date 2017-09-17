@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
-import Menu from '../components/Menu.js'
+import Menu from './Menu.js'
 import {setMustBeSignedInNotification}
-  from '../actions/NotificationActions'
+  from '../../scenes/notifications/NotificationActions'
 
 const mapStateToProps = (state) => {
   return {

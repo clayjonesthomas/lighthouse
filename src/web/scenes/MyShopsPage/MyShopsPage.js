@@ -1,12 +1,12 @@
-import ShopBox from './ShopBox'
+import ShopBox from 'features/ShopBox/ShopBox'
 import React, {PropTypes} from 'react'
 import Spinner from 'ui-kit/Spinner'
 import ShopFinder, {FINDER_LIKE} from 'features/ShopFinder/ShopFinder'
 import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from 'ui-kit/Logo'
 
-import "./FrontPage.css"
-import "./PostBox.css"
+import "scenes/FrontPage/FrontPage.css"
+import "features/PostBox/PostBox.css"
 import "./MyShopsPage.css"
 const MyShopsPage =
   ({

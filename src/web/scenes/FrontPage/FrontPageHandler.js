@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import FrontPage from '../components/FrontPage'
-import {deletePost} from '../actions/FrontPageActions'
-import {togglePostLike} from '../actions/PostPageActions'
+import FrontPage from './FrontPage'
+import {deletePost} from './FrontPageActions'
+import {togglePostLike} from '../MyPostsPage/PostPageActions'
 import {setMustBeSignedInNotification}
-  from '../actions/NotificationActions'
+  from '../notifications/NotificationActions'
 
 class FrontPageHandler extends Component {
   componentDidMount () {
