@@ -1,5 +1,5 @@
 import {push} from 'react-router-redux'
-import {LOGIN_URL, LOGOUT_URL} from '../constants/constants'
+import {LOGIN_URL, LOGOUT_URL} from '../../constants/constants'
 import fetch from 'isomorphic-fetch'
 
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'

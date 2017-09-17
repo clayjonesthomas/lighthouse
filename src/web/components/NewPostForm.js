@@ -9,7 +9,7 @@ import ErrorMessages from './ui-kit/ErrorMessages'
 
 import "./FrontPage.css"
 import "./ui-kit/TextBox.css"
-import "./modals/ModalStyle.css"
+import "../features/modals/components/ModalStyle.css"
 import "./NewPostForm.css"
 const NewPostForm = (
   {

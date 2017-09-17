@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react'
-import SubmitButton from '../ui-kit/SubmitButton'
-import LinkButton from '../ui-kit/LinkButton'
+import SubmitButton from 'components/ui-kit/SubmitButton'
+import LinkButton from 'components/ui-kit/LinkButton'
 import {GlobalModalStyle, DesktopGlobalModalStyle} from './GlobalModalStyle'
 import Modal from 'react-modal'
 import {Component} from 'react'
-import XGraphic from '../ui-kit/XGraphic'
+import XGraphic from 'components/ui-kit/XGraphic'
 
 import "./ModalStyle.css"
 import './InfoModal.css'

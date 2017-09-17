@@ -27,4 +27,10 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    modules: [
+      path.resolve('./src/web'),
+      path.resolve('./node_modules')
+    ]
+  }
 };

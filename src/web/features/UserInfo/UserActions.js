@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import {MOBILE_USER_AGENT_REGEX_WHOLE, MOBILE_USER_AGENT_REGEX_SUBSTRING}
-  from '../constants/constants'
+  from '../../constants/constants'
 
 export const IS_USER_MOBILE = "IS_USER_MOBILE"
 

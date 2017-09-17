@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import {LOGIN_URL, SIGN_UP_URL} from '../constants/constants'
+import {LOGIN_URL, SIGN_UP_URL} from '../../constants/constants'
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
 export const RESPONSE_LOGIN = 'RESPONSE_LOGIN'

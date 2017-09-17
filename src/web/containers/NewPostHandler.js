@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import NewPostForm from '../components/NewPostForm'
 import {pushPost, cancelPost, onSaveRef, pullShops,
   onUpdateFormShops} from '../actions/NewPostActions'
-import {clearErrorMessage} from'../actions/AuthActions'
+import {clearErrorMessage} from'../features/modals/AuthActions'
 
 class NewPostHandler extends Component {
 

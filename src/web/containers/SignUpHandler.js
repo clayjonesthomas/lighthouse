@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {showLogin, signUpUser, clearErrorMessage}
-  from '../actions/AuthActions'
-import SignUpModal from '../components/modals/SignUpModal'
+  from '../features/modals/AuthActions'
+import SignUpModal from '../features/modals/components/SignUpModal'
 import {onSaveRef} from '../actions/NewPostActions'
 
 class SignUpHandler extends Component {

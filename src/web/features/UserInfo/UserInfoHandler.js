@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
-import {pullUserInfo, signOut} from '../actions/UserInfoActions'
-import {showLogin, showSignUp} from '../actions/AuthActions'
-import UserInfo from '../components/UserInfo'
+import {pullUserInfo, signOut} from './UserInfoActions'
+import {showLogin, showSignUp} from '../modals/AuthActions'
+import UserInfo from './UserInfo'
 
 class UserInfoHandler extends Component {
   componentDidMount () {

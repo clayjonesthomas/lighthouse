@@ -2,8 +2,8 @@ import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import MobileMenu from '../components/MobileMenu.js'
 import {goHome, goMyShops} from '../actions/MenuActions.js'
-import {pullUserInfo, signOut} from '../actions/UserInfoActions'
-import {showSignUp, showLogin} from '../actions/AuthActions'
+import {pullUserInfo, signOut} from '../features/UserInfo/UserInfoActions'
+import {showSignUp, showLogin} from '../features/modals/AuthActions'
 import {toggleHamburgerMenu} from '../actions/MobileMenuActions'
 
 const mapStateToProps = (state) => {

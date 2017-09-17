@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import LoginModal from '../components/modals/LoginModal'
+import LoginModal from '../features/modals/components/LoginModal'
 import {logInUser, clearErrorMessage}
-  from '../actions/AuthActions'
+  from '../features/modals/AuthActions'
 import {onSaveRef} from '../actions/NewPostActions'
 
 class LoginHandler extends Component {
