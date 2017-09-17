@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import {SHOP_URL, SHOP_POST_URL, LIKE_SHOP_URL} from '../constants/constants'
+import {SHOP_URL, SHOP_POST_URL, LIKE_SHOP_URL} from '../../constants/constants'
 
 export const REQUEST_SHOP = "REQUEST_SHOP"
 export const REQUEST_SHOP_RETURN = "REQUEST_SHOP_RETURN"

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import {Typeahead} from 'react-bootstrap-typeahead'
 import {InputGroup, Button} from 'react-bootstrap'
-import ShopRecommenderBox from '../ShopRecommenderBox'
+import ShopRecommenderBox from '../../ui-kit/ShopRecommenderBox'
 
 import "./ShopFinder.css"
 const ShopFinder = (

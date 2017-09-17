@@ -1,6 +1,6 @@
 import {push} from 'react-router-redux'
 import fetch from 'isomorphic-fetch'
-import {POST_URL, SHOPS_URL} from '../constants/constants'
+import {POST_URL, SHOPS_URL} from '../../constants/constants'
 
 export const ADD_POST = 'ADD_POST'
 export const ADD_POST_RETURN = 'ADD_POST_RETURN'

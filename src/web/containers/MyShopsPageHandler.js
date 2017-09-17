@@ -4,8 +4,8 @@ import {connect} from 'react-redux'
 import MyShopsPage from '../components/MyShopsPage'
 import {pullMyShops, addShopsToMyShops, addShopFinderRef, clearShopFinder}
   from '../actions/MyShopsPageActions'
-import {toggleShopLike} from '../actions/ShopPageActions'
-import {pullShops, onUpdateFormShops} from '../actions/NewPostActions'
+import {toggleShopLike} from '../scenes/ShopPage/ShopPageActions'
+import {pullShops, onUpdateFormShops} from '../scenes/NewPostPage/NewPostActions'
 import {pullNotMyShops} from '../actions/FrontPageActions'
 
 class MyShopsPageHandler extends Component {

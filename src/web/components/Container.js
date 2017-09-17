@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ModalHandler from '../features/modals/ModalHandler.js'
+import ModalHandler from '../scenes/modals/containers/ModalHandler.js'
 import MenuHandler from '../containers/MenuHandler.js'
 import UserInfoHandler from '../features/UserInfo/UserInfoHandler.js'
 import {Grid, Row, Col} from 'react-bootstrap'
@@ -8,11 +8,11 @@ import {isUserMobile} from '../features/UserInfo/UserActions'
 import {pullUserInfo} from '../features/UserInfo/UserInfoActions'
 import NotificationHandler from '../containers/NotificationHandler'
 import Footer from './Footer'
-import {showInfoIfAppropriate} from '../features/modals/AuthActions'
+import {showInfoIfAppropriate} from '../scenes/modals/AuthActions'
 
 // mobile
-import MobileMenuHandler from '../containers/MobileMenuHandler'
-import "./MobileMenu.css"
+import MobileMenuHandler from '../features/mobile/MobileMenu/MobileMenuHandler'
+import "../features/mobile/MobileMenu/MobileMenu.css"
 import "./Container.css"
 class Container extends Component {
 

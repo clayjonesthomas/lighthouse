@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import Logo from 'ui-kit/Logo'
 import {Col, Row} from 'react-bootstrap'
-import MinimalButton from "./ui-kit/MinimalButton"
-import MenuButton from "./ui-kit/MenuButton/MenuButton"
+import MinimalButton from "ui-kit/MinimalButton"
+import MenuButton from "ui-kit/MenuButton/MenuButton"
 
 import './MobileMenu.css'
 const MobileMenu =

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import InfoModal from '../features/modals/components/InfoModal'
-import {showLogin, showSignUp} from '../features/modals/AuthActions'
+import InfoModal from '../components/InfoModal'
+import {showLogin, showSignUp} from '../AuthActions'
 
 class InfoHandler extends Component {
 

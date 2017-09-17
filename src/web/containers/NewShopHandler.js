@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import NewShopForm from '../components/NewShopForm'
-import {onSaveRef} from '../actions/NewPostActions'
+import {onSaveRef} from '../scenes/NewPostPage/NewPostActions'
 import {submitShop} from '../actions/NewShopActions'
 
 

@@ -1,10 +1,10 @@
 import {connect} from 'react-redux'
-import ShopPage from '../components/ShopPage'
-import {pullShop} from '../actions/ShopPageActions'
+import ShopPage from './ShopPage'
+import {pullShop} from './ShopPageActions'
 import React, {Component} from 'react'
-import {toggleShopLike} from '../actions/ShopPageActions'
-import {togglePostLike} from '../actions/PostPageActions'
-import {pullShopPosts, pullMoreShopPosts} from '../actions/ShopPageActions'
+import {toggleShopLike} from './ShopPageActions'
+import {togglePostLike} from '../../actions/PostPageActions'
+import {pullShopPosts, pullMoreShopPosts} from './ShopPageActions'
 import Spinner from 'ui-kit/Spinner'
 
 class ShopPageHandler extends Component {

@@ -1,9 +1,9 @@
 import React from 'react'
-import LoginModalHandler from 'containers/LoginHandler'
-import SignUpHandler from 'containers/SignUpHandler'
-import InfoHandler from 'containers/InfoHandler'
+import LoginModalHandler from './LoginHandler'
+import SignUpHandler from './SignUpHandler'
+import InfoHandler from './InfoHandler'
 import {connect} from 'react-redux'
-import {cancelModal} from './AuthActions'
+import {cancelModal} from '../AuthActions'
 
 const MODAL_COMPONENTS = {
   'LOGIN': LoginModalHandler,

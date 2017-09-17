@@ -2,12 +2,11 @@ import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import ShopFinderComponent from "./ShopFinderComponent"
 import {connect} from 'react-redux'
-import {onUpdateFormShops} from '../../../actions/NewPostActions'
+import {onUpdateFormShops, pullShops, pushPost} from 'scenes/NewPostPage/NewPostActions'
 import {addShopsToMyShops, addShopFinderRef, clearShopFinder,
   goToShop}
-  from '../../../actions/MyShopsPageActions'
-import {pullNotMyShops} from '../../../actions/FrontPageActions'
-import {pullShops, pushPost} from '../../../actions/NewPostActions'
+  from 'actions/MyShopsPageActions'
+import {pullNotMyShops} from 'actions/FrontPageActions'
 
 
 import "./ShopFinder.css"

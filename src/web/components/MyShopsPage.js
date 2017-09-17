@@ -1,7 +1,7 @@
 import ShopBox from './ShopBox'
 import React, {PropTypes} from 'react'
 import Spinner from 'ui-kit/Spinner'
-import ShopFinder, {FINDER_LIKE} from 'ui-kit/ShopFinder/ShopFinder'
+import ShopFinder, {FINDER_LIKE} from 'features/ShopFinder/ShopFinder'
 import {Grid, Col, Row} from 'react-bootstrap'
 import Logo from 'ui-kit/Logo'
 

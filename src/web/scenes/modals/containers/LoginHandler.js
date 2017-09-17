@@ -1,21 +1,20 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {showLogin, signUpUser, clearErrorMessage}
-  from '../features/modals/AuthActions'
-import SignUpModal from '../features/modals/components/SignUpModal'
-import {onSaveRef} from '../actions/NewPostActions'
+import LoginModal from '../components/LoginModal'
+import {logInUser, clearErrorMessage}
+  from '../AuthActions'
+import {onSaveRef} from 'scenes/NewPostPage/NewPostActions'
 
-class SignUpHandler extends Component {
+class LoginHandler extends Component {
   componentDidMount() {
     this.props.clearMessage()
   }
 
   render () {
     return (
-      <SignUpModal
-        onSignUp={this.props.onSignUp}
+      <LoginModal
+        onLogin={this.props.onLogin}
         onCancel={this.props.onCancel}
-        showSignUp={this.props.showSignUp}
         isMobile={this.props.isMobile}
         onSaveRef={this.props.onSaveRef}
         messages={this.props.messages}
@@ -26,10 +25,9 @@ class SignUpHandler extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSignUp: () => dispatch(signUpUser()),
-    showLogin: () => dispatch(showLogin()),
+    onLogin: (user, pass) => dispatch(logInUser(user, pass)),
     onSaveRef: (ref, type) => dispatch(onSaveRef(ref, type)),
-    clearMessage: () => dispatch(clearErrorMessage())
+    clearMessage: () => dispatch(clearErrorMessage()),
   }
 }
 
@@ -44,4 +42,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUpHandler)
+)(LoginHandler)

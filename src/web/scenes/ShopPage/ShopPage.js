@@ -3,9 +3,9 @@ import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import Spinner from 'ui-kit/Spinner'
 import MoreContentButton from 'ui-kit/MoreContentButton'
 import {Grid, Col, Row} from 'react-bootstrap'
-import PostBox from './PostBox'
+import PostBox from 'components/PostBox'
 import ShopFinder, {FINDER_SEARCH}
-  from 'ui-kit/ShopFinder/ShopFinder'
+  from 'features/ShopFinder/ShopFinder'
 
 import './ShopPage.css'
 const ShopPage =

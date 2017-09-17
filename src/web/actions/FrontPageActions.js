@@ -1,6 +1,6 @@
 import {POSTS_URL, POST_URL, NOT_MY_SHOPS_URL} from '../constants/constants'
 import fetch from 'isomorphic-fetch'
-import {requestShops, requestShopsReturn} from './NewPostActions'
+import {requestShops, requestShopsReturn} from '../scenes/NewPostPage/NewPostActions'
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const REQUEST_POSTS_RETURN = 'REQUEST_POSTS_RETURN'
