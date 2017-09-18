@@ -49,7 +49,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getMorePosts: () => ownProps.getMorePosts(),
     deletePost: (key) => dispatch(deletePost(key)),
     fireMustSignIn: () => dispatch(setMustBeSignedInNotification())
-
   }
 }
 
