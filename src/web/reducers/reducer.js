@@ -34,27 +34,25 @@ import {ARCHIVE_POST_RETURN} from '../scenes/MyPostsPage/PostPageActions'
 
 const initialState = {
   displayedPosts: [],
-  displayedShops: [],
-  shops: [],
-  jwt: null,
+    displayedShops: [],
+    shops: [],
   modal: null,
   username: null,
-  shop: {},
+    shop: {},
   isUserInfoLoaded: false,
   arePostsLoaded: false,
-  areMyShopsLoaded: false,
-  areShopsLoaded: false,
+    areMyShopsLoaded: false,
+    areShopsLoaded: false,
   formRefs: {},
   form: {},
   isModerator: false,
   postsOffset: 0,
   areMorePostsLoaded: true,
   areMorePosts: true,
-  shopPostsOffset: 0,
+    shopPostsOffset: 0,
   isMobile: false,
   displayHamburgerMenu: false,
   authRefs: {},
-  serverMessage: null,
   serverMessageArray: [],
   notification: null
 }
@@ -335,7 +333,6 @@ function store(state = initialState, action) {
       })
     case CLEAR_ERROR_MESSAGE:
       return Object.assign({}, state, {
-        serverMessage: null,
         serverMessageArray: []
       })
     case ADD_POST_RETURN:
