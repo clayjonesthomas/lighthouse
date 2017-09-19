@@ -7,6 +7,9 @@ import {displayedPosts, postsOffset, areMorePosts,
 import {username, isUserInfoLoaded, isModerator, isMobile}
   from './UserReducer'
 import {formRefs, form, serverMessageArray} from './FormReducer'
+import {modal} from './ModalReducer'
+import {notification} from './NotificationReducer'
+import {dislayHamburgerMenu} from './MenuReducer'
 
 export default combineReducers({
   displayedShops,
@@ -25,5 +28,8 @@ export default combineReducers({
   isMobile,
   formRefs,
   form,
-  serverMessageArray
+  serverMessageArray,
+  modal,
+  notification,
+  displayHamburgerMenu
 })

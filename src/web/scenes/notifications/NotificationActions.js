@@ -19,12 +19,16 @@ export const setNotification = (notificationType) => {
   }
 }
 
-export const setMustBeSignedInNotification = (e, action) => {
-  return {
-    type: SET_MUST_BE_SIGNED_IN_NOTIFICATION,
-    data: {
-      event: e,
-      intendedAction: action
+export function setMustBeSignedInNotification(e, action) {
+  return (dispatch, getState) =>{
+    const state = getState()
+    return {
+      type: SET_MUST_BE_SIGNED_IN_NOTIFICATION,
+      data: {
+        event: e,
+        intendedAction: action,
+        username: state.username
+      }
     }
   }
 }

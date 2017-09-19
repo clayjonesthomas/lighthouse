@@ -36,7 +36,7 @@ const initialState = {
     displayedPosts: [],
     displayedShops: [],
     shops: [],
-  modal: null,
+    modal: null,
     username: null,
     shop: {},
     isUserInfoLoaded: false,
@@ -53,7 +53,7 @@ const initialState = {
     isMobile: false,
   displayHamburgerMenu: false,
     serverMessageArray: [],
-  notification: null
+    notification: null
 }
 
 
@@ -366,7 +366,7 @@ function store(state = initialState, action) {
       return Object.assign({}, state, {
         notification: {
           type: action.data.notification
-      }
+        }
       })
     case REMOVE_NOTIFICATION:
       return Object.assign({}, state, {
