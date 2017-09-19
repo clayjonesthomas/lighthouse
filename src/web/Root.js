@@ -6,10 +6,10 @@ import MyShopsPageHandler from 'scenes/MyShopsPage/MyShopsPageHandler'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {routerMiddleware} from 'react-router-redux'
-import lighthouse from 'reducers/reducer.js'
+import reducer from 'reducers/index'
 import NewPostHandler from 'scenes/NewPostPage/NewPostHandler'
 import thunkMiddleware from 'redux-thunk'
-import Container from 'scenes/Container/Container.js'
+import Container from 'scenes/Container/Container'
 import NewShopHandler from 'scenes/NewShopPage/NewShopHandler'
 import MyPostsPageHandler from 'scenes/MyPostsPage/MyPostsPageHandler'
 import "scenes/Container/Globals.css"
@@ -18,7 +18,7 @@ import MyFeedPageHandler from 'scenes/MyFeedPage/MyFeedPageHandler'
 import PrivacyPolicyPage from "scenes/PrivacyPolicyPage/PrivacyPolicyPage"
 
 let store = createStore(
-  lighthouse,
+  reducer,
   applyMiddleware(
     thunkMiddleware,
     routerMiddleware(browserHistory)

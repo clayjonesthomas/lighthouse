@@ -8,9 +8,9 @@ export function username(state = null, action) {
   switch(action.type) {
     case RESPONSE_LOGIN:
       window.location.reload() // move this out of the reducer
-      return action.data.username
+      return action.data.username || null
     case REQUEST_USER_INFO_RETURN:
-      return action.data.username
+      return action.data.username || null
     case SIGN_OUT_REQUEST:
       return null
     case SIGN_UP_RESPONSE:

@@ -1,16 +1,13 @@
 // this should be broken out/refactored into difference reducers for
 // different forms
-import {SAVE_NEW_POST_FORM_REF}
+import {SAVE_NEW_POST_FORM_REF, UPDATE_FORM_SHOPS,ADD_POST_FAILURE,
+  ADD_POST_RETURN, VALIDATION_ERROR}
   from 'scenes/NewPostPage/NewPostActions'
 import {ADD_SHOP_FINDER_REF}
   from 'scenes/MyShopsPage/MyShopsPageActions'
-import {SAVE_NEW_POST_FORM_REF, UPDATE_FORM_SHOPS}
-  from 'scenes/NewPostPage/NewPostActions'
 import {LOGIN_RESPONSE_FAILED, SIGN_UP_RESPONSE_FAILED, CLEAR_ERROR_MESSAGE,
   DUPLICATE_USERNAME_ERROR, AUTHENTICATION_ERROR}
   from 'scenes/modals/AuthActions'
-import {ADD_POST_FAILURE, ADD_POST_RETURN, VALIDATION_ERROR}
-  from 'scenes/NewPostPage/NewPostActions'
 
 export function formRefs(state = {}, action) {
   switch(action.type) {

@@ -9,7 +9,7 @@ import {username, isUserInfoLoaded, isModerator, isMobile}
 import {formRefs, form, serverMessageArray} from './FormReducer'
 import {modal} from './ModalReducer'
 import {notification} from './NotificationReducer'
-import {dislayHamburgerMenu} from './MenuReducer'
+import {displayHamburgerMenu} from './MenuReducer'
 
 export default combineReducers({
   displayedShops,
