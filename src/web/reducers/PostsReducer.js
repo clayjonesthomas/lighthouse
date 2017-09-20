@@ -49,6 +49,27 @@ export function displayedPosts(state = [], action){
   }
 }
 
+export function arePostsLoaded(state = false, action) {
+  switch(action.type) {
+    case REQUEST_POSTS:
+      return false
+    case REQUEST_POSTS_RETURN:
+      if(action.data.posts)
+        return true
+      return state
+    case SHOP_POSTS_REQUEST:
+      return false
+    case SHOP_POSTS_RETURN:
+      return true
+    case MY_POSTS_REQUEST:
+      return false
+    case MY_POSTS_RESPONSE:
+      return true
+    default:
+      return state
+  }
+}
+
 export function postsOffset(state = [], action){
   switch(action.type) {
     case REQUEST_POSTS:
@@ -59,6 +80,7 @@ export function postsOffset(state = [], action){
       return state
   }
 }
+
 export function areMorePosts(state = true, action){
   switch(action.type) {
     case REQUEST_POSTS:

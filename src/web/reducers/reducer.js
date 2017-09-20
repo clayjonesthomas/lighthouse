@@ -51,7 +51,7 @@ const initialState = {
     areMorePosts: true,
     shopPostsOffset: 0,
     isMobile: false,
-  displayHamburgerMenu: false,
+    displayHamburgerMenu: false,
     serverMessageArray: [],
     notification: null
 }

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import {displayedShops, shops, areMyShopsLoaded,
   areShopsLoaded} from './ShopsReducer'
 import {shop, shopPostsOffset} from './ShopReducer'
-import {displayedPosts, postsOffset, areMorePosts,
+import {displayedPosts, arePostsLoaded, postsOffset, areMorePosts,
   areMorePostsLoaded} from './PostsReducer'
 import {username, isUserInfoLoaded, isModerator, isMobile}
   from './UserReducer'
@@ -19,6 +19,7 @@ export default combineReducers({
   shop,
   shopPostsOffset,
   displayedPosts,
+  arePostsLoaded,
   postsOffset,
   areMorePosts,
   areMorePostsLoaded,
