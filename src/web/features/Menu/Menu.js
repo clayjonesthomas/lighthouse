@@ -22,9 +22,9 @@ const Menu =
         <Link
           to="/my_feed"
           className="menu-option"
-          onClick={(e) =>
-            setMustBeSignedInNotification(e)}
-        >
+          onClick={(e) => {
+            setMustBeSignedInNotification(e)
+          }}>
           {
             "My Feed"
           }

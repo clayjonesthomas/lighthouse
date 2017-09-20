@@ -99,7 +99,7 @@ export function areMorePosts(state = true, action){
       return state
   }
 }
-export function areMorePostsLoaded(state = false, action){
+export function areMorePostsLoaded(state = true, action){
   switch(action.type) {
     case MORE_POSTS_REQUEST:
       return false
