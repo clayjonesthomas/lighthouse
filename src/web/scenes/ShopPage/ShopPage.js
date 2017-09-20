@@ -24,6 +24,7 @@ const ShopPage =
     onMorePosts,
     areMorePostsLoaded,
     areMorePosts,
+    fireMustSignIn,
 
     isMobile
   }) => (
@@ -36,7 +37,12 @@ const ShopPage =
                 {name}
               </h1>
               <LikeButton
-                onClick={() => onLike()}
+                onClick={() => {
+                  if (username)
+                    onLike()
+                  else
+                    fireMustSignIn()
+                }}
                 isPressed={isLiked}
                 likes={likes}
               />

@@ -5,6 +5,8 @@ import React, {Component} from 'react'
 import {toggleShopLike} from './ShopPageActions'
 import {togglePostLike} from '../MyPostsPage/PostPageActions'
 import {pullShopPosts, pullMoreShopPosts} from './ShopPageActions'
+import {setMustBeSignedInNotification}
+  from 'scenes/notifications/NotificationActions'
 import Spinner from 'ui-kit/Spinner'
 
 class ShopPageHandler extends Component {
@@ -34,6 +36,7 @@ class ShopPageHandler extends Component {
           onMorePosts={this.props.onMorePosts}
           areMorePostsLoaded={this.props.areMorePostsLoaded}
           areMorePosts={this.props.areMorePosts}
+          fireMustSignIn={this.props.fireMustSignIn}
 
           isMobile={this.props.isMobile}
         />
@@ -65,6 +68,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onLikePost: (post_key) => dispatch(togglePostLike(post_key)),
     onMorePosts: () => dispatch(pullMoreShopPosts(ownProps.params.url_key)),
     getShopPosts: () => dispatch(pullShopPosts(ownProps.params.url_key)),
+    fireMustSignIn: () =>
+      dispatch(setMustBeSignedInNotification(undefined,
+        "to like a store"
+      )),
   }
 }
 
