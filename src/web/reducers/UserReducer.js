@@ -37,7 +37,7 @@ export function isUserInfoLoaded(state = false, action) {
 export function isModerator(state = false, action) {
   switch(action.type) {
     case REQUEST_USER_INFO_RETURN:
-      return true
+      return action.data.isModerator
     case SIGN_OUT_REQUEST:
       return false
     default:

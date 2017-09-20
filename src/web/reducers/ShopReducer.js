@@ -1,11 +1,20 @@
 import {SHOP_POSTS_RETURN} from 'scenes/ShopPage/ShopPageActions'
 import {MORE_SHOP_POSTS_RETURN} from 'scenes/ShopPage/ShopPageActions'
 import {REQUEST_SHOP_RETURN} from 'scenes/ShopPage/ShopPageActions'
+import {LIKE_SHOP} from 'scenes/ShopPage/ShopPageActions'
 
 export function shop(state = {}, action){
   switch(action.type) {
     case REQUEST_SHOP_RETURN:
       return action.data.shop
+    case LIKE_SHOP:
+      if (state.likes) {
+        return Object.assign({}, state, {
+          likes: state.likes += state.isLiked ? -1 : 1,
+          isLiked: !state.isLiked
+        })
+      }
+      return state
     default:
       return state
   }

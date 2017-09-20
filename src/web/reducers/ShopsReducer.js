@@ -1,8 +1,8 @@
 import {REQUEST_SHOPS, REQUEST_SHOPS_RETURN}
-  from '../scenes/NewPostPage/NewPostActions.js'
-import {LIKE_SHOP} from '../scenes/ShopPage/ShopPageActions'
+  from 'scenes/NewPostPage/NewPostActions'
+import {LIKE_SHOP} from 'scenes/ShopPage/ShopPageActions'
 import {REQUEST_MY_SHOPS, REQUEST_MY_SHOPS_RETURN,
-  ADD_SHOPS_TO_MY_SHOPS_RETURN} from '../scenes/MyShopsPage/MyShopsPageActions'
+  ADD_SHOPS_TO_MY_SHOPS_RETURN} from 'scenes/MyShopsPage/MyShopsPageActions'
 
 export function shops(state = [], action){
   switch(action.type) {
