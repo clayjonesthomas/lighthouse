@@ -4,7 +4,8 @@
     background-color: #00aaff;
     width: 100%;
     color: #fcfcfc;
-    z-index: 2;
+    /* shopfinder has a component at z index 1000 */
+    z-index: 1001;
     text-align: center;
     padding: .8em;
     font-size: 1.4em;
