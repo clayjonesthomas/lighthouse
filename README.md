@@ -2,10 +2,10 @@
 #Current Members
 Clay and Michelle!!!!
 
-#Setup
+# Setup
 to be filled out when/if Michelle is on-boarded
 
-#Git stuff
+# Git stuff
 All contributions to this code base should follow the typical
 git style of contribution; checkout a new branch, write your 
 code, submit a pull request, get your PR approved, and submit.
