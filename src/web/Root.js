@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react'
 import {createStore, applyMiddleware} from 'redux'
 import ShopPageHandler from 'scenes/ShopPage/ShopPageHandler'
-import PostPageHandler from 'scenes/PostPage/PostPageHandler'
 import MyShopsPageHandler from 'scenes/MyShopsPage/MyShopsPageHandler'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
@@ -34,7 +33,6 @@ const Root = () => (
         <Route path="/new_shop" component={NewShopHandler} />
         <Route path="/new" component={NewPostHandler} />
         <Route path="/shop/:url_key" component={ShopPageHandler}/>
-        <Route path="/post/:url_key" component={PostPageHandler}/>
         <Route path="/shops" component={MyShopsPageHandler}/>
         <Route path="/posts" component={MyPostsPageHandler}/>
         <Route path="/privacy_policy" component={PrivacyPolicyPage}/>
