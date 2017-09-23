@@ -18,12 +18,9 @@ npm-debug.log
 src/backend/backend.pyc
 src/backend/models.pyc
 src/bundled_web
-
 .idea
 npm-debug.log
 node_modules
 coffee_src
 src/bundle.js
-lib
-src/backend/lib
 src/backend/config.py
