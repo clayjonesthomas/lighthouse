@@ -107,7 +107,7 @@ def _spawn_dummy_posts(shop_keys):
 def _spawn_dummy_shops():
     shops = [Store(name='American Eagle',
                   website='www.ae.com',
-                  likes=302470),
+                  likes=0),
              Store(name='JCrew',
                   website='www.jcrew.com',
                   likes=493218),

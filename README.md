@@ -34,3 +34,6 @@ ready for your PR to be seen by others, hit 'Create pull request'.
 From there, reviewers can comment on your code, and you can continue to commit to
 the PR until it satisfies your reviewers. After that, you can run the necessary merges
 and submit your code to the master branch.
+
+## Deploys and stuff
+gcloud app deploy --no-promote app.yaml index.yaml

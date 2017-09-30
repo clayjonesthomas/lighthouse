@@ -43,7 +43,7 @@ class Post(ndb.Model):
 
     @staticmethod
     def order_posts(posts):
-        return sorted(posts, key=lambda post: post.likes/post.shop_key.get().likes)
+        return sorted(posts, key=lambda post: post.likes/(post.shop_key.get().likes + 1))
 
     def prepare_post(self, user):
         post_dictionary = self.to_dict()

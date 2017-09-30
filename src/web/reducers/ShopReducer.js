@@ -8,7 +8,7 @@ export function shop(state = {}, action){
     case REQUEST_SHOP_RETURN:
       return action.data.shop
     case LIKE_SHOP:
-      if (state.likes) {
+      if (state.likes >= 0) {
         return Object.assign({}, state, {
           likes: state.likes += state.isLiked ? -1 : 1,
           isLiked: !state.isLiked
