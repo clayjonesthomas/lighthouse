@@ -1,4 +1,7 @@
-## ReadMe
+##ReadMe
+#Current Members
+Clay and Michelle!!!!
+
 # Setup
 to be filled out when/if Michelle is on-boarded
 
@@ -21,7 +24,7 @@ branch. It should look something like this:
 git push --set-upstream origin my_first_branch
 ```
 You should run this command unless you know what you're doing and would like
-to do something else
+to do something else.
 
 
 To submit a pull request, go onto git, click 'New Pull Request',
