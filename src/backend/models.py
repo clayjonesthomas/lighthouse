@@ -120,6 +120,7 @@ class Store(ndb.Model):
             shop_dict['canDelete'] = user.is_moderator
         else:
             shop_dict['isLiked'] = False
+            shop_dict['canDelete'] = False
 
         return shop_dict
 
