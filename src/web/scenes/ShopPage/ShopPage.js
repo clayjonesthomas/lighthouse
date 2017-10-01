@@ -21,6 +21,8 @@ const ShopPage =
     shopPosts,
     onLikePost,
     arePostsLoaded,
+    displayDummyShopSpinner,
+    startDummySpinnerTimer,
     onMorePosts,
     areMorePostsLoaded,
     areMorePosts,
@@ -48,7 +50,7 @@ const ShopPage =
               />
             </div>
           </Row>
-          {!arePostsLoaded &&
+          {(!arePostsLoaded || displayDummyShopSpinner) &&
             <Spinner/>
           }
           {arePostsLoaded && shopPosts &&
@@ -59,6 +61,7 @@ const ShopPage =
                 onLike={() => onLikePost(post.key)}
                 canDelete={post.canDelete}
                 onDelete={deletePost}
+                startDummySpinnerTimer={startDummySpinnerTimer}
               /></Row>
             })
           }

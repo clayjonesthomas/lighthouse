@@ -4,7 +4,7 @@ import {pullShop} from './ShopPageActions'
 import React, {Component} from 'react'
 import {toggleShopLike} from './ShopPageActions'
 import {togglePostLike} from '../MyPostsPage/PostPageActions'
-import {pullShopPosts, pullMoreShopPosts} from './ShopPageActions'
+import {pullShopPosts, pullMoreShopPosts, startDummySpinnerTimer} from './ShopPageActions'
 import {setMustBeSignedInNotification}
   from 'scenes/notifications/NotificationActions'
 import Spinner from 'ui-kit/Spinner'
@@ -33,6 +33,8 @@ class ShopPageHandler extends Component {
           shopPosts={this.props.shopPosts}
           onLikePost={this.props.onLikePost}
           arePostsLoaded={this.props.arePostsLoaded}
+          displayDummyShopSpinner={this.props.displayDummyShopSpinner}
+          startDummySpinnerTimer={this.props.startDummySpinnerTimer}
           onMorePosts={this.props.onMorePosts}
           areMorePostsLoaded={this.props.areMorePostsLoaded}
           areMorePosts={this.props.areMorePosts}
@@ -54,6 +56,7 @@ const mapStateToProps = (state) => {
     isLiked: state.shop.isLiked,
     username: state.username,
     arePostsLoaded: state.arePostsLoaded,
+    displayDummyShopSpinner: state.displayDummyShopSpinner,
     areMorePostsLoaded: state.areMorePostsLoaded,
     areMorePosts: state.areMorePosts,
     shopPosts: state.displayedPosts,
@@ -72,6 +75,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(setMustBeSignedInNotification(undefined,
         "to like a store"
       )),
+    startDummySpinnerTimer: () => dispatch(startDummySpinnerTimer())
   }
 }
 

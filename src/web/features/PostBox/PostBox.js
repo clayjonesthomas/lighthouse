@@ -18,7 +18,8 @@ const PostBox = (
     isMobile,
     onArchive,
     username,
-    fireMustSignIn
+    fireMustSignIn,
+    startDummySpinnerTimer
   }) => (
   <div className="post-box">
     <div className="post-box-inner">
@@ -35,7 +36,9 @@ const PostBox = (
       </div>
       <div className="sale-shop">
         <Link
-          to={"/shop/" + post['shop_key']}>
+          to={"/shop/" + post['shop_key']}
+          onClick={startDummySpinnerTimer}
+        >
           {
             post['shop']['name']
           }

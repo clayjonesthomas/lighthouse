@@ -9,7 +9,8 @@ export const SHOP_POSTS_REQUEST = 'SHOP_POSTS_REQUEST'
 export const SHOP_POSTS_RETURN = 'SHOP_POSTS_RETURN'
 export const MORE_SHOP_POSTS_REQUEST = 'MORE_SHOP_POSTS_REQUEST'
 export const MORE_SHOP_POSTS_RETURN = 'MORE_SHOP_POSTS_RETURN'
-
+export const SHOP_DUMMY_SPINNER_START = 'SHOP_DUMMY_SPINNER_START'
+export const SHOP_DUMMY_SPINNER_TIMEOUT = 'SHOP_DUMMY_SPINNER_TIMEOUT'
 
 export const requestShop = () => {
   return {
@@ -126,5 +127,28 @@ const moreShopPostsReturn = (shopPosts) => {
     data: {
       shopPosts: shopPosts
     }
+  }
+}
+
+export function startDummySpinnerTimer() {
+  const DUMMY_SPINNER_DURATION = 1000 //ms
+  return dispatch => {
+    dispatch(shopDummySpinnerStart())
+    return setTimeout(function() {
+      dispatch(shopDummySpinnerTimeout());
+    }, DUMMY_SPINNER_DURATION);
+
+  }
+}
+
+const shopDummySpinnerStart = () => {
+  return {
+    type: SHOP_DUMMY_SPINNER_START
+  }
+}
+
+const shopDummySpinnerTimeout = () => {
+  return {
+    type: SHOP_DUMMY_SPINNER_TIMEOUT
   }
 }
