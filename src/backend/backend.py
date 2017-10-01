@@ -263,6 +263,9 @@ class MyPosts(BaseHandler):
 class SinglePost(BaseHandler):
 
     def post(self):
+        user = self.user
+        if not user:
+            return
         body = json.loads(self.request.body)
         shops = body['shops']
         title = body['title']
