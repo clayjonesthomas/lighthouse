@@ -206,12 +206,18 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainPage(webapp2.RequestHandler):
 
+    bool_retrofit_admin_author = True;
     def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             # development, otherwise prod
             if not Post.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
+            else:
+                if self.user.is_moderator:
+                  for post in Post.query():
+                      post.author = self.user.key.urlsafe();
+                  bool_retrofit_admin_author = False;
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
