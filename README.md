@@ -1,5 +1,7 @@
 ## ReadMe
+
 # Setup
+
 to be filled out when/if Michelle is on-boarded
 
 # Git stuff
@@ -34,3 +36,7 @@ ready for your PR to be seen by others, hit 'Create pull request'.
 From there, reviewers can comment on your code, and you can continue to commit to
 the PR until it satisfies your reviewers. After that, you can run the necessary merges
 and submit your code to the master branch.
+
+# Backing up the datastore
+This is a thing you should do whenever you are running scripts over the datastore.
+Check out this page for specifics: https://cloud.google.com/datastore/docs/console/datastore-backing-up-restoring
