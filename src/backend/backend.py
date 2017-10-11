@@ -212,11 +212,6 @@ class MainPage(BaseHandler):
             if not Post.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
-        else:
-            if self.user and self.user.is_moderator:
-                for post in Post.query():
-                    post.author = self.user.key
-                    post.put()
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
