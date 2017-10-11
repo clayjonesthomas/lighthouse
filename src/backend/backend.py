@@ -33,7 +33,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
+# CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
@@ -696,7 +696,8 @@ class LoginHandler(BaseHandler):
         if self.user:
             self.response.write(json.dumps({
                 'username': self.user.username,
-                'isModerator': self.user.is_moderator
+                'isModerator': self.user.is_moderator,
+                'logged_in': True
             }))
         else:
             self.response.write(json.dumps({'logged_in': False}))
