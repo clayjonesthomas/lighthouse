@@ -403,24 +403,15 @@ class LikeShop(BaseHandler):
         if 'keys' in body:
             shops = [ndb.Key(urlsafe=key).get()
                      for key in body['keys']]
-        # stupid amount of ifs here, but we dont want a user to
-        # remove shops they add in a group on accident. We should
-        # probably send only unliked shops in this case or something
-        if len(shops) > 1:
-            for shop in shops:
+
+        for shop in shops:
+            if shop.key in user.liked_stores:
+                user.liked_stores.remove(shop.key)
+                shop.likes -= 1
+            else:
                 user.liked_stores.append(shop.key)
                 shop.likes += 1
-                shop.put()
-        else:
-            # is this what it means, what it means to hack
-            for shop in shops:
-                if shop.key in user.liked_stores:
-                    user.liked_stores.remove(shop.key)
-                    shop.likes -= 1
-                else:
-                    user.liked_stores.append(shop.key)
-                    shop.likes += 1
-                shop.put()
+            shop.put()
         user.put()
         shops = [shop.prepare_shop(user) for shop in shops]
         self.response.write(json.dumps(shops))
