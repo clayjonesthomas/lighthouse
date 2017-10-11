@@ -122,6 +122,7 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmitLike: () => {
       dispatch(addShopsToMyShops())
+      dispatch(clearShopFinder())
       dispatch(push("/shops"))
     },
     onSubmitForm: () => {
