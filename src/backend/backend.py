@@ -221,8 +221,6 @@ class Feed(BaseHandler):
 
     def get(self, offset, _should_get_all_posts):
         user = self.user
-        if not user:
-            return
         # convert from '0' or '1' to True or False
         should_get_all_posts = bool(int(_should_get_all_posts))
         raw_posts = self._get_posts(user, should_get_all_posts, int(offset))
@@ -729,8 +727,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
 
-    webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
+    webapp2.Route('/rest/posts', Feed, name='feed'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post/archive', ArchivePost, name='archive_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),

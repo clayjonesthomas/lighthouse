@@ -55,6 +55,7 @@ class Post(ndb.Model):
         post_dictionary['timestring'] = self._prepare_timestring()
         del post_dictionary['timestamp']
         post_dictionary['key'] = self.key.urlsafe()
+        del post_dictionary['author']
 
         if user:
             post_dictionary['isLiked'] = self.key in user.liked_posts
