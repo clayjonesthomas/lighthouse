@@ -60,7 +60,7 @@ class Post(ndb.Model):
             post_dictionary['isLiked'] = self.key in user.liked_posts
             post_dictionary['canDelete'] = user.is_moderator
             if self.author:
-                post_dictionary['canDelete'] = user.key == self.author.key
+                post_dictionary['canDelete'] = user.key == self.author
         else:
             post_dictionary['isLiked'] = False
             post_dictionary['canDelete'] = False
