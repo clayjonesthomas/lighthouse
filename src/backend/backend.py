@@ -221,6 +221,8 @@ class Feed(BaseHandler):
 
     def get(self, offset, _should_get_all_posts):
         user = self.user
+        if not user:
+            return
         # convert from '0' or '1' to True or False
         should_get_all_posts = bool(int(_should_get_all_posts))
         raw_posts = self._get_posts(user, should_get_all_posts, int(offset))
@@ -249,18 +251,21 @@ class MyPosts(BaseHandler):
 
     def get(self, offset):
         user = self.user
+        if not user:
+            return
         _offset = int(offset)
-        fetched_posts = []
-        if user:
-            fetched_posts = [post_key.get().prepare_post(user)
-                             for post_key in user.liked_posts[_offset:_offset+10]]
-            logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
+        fetched_posts = [post_key.get().prepare_post(user)
+                         for post_key in user.liked_posts[_offset:_offset+10]]
+        logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
 
 class SinglePost(BaseHandler):
 
     def post(self):
+        user = self.user
+        if not user:
+            return
         body = json.loads(self.request.body)
         shops = body['shops']
         title = body['title']
@@ -307,6 +312,9 @@ class SinglePost(BaseHandler):
 
 class ArchivePost(BaseHandler):
     def post(self):
+        user = self.user
+        if not user or not user.is_moderator:
+            return
         body = json.loads(self.request.body)
         post_key = body['key']
         post = ndb.Key(urlsafe=post_key).get()
@@ -317,23 +325,23 @@ class ArchivePost(BaseHandler):
 
 class LikePost(BaseHandler):
     def post(self):
+        user = self.user
+        if not user:
+            return
         body = json.loads(self.request.body)
         post = get_entity_from_url_key(body['key'])
-        user = self.user
-        if user:
-            if post.key in user.liked_posts:
-                user.liked_posts.remove(post.key)
-                post.likes -= 1
-            else:
-                user.liked_posts.append(post.key)
-                post.likes += 1
-            user.put()
-            post.put()
+        if post.key in user.liked_posts:
+            user.liked_posts.remove(post.key)
+            post.likes -= 1
+        else:
+            user.liked_posts.append(post.key)
+            post.likes += 1
+        user.put()
+        post.put()
 
 
 class Shops(BaseHandler):
 
-    # currently gets shops a user doesn't want
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
@@ -346,12 +354,13 @@ class NotMyShops(BaseHandler):
     # currently gets shops a user doesn't want
     def get(self):
         user = self.user
+        if not user:
+            return
         fetched_shops = [shop.prepare_shop(user)
-                          for shop in Store.query()]
-        if user:
-            fetched_shops = list(filter((lambda s:
-                                          ndb.Key(urlsafe=s['key']) not in user.liked_stores),
-                                         fetched_shops))
+                         for shop in Store.query()]
+        fetched_shops = list(filter((lambda s: ndb.Key(urlsafe=s['key'])
+                                     not in user.liked_stores),
+                                    fetched_shops))
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
@@ -360,11 +369,11 @@ class MyShops(BaseHandler):
 
     def get(self):
         user = self.user
-        fetched_shops = []
-        if user:
-            fetched_shops = [shop_key.get().prepare_shop(user)
-                              for shop_key in user.liked_stores]
-            logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
+        if not user:
+            return
+        fetched_shops = [shop_key.get().prepare_shop(user)
+                         for shop_key in user.liked_stores]
+        logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps(fetched_shops))
 
 
@@ -384,36 +393,28 @@ class ShopPosts(BaseHandler):
 class LikeShop(BaseHandler):
 
     def post(self):
+        user = self.user
+        if not user:
+            return
         body = json.loads(self.request.body)
         shops = []
         if 'key' in body:
             shops = [ndb.Key(urlsafe=body['key']).get()]
         if 'keys' in body:
             shops = [ndb.Key(urlsafe=key).get()
-                      for key in body['keys']]
-        user = self.user
-        if user:
-            # stupid amount of ifs here, but we dont want a user to
-            # remove shops they add in a group on accident. We should
-            # probably send only unliked shops in this case or something
-            if len(shops) > 1:
-                for shop in shops:
-                    user.liked_stores.append(shop.key)
-                    shop.likes += 1
-                    shop.put()
+                     for key in body['keys']]
+
+        for shop in shops:
+            if shop.key in user.liked_stores:
+                user.liked_stores.remove(shop.key)
+                shop.likes -= 1
             else:
-                # is this what it means, what it means to hack
-                for shop in shops:
-                    if shop.key in user.liked_stores:
-                        user.liked_stores.remove(shop.key)
-                        shop.likes -= 1
-                    else:
-                        user.liked_stores.append(shop.key)
-                        shop.likes += 1
-                    shop.put()
-            user.put()
-            shops = [shop.prepare_shop(user) for shop in shops]
-            self.response.write(json.dumps(shops))
+                user.liked_stores.append(shop.key)
+                shop.likes += 1
+            shop.put()
+        user.put()
+        shops = [shop.prepare_shop(user) for shop in shops]
+        self.response.write(json.dumps(shops))
 
 
 class SingleShop(BaseHandler):
@@ -434,25 +435,27 @@ class SingleShop(BaseHandler):
 
     def post(self):
         user = self.user
+        if not user or not user.is_moderator:
+            return
         body = json.loads(self.request.body)
-        if user and user.is_moderator:
-            shop = Store(
-                name=body['name'],
-                website=body['website']
-            )
-            shop_key = shop.put()
-            self.response.write(json.dumps({'key': shop_key.urlsafe()}))
+        shop = Store(
+            name=body['name'],
+            website=body['website']
+        )
+        shop_key = shop.put()
+        self.response.write(json.dumps({'key': shop_key.urlsafe()}))
 
     def delete(self, url_key):
         user = self.user
-        if user and user.is_moderator:
-            ndb.Key(urlsafe=url_key).delete()
+        if not user or not user.is_moderator:
+            return
+        ndb.Key(urlsafe=url_key).delete()
 
 
 class AddIconToShop(BaseHandler):
     '''
     under severe construction, don't use unless you
-    figure out what the fuck is going on with python
+    figure out what is going on with python
     gcs
     '''
     def get(self, url_key):
