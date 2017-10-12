@@ -1,5 +1,8 @@
 ## ReadMe
 
+# Current Members
+Clay and Michelle!!!!
+
 # Setup
 
 to be filled out when/if Michelle is on-boarded
@@ -23,7 +26,7 @@ branch. It should look something like this:
 git push --set-upstream origin my_first_branch
 ```
 You should run this command unless you know what you're doing and would like
-to do something else
+to do something else.
 
 
 To submit a pull request, go onto git, click 'New Pull Request',
@@ -40,3 +43,6 @@ and submit your code to the master branch.
 # Backing up the datastore
 This is a thing you should do whenever you are running scripts over the datastore.
 Check out this page for specifics: https://cloud.google.com/datastore/docs/console/datastore-backing-up-restoring
+
+## Deploys and stuff
+gcloud app deploy --no-promote app.yaml index.yaml
