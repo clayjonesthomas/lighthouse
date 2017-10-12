@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import {displayedShops, shops, areMyShopsLoaded,
   areShopsLoaded} from './ShopsReducer'
-import {shop, shopPostsOffset} from './ShopReducer'
+import {shop, shopPostsOffset, isEditShop} from './ShopReducer'
 import {displayedPosts, arePostsLoaded, postsOffset, areMorePosts,
   areMorePostsLoaded} from './PostsReducer'
 import {username, isUserInfoLoaded, isModerator, isMobile}
@@ -32,5 +32,6 @@ export default combineReducers({
   serverMessageArray,
   modal,
   notification,
-  displayHamburgerMenu
+  displayHamburgerMenu,
+  isEditShop
 })

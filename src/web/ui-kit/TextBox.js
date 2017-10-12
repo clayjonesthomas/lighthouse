@@ -28,6 +28,7 @@ class TextBox extends Component {
           </ControlLabel>
         }
         <FormControl
+          defaultValue={this.props.textBoxValue || ''}
           type={this.props.inputType || "text"}
           placeholder={this.props.placeholder}
           className={"text-box-input "+this.props.className}
@@ -44,7 +45,8 @@ TextBox.propTypes = {
   placeholder: PropTypes.string,
   label: PropTypes.string,
   className: PropTypes.string,
-  refFunc: PropTypes.func.isRequired
+  refFunc: PropTypes.func.isRequired,
+  textBoxValue: PropTypes.string
 }
 
 export default TextBox

@@ -36,6 +36,7 @@ const PostBox = (
       <div className="sale-shop">
         <Link
           to={"/shop/" + post['shop_key']}>
+          {post['shop']['icon_url'] != null && <img src={post['shop']['icon_url']}/>}
           {
             post['shop']['name']
           }
