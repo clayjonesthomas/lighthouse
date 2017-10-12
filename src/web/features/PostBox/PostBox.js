@@ -57,6 +57,9 @@ const PostBox = (
           {
             "Posted " + post.timestring
           }
+          {
+            post.author_username && " by " + post['author_username']
+          }
         </div>
         {isModerator &&
           <div className="admin-tools">

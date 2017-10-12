@@ -204,7 +204,7 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
-class MainPage(webapp2.RequestHandler):
+class MainPage(BaseHandler):
 
     def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
@@ -276,7 +276,8 @@ class SinglePost(BaseHandler):
         post_keys = []
         for shop in shops:
             post = Post(title=title,
-                        shop_key=ndb.Key(urlsafe=shop['key']))
+                        shop_key=ndb.Key(urlsafe=shop['key']),
+                        author=ndb.Key(urlsafe=self.user.key.urlsafe()))
             post_keys.append(post.put().urlsafe())
         self.response.write(json.dumps({'keys': post_keys}))
 
