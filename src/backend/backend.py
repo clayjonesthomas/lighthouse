@@ -709,25 +709,6 @@ class LogoutHandler(BaseHandler):
         self.auth.unset_session()
         self.response.write(json.dumps('Logout successful'))
 
-
-import time
-
-
-class AdvanceTime(BaseHandler):
-    def get(self):
-        time.time = self._diff_time
-        logging.info('doneskies')
-        self.response.write(json.dumps({"time has advanced": "yep"}))
-
-
-    @staticmethod
-    def _diff_time():
-        # import pdb; pdb.set_trace()
-        current_date = datetime.datetime.now()
-        thirty_days_future = current_date + datetime.timedelta(days=30)
-        return time.mktime(thirty_days_future.timetuple())
-
-
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -749,7 +730,6 @@ config = {
 
 
 app = webapp2.WSGIApplication([
-    webapp2.Route('/rest/advance_time', AdvanceTime, name='advance_time'),
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
     webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),

@@ -318,4 +318,3 @@ class TestAuth(unittest.TestCase):
         response_session = request_session.get_response(app)
         body = json.loads(response_session.body)
         print body['logged_in']
-        import ipdb; ipdb.set_trace()
