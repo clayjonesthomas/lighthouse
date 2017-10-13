@@ -664,6 +664,7 @@ class LoginHandler(BaseHandler):
             return
 
         try:
+            import pdb; pdb.set_trace()
             user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
 
@@ -721,15 +722,25 @@ class AdvanceTime(BaseHandler):
 
     @staticmethod
     def _diff_time():
+        # import pdb; pdb.set_trace()
         current_date = datetime.datetime.now()
-        thirty_days_future = current_date + datetime.timedelta(minutes=30)
+        thirty_days_future = current_date + datetime.timedelta(days=30)
         return time.mktime(thirty_days_future.timetuple())
 
 
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
-        'user_attributes': [] # used for caching properties
+        'user_attributes': [],  # used for caching properties
+        # default is 1814400, 86400, 3600
+        'token_max_age': 86400 * 365,  # amount of seconds in a day * 1 year of days
+        # for some reason this also functions like token_max_age in that it
+        # logs out users after the time period is up instead of doing what it
+        # should do, namely issuing a new cookie. Ideally, this should be limited
+        # to ~1 day for security reasons.
+        'token_new_age': 86400 * 365,
+        'token_cache_age': 3600
+
     },
     'webapp2_extras.sessions': {
         'secret_key': auth_config.secret_key
