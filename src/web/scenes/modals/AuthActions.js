@@ -187,3 +187,15 @@ export const clearErrorMessage = () => {
     type: CLEAR_ERROR_MESSAGE
   }
 }
+
+export function onAdvanceTime() {
+  return () => {
+    const args = {
+      method: 'GET',
+      credentials: 'same-origin'
+    }
+    return fetch("/rest/advance_time", args)
+      .then(response => response.json())
+      .then(console.log("done"))
+  }
+}

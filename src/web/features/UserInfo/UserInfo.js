@@ -12,7 +12,8 @@ const UserInfo =
      username,
      isUserInfoLoaded,
      signOut,
-     onHome
+     onHome,
+     onAdvanceTime
    }) => (
     <div id="top-bar-container">
       <div className="clear-fix user-info-container">
@@ -54,6 +55,12 @@ const UserInfo =
         />
         <span id="beta-version">
           BETA
+        </span>
+        <span>
+          <LinkButton
+            onClick={onAdvanceTime}
+            contents="Advance time"
+          />
         </span>
       </div>
     </div>

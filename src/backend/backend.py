@@ -715,6 +715,8 @@ import time
 class AdvanceTime(BaseHandler):
     def get(self):
         time.time = self._diff_time
+        logging.info('doneskies')
+        self.response.write(json.dumps({"time has advanced": "yep"}))
 
 
     @staticmethod

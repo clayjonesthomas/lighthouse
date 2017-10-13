@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import {pullUserInfo, signOut} from './UserInfoActions'
-import {showLogin, showSignUp} from '../../scenes/modals/AuthActions'
+import {showLogin, showSignUp, onAdvanceTime} from 'scenes/modals/AuthActions'
 import UserInfo from './UserInfo'
 
 class UserInfoHandler extends Component {
@@ -19,6 +19,7 @@ class UserInfoHandler extends Component {
         onShowSignUp={this.props.onShowSignUp}
         signOut={this.props.signOut}
         onHome={this.props.onHome}
+        onAdvanceTime={this.props.onAdvanceTime}
       />
     )
   }
@@ -41,7 +42,8 @@ const mapDispatchToProps = (dispatch) => {
     signOut: () => {
       dispatch(signOut())
     },
-    onHome: () => dispatch(push('/'))
+    onHome: () => dispatch(push('/')),
+    onAdvanceTime: () => dispatch(onAdvanceTime())
   }
 }
 
