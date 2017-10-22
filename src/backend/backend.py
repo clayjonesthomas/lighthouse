@@ -664,7 +664,6 @@ class LoginHandler(BaseHandler):
             return
 
         try:
-            import pdb; pdb.set_trace()
             user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
 
