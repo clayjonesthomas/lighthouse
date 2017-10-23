@@ -24,6 +24,7 @@ const ShopBox = (
         <a
           href={shop.website}
           className="go-to-site-link"
+          target="_blank"
         >
           Go to site...
         </a>

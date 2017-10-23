@@ -18,7 +18,8 @@ const PostBox = (
     isMobile,
     onArchive,
     username,
-    fireMustSignIn
+    fireMustSignIn,
+    startDummySpinnerTimer
   }) => (
   <div className="post-box">
     <div className="post-box-inner">
@@ -57,6 +58,9 @@ const PostBox = (
         <div className="post-timestamp">
           {
             "Posted " + post.timestring
+          }
+          {
+            post.author_username && " by " + post['author_username']
           }
         </div>
         {isModerator &&
