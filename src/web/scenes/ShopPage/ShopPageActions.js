@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import {SHOP_URL, SHOP_POST_URL, LIKE_SHOP_URL} from '../../constants/constants'
+import {SHOP_URL, SHOP_POST_URL, LIKE_SHOP_URL, EDIT_SHOP_URL} from '../../constants/constants'
 
 export const REQUEST_SHOP = "REQUEST_SHOP"
 export const REQUEST_SHOP_RETURN = "REQUEST_SHOP_RETURN"
@@ -9,6 +9,9 @@ export const SHOP_POSTS_REQUEST = 'SHOP_POSTS_REQUEST'
 export const SHOP_POSTS_RETURN = 'SHOP_POSTS_RETURN'
 export const MORE_SHOP_POSTS_REQUEST = 'MORE_SHOP_POSTS_REQUEST'
 export const MORE_SHOP_POSTS_RETURN = 'MORE_SHOP_POSTS_RETURN'
+export const TOGGLE_EDIT_SHOP = 'TOGGLE_EDIT_SHOP'
+export const EDIT_SHOP_REQUEST = 'EDIT_SHOP_REQUEST'
+export const EDIT_SHOP_RESPONSE = 'EDIT_SHOP_RESPONSE'
 export const SHOP_DUMMY_SPINNER_START = 'SHOP_DUMMY_SPINNER_START'
 export const SHOP_DUMMY_SPINNER_TIMEOUT = 'SHOP_DUMMY_SPINNER_TIMEOUT'
 
@@ -127,6 +130,59 @@ const moreShopPostsReturn = (shopPosts) => {
     data: {
       shopPosts: shopPosts
     }
+  }
+}
+
+const toggleEditShopAction = () => {
+  return {
+    type: TOGGLE_EDIT_SHOP
+  }
+}
+
+export function toggleEditShop() {
+  return dispatch => 
+    dispatch(toggleEditShopAction())
+    return;
+}
+
+export function submitShopEdits(shop_key) {
+  return (dispatch, getState) => {
+    const state = getState()
+    const refs = state.formRefs
+    const name = refs.shop_name.value
+    const website = refs.shop_website.value
+    const icon_url = refs.icon_url.value
+    
+    const body = {
+      key: shop_key,
+      name: name,
+      website: website,
+      icon_url: icon_url,
+    }
+    
+    const formArgs = {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify(body)
+    }
+
+    dispatch(onSubmitEditRequest())
+
+    return fetch(EDIT_SHOP_URL, formArgs)
+      .then(response => response.json())
+      .then(json => onSubmitEditResponse())
+  }
+}
+
+export const onSubmitEditRequest = () => {
+  return {
+    type: EDIT_SHOP_REQUEST
+  }
+}
+
+export const onSubmitEditResponse = () => {
+  return {
+    type: EDIT_SHOP_RESPONSE
   }
 }
 

@@ -116,7 +116,8 @@ def _spawn_dummy_shops():
                   likes=124341),
              Store(name='Lulu Lemon',
                   website='www.lululemon.com',
-                  likes=295831),
+                  likes=295831,
+                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Store(name='Old Navy',
                   website='www.oldnavy.com',
                   likes=324319)]
@@ -437,12 +438,15 @@ class SingleShop(BaseHandler):
         if not user or not user.is_moderator:
             return
         body = json.loads(self.request.body)
-        shop = Store(
-            name=body['name'],
-            website=body['website']
-        )
-        shop_key = shop.put()
-        self.response.write(json.dumps({'key': shop_key.urlsafe()}))
+
+        if user and user.is_moderator:
+            shop = Store(
+                name=body['name'],
+                website=body['website'],
+                icon_url=body['icon_url']
+            )
+            shop_key = shop.put()
+            self.response.write(json.dumps({'key': shop_key.urlsafe()}))
 
     def delete(self, url_key):
         user = self.user
@@ -450,6 +454,20 @@ class SingleShop(BaseHandler):
             return
         ndb.Key(urlsafe=url_key).delete()
 
+class EditShop(BaseHandler):
+
+    def post(self):
+      user = self.user
+      body = json.loads(self.request.body)
+
+      if user and user.is_moderator:
+          shop_key=body['key']
+          shop = ndb.Key(urlsafe=shop_key).get()
+          shop.name = body['name']
+          shop.website = body['website']
+          shop.icon_url = body['icon_url']
+          shop.put()
+          self.response.write(json.dumps({'key': shop_key}))
 
 class AddIconToShop(BaseHandler):
     '''
@@ -739,6 +757,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shop/like', LikeShop, name='like_shop'),
     # webapp2.Route('/rest/shop/icon/<url_key:.*>', AddIconToShop, name='single_shop'),
+    webapp2.Route('/rest/shop/edit', EditShop, name='edit_shop'),
     webapp2.Route('/rest/shop', SingleShop, name='single_shop'),
     webapp2.Route('/rest/shop/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', ShopPosts, name='single_shop'),
     webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),

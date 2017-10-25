@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import SubmitButton from 'ui-kit/SubmitButton'
 import LikeButton from 'ui-kit/LikeButton/LikeButton'
 import Spinner from 'ui-kit/Spinner'
 import MoreContentButton from 'ui-kit/MoreContentButton'
@@ -6,14 +7,16 @@ import {Grid, Col, Row} from 'react-bootstrap'
 import PostBox from 'features/PostBox/PostBox'
 import ShopFinder, {FINDER_SEARCH}
   from 'features/ShopFinder/ShopFinder'
+import EditShop from '../../features/EditShop/EditShop'
 
 import './ShopPage.css'
 const ShopPage =
   ({
     name,
     website,
+    iconUrl,
     likes,
-    onLike,
+    onLike, 
     isLiked,
 
     username,
@@ -28,7 +31,15 @@ const ShopPage =
     areMorePosts,
     fireMustSignIn,
 
-    isMobile
+    isMobile,
+    isModerator,
+    toggleEditShop,
+    isEditShop,
+    onSaveShopNameRef,
+    onSaveShopWebsiteRef,
+    onSaveShopIconUrlRef,
+    onSubmitEditShop,
+    onCancelEditShop
   }) => (
     <Grid>
       <Row>
@@ -38,6 +49,26 @@ const ShopPage =
               <h1>
                 {name}
               </h1>
+              {isModerator && 
+                <div className="admin-tools">
+                  <SubmitButton
+                    className="admin-button"
+                    onClick={() => toggleEditShop()}
+                    contents="Edit Shop"
+                  />
+                </div>}
+              {isModerator && isEditShop &&
+                <EditShop 
+                  onSaveNameRef={onSaveShopNameRef}
+                  onSaveWebsiteRef={onSaveShopWebsiteRef}
+                  onSaveIconUrlRef={onSaveShopIconUrlRef}
+                  onCancel={onCancelEditShop}
+                  onSubmit={onSubmitEditShop}
+                  shopName={name}
+                  shopWebsite={website}
+                  shopIconUrl={iconUrl}
+                />
+              }
               <LikeButton
                 onClick={() => {
                   if (username)
@@ -96,6 +127,7 @@ const ShopPage =
 ShopPage.propTypes = {
   name: PropTypes.string.isRequired,
   website: PropTypes.string.isRequired,
+  iconUrl: PropTypes.string,
   likes: PropTypes.number.isRequired,
   onLike: PropTypes.func.isRequired,
   isLiked: PropTypes.bool.isRequired

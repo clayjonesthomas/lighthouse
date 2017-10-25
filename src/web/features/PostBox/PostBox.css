@@ -59,6 +59,12 @@
     color: #2c2e32;
 }
 
+.sale-shop>a>img{
+    height:30px;
+    width:30px;
+    margin-right:10px;
+}
+
 .post-timestamp{
     font-style: italic;
     font-size: .8em;

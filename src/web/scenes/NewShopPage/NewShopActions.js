@@ -11,10 +11,12 @@ export function submitShop() {
     const refs = state.formRefs
     const name = refs.shop_name.value
     const website = refs.shop_website.value
+    const icon_url = refs.icon_url.value
     // const icon = refs.icon
     const body = {
       name: name,
       website: website,
+      icon_url: icon_url,
     }
     const formArgs = {
       method: 'POST',
