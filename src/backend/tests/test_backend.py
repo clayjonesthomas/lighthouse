@@ -297,24 +297,3 @@ class TestAuth(unittest.TestCase):
 
         self.assertEqual(unique_response.status_int, 200)
         self.assertIn('/rest/v', unique_response.body)
-
-    def test_stays_logged_in(self):
-        """user logs in once and stays logged in pseudo-indefinitely"""
-        # this test messes up nosetest runtime stats D:
-        utils.stub_rest(self)
-
-        request_signup = webapp2.Request.blank('/rest/signup', POST=json.dumps(self._contents))
-        request_signup.get_response(app)
-        current_date = datetime.datetime.now()
-
-        # def diff_time():
-        #     thirty_days_future = current_date + datetime.timedelta(minutes=30)
-        #     return time.mktime(thirty_days_future.timetuple())
-        #
-        # time.time = diff_time
-
-        request_session = webapp2.Request.blank('/rest/login')
-        request_session.method = 'GET'
-        response_session = request_session.get_response(app)
-        body = json.loads(response_session.body)
-        print body['logged_in']
