@@ -1,13 +1,10 @@
-## ReadMe
-
-# Current Members
+# ReadMe
+## Current Members
 Clay and Michelle!!!!
 
 # Setup
 
-to be filled out when/if Michelle is on-boarded
-
-# Git stuff
+## Git stuff
 All contributions to this code base should follow the typical
 git style of contribution; checkout a new branch, write your 
 code, submit a pull request, get your PR approved, and submit.
@@ -40,9 +37,16 @@ From there, reviewers can comment on your code, and you can continue to commit t
 the PR until it satisfies your reviewers. After that, you can run the necessary merges
 and submit your code to the master branch.
 
+## Deploys
+```gcloud app deploy --no-promote app.yaml index.yaml```
+
+## Testing
+```nosetests -xs --with-gae --nologcapture```
+from the src subdirectory will run all python tests in the project.
+```nosetests -xs --with-gae --nologcapture backend/tests/test_backend.py:TestAuth.test_stays_logged_in```
+or similar syntax will run the specific test you request.
+
 # Backing up the datastore
 This is a thing you should do whenever you are running scripts over the datastore.
 Check out this page for specifics: https://cloud.google.com/datastore/docs/console/datastore-backing-up-restoring
 
-## Deploys and stuff
-gcloud app deploy --no-promote app.yaml index.yaml

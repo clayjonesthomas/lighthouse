@@ -33,7 +33,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
+# CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 
 def populate_dummy_datastore():
@@ -716,7 +716,8 @@ class LoginHandler(BaseHandler):
         if self.user:
             self.response.write(json.dumps({
                 'username': self.user.username,
-                'isModerator': self.user.is_moderator
+                'isModerator': self.user.is_moderator,
+                'logged_in': True
             }))
         else:
             self.response.write(json.dumps({'logged_in': False}))
@@ -727,11 +728,19 @@ class LogoutHandler(BaseHandler):
         self.auth.unset_session()
         self.response.write(json.dumps('Logout successful'))
 
-
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
-        'user_attributes': [] # used for caching properties
+        'user_attributes': [],  # used for caching properties
+        # default is 1814400, 86400, 3600
+        'token_max_age': 86400 * 365,  # amount of seconds in a day * 1 year of days
+        # for some reason this also functions like token_max_age in that it
+        # logs out users after the time period is up instead of doing what it
+        # should do, namely issuing a new cookie. Ideally, this should be limited
+        # to ~1 day for security reasons.
+        'token_new_age': 86400 * 365,
+        'token_cache_age': 3600
+
     },
     'webapp2_extras.sessions': {
         'secret_key': auth_config.secret_key

@@ -1,8 +1,13 @@
 import unittest
 import webapp2
 import json
+import datetime
+import time
 
-from backend.backend import Posts, app
+
+from backend.backend import app
+from backend.models import Post
+
 import utils
 
 
@@ -253,7 +258,7 @@ class TestAuth(unittest.TestCase):
                                               POST=self._contents)
         response_login = request_login.get_response(app)
 
-        self.assertEqual(200,response_login.status_int)
+        self.assertEqual(200, response_login.status_int)
         self.assertIn('password reset', response_login.body)
 
     def test_multiple_signups(self):
