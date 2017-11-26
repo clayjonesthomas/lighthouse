@@ -38,6 +38,8 @@ export function isEditShop(state = false, action) {
       return !state
     default:
       return state
+    }
+  }
 
 export function displayDummyShopSpinner(state = false, action) {
   switch(action.type) {
