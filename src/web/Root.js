@@ -15,6 +15,7 @@ import "scenes/Container/Globals.css"
 import AllPostsPageHandler from 'scenes/AllPostsPage/AllPostsPageHandler'
 import MyFeedPageHandler from 'scenes/MyFeedPage/MyFeedPageHandler'
 import PrivacyPolicyPage from "scenes/PrivacyPolicyPage/PrivacyPolicyPage"
+import EmailHandler from 'scenes/EmailPage/EmailPageHandler'
 
 let store = createStore(
   reducer,
@@ -36,6 +37,7 @@ const Root = () => (
         <Route path="/shops" component={MyShopsPageHandler}/>
         <Route path="/posts" component={MyPostsPageHandler}/>
         <Route path="/privacy_policy" component={PrivacyPolicyPage}/>
+        <Route path="/email" component={EmailHandler}/>
       </Route>
     </Router>
   </Provider>
