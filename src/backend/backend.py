@@ -728,6 +728,7 @@ class LogoutHandler(BaseHandler):
         self.auth.unset_session()
         self.response.write(json.dumps('Logout successful'))
 
+
 class EmailHandler(BaseHandler):
     def post(self):
         message = mail.EmailMessage(sender="michelle@lightho.us",subject="Testing email")

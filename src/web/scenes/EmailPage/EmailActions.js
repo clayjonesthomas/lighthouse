@@ -1,11 +1,10 @@
-import {SEND_EMAIL_URL} from '../../constants/constants'
+import {SEND_EMAIL_URL} from 'constants/constants'
 
 export const SEND_EMAIL_RETURN = "SEND_EMAIL_RETURN"
 
 export const sendEmailReturn = () => {
   return {
-    type: SEND_EMAIL_RETURN,
-    data: {}
+    type: SEND_EMAIL_RETURN
   }
 }
 
@@ -21,6 +20,6 @@ export const sendEmailReturn = () => {
   return dispatch => {
     return fetch(SEND_EMAIL_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(sendEmailReturn()))
+      .then(() => dispatch(sendEmailReturn()))
   }
  }
