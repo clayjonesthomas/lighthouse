@@ -33,11 +33,13 @@ export function shopPostsOffset(state = 0, action){
 }
 
 export function isEditShop(state = false, action) {
-  switch(action.type) {
+  switch (action.type) {
     case TOGGLE_EDIT_SHOP:
       return !state
     default:
       return state
+  }
+}
 
 export function displayDummyShopSpinner(state = false, action) {
   switch(action.type) {
