@@ -25,7 +25,7 @@ from google.appengine.ext import deferred
 from models import Post, Store, get_entity_from_url_key
 
 
-from google.appengine.api import app_identity
+from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -728,6 +728,16 @@ class LogoutHandler(BaseHandler):
         self.auth.unset_session()
         self.response.write(json.dumps('Logout successful'))
 
+
+class EmailHandler(BaseHandler):
+    def post(self):
+        message = mail.EmailMessage(sender="michelle@lightho.us",subject="Testing email")
+        message.to = "michelle@lightho.us"
+        message.body = "email body"
+        message.send()
+        self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -774,7 +784,7 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
 
-
+    webapp2.Route('/rest/email', EmailHandler, name='email'),
 
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
