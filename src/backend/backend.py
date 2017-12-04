@@ -731,7 +731,8 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
-        message = mail.EmailMessage(sender="michelle@lightho.us",subject="Testing email")
+
+        message = mail.EmailMessage(sender="michelle@lightho.us", subject="Testing email")
         message.to = "michelle@lightho.us"
         message.body = "email body"
         message.send()

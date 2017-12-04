@@ -5,6 +5,7 @@ import logging
 import webapp2_extras.appengine.auth.models
 
 from google.appengine.ext import ndb
+from google.appengine.api import mail
 
 from webapp2_extras import security
 from webapp2_extras import auth
@@ -27,6 +28,11 @@ class Comment(ndb.Model):
         self.comment_amount.append(comment.key)
 
 
+class PostNoShopException(Exception):
+    def __init__(self):
+        Exception.__init__(self, "New posts must have a shop key.")
+
+
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
     shop_key = ndb.KeyProperty(indexed=True, kind='Store')
@@ -35,7 +41,20 @@ class Post(ndb.Model):
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
     comment_amount = ndb.IntegerProperty(indexed=True, default=0)
     author = ndb.KeyProperty(indexed=True, kind='User')
-    isArchived = ndb.BooleanProperty(indexed=True, default=False)
+    isArchived = ndb.BooleanProperty(indexed=True, default=False)  # TODO: is_archived
+    is_important = ndb.BooleanProperty(indexed=True, default=False)
+
+    def __init__(self, *args, **kwargs):
+        if not kwargs.get("isArchived"):
+            shop_key = kwargs.get("shop_key")
+            if shop_key:
+                shop = shop_key.get()
+                shop.add_active_post(self)
+                shop.put()
+            else:
+                raise PostNoShopException()
+
+        super(Post, self).__init__(*args, **kwargs)
 
     def add_top_comment(self, comment):
         self.comment_amount += 1
@@ -113,6 +132,7 @@ class Store(ndb.Model):
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
+    active_posts = ndb.KeyProperty(indexed=False, repeated=True)
 
     def prepare_shop(self, user):
         shop_dict = self.to_dict()
@@ -128,6 +148,12 @@ class Store(ndb.Model):
 
         return shop_dict
 
+    def add_active_post(self, post):
+        self.active_posts.append(post.key())
+
+    def remove_active_post(self, post):
+        self.active_posts.remove(post.key())
+
 
 class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
@@ -136,9 +162,12 @@ class User(webapp2_extras.appengine.auth.models.User):
     liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
+    using_email_service = ndb.BooleanProperty(indexed=True, default=False)
+    # must be in order from earliest to latest email
+    emails = ndb.KeyProperty(indexed=False, kind='PostsEmail', repeated=True)
 
     def __init__(self, *args, **kwargs):
-        super(self.__class__, self).__init__(*args,**kwargs)
+        super(self.__class__, self).__init__(*args, **kwargs)
         self._is_login_enabled = True
 
     def set_password(self, raw_password):
@@ -206,3 +235,23 @@ class User(webapp2_extras.appengine.auth.models.User):
         # definitely a more concise way to do this
         user_key = ndb.Key(cls, user_id)
         return user_key.get()
+
+
+class PostsEmail(ndb.Model):
+
+    body = ndb.StringProperty(indexed=False)
+    to = ndb.KeyProperty(indexed=True, kind='User')
+    subject = ndb.StringProperty(indexed=False)
+    posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
+    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    has_been_sent = ndb.BooleanProperty(indexed=False, default=False)
+
+    def send(self):
+        message = mail.EmailMessage(sender="michelle@lightho.us", subject=self.subject)
+        message.to = self.to
+        message.body = self.body
+        message.send()
+        receiving_user = message.to.get()
+        receiving_user.emails.append(self.key())
+        receiving_user.put()
+        self.has_been_sent = True
