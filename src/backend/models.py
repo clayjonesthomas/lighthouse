@@ -242,7 +242,8 @@ class PostsEmail(ndb.Model):
     body = ndb.StringProperty(indexed=False)
     to = ndb.KeyProperty(indexed=True, kind='User')
     subject = ndb.StringProperty(indexed=False)
-    posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
+    important_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
+    unimportant_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     has_been_sent = ndb.BooleanProperty(indexed=False, default=False)
 
