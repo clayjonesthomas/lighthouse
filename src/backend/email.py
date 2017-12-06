@@ -6,17 +6,17 @@ from models import Store, Post, User, PostsEmail
 
 def send_emails():
     for user in User.query(User.using_email_service == True):
-        important_posts, unimportant_posts = get_posts_for_user(user)
+        important_posts, unimportant_posts = get_active_posts_for_user(user)
         if important_posts:
-            email = compose_email_for_user(user, important_posts, unimportant_posts)
+            email = _compose_email_for_user(user, important_posts, unimportant_posts)
             email.send()
             email.put()
 
 
-def get_posts_for_user(user, new_only=True):
+def get_active_posts_for_user(user, new_only=True):
     """
-    Returns the posts in a tuple, separated by important posts and unimportant
-    posts.
+    Returns currently active posts from a user's liked_stores in a tuple,
+    separated by important posts and unimportant posts.
     :param user: the User to get posts for
     :param new_only: set to True if you only want posts posted since the last
     email to user
@@ -41,9 +41,9 @@ def get_posts_for_user(user, new_only=True):
     return important_posts, unimportant_posts
 
 
-def compose_email_for_user(user, important_posts, unimportant_posts):
-    body = generate_body(important_posts, unimportant_posts)
-    subject = generate_subject(important_posts, unimportant_posts)
+def _compose_email_for_user(user, important_posts, unimportant_posts):
+    body = _generate_body(important_posts, unimportant_posts)
+    subject = _generate_subject(important_posts, unimportant_posts)
     email = PostsEmail(body=body,
                        to=user.key,
                        subject=subject,
@@ -55,7 +55,7 @@ def compose_email_for_user(user, important_posts, unimportant_posts):
 SUBJECT_STORE_LIMIT = 3  # TODO: decide on the number for this
 
 
-def generate_subject(important_posts, unimportant_posts):
+def _generate_subject(important_posts, unimportant_posts):
     """ assumes >=1 of the posts is important """
     subject = "lightho.us \\\\"
     for i_post in important_posts:
@@ -76,22 +76,22 @@ def generate_subject(important_posts, unimportant_posts):
     return subject
 
 
-def generate_body(important_posts, unimportant_posts):
+def _generate_body(important_posts, unimportant_posts):
     body = ""
     for i_post in important_posts:
-        body += generate_post_line(i_post, bold=True)
+        body += _generate_post_line(i_post, bold=True)
         body += "\n"
 
     body += "\n Other Sales: \n"
     for u_post in unimportant_posts:
-        body += generate_post_line(u_post, bold=False)
+        body += _generate_post_line(u_post, bold=False)
         body += "\n"
 
     body += "\n\n love,\n<a href=\"lightho.us\">lightho.us</a>"
     return body
 
 
-def generate_post_line(post, bold=False):
+def _generate_post_line(post, bold=False):
     store = post.store_key.get()
     if bold:
         beginning_tags = "<b><a href=\"" + store.website + "\">"

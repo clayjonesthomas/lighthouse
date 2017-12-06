@@ -41,7 +41,8 @@ class Post(ndb.Model):
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
     comment_amount = ndb.IntegerProperty(indexed=True, default=0)
     author = ndb.KeyProperty(indexed=True, kind='User')
-    isArchived = ndb.BooleanProperty(indexed=True, default=False)  # TODO: is_archived
+    # TODO: is_archived
+    isArchived = ndb.BooleanProperty(indexed=True, default=False)
     is_important = ndb.BooleanProperty(indexed=True, default=False)
 
     def __init__(self, *args, **kwargs):
@@ -49,7 +50,7 @@ class Post(ndb.Model):
             shop_key = kwargs.get("shop_key")
             if shop_key:
                 shop = shop_key.get()
-                shop.add_active_post(self)
+                shop.active_posts.append(self)
                 shop.put()
             else:
                 raise PostNoShopException()
@@ -124,15 +125,14 @@ class Post(ndb.Model):
             return "just now"
 
 
-# needs to be renamed to Shop but that would require a migration with
-# existing entities in prod
+# TODO: rename shop
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     website = ndb.StringProperty(indexed=False)
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
-    active_posts = ndb.KeyProperty(indexed=False, repeated=True)
+    _active_posts = ndb.KeyProperty(indexed=False, repeated=True)
 
     def prepare_shop(self, user):
         shop_dict = self.to_dict()
@@ -148,11 +148,13 @@ class Store(ndb.Model):
 
         return shop_dict
 
-    def add_active_post(self, post):
-        self.active_posts.append(post.key())
-
-    def remove_active_post(self, post):
-        self.active_posts.remove(post.key())
+    @property
+    def active_posts(self):
+        for active_post in self._active_posts:
+            if active_post.isArchived:
+                self._active_posts.remove(active_post)
+                self.put()
+        return self._active_posts
 
 
 class User(webapp2_extras.appengine.auth.models.User):
