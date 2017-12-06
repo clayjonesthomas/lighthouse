@@ -22,7 +22,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Store, get_entity_from_url_key
+from models import Post, Store, EmailOffer, EmailUser, get_entity_from_url_key
 
 
 from google.appengine.api import app_identity, mail
@@ -123,6 +123,21 @@ def _spawn_dummy_shops():
                   likes=324319)]
     return ndb.put_multi(shops)
 
+
+def _spawn_dummy_email_offers(shop_keys):
+    offers = [EmailOffer(shop=shop_keys[0],
+                         summary='Yay sales',
+                         is_important=True),
+              EmailOffer(shop=shop_keys[1],
+                         summary='Less relevant sale',
+                         is_important=False)]
+    ndb.put_multi(offers)
+
+
+def _spawn_dummy_email_users(shop_keys):
+    users = [EmailUser(followed_shops=shop_keys,
+                      email='michelle@lightho.us')]
+    ndb.put_multi(users)
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
 def user_required(handler):
@@ -730,12 +745,46 @@ class LogoutHandler(BaseHandler):
 
 
 class EmailHandler(BaseHandler):
+
     def post(self):
-        message = mail.EmailMessage(sender="michelle@lightho.us",subject="Testing email")
-        message.to = "michelle@lightho.us"
-        message.body = "email body"
-        message.send()
-        self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
+        if not EmailOffer.query().fetch(1): #hackhackhack
+            print("generating some fake email things")
+            shop_keys = _spawn_dummy_shops()
+            _spawn_dummy_email_offers(shop_keys)
+            _spawn_dummy_email_users(shop_keys)
+
+        important_offers = {}
+        other_offers = {}
+        for offer in EmailOffer.query():
+            if offer.is_important:
+                important_offers[offer.shop] = offer #urlsafe???
+            else:
+                other_offers[offer.shop] = offer
+
+        for user in EmailUser.query():
+            has_important_offer = False
+            
+            email_subject = 'Your lightho.us offers // '
+            email_body_important = 'Important Offers \n'
+            email_body_other = 'Other Offers \n'
+
+            for shop_key in user.followed_shops:
+                shop = shop_key.get()
+                shop_name = shop.name
+                if shop_key in important_offers:
+                    has_important_offer = True
+                    email_subject += shop_name
+                    email_body_important += shop_name + '\n' + important_offers[shop_key].summary + '\n'
+                elif shop_key in other_offers:
+                    email_body_other += shop_name + '\n' + other_offers[shop_key].summary + '\n'
+
+            if has_important_offer:       
+                message = mail.EmailMessage(sender="michelle@lightho.us",subject=email_subject)
+                message.to = user.email
+                message.body = email_body_important + '\n' + email_body_other
+                message.send()
+        
+        self.response.write(json.dumps({'success': 'SENT_RELEVANT_EMAILS'}))
 
 
 config = {

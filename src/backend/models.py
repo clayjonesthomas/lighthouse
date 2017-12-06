@@ -129,6 +129,18 @@ class Store(ndb.Model):
         return shop_dict
 
 
+class EmailUser(ndb.Model):
+    followed_shops = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
+    email = ndb.StringProperty(indexed=True, default='')
+
+
+class EmailOffer(ndb.Model):
+    shop = ndb.KeyProperty(indexed=True, kind='Store')
+    summary = ndb.StringProperty(indexed=True, default='')
+    is_important = ndb.BooleanProperty(indexed=True, default=False)
+    has_sent = ndb.BooleanProperty(indexed=True, default=False)
+
+
 class User(webapp2_extras.appengine.auth.models.User):
     # Source: https://github.com/abahgat/webapp2-user-accounts
 
