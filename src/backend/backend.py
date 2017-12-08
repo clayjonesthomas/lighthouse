@@ -22,8 +22,8 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Store, get_entity_from_url_key
-
+from models import Post, Store, User, get_entity_from_url_key
+from email import send_emails
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -122,6 +122,48 @@ def _spawn_dummy_shops():
                   website='www.oldnavy.com',
                   likes=324319)]
     return ndb.put_multi(shops)
+
+
+def _spawn_dummy_email_user(shop_keys):
+    # _contents = {'username': u'mflauer', 'email': u'michelle@lightho.us',
+    #              'password': u'password'}
+    # request_signup = webapp2.Request.blank('/rest/signup')
+    # request_signup.method = 'POST'
+    # request_signup.body = json.dumps(_contents)
+    # response_signup = request_signup.get_response(app)
+    users = [User(liked_stores=shop_keys,
+                 using_email_service=True,
+                 emails=[],
+                 email_address='michelle@lightho.us')] # this field usually automatically populatied during account creation
+    ndb.put_multi(users) 
+
+def _spawn_dummy_posts_for_email(shop_keys):
+    email_posts = [Post(title='50% off all items on clearance',
+                  shop_key=shop_keys[0],
+                  likes=25074,
+                  timestamp=datetime.datetime.now()-datetime.timedelta(1),
+                  is_important=True),
+             Post(title='Buy any oxford on the site, get one free',
+                  shop_key=shop_keys[1],
+                  likes=14543,
+                  timestamp=datetime.datetime.now()-datetime.timedelta(2),
+                  is_important=True),
+             Post(title='$5 off the entire summer selection',
+                  shop_key=shop_keys[1],
+                  likes=30210,
+                  timestamp=datetime.datetime.now()-datetime.timedelta(1.5),
+                  is_important=False)]
+    return ndb.put_multi(email_posts)
+
+def _update_dummy_posts_for_email(shop_keys, post_keys):
+    updated_shops = []
+    for shop_key in shop_keys:
+        shop = shop_key.get()
+        shop.active_posts += [post_key for post_key in post_keys if post_key.get().shop_key == shop_key]
+        shop.put()
+        updated_shops.append(shop)
+    ndb.put_multi(updated_shops)
+
 
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
@@ -731,11 +773,14 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
+        if not User.query(User.using_email_service == True).fetch(1): #hackhackhack
+            print("generating some fake email setup")
+            dummy_shops = _spawn_dummy_shops()
+            dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
+            _update_dummy_posts_for_email(dummy_shops, dummy_posts)
+            _spawn_dummy_email_user(dummy_shops)
 
-        message = mail.EmailMessage(sender="michelle@lightho.us", subject="Testing email")
-        message.to = "michelle@lightho.us"
-        message.body = "email body"
-        message.send()
+        send_emails()
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 

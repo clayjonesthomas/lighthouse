@@ -45,17 +45,18 @@ class Post(ndb.Model):
     isArchived = ndb.BooleanProperty(indexed=True, default=False)
     is_important = ndb.BooleanProperty(indexed=True, default=False)
 
-    def __init__(self, *args, **kwargs):
-        if not kwargs.get("isArchived"):
-            shop_key = kwargs.get("shop_key")
-            if shop_key:
-                shop = shop_key.get()
-                shop.active_posts.append(self)
-                shop.put()
-            else:
-                raise PostNoShopException()
+    # def __init__(self, *args, **kwargs):
+    #     super(Post, self).__init__(*args, **kwargs)
 
-        super(Post, self).__init__(*args, **kwargs)
+    #     if not kwargs.get("isArchived"):
+    #         shop_key = kwargs.get("shop_key")
+    #         if shop_key:
+    #             shop = shop_key.get()
+    #             shop.active_posts.append(self)
+    #             shop.put()
+    #         else:
+    #             raise PostNoShopException()
+
 
     def add_top_comment(self, comment):
         self.comment_amount += 1
@@ -132,7 +133,8 @@ class Store(ndb.Model):
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
-    _active_posts = ndb.KeyProperty(indexed=False, repeated=True)
+    active_posts_private = ndb.KeyProperty(indexed=False, repeated=True)
+    active_posts = ndb.KeyProperty(indexed=False, repeated=True)
 
     def prepare_shop(self, user):
         shop_dict = self.to_dict()
@@ -150,11 +152,16 @@ class Store(ndb.Model):
 
     @property
     def active_posts(self):
-        for active_post in self._active_posts:
-            if active_post.isArchived:
-                self._active_posts.remove(active_post)
+        for active_post in self.active_posts_private:
+            if active_post.get().isArchived:
+                self.active_posts_private.remove(active_post)
                 self.put()
-        return self._active_posts
+        return self.active_posts_private
+
+    @active_posts.setter
+    def active_posts(self, updated_active_posts):
+        self.active_posts_private = updated_active_posts
+        self.put()
 
 
 class User(webapp2_extras.appengine.auth.models.User):
@@ -251,9 +258,10 @@ class PostsEmail(ndb.Model):
 
     def send(self):
         message = mail.EmailMessage(sender="michelle@lightho.us", subject=self.subject)
-        message.to = self.to
+        message.to = self.to.get().username
         message.body = self.body
         message.send()
+
         receiving_user = message.to.get()
         receiving_user.emails.append(self.key())
         receiving_user.put()
