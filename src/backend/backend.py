@@ -48,7 +48,7 @@ def _spawn_admin():
     request_signup = webapp2.Request.blank('/rest/signup')
     request_signup.method = 'POST'
     request_signup.body = json.dumps(_contents)
-    response_signup = request_signup.get_response(app)
+    request_signup.get_response(app)
 
 
 def _spawn_dummy_posts(shop_keys):
@@ -106,21 +106,21 @@ def _spawn_dummy_posts(shop_keys):
 
 def _spawn_dummy_shops():
     shops = [Store(name='American Eagle',
-                  website='www.ae.com',
-                  likes=0),
+                   website='www.ae.com',
+                   likes=0),
              Store(name='JCrew',
-                  website='www.jcrew.com',
-                  likes=493218),
+                   website='www.jcrew.com',
+                   likes=493218),
              Store(name="Levi's Jeans",
-                  website='www.levis.com',
-                  likes=124341),
+                   website='www.levis.com',
+                   likes=124341),
              Store(name='Lulu Lemon',
-                  website='www.lululemon.com',
-                  likes=295831,
-                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+                   website='www.lululemon.com',
+                   likes=295831,
+                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Store(name='Old Navy',
-                  website='www.oldnavy.com',
-                  likes=324319)]
+                   website='www.oldnavy.com',
+                   likes=324319)]
     return ndb.put_multi(shops)
 
 
@@ -132,28 +132,31 @@ def _spawn_dummy_email_user(shop_keys):
     # request_signup.body = json.dumps(_contents)
     # response_signup = request_signup.get_response(app)
     users = [User(liked_stores=shop_keys,
-                 using_email_service=True,
-                 emails=[],
-                 email_address='michelle@lightho.us')] # this field usually automatically populatied during account creation
+                  using_email_service=True,
+                  emails=[],
+                  # this field usually automatically populated during account creation
+                  email_address='michelle@lightho.us')]
     ndb.put_multi(users) 
+
 
 def _spawn_dummy_posts_for_email(shop_keys):
     email_posts = [Post(title='50% off all items on clearance',
-                  shop_key=shop_keys[0],
-                  likes=25074,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1),
-                  is_important=True),
-             Post(title='Buy any oxford on the site, get one free',
-                  shop_key=shop_keys[1],
-                  likes=14543,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(2),
-                  is_important=True),
-             Post(title='$5 off the entire summer selection',
-                  shop_key=shop_keys[1],
-                  likes=30210,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1.5),
-                  is_important=False)]
+                        shop_key=shop_keys[0],
+                        likes=25074,
+                        timestamp=datetime.datetime.now()-datetime.timedelta(1),
+                        is_important=True),
+                   Post(title='Buy any oxford on the site, get one free',
+                        shop_key=shop_keys[1],
+                        likes=14543,
+                        timestamp=datetime.datetime.now()-datetime.timedelta(2),
+                        is_important=True),
+                   Post(title='$5 off the entire summer selection',
+                        shop_key=shop_keys[1],
+                        likes=30210,
+                        timestamp=datetime.datetime.now()-datetime.timedelta(1.5),
+                        is_important=False)]
     return ndb.put_multi(email_posts)
+
 
 def _update_dummy_posts_for_email(shop_keys, post_keys):
     updated_shops = []
@@ -163,7 +166,6 @@ def _update_dummy_posts_for_email(shop_keys, post_keys):
         shop.put()
         updated_shops.append(shop)
     ndb.put_multi(updated_shops)
-
 
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
@@ -387,7 +389,7 @@ class Shops(BaseHandler):
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
-                          for shop in Store.query()]
+                         for shop in Store.query()]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
@@ -496,20 +498,22 @@ class SingleShop(BaseHandler):
             return
         ndb.Key(urlsafe=url_key).delete()
 
+
 class EditShop(BaseHandler):
 
     def post(self):
-      user = self.user
-      body = json.loads(self.request.body)
+        user = self.user
+        body = json.loads(self.request.body)
 
-      if user and user.is_moderator:
-          shop_key=body['key']
-          shop = ndb.Key(urlsafe=shop_key).get()
-          shop.name = body['name']
-          shop.website = body['website']
-          shop.icon_url = body['icon_url']
-          shop.put()
-          self.response.write(json.dumps({'key': shop_key}))
+        if user and user.is_moderator:
+            shop_key=body['key']
+            shop = ndb.Key(urlsafe=shop_key).get()
+            shop.name = body['name']
+            shop.website = body['website']
+            shop.icon_url = body['icon_url']
+            shop.put()
+            self.response.write(json.dumps({'key': shop_key}))
+
 
 class AddIconToShop(BaseHandler):
     '''
@@ -554,11 +558,11 @@ class AddIconToShop(BaseHandler):
 
 
 class ShopUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-    '''
+    """
         under severe construction, don't use unless you
         figure out what the fuck is going on with python
         gcs
-        '''
+    """
     def get(self):
         upload_url = blobstore.create_upload_url('/upload_photo')
         self.response.write(json.dumps({'upload_url': upload_url}))
@@ -773,7 +777,7 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
-        if not User.query(User.using_email_service == True).fetch(1): #hackhackhack
+        if not User.query(User.using_email_service == True).fetch(1):  # hackhackhack
             print("generating some fake email setup")
             dummy_shops = _spawn_dummy_shops()
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
