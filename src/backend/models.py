@@ -258,12 +258,10 @@ class PostsEmail(ndb.Model):
 
     def send(self):
         receiving_user = self.to.get()
-
         message = mail.EmailMessage(sender="michelle@lightho.us", subject=self.subject)
         message.to = receiving_user.email_address
         message.body = self.body
         message.send()
-
-        receiving_user.emails.append(self.key) #TODO self.key is None here, throwing errors
+        receiving_user.emails.append(self.key)
         receiving_user.put()
         self.has_been_sent = True
