@@ -135,7 +135,7 @@ def _spawn_dummy_email_user(shop_keys):
                   using_email_service=True,
                   emails=[],
                   # this field usually automatically populated during account creation
-                  email_address='michelle@lightho.us')]
+                  email_address='clay@lightho.us')]
     ndb.put_multi(users) 
 
 
@@ -777,8 +777,8 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
-        if not User.query(User.using_email_service == True).fetch(1):  # hackhackhack
-            print("generating some fake email setup")
+        # admin has emil service enabled
+        if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             dummy_shops = _spawn_dummy_shops()
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
             _update_dummy_posts_for_email(dummy_shops, dummy_posts)

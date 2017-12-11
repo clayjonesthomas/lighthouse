@@ -26,8 +26,9 @@ def get_active_posts_for_user(user, new_only=True):
     important_posts = []
     unimportant_posts = []
     for liked_store_key in user.liked_stores:
-        liked_store = liked_store_key.get()
-        for post_key in liked_store.active_posts:
+        active_posts = Post.query(ndb.AND(Post.isArchived == False,
+                                          Post.shop_key == liked_store_key))
+        for post_key in active_posts:
             post = post_key.get()
             if not new_only:
                 if post.is_important:
