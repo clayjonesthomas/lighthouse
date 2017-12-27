@@ -3,11 +3,12 @@ import React, {PropTypes} from 'react'
 import "./FullLogo.css"
 const FullLogo = (
   {
-    onClick
+    onClick,
+    scale
   }) => (
   <svg
-    width="385px"
-    height="69px"
+    width={385*scale+"px"}
+    height={69*scale+"px"}
     viewBox="0 0 385 69"
     onClick={onClick}
     id="full-logo"
@@ -29,7 +30,7 @@ const FullLogo = (
 )
 
 FullLogo.propTypes = {
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 }
 
 export default FullLogo

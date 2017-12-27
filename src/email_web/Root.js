@@ -6,7 +6,7 @@ import {routerMiddleware} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
 import reducer from './reducer'
-import FrontPage from './FrontPage'
+import FrontPage from './option_1/FrontPage'
 import App from './App'
 
 let store = createStore(
