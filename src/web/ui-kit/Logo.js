@@ -8,11 +8,9 @@ const Logo = (
     color
   }) => (
   <svg
-    className="logo-svg"
     width={34*scale+"px"}
     height={61*scale+"px"}
     viewBox="0 0 34 61"
-    onClick={() => onClick()}
   >
     <g
       id="Page-1"

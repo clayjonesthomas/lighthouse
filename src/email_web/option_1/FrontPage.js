@@ -1,6 +1,4 @@
 import React from 'react'
-import FullLogo from '../../web/ui-kit/FullLogo'
-import LogoCircle from '../../web/ui-kit/LogoCircle'
 import Logo from '../../web/ui-kit/Logo'
 
 import "./FrontPage.css"
@@ -10,11 +8,12 @@ const FrontPage =
    }) => (
     <div id="front-page">
       <div id="logo">
-        <Logo
-          scale={2}
-          color="#aaaaaa"
-          class="logo-icon"
-        />
+        <div id="logo-icon-wrapper">
+          <Logo
+            scale={2}
+            color="#003091" //#0055ff
+          />
+        </div>
         <span id="logo-name">
           lightho.us
         </span>
@@ -26,7 +25,7 @@ const FrontPage =
       </p>
       <input
         type="button"
-        value="Try it out"
+        value="Let's Get Started"
         id="try-it-button"
       />
     </div>
