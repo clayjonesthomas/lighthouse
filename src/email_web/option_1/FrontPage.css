@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+#logo-name{
+    font-size: 100px;
+}
+
+#front-page-paragraph{
+
+}
+
+#front-page{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    background-image: url('https://st.depositphotos.com/1010266/1560/i/950/depositphotos_15606917-stock-photo-stack-of-blue-jeans-over.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: right;
+}
+
+#logo{
+    font-family: 'Montserrat', sans-serif;
+}
+
+#logo-icon{
+
+}
+
+#try-it-button{
+
+}
