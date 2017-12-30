@@ -1,0 +1,41 @@
+#front-page-contents{
+    padding-left: 5%;
+    padding-top: 10%;
+}
+
+#front-page-title{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 48px;
+    max-width: 48%;
+}
+
+#front-page-paragraph{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 29px;
+    padding-top: 20px;
+    max-width: 42%;
+}
+
+#lighthous-inline{
+    color: #003091;
+    font-weight: 600;
+    font-family: 'Roboto Condensed', sans-serif;
+    padding-right: 8px;
+}
+
+#try-it-button{
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+    padding: .7em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 3px;
+    background-color: #ffffff;
+    color: #003091;
+    border-color: #003091;
+    margin-top: 40px;
+    font-weight: 600;
+    font-size: 17px;
+}
