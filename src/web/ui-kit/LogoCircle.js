@@ -7,11 +7,10 @@ const LogoCircle = (
     color,
     scale
   }) => (
-  <div>
     <svg
       className="logo-circle-svg"
-      width="69px"
-      height="68px"
+      width={69*scale+"px"}
+      height={68*scale+"px"}
       viewBox="0 0 69 68"
       version="1.1"
       onClick={() => onClick()}
@@ -30,7 +29,6 @@ const LogoCircle = (
         </g>
       </g>
     </svg>
-  </div>
 )
 
 LogoCircle.propTypes = {
