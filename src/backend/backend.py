@@ -374,7 +374,8 @@ class MyShops(BaseHandler):
         fetched_shops = [shop_key.get().prepare_shop(user)
                          for shop_key in user.liked_stores]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
-        self.response.write(json.dumps(fetched_shops))
+        self.response.write(json.dumps(fetched_shops)) #included in state as "displayedShops"
+        # TODO why not make this more obvious by doing 'displayedShops' : fetched_shops 
 
 
 class ShopPosts(BaseHandler):
