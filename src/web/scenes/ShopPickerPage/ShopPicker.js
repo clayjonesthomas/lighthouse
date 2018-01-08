@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
+import {setMyLikedShops} from './ShopPickerActions'
 import {onUpdateFormShops, pullShops} from 'scenes/NewPostPage/NewPostActions'
 import {pullNotMyShops} from 'scenes/FrontPage/FrontPageActions'
-import {addShopFinderRef, addShopsToMyShops, pullMyShops, clearShopFinder}
+import {addShopFinderRef, pullMyShops, clearShopFinder}
   from 'scenes/MyShopsPage/MyShopsPageActions'
 import ShopPickerComponent from './ShopPickerComponent'
-//TODO clean up imports and props const
 
 import "./ShopPicker.css"
 
@@ -108,10 +108,15 @@ function mapDispatchToProps(dispatch) {
     },
     clearShopFinder: () => dispatch(clearShopFinder()),
     onSubmitSetup: () => {
-      dispatch(addShopsToMyShops())
+      dispatch(setMyLikedShops())
       dispatch(clearShopFinder())
+      dispatch(push("/email"))
     },
-    onSubmitPreferenceEdit: () => {},
+    onSubmitPreferenceEdit: () => {
+      dispatch(setMyLikedShops())
+      dispatch(clearShopFinder())
+      dispatch(push("/email"))
+    },
   }
 }
 

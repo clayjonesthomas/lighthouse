@@ -418,6 +418,39 @@ class LikeShop(BaseHandler):
         self.response.write(json.dumps(shops))
 
 
+class SetLikedShops(BaseHandler):
+
+    def post(self):
+        user = self.user
+        if not user:
+            return
+        body = json.loads(self.request.body)
+        selected_shops = []
+        if 'key' in body:
+            selected_shops = [ndb.Key(urlsafe=body['key']).get()]
+        if 'keys' in body:
+            selected_shops = [ndb.Key(urlsafe=key).get()
+                     for key in body['keys']]
+
+        for shop in selected_shops:
+            if shop.key not in user.liked_stores:
+                user.liked_stores.append(shop.key)
+                shop.likes += 1
+                shop.put()
+
+        og_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_stores]
+        for og_liked_shop in og_liked_shops:
+            if og_liked_shop not in selected_shops: #they no longer want this shop included in their liked shops
+                user.liked_stores.remove(og_liked_shop.key)
+                og_liked_shop.likes -= 1
+                og_liked_shop.put()
+        
+        user.put()
+
+        shops = [shop.prepare_shop(user) for shop in selected_shops]
+        self.response.write(json.dumps(shops))
+
+
 class SingleShop(BaseHandler):
 
     def get(self, url_key):
@@ -775,6 +808,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
     webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
     webapp2.Route('/rest/shops', Shops, name='shops'),
+    webapp2.Route('/rest/shops/set_likes', SetLikedShops, name='set_liked_shops'),
     webapp2.Route('/rest/shop/like', LikeShop, name='like_shop'),
     # webapp2.Route('/rest/shop/icon/<url_key:.*>', AddIconToShop, name='single_shop'),
     webapp2.Route('/rest/shop/edit', EditShop, name='edit_shop'),

@@ -9,7 +9,7 @@ class ShopPickerPageHandler extends Component {
     return (
       <div>
         <h1>SHOP PICKER PAGE</h1>
-        <ShopPicker pickerType={PICKER_SETUP}/>
+        <ShopPicker pickerType={PICKER_PREFERENCES}/>
       </div>
     )
   }
