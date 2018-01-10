@@ -21,7 +21,7 @@ class FrontPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: 2
+    page: 1
   }
 }
 
