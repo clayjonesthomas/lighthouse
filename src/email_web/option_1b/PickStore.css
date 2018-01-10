@@ -1,0 +1,10 @@
+#form-wrapper{
+    background-color: #ececec;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #000000;
+    position: relative;
+    top: 55px;
+    height: 100%; /* should be 100% minus nav bar height, on hold until i get internet again */
+    width: 46%;
+}
