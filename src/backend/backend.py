@@ -106,19 +106,24 @@ def _spawn_dummy_posts(shop_keys):
 
 def _spawn_dummy_shops():
     shops = [Store(name='American Eagle',
+    			  recognized_names=['american eagle', 'ae'],
                   website='www.ae.com',
                   likes=0),
              Store(name='JCrew',
+             	  recognized_names=['jcrew'],
                   website='www.jcrew.com',
                   likes=493218),
              Store(name="Levi's Jeans",
+             	  recognized_names=['levis jeans'],
                   website='www.levis.com',
                   likes=124341),
              Store(name='Lulu Lemon',
+             	  recognized_names=['lululemon', 'lulu lemon'],
                   website='www.lululemon.com',
                   likes=295831,
                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Store(name='Old Navy',
+             	  recognized_names=['old navy'],
                   website='www.oldnavy.com',
                   likes=324319)]
     return ndb.put_multi(shops)

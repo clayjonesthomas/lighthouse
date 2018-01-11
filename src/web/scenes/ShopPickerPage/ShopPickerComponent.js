@@ -21,6 +21,19 @@ const ShopPicker = (
       <Typeahead
         emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
+        filterBy={(option, text) => {
+          for (var i=0; i < option.recognized_names.length; i++) {
+            var recognized_name = option.recognized_names[i] 
+            //TODO when we store these in the backend, store them all lower case with no punctuation
+            //to save time so that the only thing that needs to be processed here is the inputted text
+            text = text.replace(/[^a-zA-Z0-9]/g,'')
+            text = text.toLowerCase()
+            if (recognized_name.indexOf(text) !== -1) {
+              return true
+            }
+          }
+          return false
+        }}
         multiple
         selectHintOnEnter
         options={shops.sort((a, b) => {
