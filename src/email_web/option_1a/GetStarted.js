@@ -2,7 +2,9 @@ import React from 'react'
 import Logo from '../../web/ui-kit/Logo'
 
 import "./GetStarted.css"
-const GetStarted = ({}) => (
+const GetStarted = ({
+  expand_button
+                    }) => (
   <div id="front-page-contents">
     <div id="logo">
       <div id="logo-icon-wrapper">
@@ -23,7 +25,8 @@ const GetStarted = ({}) => (
     <input
       type="button"
       value="Let's Get Started"
-      id="try-it-button"
+      // id="try-it-button"
+      className={expand_button?'try-it-button try-it-button-expanded':'try-it-button'}
     />
   </div>
 )

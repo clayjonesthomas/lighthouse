@@ -31,6 +31,7 @@
     margin-right: 7%;
     width: 83%;
     height: 200px;
+    display: block;
     margin-bottom: 20px;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 2px;

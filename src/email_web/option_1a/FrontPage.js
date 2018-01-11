@@ -16,7 +16,9 @@ class FrontPage extends Component {
         <NavBar
           onClickLogo={this.props.onClickLogo}
         />
-        {this.props.page === 1 && <GetStarted/>}
+        {this.props.page === 1 &&
+          <GetStarted expand_button={this.props.expand_button}/>
+        }
         {this.props.page === 2 && <PickStore/>}
       </div>
     )
@@ -25,7 +27,8 @@ class FrontPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page
+    page: 1, //state.page
+    expand_button: state.page === 2
   }
 }
 

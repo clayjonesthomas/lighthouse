@@ -26,8 +26,9 @@
     top: .22em;
 }
 
-#try-it-button{
-    margin-left: 95px;
+.try-it-button{
+    display: block;
+    margin-left: 7%;
     margin-bottom: 20px;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 2px;
@@ -43,4 +44,20 @@
     margin-top: 40px;
     font-weight: 600;
     font-size: 17px;
+
+    width: auto;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    transition: min-height .5s ease, min-width .5s ease;
+    /*-webkit-transition: width 0.5s, height 0.5s 0.5s;*/
+    /*-moz-transition: width 0.5s, height 0.5s 0.5s;*/
+    /*-o-transition: width 0.5s, height 0.5s 0.5s;*/
+    /*transition: width 0.5s, height 0.5s 0.5s;*/
+}
+
+.try-it-button-expanded{
+    min-width: 83%;
+    min-height: 200px;
+    /*max-height: 500px;*/
 }
