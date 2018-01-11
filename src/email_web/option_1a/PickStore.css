@@ -1,10 +1,49 @@
-#form-wrapper{
-    background-color: #c5d2ec;
-    border-right-style: solid;
-    border-width: 2px;
-    border-color: #000000;
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
+#front-page-paragraph{
+    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    max-width: 46%;
+    padding-top: 20px;
+    padding-left: 95px;
+    letter-spacing: 1px;
+}
+
+#front-page-contents{
+    padding-left: 2%;
+}
+
+#logo{
+    padding-top: 8%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100px;
+    color: #003091;
+}
+
+#logo-icon-wrapper{
+    padding-right: 20px;
+    display: inline;
     position: relative;
-    top: 55px;
-    height: 100%; /* should be 100% minus nav bar height, on hold until i get internet again */
-    width: 46%;
+    top: .22em;
+}
+
+#try-it-div{
+    margin-left: 7%;
+    margin-right: 7%;
+    width: 83%;
+    height: 200px;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+    padding: .7em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 3px;
+    background-color: #ffffff;
+    color: #003091;
+    border-color: #003091;
+    margin-top: 40px;
+    font-weight: 600;
+    font-size: 17px;
 }

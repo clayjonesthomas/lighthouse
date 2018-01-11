@@ -1,31 +1,30 @@
 import React from 'react'
-import {Typeahead} from 'react-bootstrap-typeahead'
-import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
+import Logo from '../../web/ui-kit/Logo'
 
 import "./PickStore.css"
-const PickStorePage =
-  ({}) => (
-    <div id="form-wrapper">
-      .
+const PickStore = ({}) => (
+  <div id="front-page-contents">
+    <div id="logo">
+      <div id="logo-icon-wrapper">
+        <Logo
+          scale={2}
+          color="#003091" //#0055ff
+        />
+      </div>
+      <span id="logo-name">
+            lightho.us
+          </span>
     </div>
-    // {/*<form>*/}
-    //   {/*<FormGroup*/}
-    //     {/*controlId="formBasicText"*/}
-    //     {/*// validationState={this.getValidationState()}*/}
-    //   {/*>*/}
-    //     {/*<ControlLabel>*/}
-    //       {/*Working example with validation*/}
-    //     {/*</ControlLabel>*/}
-    //     {/*<FormControl*/}
-    //       {/*type="text"*/}
-    //       {/*// value={this.state.value}*/}
-    //       {/*placeholder="Enter text"*/}
-    //       {/*// onChange={this.handleChange}*/}
-    //     {/*/>*/}
-    //     {/*<FormControl.Feedback />*/}
-    //     {/*/!*<HelpBlock>Validation is based on string length.</HelpBlock>*!/*/}
-    //   {/*</FormGroup>*/}
-    // {/*</form>*/}
-  )
+    <p id="front-page-paragraph">
+      A curated list of the
+      clothing sales you actually want
+      delivered straight to your inbox.
+    </p>
+    <div id="try-it-div">
+      Let's Get Started
+    </div>
+  </div>
+)
 
-export default PickStorePage
+export default PickStore
+

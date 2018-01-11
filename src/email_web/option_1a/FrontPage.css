@@ -11,6 +11,6 @@ html{
     min-width: 100%;
     background-image: url('https://st.depositphotos.com/1010266/1560/i/950/depositphotos_15606917-stock-photo-stack-of-blue-jeans-over.jpg');
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed; /* TODO  make the background never have whitespace even when scrolling*/
     background-position: right;
 }

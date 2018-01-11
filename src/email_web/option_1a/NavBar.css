@@ -1,6 +1,6 @@
 #top-bar{
     background: #003091;
-    position: absolute;
+    position: fixed;
     min-height: 50px;
     min-width: 100%;
     color: #ececec;
