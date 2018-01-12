@@ -3,7 +3,6 @@ import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import {setMyLikedShops} from './ShopPickerActions'
 import {onUpdateFormShops, pullShops} from 'scenes/NewPostPage/NewPostActions'
-import {pullNotMyShops} from 'scenes/FrontPage/FrontPageActions'
 import {addShopFinderRef, pullMyShops, clearShopFinder}
   from 'scenes/MyShopsPage/MyShopsPageActions'
 import ShopPickerComponent from './ShopPickerComponent'
@@ -21,7 +20,7 @@ class ShopPicker extends Component {
         this.props.getAllShops()
         break
       case PICKER_PREFERENCES:
-        this.props.getNotMyShops()
+        this.props.getAllShops()
         this.props.getMyShops()
         break
       default:
@@ -33,6 +32,7 @@ class ShopPicker extends Component {
     const {
       shops,
       pickedShops,
+      selectedShopsForm,
       onAddShopFinderRef,
       onAddNewShop,
       placeholder,
@@ -49,6 +49,7 @@ class ShopPicker extends Component {
             </h2>
             <ShopPickerComponent
               shops={shops}
+              selectedShopsForm={selectedShopsForm}
               onAddNewShop={shop => {
                 onAddNewShop(shop)}}
               onAddShopFinderRef={ref =>
@@ -66,6 +67,7 @@ class ShopPicker extends Component {
             </h2>
             <ShopPickerComponent
               shops={shops}
+              selectedShopsForm={selectedShopsForm}
               onAddNewShop={shop => {
                 onAddNewShop(shop)}}
               onAddShopFinderRef={ref =>
@@ -81,11 +83,11 @@ class ShopPicker extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-
   return Object.assign({}, ownProps, {
     shops:  state.shops,
     pickedShops: (state.displayedShops || []),
-    placeholder: (ownProps.placeholder || "search for a shop...")
+    placeholder: (ownProps.placeholder || "search for a shop..."),
+    selectedShopsForm: (state.form || {})
   })
 }
 

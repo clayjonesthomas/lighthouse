@@ -6,6 +6,7 @@ import ShopRecommenderBox from '../../ui-kit/ShopRecommenderBox'
 const ShopPicker = (
   {
     shops,
+    selectedShopsForm,
     pickedShops,
     onSubmit,
     onAddNewShop,
@@ -22,6 +23,12 @@ const ShopPicker = (
         emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {
+          var selectedShops = selectedShopsForm.shops || pickedShops || []
+          var selectedShopKeys = selectedShops.map(shop => shop.key)
+          if (selectedShopKeys.indexOf(option.key) !== -1) {
+            return false
+          }
+
           for (var i=0; i < option.recognized_names.length; i++) {
             var recognized_name = option.recognized_names[i] 
             //TODO when we store these in the backend, store them all lower case with no punctuation
@@ -52,6 +59,7 @@ const ShopPicker = (
           if(onAddShopFinderRef)
             onAddShopFinderRef(ref)
         }}
+        maxHeight={200}
       />
     </InputGroup>
     <InputGroup.Button>
