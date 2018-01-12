@@ -25,7 +25,7 @@ const GetStarted = ({
       your inbox.
     </p>
     <div
-      className={'try-it-button'}
+      className='try-it-button_2'
       onClick={onClickLogo}>
       SIGN ME UP
     </div>

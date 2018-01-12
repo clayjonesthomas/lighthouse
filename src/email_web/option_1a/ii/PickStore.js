@@ -43,7 +43,7 @@ const PickStore = ({
           Tip: use a password that is at least 8 characters in length
         </HelpBlock>
       </FormGroup>
-      <input type="submit" value="TRY IT OUT" className="try-it-button submit-button"/>
+      <input type="submit" value="TRY IT OUT" className="try-it-button_2 submit-button_2"/>
     </div>
   </form>
 )
