@@ -3,7 +3,8 @@ import Logo from '../../../web/ui-kit/Logo'
 
 import "./GetStarted.css"
 const GetStarted = ({
-  expand_button
+  expand_button,
+  onClickLogo
                     }) => (
   <div id="front-page-contents">
     <div id="logo">
@@ -25,7 +26,9 @@ const GetStarted = ({
     <div
       className={expand_button?
         'try-it-button try-it-button-expanded':
-        'try-it-button'}>
+        'try-it-button'}
+      onClick={onClickLogo}
+    >
       Let's Get Started
     </div>
   </div>

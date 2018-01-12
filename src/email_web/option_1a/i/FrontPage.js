@@ -17,7 +17,10 @@ class FrontPage extends Component {
           onClickLogo={this.props.onClickLogo}
         />
         {this.props.page === 1 &&
-          <GetStarted expand_button={this.props.expand_button}/>
+          <GetStarted
+            expand_button={this.props.expand_button}
+            onClickLogo={this.props.onClickLogo}
+          />
         }
         {this.props.page === 2 && <PickStore/>}
       </div>
