@@ -27,7 +27,7 @@ const GetStarted = ({
     <div
       className={'try-it-button'}
       onClick={onClickLogo}>
-      SIGN ME UP
+      Let's Get Started
     </div>
   </div>
 )
