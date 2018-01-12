@@ -1,10 +1,8 @@
 import React from 'react'
-import Logo from '../../web/ui-kit/Logo'
+import Logo from '../../../web/ui-kit/Logo'
 
-import "./GetStarted.css"
-const GetStarted = ({
-  expand_button
-                    }) => (
+import "./PickStore.css"
+const PickStore = ({}) => (
   <div id="front-page-contents">
     <div id="logo">
       <div id="logo-icon-wrapper">
@@ -22,14 +20,11 @@ const GetStarted = ({
       clothing sales you actually want
       delivered straight to your inbox.
     </p>
-    <input
-      type="button"
-      value="Let's Get Started"
-      // id="try-it-button"
-      className={expand_button?'try-it-button try-it-button-expanded':'try-it-button'}
-    />
+    <div id="try-it-div">
+      Let's Get Started
+    </div>
   </div>
 )
 
-export default GetStarted
+export default PickStore
 

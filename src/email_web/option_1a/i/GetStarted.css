@@ -1,15 +1,16 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
+
+
+#front-page-contents{
+}
+
 #front-page-paragraph{
     font-family: 'Roboto', sans-serif;
     font-size: 30px;
     max-width: 46%;
     padding-top: 20px;
-    padding-left: 95px;
     letter-spacing: 1px;
-}
-
-#front-page-contents{
-    padding-left: 2%;
+    margin-left: 4%;
 }
 
 #logo{
@@ -17,6 +18,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 100px;
     color: #003091;
+    margin-left: 4%;
 }
 
 #logo-icon-wrapper{
@@ -26,12 +28,10 @@
     top: .22em;
 }
 
-#try-it-div{
-    margin-left: 7%;
-    margin-right: 7%;
-    width: 83%;
-    height: 200px;
-    display: block;
+.try-it-button{
+    display: inline-block;
+    margin-left: 4%;
+    margin-right: 4%;
     margin-bottom: 20px;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 2px;
@@ -47,4 +47,20 @@
     margin-top: 40px;
     font-weight: 600;
     font-size: 17px;
+
+    width: auto;
+    height: auto;
+    min-height: 0;
+    min-width: 0;
+    transition: min-height .5s ease, min-width .5s ease;
+    /*-webkit-transition: width 0.5s, height 0.5s 0.5s;*/
+    /*-moz-transition: width 0.5s, height 0.5s 0.5s;*/
+    /*-o-transition: width 0.5s, height 0.5s 0.5s;*/
+    /*transition: width 0.5s, height 0.5s 0.5s;*/
+}
+
+.try-it-button-expanded{
+    min-width: 92%;
+    min-height: 200px;
+    /*max-height: 500px;*/
 }

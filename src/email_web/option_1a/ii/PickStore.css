@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
+
+#try-it-div{
+    margin-left: 7%;
+    margin-right: 7%;
+    width: 83%;
+    height: 200px;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 2px;
+    padding: .7em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 3px;
+    background-color: #ffffff;
+    color: #003091;
+    border-color: #003091;
+    margin-top: 40px;
+    font-weight: 600;
+    font-size: 17px;
+}

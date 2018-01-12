@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../../web/ui-kit/Logo'
+import Logo from '../../../web/ui-kit/Logo'
 
 import "./PickStore.css"
 const PickStore = ({}) => (
