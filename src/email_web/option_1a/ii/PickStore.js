@@ -1,32 +1,51 @@
 import React from 'react'
 import Logo from '../../../web/ui-kit/Logo'
+import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap'
 
 import "./PickStore.css"
 const PickStore = ({
   scroll_pages
                    }) => (
-  <div className={scroll_pages ? "form-contents":
+  <form className={scroll_pages ? "form-contents":
     "form-contents form-contents-hidden"}>
-    <div id="logo">
-      <div id="logo-icon-wrapper">
-        <Logo
-          scale={2}
-          color="#003091" //#0055ff
+    <div className="form-wrapper">
+      <h1 className="form-title">Sign Up</h1>
+      <p className="sign-up-helper-text">
+        Already have an account? <a>Sign in</a>
+      </p>
+      <FormGroup
+        controlId="formBasicText"
+        // validationState={this.getValidationState()}
+      >
+        {/*<ControlLabel>Working example with validation</ControlLabel>*/}
+        <FormControl
+          className="text-box"
+          type="text"
+          // value={this.state.value}
+          placeholder="Email"
+          // onChange={this.handleChange}
         />
-      </div>
-      <span id="logo-name">
-            lightho.us
-          </span>
+        <FormControl
+          className="text-box"
+          type="text"
+          // value={this.state.value}
+          placeholder="Stores"
+          // onChange={this.handleChange}
+        />
+        <FormControl
+          className="text-box"
+          type="text"
+          // value={this.state.value}
+          placeholder="Password"
+          // onChange={this.handleChange}
+        />
+        <HelpBlock className="sign-up-helper-text">
+          Tip: use a password that is at least 8 characters in length
+        </HelpBlock>
+      </FormGroup>
+      <input type="submit" value="TRY IT OUT" className="try-it-button submit-button"/>
     </div>
-    <p id="front-page-paragraph">
-      A curated list of the
-      clothing sales you actually want
-      delivered straight to your inbox.
-    </p>
-    <div id="try-it-div">
-      Let's Get Started
-    </div>
-  </div>
+  </form>
 )
 
 export default PickStore
