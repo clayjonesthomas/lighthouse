@@ -2,8 +2,11 @@ import React from 'react'
 import Logo from '../../../web/ui-kit/Logo'
 
 import "./PickStore.css"
-const PickStore = ({}) => (
-  <div id="front-page-contents">
+const PickStore = ({
+  scroll_pages
+                   }) => (
+  <div className={scroll_pages ? "form-contents":
+    "form-contents form-contents-hidden"}>
     <div id="logo">
       <div id="logo-icon-wrapper">
         <Logo

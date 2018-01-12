@@ -22,3 +22,14 @@
     font-weight: 600;
     font-size: 17px;
 }
+
+
+.form-contents{
+    position: absolute;
+    top: 0;
+    transition: top .5s ease;
+}
+
+.form-contents-hidden{
+    top: -100%;
+}

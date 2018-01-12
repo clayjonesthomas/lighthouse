@@ -3,9 +3,10 @@ import Logo from '../../../web/ui-kit/Logo'
 
 import "./GetStarted.css"
 const GetStarted = ({
-  expand_button
+  scroll_pages
                     }) => (
-  <div id="front-page-contents">
+  <div className={!scroll_pages ? "front-page-contents":
+    "front-page-contents front-page-contents-hidden"}>
     <div id="logo">
       <div id="logo-icon-wrapper">
         <Logo
@@ -23,9 +24,7 @@ const GetStarted = ({
       delivered straight to your inbox.
     </p>
     <div
-      className={expand_button?
-        'try-it-button try-it-button-expanded':
-        'try-it-button'}>
+      className={'try-it-button'}>
       Let's Get Started
     </div>
   </div>

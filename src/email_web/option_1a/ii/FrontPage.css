@@ -13,4 +13,5 @@ html{
     background-repeat: no-repeat;
     background-attachment: fixed; /* TODO  make the background never have whitespace even when scrolling*/
     background-position: right;
+    overflow: hidden;
 }

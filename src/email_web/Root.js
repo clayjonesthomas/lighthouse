@@ -6,7 +6,8 @@ import {routerMiddleware} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
 import reducer from './option_1a/i/reducer'
-import FrontPage from './option_1a/i/FrontPage'
+import FrontPage_1 from './option_1a/i/FrontPage'
+import FrontPage_2 from './option_1a/ii/FrontPage'
 import App from './App'
 
 let store = createStore(
@@ -21,7 +22,10 @@ const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={FrontPage}/>
+        <Route path="option_1" component={FrontPage_1}/>
+        <Route path="option_2" component={FrontPage_2}/>
+
+
       </Route>
     </Router>
   </Provider>

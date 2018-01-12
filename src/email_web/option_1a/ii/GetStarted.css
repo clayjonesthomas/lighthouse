@@ -1,7 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
 
 
-#front-page-contents{
+.front-page-contents{
+    position: absolute;
+    top: 0;
+    transition: top .5s ease;
+}
+
+.front-page-contents-hidden{
+    top: -100%;
 }
 
 #front-page-paragraph{
