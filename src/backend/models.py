@@ -109,6 +109,7 @@ class Post(ndb.Model):
 # existing entities in prod
 class Store(ndb.Model):
     name = ndb.StringProperty(indexed=True)
+    alternate_names = ndb.StringProperty(indexed=False, repeated=True)
     website = ndb.StringProperty(indexed=False)
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
