@@ -106,26 +106,22 @@ def _spawn_dummy_posts(shop_keys):
 
 def _spawn_dummy_shops():
     shops = [Store(name='American Eagle',
-                  recognized_names=['american eagle', 'ae'],
-                  website='www.ae.com',
-                  likes=0),
+                   alternate_names=['ae'],
+                   website='www.ae.com',
+                   likes=0),
              Store(name='JCrew',
-                  recognized_names=['jcrew'],
-                  website='www.jcrew.com',
-                  likes=493218),
+                   website='www.jcrew.com',
+                   likes=493218),
              Store(name="Levi's Jeans",
-                  recognized_names=['levis jeans'],
-                  website='www.levis.com',
-                  likes=124341),
+                   website='www.levis.com',
+                   likes=124341),
              Store(name='Lulu Lemon',
-                  recognized_names=['lululemon', 'lulu lemon'],
-                  website='www.lululemon.com',
-                  likes=295831,
-                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+                   website='www.lululemon.com',
+                   likes=295831,
+                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Store(name='Old Navy',
-                  recognized_names=['old navy'],
-                  website='www.oldnavy.com',
-                  likes=324319)]
+                   website='www.oldnavy.com',
+                   likes=324319)]
     return ndb.put_multi(shops)
 
 
@@ -379,8 +375,7 @@ class MyShops(BaseHandler):
         fetched_shops = [shop_key.get().prepare_shop(user)
                          for shop_key in user.liked_stores]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
-        self.response.write(json.dumps(fetched_shops)) #included in state as "displayedShops"
-        # TODO why not make this more obvious by doing 'displayedShops' : fetched_shops 
+        self.response.write(json.dumps(fetched_shops))  # included in state as "displayedShops"
 
 
 class ShopPosts(BaseHandler):

@@ -1,38 +1,36 @@
 import React, {PropTypes} from 'react'
 import {Typeahead} from 'react-bootstrap-typeahead'
-import {InputGroup, Button} from 'react-bootstrap'
-import ShopRecommenderBox from '../../ui-kit/ShopRecommenderBox'
+import {InputGroup} from 'react-bootstrap'
+import ShopRecommenderBox from 'ui-kit/ShopRecommenderBox'
 
-const ShopPicker = (
+const ShopPickerComponent = (
   {
     shops,
     selectedShopsForm,
     pickedShops,
-    onSubmit,
     onAddNewShop,
     onAddShopFinderRef
   }) => (
-  <form
-    className={"shop-picker-search"}
-    onSubmit={(e) => {
-      onSubmit(e)
-      e.preventDefault()
-    }}>
+  <div className={"shop-picker-search"}>
     <InputGroup>
       <Typeahead
         emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {
-          var selectedShops = selectedShopsForm.shops || pickedShops || []
-          var selectedShopKeys = selectedShops.map(shop => shop.key)
+          const selectedShops = selectedShopsForm.shops || pickedShops || []
+          const selectedShopKeys = selectedShops.map(shop => shop.key)
           if (selectedShopKeys.indexOf(option.key) !== -1) {
             return false
           }
 
-          for (var i=0; i < option.recognized_names.length; i++) {
-            var recognized_name = option.recognized_names[i] 
-            //TODO when we store these in the backend, store them all lower case with no punctuation
-            //to save time so that the only thing that needs to be processed here is the inputted text
+          let recognizedNames = [option.name.replace(/[^a-zA-Z0-9]/g,'')]
+          if (option.alternate_names) {
+            recognizedNames = recognizedNames.concat(option.alternate_names)
+          }
+          recognizedNames = recognizedNames.map(recognizedName => recognizedName.toLowerCase())
+
+          for (let i=0; i < recognizedNames.length; i++) {
+            const recognized_name = recognizedNames[i]
             text = text.replace(/[^a-zA-Z0-9]/g,'')
             text = text.toLowerCase()
             if (recognized_name.indexOf(text) !== -1) {
@@ -59,17 +57,14 @@ const ShopPicker = (
           if(onAddShopFinderRef)
             onAddShopFinderRef(ref)
         }}
-        maxHeight={200}
+        maxHeight={200} // in pixels
       />
     </InputGroup>
-    <InputGroup.Button>
-      <Button type="submit">Submit All Stores</Button>
-    </InputGroup.Button>
-  </form>
+  </div>
 )
 
-ShopPicker.propTypes = {
+ShopPickerComponent.propTypes = {
   onAddNewShop: PropTypes.func
 }
 
-export default ShopPicker
+export default ShopPickerComponent

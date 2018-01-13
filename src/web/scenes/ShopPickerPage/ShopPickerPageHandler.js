@@ -1,26 +1,53 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
-import ShopPicker, {PICKER_SETUP, PICKER_PREFERENCES} from './ShopPicker'
+
+import {setMyLikedShops} from './ShopPickerActions'
+import {clearShopFinder} from 'scenes/MyShopsPage/MyShopsPageActions'
+
+import ShopPickerPage from './ShopPickerPage'
 
 class ShopPickerPageHandler extends Component {
-
   render() {
+    const {
+      onSubmit,
+      isSetupMode
+    } = this.props
     return (
-      <div>
-        <h1>SHOP PICKER PAGE</h1>
-        <ShopPicker pickerType={PICKER_SETUP}/>
-      </div>
+      <ShopPickerPage
+        onSubmit={onSubmit}
+        isSetupMode={isSetupMode}
+      />
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {}
+const isSetupMode = true
+
+const mapStateToProps = () => {
+  return {
+    isSetupMode: isSetupMode
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  const onSubmitSetup = () => {
+    dispatch(setMyLikedShops())
+    dispatch(clearShopFinder())
+    dispatch(push("/email"))
+  }
+  const onSubmitPreferenceEdit = () => {
+    dispatch(setMyLikedShops())
+    dispatch(clearShopFinder())
+    dispatch(push("/email"))
+  }
+  let onSubmit = onSubmitPreferenceEdit
+  if (isSetupMode) {
+    onSubmit = onSubmitSetup
+  }
+  return {
+    onSubmit: onSubmit
+  }
 }
 
 export default connect(

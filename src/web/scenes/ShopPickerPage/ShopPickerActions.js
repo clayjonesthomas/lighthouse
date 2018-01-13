@@ -18,13 +18,11 @@ export const SetMyLikedShopsReturn = (selectedShops) => {
   }
 }
 
-export function setMyLikedShops(){
+export function setMyLikedShops () {
   return (dispatch, getState) => {
     const state = getState()
     if(state.form.shops) {
-      const shops = state.form.shops.map(shop => {
-        return shop.key
-      })
+      const shops = state.form.shops.map(shop => shop.key)
       const body = {
         keys: shops
       }
