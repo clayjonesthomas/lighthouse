@@ -106,21 +106,22 @@ def _spawn_dummy_posts(shop_keys):
 
 def _spawn_dummy_shops():
     shops = [Store(name='American Eagle',
-                  website='www.ae.com',
-                  likes=0),
+                   alternate_names=['ae'],
+                   website='www.ae.com',
+                   likes=0),
              Store(name='JCrew',
-                  website='www.jcrew.com',
-                  likes=493218),
+                   website='www.jcrew.com',
+                   likes=493218),
              Store(name="Levi's Jeans",
-                  website='www.levis.com',
-                  likes=124341),
+                   website='www.levis.com',
+                   likes=124341),
              Store(name='Lulu Lemon',
-                  website='www.lululemon.com',
-                  likes=295831,
-                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+                   website='www.lululemon.com',
+                   likes=295831,
+                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Store(name='Old Navy',
-                  website='www.oldnavy.com',
-                  likes=324319)]
+                   website='www.oldnavy.com',
+                   likes=324319)]
     return ndb.put_multi(shops)
 
 
@@ -374,7 +375,7 @@ class MyShops(BaseHandler):
         fetched_shops = [shop_key.get().prepare_shop(user)
                          for shop_key in user.liked_stores]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
-        self.response.write(json.dumps(fetched_shops))
+        self.response.write(json.dumps(fetched_shops))  # included in state as "displayedShops"
 
 
 class ShopPosts(BaseHandler):
@@ -414,6 +415,39 @@ class LikeShop(BaseHandler):
             shop.put()
         user.put()
         shops = [shop.prepare_shop(user) for shop in shops]
+        self.response.write(json.dumps(shops))
+
+
+class SetLikedShops(BaseHandler):
+
+    def post(self):
+        user = self.user
+        if not user:
+            return
+        body = json.loads(self.request.body)
+        selected_shops = []
+        if 'key' in body:
+            selected_shops = [ndb.Key(urlsafe=body['key']).get()]
+        if 'keys' in body:
+            selected_shops = [ndb.Key(urlsafe=key).get()
+                     for key in body['keys']]
+
+        for shop in selected_shops:
+            if shop.key not in user.liked_stores:
+                user.liked_stores.append(shop.key)
+                shop.likes += 1
+                shop.put()
+
+        og_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_stores]
+        for og_liked_shop in og_liked_shops:
+            if og_liked_shop not in selected_shops: #they no longer want this shop included in their liked shops
+                user.liked_stores.remove(og_liked_shop.key)
+                og_liked_shop.likes -= 1
+                og_liked_shop.put()
+        
+        user.put()
+
+        shops = [shop.prepare_shop(user) for shop in selected_shops]
         self.response.write(json.dumps(shops))
 
 
@@ -774,6 +808,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
     webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
     webapp2.Route('/rest/shops', Shops, name='shops'),
+    webapp2.Route('/rest/shops/set_likes', SetLikedShops, name='set_liked_shops'),
     webapp2.Route('/rest/shop/like', LikeShop, name='like_shop'),
     # webapp2.Route('/rest/shop/icon/<url_key:.*>', AddIconToShop, name='single_shop'),
     webapp2.Route('/rest/shop/edit', EditShop, name='edit_shop'),
