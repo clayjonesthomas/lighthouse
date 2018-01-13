@@ -59,7 +59,7 @@ const ShopPicker = (
           if(onAddShopFinderRef)
             onAddShopFinderRef(ref)
         }}
-        maxHeight={200}
+        maxHeight={60}
       />
     </InputGroup>
     <InputGroup.Button>
