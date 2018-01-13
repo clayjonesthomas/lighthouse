@@ -5,8 +5,6 @@ import {addShopFinderRef, pullMyShops, pullNotMyShops, clearShopFinder}
   from 'scenes/MyShopsPage/MyShopsPageActions'
 import ShopPickerComponent from './ShopPickerComponent'
 
-import "./ShopPickerHandler.css"
-
 class ShopPickerHandler extends Component {
 
   componentDidMount () {

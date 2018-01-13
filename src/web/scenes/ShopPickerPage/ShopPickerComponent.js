@@ -3,6 +3,8 @@ import {Typeahead} from 'react-bootstrap-typeahead'
 import {InputGroup} from 'react-bootstrap'
 import ShopRecommenderBox from 'ui-kit/ShopRecommenderBox'
 
+import "./ShopPickerComponent.css"
+
 const ShopPickerComponent = (
   {
     shops,

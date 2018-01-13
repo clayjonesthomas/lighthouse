@@ -1,0 +1,39 @@
+.shop-picker-search {
+    width: 60%;
+    float:left;
+}
+
+.shop-picker-search>span{
+    width: 100%;
+}
+
+.shop-picker-search>span>div>ul{
+    width: 100%;
+}
+
+.shop-picker-search .token{
+    background-color: #e7f4ff;
+    border: 0;
+    border-radius: 2px;
+    color: #1f8dd6;
+    display: inline-block;
+    line-height: 1em;
+    margin: 0 3px 3px 0;
+    padding: 4px 7px;
+    position: relative;
+}
+
+.shop-picker-search .token .close-button{
+    margin-left: 3px;
+}
+
+ul::-webkit-scrollbar {
+    width:10px;
+}
+
+ul::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+}
+ul::-webkit-scrollbar-thumb {
+  background-color: #a9a9a9;
+}
