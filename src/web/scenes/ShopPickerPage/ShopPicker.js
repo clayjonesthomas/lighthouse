@@ -5,7 +5,7 @@ import {addShopFinderRef, pullMyShops, pullNotMyShops, clearShopFinder}
   from 'scenes/MyShopsPage/MyShopsPageActions'
 import ShopPickerComponent from './ShopPickerComponent'
 
-class ShopPickerHandler extends Component {
+class ShopPicker extends Component {
 
   componentDidMount () {
     this.props.getAllShops()
@@ -16,32 +16,27 @@ class ShopPickerHandler extends Component {
 
   render () {
     const {
+      className,
       shops,
       pickedShops,
       selectedShopsForm,
       onAddShopFinderRef,
       onAddNewShop,
-      placeholder,
-      isSetupMode
+      placeholder
     } = this.props
 
     return (
-      <div>
-        <h2 className="shop-picker-title">
-          {isSetupMode?"Search for a shop":
-            "Search for shops to add"}
-        </h2>
-        <ShopPickerComponent
-          shops={shops}
-          selectedShopsForm={selectedShopsForm}
-          onAddNewShop={shop => {
-            onAddNewShop(shop)}}
-          onAddShopFinderRef={ref =>
-            onAddShopFinderRef(ref)}
-          pickedShops={pickedShops}
-          placeholder={placeholder}
-        />
-      </div>
+      <ShopPickerComponent
+        className={className}
+        shops={shops || []}
+        selectedShopsForm={selectedShopsForm}
+        onAddNewShop={shop => {
+          onAddNewShop(shop)}}
+        onAddShopFinderRef={ref =>
+          onAddShopFinderRef(ref)}
+        pickedShops={pickedShops}
+        placeholder={placeholder}
+      />
     )
   }
 }
@@ -52,8 +47,6 @@ function mapStateToProps(state, ownProps) {
     pickedShops: (state.displayedShops || []),
     placeholder: (ownProps.placeholder || "search for a shop..."),
     selectedShopsForm: (state.form || {}),
-    // TODO this should be moved to state and referenced through it
-    isSetupMode: ownProps.isSetupMode
   })
 }
 
@@ -82,4 +75,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ShopPickerHandler)
+)(ShopPicker)

@@ -1,6 +1,7 @@
 import React from 'react'
-import Logo from '../../../web/ui-kit/Logo'
 import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap'
+
+import ShopPicker from '../../../web/scenes/ShopPickerPage/ShopPicker'
 
 import "./PickStore.css"
 const PickStore = ({
@@ -25,12 +26,8 @@ const PickStore = ({
           placeholder="Email"
           // onChange={this.handleChange}
         />
-        <FormControl
-          className="text-box"
-          type="text"
-          // value={this.state.value}
-          placeholder="Stores"
-          // onChange={this.handleChange}
+        <ShopPicker
+          className="shop-picker-box"
         />
         <FormControl
           className="text-box"

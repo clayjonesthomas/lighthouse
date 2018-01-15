@@ -7,13 +7,14 @@ import "./ShopPickerComponent.css"
 
 const ShopPickerComponent = (
   {
+    className,
     shops,
     selectedShopsForm,
     pickedShops,
     onAddNewShop,
     onAddShopFinderRef
   }) => (
-  <div className={"shop-picker-search"}>
+  <div className={className + " shop-picker-search"}>
     <InputGroup>
       <Typeahead
         emptyLabel={<ShopRecommenderBox/>}
