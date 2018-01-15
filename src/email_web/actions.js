@@ -1,7 +1,7 @@
-export const SWITCH_PAGES = 'SWITCH_PAGES'
+export const GO_TO_SIGN_UP = 'GO_TO_SIGN_UP'
 
-export const switchPages = () => {
+export const goToSignUp = () => {
   return {
-    type: SWITCH_PAGES
+    type: GO_TO_SIGN_UP
   }
 }

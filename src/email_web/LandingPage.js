@@ -1,29 +1,30 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import NavBar from "./NavBar"
-import GetStarted from "./GetStarted"
-import PickStore from "./PickStore"
+import NavBar from "./components/NavBar"
+import GetStarted from "./components/GetStarted"
+import PickStore from "./components/PickStore"
 
-import {switchPages} from "./actions"
+import {goToSignUp} from "./actions"
 
-import "./FrontPage.css"
+import "./LandingPage.css"
 class FrontPage extends Component {
 
   render() {
     const {
-      onClickLogo,
+      goToSignUp,
       scrollPages
     } = this.props
     return (
-      <div id="front-page">
+      <div id="landing-page-container">
         <NavBar
-          onClickLogo={onClickLogo}
+          onClickSignUp={goToSignUp}
         />
         {
           <GetStarted
             scrollPages={scrollPages}
-            onClickLogo={onClickLogo}/>
+            onClickSignUp={goToSignUp}
+          />
         }
         {
           <PickStore scrollPages={scrollPages}/>
@@ -35,14 +36,14 @@ class FrontPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: 1, //state.page
+    page: state.page,
     scrollPages: state.page === 2
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClickLogo: () => dispatch(switchPages())
+    goToSignUp: () => dispatch(goToSignUp())
   }
 }
 
