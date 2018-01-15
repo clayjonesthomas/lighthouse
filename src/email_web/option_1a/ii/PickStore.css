@@ -1,18 +1,45 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
 
-.form-contents{
+.form-contents_2 {
     position: absolute;
     top: 0;
     transition: top .5s ease;
     height: 100%;
 }
 
-.form-contents-hidden{
+.form-contents-hidden_2 {
     top: 100%;
 }
 
-.text-box{
+.form-wrapper_2 {
+    background-color: #aec7ea;
+    padding-top: 10em;
+    padding-left: 90px;
+    padding-right: 90px;
+    height: 100%;
+    text-align: center;
+    width: 500px;
+}
+
+.sign-up-helper-text, .store-helper-text{
+    color: #585858;
+}
+
+.store-helper-text {
+    text-align: left;
+    margin-bottom: 2em;
+    margin-left: 6px;
+}
+
+.form-title {
+    font-family: "Roboto", sans-serif;
+}
+
+.pass-box, .email-box {
     background-color: #f1f1f1;
+}
+.email-box {
+    margin-bottom: 2em;
 }
 
 .submit-button_2 {
@@ -20,30 +47,12 @@
     width: 100%;
 }
 
-.form-wrapper {
-    background-color: #aec7ea;
-    padding-top: 10em;
-    padding-left: 60px;
-    padding-right: 120px;
-    height: 100%;
-    text-align: center;
-}
-
-.sign-up-helper-text {
-    color: #585858;
-}
-
-.form-title {
-    font-family: "Roboto", sans-serif;
-}
-
 .shop-picker-box {
     width: 100%;
     border-radius: 4px;
-    margin-top: 2em;
     font-size: 14px;
     text-align: left;
-    margin-bottom: 2em;
+    margin-top: 2em;
 }
 
 .shop-picker-box>span>div>div {
@@ -51,4 +60,21 @@
     /* TODO figure out a way to write this without !important */
     border-radius: 4px !important;
     border: 1px solid #ccc;
+}
+
+.shop-picker-box>span>div>ul{
+    background-color: #f1f1f1;
+}
+
+.shop-picker-box>span>div>.dropdown-menu>li>a:hover{
+    background-color: #e5dbff;
+}
+
+.shop-picker-box .token {
+    color: #333333;
+    background-color: #d1e4ff;
+}
+
+.shop-picker-box .bootstrap-tokenizer {
+    font-size: 16px;
 }

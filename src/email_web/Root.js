@@ -5,7 +5,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {routerMiddleware} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
-import reducer from './option_1a/i/reducer'
+import reducer from './option_1a/ii/reducer'
 import FrontPage_1 from './option_1a/i/FrontPage'
 import FrontPage_2 from './option_1a/ii/FrontPage'
 import FrontPage_3 from './option_1a/iii/FrontPage'

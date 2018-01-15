@@ -53,14 +53,14 @@ const ShopPickerComponent = (
             return 1
           return 0
         })}
-        placeholder={"search for a shop..."}
+        placeholder={"Pick your shops"}
         selected={pickedShops}
         onChange={onAddNewShop}
         ref={ref => {
           if(onAddShopFinderRef)
             onAddShopFinderRef(ref)
         }}
-        maxHeight={200} // in pixels
+        maxHeight={300} // in pixels
       />
     </InputGroup>
   </div>
