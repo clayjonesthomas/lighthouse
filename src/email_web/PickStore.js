@@ -1,14 +1,14 @@
 import React from 'react'
-import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap'
+import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
-import ShopPicker from '../../../web/scenes/ShopPickerPage/ShopPicker'
+import ShopPicker from '../web/scenes/ShopPickerPage/ShopPicker'
 
 import "./PickStore.css"
 const PickStore = ({
-  scroll_pages,
+  scrollPages,
   shops
                    }) => (
-  <form className={scroll_pages ? "form-contents_2":
+  <form className={scrollPages ? "form-contents_2":
     "form-contents_2 form-contents-hidden_2"}>
     <div className="form-wrapper_2">
       <h1 className="form-title">Sign Up</h1>

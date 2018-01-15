@@ -1,12 +1,12 @@
 import React from 'react'
-import Logo from '../../../web/ui-kit/Logo'
+import Logo from '../web/ui-kit/Logo'
 
 import "./GetStarted.css"
 const GetStarted = ({
-  scroll_pages,
+  scrollPages,
   onClickLogo
                     }) => (
-  <div className={!scroll_pages ? "front-page-contents":
+  <div className={!scrollPages ? "front-page-contents":
     "front-page-contents front-page-contents-hidden"}>
     <div id="logo">
       <div id="logo-icon-wrapper">

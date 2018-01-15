@@ -11,18 +11,22 @@ import "./FrontPage.css"
 class FrontPage extends Component {
 
   render() {
+    const {
+      onClickLogo,
+      scrollPages
+    } = this.props
     return (
       <div id="front-page">
         <NavBar
-          onClickLogo={this.props.onClickLogo}
+          onClickLogo={onClickLogo}
         />
         {
           <GetStarted
-            scroll_pages={true}
-            onClickLogo={this.props.onClickLogo}/>
+            scrollPages={scrollPages}
+            onClickLogo={onClickLogo}/>
         }
         {
-          <PickStore scroll_pages={true}/>
+          <PickStore scrollPages={scrollPages}/>
         }
       </div>
     )
@@ -32,7 +36,7 @@ class FrontPage extends Component {
 const mapStateToProps = (state) => {
   return {
     page: 1, //state.page
-    scroll_pages: state.page === 2
+    scrollPages: state.page === 2
   }
 }
 
