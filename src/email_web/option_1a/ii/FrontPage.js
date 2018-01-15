@@ -18,11 +18,11 @@ class FrontPage extends Component {
         />
         {
           <GetStarted
-            scroll_pages={true}
+            scroll_pages={this.props.scroll_pages}
             onClickLogo={this.props.onClickLogo}/>
         }
         {
-          <PickStore scroll_pages={true}/>
+          <PickStore scroll_pages={this.props.scroll_pages}/>
         }
       </div>
     )
