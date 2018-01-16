@@ -1,4 +1,4 @@
-#nav-bar{
+#nav-bar {
     background: #003091;
     position: fixed;
     min-height: 50px;
@@ -9,20 +9,19 @@
     z-index: 2;
 }
 
-#nav-bar-link-container{
+#nav-bar-link-container {
     padding-top: 12px;
     font-size: 16px;
     letter-spacing: 1px;
     text-align: right;
 }
 
-
-.nav-bar-link{
+.nav-bar-link {
     padding: 5px;
     padding-right: 40px;
 
 }
 
-.nav-bar-link:hover{
+.nav-bar-link:hover {
     cursor: pointer;
 }

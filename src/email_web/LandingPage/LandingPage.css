@@ -1,17 +1,16 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
 
-
-.front-page-contents{
+.front-page-contents {
     position: absolute;
     top: 0;
     transition: top .5s ease;
 }
 
-.front-page-contents-hidden{
+.front-page-contents-hidden {
     top: -100%;
 }
 
-#front-page-paragraph{
+#front-page-paragraph {
     font-family: 'Roboto', sans-serif;
     font-size: 30px;
     max-width: 46%;
@@ -20,7 +19,7 @@
     margin-left: 4%;
 }
 
-#logo{
+#logo {
     padding-top: 8%;
     font-family: 'Montserrat', sans-serif;
     font-size: 100px;
@@ -28,14 +27,14 @@
     margin-left: 4%;
 }
 
-#logo-icon-wrapper{
+#logo-wrapper {
     padding-right: 20px;
     display: inline;
     position: relative;
     top: .22em;
 }
 
-.try-it-button_2{
+.submit-button {
     background-color: #003091;
     color: #f1f1f1;
     font-weight: 100;
@@ -56,4 +55,8 @@
     border-radius: 3px;
     border-color: #003091;
     margin-top: 40px;
+}
+
+.submit-button:hover {
+    cursor: pointer;
 }

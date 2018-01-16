@@ -1,23 +1,22 @@
-import {SWITCH_PAGES} from './actions'
+import {GO_TO_SIGN_UP} from './actions'
 
 import {REQUEST_SHOPS_RETURN} from 'scenes/NewPostPage/NewPostActions'
 import {REQUEST_MY_SHOPS_RETURN} from 'scenes/MyShopsPage/MyShopsPageActions'
 
+import {LANDING_PAGE} from './LandingPage/LandingPageHandler'
+import {SIGN_UP_PAGE} from './SignUpPage/SignUpPageHandler'
+
 let default_state = {
-  page: 1,
+  switchToPage: null,
   shops: [],
   displayedShops: []
 }
 
 export default function reducer(state=default_state, action) {
   switch (action.type) {
-    case SWITCH_PAGES:
-      let page = 1
-      if (state.page === 1) {
-        page = 2
-      }
+    case GO_TO_SIGN_UP:
       return Object.assign({}, state, {
-        page: page
+        switchToPage: SIGN_UP_PAGE
       })
     case REQUEST_SHOPS_RETURN:
       return Object.assign({}, state, {

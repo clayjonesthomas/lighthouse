@@ -2,7 +2,7 @@ import React from 'react'
 
 import "./NavBar.css"
 const NavBar = ({
-  onClickSignUp
+                  onClickSignUp
                 }) => (
   <div id="nav-bar">
     <div id="nav-bar-link-container">

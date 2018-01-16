@@ -3,47 +3,55 @@ import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
 import ShopPicker from '../../web/scenes/ShopPickerPage/ShopPicker'
 
-import "./PickStore.css"
-const PickStore = ({
-  scrollPages,
-  shops
-                   }) => (
-  <form className={scrollPages ? "form-contents_2":
-    "form-contents_2 form-contents-hidden_2"}>
-    <div className="form-wrapper_2">
-      <h1 className="form-title">Sign Up</h1>
-      <p className="sign-up-helper-text">
+import "./SignUpPage.css"
+import "../LandingPage/LandingPage.css"
+
+const SignUpPage = ({
+                  shouldDisplay
+                }) => (
+  <form className={shouldDisplay ? "form-contents" :
+    "form-contents form-contents-hidden"}>
+    <div id="form-wrapper">
+      <h1 id="form-title">
+        Sign Up
+      </h1>
+      <p id="sign-up-helper-text">
         Already have an account? <a>Sign in</a>
       </p>
       <FormGroup
-        controlId="formBasicText"
         // validationState={this.getValidationState()}
       >
         <ShopPicker
           className="shop-picker-box"
         />
-        <HelpBlock className="store-helper-text">
+        <HelpBlock id="store-helper-text">
           We recommend picking 5-6 of your favorite stores and brands to start off.
         </HelpBlock>
         <FormControl
-          className="email-box"
+          className="form-box"
+          id="email-box"
           type="text"
           // value={this.state.value}
           placeholder="Email"
           // onChange={this.handleChange}
         />
         <FormControl
-          className="pass-box"
+          className="form-box"
           type="text"
           // value={this.state.value}
           placeholder="Password"
           // onChange={this.handleChange}
         />
       </FormGroup>
-      <input type="submit" value="TRY IT OUT" className="try-it-button_2 submit-button_2"/>
+      <input
+        type="submit"
+        value="TRY IT OUT"
+        className="submit-button"
+        id="form-button"
+      />
     </div>
   </form>
 )
 
-export default PickStore
+export default SignUpPage
 

@@ -6,8 +6,10 @@ import {routerMiddleware} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
 import reducer from './reducer'
-import FrontPage from './LandingPage'
-import App from './App'
+import Container from './Container'
+
+import {LANDING_PAGE} from './LandingPage/LandingPageHandler'
+import {SIGN_UP_PAGE} from './SignUpPage/SignUpPageHandler'
 
 let store = createStore(
   reducer,
@@ -20,11 +22,30 @@ let store = createStore(
 const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <IndexRoute component={FrontPage}/>
+      <Route path="/">
+        <IndexRoute component={LandingPage_}/>
+        <Route path="/signup" component={SignUpPage_}/>
       </Route>
     </Router>
   </Provider>
 )
+
+const LandingPage_ = (props) => {
+  return (
+    <Container
+      page={LANDING_PAGE}
+      {...props}
+    />
+  )
+}
+
+const SignUpPage_ = (props) => {
+  return (
+    <Container
+      page={SIGN_UP_PAGE}
+      {...props}
+    />
+  )
+}
 
 export default Root
