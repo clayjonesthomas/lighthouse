@@ -1,7 +1,7 @@
 import React from 'react'
 import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
-import ShopPicker from '../../web/scenes/ShopPickerPage/ShopPicker'
+import ShopPicker from '../ui-kit/ShopPicker/ShopPicker'
 
 import "./SignUpPage.css"
 import "../LandingPage/LandingPage.css"
