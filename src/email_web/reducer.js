@@ -1,3 +1,6 @@
+import {combineReducers} from 'redux'
+import {routerReducer} from 'react-router-redux'
+
 import {GO_TO_SIGN_UP} from './actions'
 
 import {REQUEST_SHOPS_RETURN} from 'scenes/NewPostPage/NewPostActions'
@@ -5,28 +8,40 @@ import {REQUEST_MY_SHOPS_RETURN} from 'scenes/MyShopsPage/MyShopsPageActions'
 
 import {LANDING_PAGE} from './LandingPage/LandingPageHandler'
 import {SIGN_UP_PAGE} from './SignUpPage/SignUpPageHandler'
+import {LOCATION_CHANGE} from 'react-router-redux'
 
-let default_state = {
-  switchToPage: null,
-  shops: [],
-  displayedShops: []
-}
-
-export default function reducer(state=default_state, action) {
+export function displayedShops(state = [], action) {
   switch (action.type) {
-    case GO_TO_SIGN_UP:
-      return Object.assign({}, state, {
-        switchToPage: SIGN_UP_PAGE
-      })
-    case REQUEST_SHOPS_RETURN:
-      return Object.assign({}, state, {
-        shops: action.data.shops
-      })
     case REQUEST_MY_SHOPS_RETURN:
-      return Object.assign({}, state, {
-        displayedShops: action.data.shops
-      })
+      return action.data.shops
     default:
       return state
   }
 }
+
+export function shops(state = [], action) {
+  switch (action.type) {
+    case REQUEST_SHOPS_RETURN:
+      return action.data.shops
+    default:
+      return state
+  }
+}
+
+export function switchToPage(state = null, action) {
+  switch (action.type) {
+    case LOCATION_CHANGE:
+      return null
+    case GO_TO_SIGN_UP:
+      return SIGN_UP_PAGE
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  shops,
+  displayedShops,
+  switchToPage,
+  routing: routerReducer
+})

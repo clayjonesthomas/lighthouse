@@ -35,7 +35,7 @@ class Container extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps) =>
   return {
     page: state.switchToPage || ownProps.page
   }
