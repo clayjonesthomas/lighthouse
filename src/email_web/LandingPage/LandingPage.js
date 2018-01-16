@@ -1,5 +1,6 @@
 import React from 'react'
 import Logo from '../ui-kit/Logo'
+import {smalt} from '../ui-kit/colors'
 
 import "./LandingPage.css"
 const LandingPage = ({
@@ -12,7 +13,7 @@ const LandingPage = ({
       <div id="logo-wrapper">
         <Logo
           scale={2}
-          color="#003091"
+          color={smalt}
         />
       </div>
       <span>
