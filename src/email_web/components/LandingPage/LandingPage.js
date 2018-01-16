@@ -1,6 +1,6 @@
 import React from 'react'
-import Logo from '../ui-kit/Logo'
-import {smalt} from '../ui-kit/colors'
+import Logo from '../../ui-kit/Logo'
+import {smalt} from '../../ui-kit/colors'
 
 import "./LandingPage.css"
 const LandingPage = ({
@@ -25,11 +25,12 @@ const LandingPage = ({
       don't have to, sending the best sales straight to
       your inbox.
     </p>
-    <div
+    <input
+      type="button"
       className='submit-button'
-      onClick={goToSignUp}>
-      SIGN ME UP
-    </div>
+      onClick={goToSignUp}
+      value="SIGN ME UP"
+    />
   </div>
 )
 

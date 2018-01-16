@@ -27,6 +27,7 @@ class ShopPicker extends Component {
 
     return (
       <ShopPickerComponent
+        tabIndex="-1"
         className={className}
         shops={shops || []}
         selectedShopsForm={selectedShopsForm}

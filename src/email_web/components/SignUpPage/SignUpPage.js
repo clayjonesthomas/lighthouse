@@ -1,7 +1,7 @@
 import React from 'react'
 import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
-import ShopPicker from '../ui-kit/ShopPicker/ShopPicker'
+import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
 
 import "./SignUpPage.css"
 import "../LandingPage/LandingPage.css"
@@ -23,6 +23,7 @@ const SignUpPage = ({
       >
         <ShopPicker
           className="shop-picker-box"
+          tabIndex="-1"
         />
         <HelpBlock id="store-helper-text">
           We recommend picking 5-6 of your favorite stores and brands to start off.
@@ -30,6 +31,7 @@ const SignUpPage = ({
         <FormControl
           className="form-box"
           id="email-box"
+          tabIndex="-1"
           type="text"
           // value={this.state.value}
           placeholder="Email"
@@ -37,6 +39,7 @@ const SignUpPage = ({
         />
         <FormControl
           className="form-box"
+          tabIndex="-1"
           type="text"
           // value={this.state.value}
           placeholder="Password"
@@ -45,6 +48,7 @@ const SignUpPage = ({
       </FormGroup>
       <input
         type="submit"
+        tabIndex="-1"
         value="TRY IT OUT"
         className="submit-button"
         id="form-button"

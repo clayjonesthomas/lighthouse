@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
 import LandingPage from './LandingPage'
-import {goToSignUp} from '../actions'
-import {SIGN_UP_PAGE_URL} from '../urls'
+import {goToSignUp} from '../../actions'
+import {SIGN_UP_PAGE_URL} from '../../urls'
 
 export const LANDING_PAGE = 'LANDING_PAGE'
 

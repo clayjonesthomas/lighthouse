@@ -17,6 +17,7 @@ const ShopPickerComponent = (
   <div className={className + " shop-picker-search"}>
     <InputGroup>
       <Typeahead
+        inputProps={{"tabIndex":"-1"}}
         emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {

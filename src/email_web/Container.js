@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import NavBar from './components/NavBar'
-import LandingPageHandler from './LandingPage/LandingPageHandler'
-import SignUpPageHandler from './SignUpPage/SignUpPageHandler'
+import NavBar from './components/NavBar/NavBar'
+import LandingPageHandler from './components/LandingPage/LandingPageHandler'
+import SignUpPageHandler from './components/SignUpPage/SignUpPageHandler'
 import {goToSignUp} from './actions'
 import {SIGN_UP_PAGE_URL} from './urls'
 
-import {LANDING_PAGE} from './LandingPage/LandingPageHandler'
-import {SIGN_UP_PAGE} from './SignUpPage/SignUpPageHandler'
+import {LANDING_PAGE} from './components/LandingPage/LandingPageHandler'
+import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPageHandler'
 
 import "./Container.css"
 class Container extends Component {

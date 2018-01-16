@@ -8,8 +8,8 @@ import thunkMiddleware from 'redux-thunk'
 import reducers from './reducer'
 import Container from './Container'
 
-import {LANDING_PAGE} from './LandingPage/LandingPageHandler'
-import {SIGN_UP_PAGE} from './SignUpPage/SignUpPageHandler'
+import {LANDING_PAGE} from './components/LandingPage/LandingPageHandler'
+import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPageHandler'
 
 
 const router = routerMiddleware(browserHistory)
