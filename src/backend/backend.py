@@ -282,7 +282,7 @@ class SinglePost(BaseHandler):
             post = Post(title=title,
             			isImportant=isImportant,
                         shop_key=ndb.Key(urlsafe=shop['key']),
-                        author=ndb.Key(urlsafe=self.user.key.urlsafe()),)
+                        author=ndb.Key(urlsafe=self.user.key.urlsafe()))
             post_keys.append(post.put().urlsafe())
         self.response.write(json.dumps({'keys': post_keys}))
 

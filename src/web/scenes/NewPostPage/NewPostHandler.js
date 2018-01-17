@@ -30,7 +30,7 @@ class NewPostHandler extends Component {
 const mapStateToProps = (state) => {
   return {
     isMobile: state.isMobile,
-    errors: state.serverMessageArray,
+    errors: state.serverMessageArray
   }
 }
 
