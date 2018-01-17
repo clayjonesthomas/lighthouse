@@ -24,12 +24,16 @@ class Container extends Component {
         <NavBar
           onClickSignUp={goToSignUp}
         />
-        <LandingPageHandler
-          shouldDisplay={page === LANDING_PAGE}
-        />
-        <SignUpPageHandler
-          shouldDisplay={page === SIGN_UP_PAGE}
-        />
+        {
+          <LandingPageHandler
+            shouldDisplay={page === LANDING_PAGE}
+          />
+        }
+        {
+          <SignUpPageHandler
+            shouldDisplay={page === SIGN_UP_PAGE}
+          />
+        }
       </div>
     )
   }
