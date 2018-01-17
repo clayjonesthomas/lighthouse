@@ -3,7 +3,7 @@ import SubmitButton from 'ui-kit/SubmitButton'
 import TextBox from 'ui-kit/TextBox'
 import ShopFinder, {FINDER_FORM}
   from 'features/ShopFinder/ShopFinder'
-import {ControlLabel} from 'react-bootstrap'
+import {Checkbox, ControlLabel} from 'react-bootstrap'
 import {Col} from 'react-bootstrap'
 import ErrorMessages from 'ui-kit/ErrorMessages'
 
@@ -16,6 +16,7 @@ const NewPostForm = (
     onSubmit,
     onCancel,
     onSaveTitleRef,
+    onSaveCheckboxRef,
     onUpdateFormShops,
     isMobile,
     errors
@@ -45,6 +46,10 @@ const NewPostForm = (
           Shop:
         </ControlLabel>
         <ShopFinder finderType={FINDER_FORM}/>
+        <Checkbox 
+          inputRef={ref => onSaveCheckboxRef(ref)}>
+          Important Post
+        </Checkbox>
         <SubmitButton
           className={isMobile?"":"desktop-submit"}
           onClick={() => onSubmit()}
@@ -57,7 +62,8 @@ const NewPostForm = (
 NewPostForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onSaveTitleRef: PropTypes.func.isRequired
+  onSaveTitleRef: PropTypes.func.isRequired,
+  onSaveCheckboxRef: PropTypes.func.isRequired
 }
 
 export default NewPostForm
