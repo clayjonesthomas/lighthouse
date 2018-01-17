@@ -2,10 +2,9 @@
 
 .form-contents {
     position: absolute;
-    top: 0;
+    top: 50px;
     transition: top .5s ease;
     height: 100%;
-    overflow-y: scroll;
 }
 
 .form-contents-hidden {
@@ -14,7 +13,7 @@
 
 #form-wrapper {
     background-color: #aec7ea;
-    padding-top: 10em;
+    padding-top: 90px;
     padding-left: 90px;
     padding-right: 90px;
     min-height: 100%;

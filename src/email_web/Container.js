@@ -20,20 +20,22 @@ class Container extends Component {
       page
     } = this.props
     return (
-      <div id="landing-page-container">
+      <div id="main-page-container">
         <NavBar
           onClickSignUp={goToSignUp}
         />
-        {
-          <LandingPageHandler
-            shouldDisplay={page === LANDING_PAGE}
-          />
-        }
-        {
-          <SignUpPageHandler
-            shouldDisplay={page === SIGN_UP_PAGE}
-          />
-        }
+        <div id="contents-container">
+          {
+            <LandingPageHandler
+              shouldDisplay={page === LANDING_PAGE}
+            />
+          }
+          {
+            <SignUpPageHandler
+              shouldDisplay={page === SIGN_UP_PAGE}
+            />
+          }
+        </div>
       </div>
     )
   }
