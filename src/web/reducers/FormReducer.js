@@ -31,10 +31,11 @@ export function formRefs(state = {}, action) {
 
 export function form(state = {}, action) {
   switch(action.type) {
-    case UPDATE_FORM_SHOPS:
+    case UPDATE_FORM_SHOPS: {
       return {
-          shops: action.data.shops
-        }
+        shops: action.data.shops
+      }
+    }
     default:
       return state
   }

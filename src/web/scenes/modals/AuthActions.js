@@ -64,7 +64,6 @@ export function showInfoIfAppropriate() {
       const expires = date.toGMTString()
       document.cookie = "isFirstTimeVisitor=false; " +
         "expires=" + expires + "; path=/"
-      dispatch(showInfo())
     }
   }
 }
