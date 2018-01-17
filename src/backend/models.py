@@ -233,7 +233,7 @@ class PostsEmail(ndb.Model):
         receiving_user = self.to.get()
         message = mail.EmailMessage(sender="michelle@lightho.us", subject=self.subject)
         message.to = receiving_user.email_address
-        message.body = self.body
+        message.html = self.body
         message.send()
         receiving_user.emails.append(self.key)
         receiving_user.put()

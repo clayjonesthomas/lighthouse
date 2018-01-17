@@ -27,15 +27,15 @@ def get_active_posts_for_user(user, new_only=True):
     unimportant_posts = []
     for liked_store_key in user.liked_stores:
         active_posts = Post.query(ndb.AND(Post.isArchived == False,
-                                          Post.shop_key == liked_store_key))
-        for post_key in active_posts:
-            post = post_key.get()
+                                          Post.shop_key == liked_store_key)).fetch()
+
+        for post in active_posts:
             if not new_only:
                 if post.is_important:
                     important_posts.append(post)
                 else:
                     unimportant_posts.append(post)
-            elif len(user.emails) == 0 or post.timestamp > user.emails[-1].timestamp:
+            elif len(user.emails) == 0 or post.timestamp > user.emails[-1].get().timestamp:
                 if post.is_important:
                     important_posts.append(post)
                 else:
@@ -83,28 +83,56 @@ def _generate_subject(important_posts, unimportant_posts):
 
 
 def _generate_body(important_posts, unimportant_posts):
-    body = ""
+    body = """
+        <html>
+          <body style="font-family: 'Century Gothic', sans-serif;">
+            <table style="width: 100%;">
+              <tr>
+                <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
+                  <div class="header-tile" style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
+                    <a style="color: #ffffff;">lightho.us</a>
+                  </div>
+                </td>
+              </tr>"""
+
     for i_post in important_posts:
-        body += _generate_post_line(i_post, bold=True)
+        body += _generate_important_post_tile(i_post)
         body += "\n"
 
-    body += "\n Other Sales: \n"
+    body += """      
+      <tr>
+        <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
+          <div class="sale-tile" style="background-color: #F0F0F0;padding: 10px;">
+            <div class="other-sales-title" style="text-align: center;font-size: 18px;">Other Sales</div>"""
+
     for u_post in unimportant_posts:
-        body += _generate_post_line(u_post, bold=False)
+        body += _generate_unimportant_post_line(u_post)
         body += "\n"
 
-    body += "\n\n love,\n<a href=\"lightho.us\">lightho.us</a>"
+    body += """</div>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>"""
+
     return body
 
 
-def _generate_post_line(post, bold=False):
+def _generate_important_post_tile(post):
     store = post.shop_key.get()
-    if bold:
-        beginning_tags = "<b><a href=\"" + store.website + "\">"
-        closing_tags = "</a></b>"
-    else:
-        beginning_tags = "<a href=\"" + store.website + "\">"
-        closing_tags = "</a>"
-    sale_info = store.name + ": " + post.title
-    return beginning_tags + sale_info + closing_tags
+
+    return("""
+      <tr>
+        <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
+          <div class="sale-tile important-sale" style="background-color: #F0F0F0;padding: 10px;">
+            <a href='""" + store.website + "'>" + store.name + "</a><div>" + post.title  + """</div>
+          </div>
+        </td>
+      </tr>
+      """)
+
+def _generate_unimportant_post_line(post):
+    store = post.shop_key.get()
+    return("<div class='other-sale'><a href='" + store.website + "'>" + store.name + "</a> - " + post.title + "</div>")
 
