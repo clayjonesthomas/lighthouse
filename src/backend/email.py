@@ -64,7 +64,7 @@ SUBJECT_STORE_LIMIT = 3  # TODO: decide on the number for this
 def _generate_subject(important_posts, unimportant_posts):
     """ assumes >=1 of the posts is important """
     subject = "lightho.us \\\\"
-    for i_post in important_posts:
+    for i_post in important_posts[:SUBJECT_STORE_LIMIT]:
         subject += " " + i_post.shop_key.get().name + ","
 
     store_count = len(important_posts)

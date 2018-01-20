@@ -159,16 +159,6 @@ def _spawn_dummy_posts_for_email(shop_keys):
     return ndb.put_multi(email_posts)
 
 
-def _update_dummy_posts_for_email(shop_keys, post_keys):
-    updated_shops = []
-    for shop_key in shop_keys:
-        shop = shop_key.get()
-        shop.active_posts = [post_key for post_key in post_keys if post_key.get().shop_key == shop_key]
-        shop.put()
-        updated_shops.append(shop)
-    ndb.put_multi(updated_shops)
-
-
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
 def user_required(handler):
     """
@@ -812,14 +802,13 @@ class LogoutHandler(BaseHandler):
 class EmailHandler(BaseHandler):
     def post(self):
         # admin has emil service enabled
-        #if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
-        dummy_shops = _spawn_dummy_shops()
-        dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
-        _update_dummy_posts_for_email(dummy_shops, dummy_posts)
-        _spawn_dummy_email_user(dummy_shops)
+        if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+            dummy_shops = _spawn_dummy_shops()
+            dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
+            _spawn_dummy_email_user(dummy_shops)
 
-        send_emails()
-        self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
+            send_emails()
+            self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
 config = {

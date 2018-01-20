@@ -238,3 +238,5 @@ class PostsEmail(ndb.Model):
         receiving_user.emails.append(self.key)
         receiving_user.put()
         self.has_been_sent = True
+        receiving_user.put()
+        
