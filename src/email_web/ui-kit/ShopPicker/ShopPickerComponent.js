@@ -12,12 +12,13 @@ const ShopPickerComponent = (
     selectedShopsForm,
     pickedShops,
     onAddNewShop,
-    onAddShopFinderRef
+    onAddShopFinderRef,
+    tabIndex
   }) => (
   <div className={className + " shop-picker-search"}>
     <InputGroup>
       <Typeahead
-        inputProps={{"tabIndex":"-1"}}
+        inputProps={{"tabIndex":tabIndex}}
         emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {

@@ -22,12 +22,13 @@ class ShopPicker extends Component {
       selectedShopsForm,
       onAddShopFinderRef,
       onAddNewShop,
-      placeholder
+      placeholder,
+      tabIndex
     } = this.props
 
     return (
       <ShopPickerComponent
-        tabIndex="-1"
+        tabIndex={tabIndex}
         className={className}
         shops={shops || []}
         selectedShopsForm={selectedShopsForm}

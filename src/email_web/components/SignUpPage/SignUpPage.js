@@ -23,11 +23,13 @@ const SignUpPage = ({
       >
         <ShopPicker
           className="shop-picker-box"
+          tabIndex={shouldDisplay ? 0 : -1}
         />
         <HelpBlock id="store-helper-text">
           We recommend picking 5-6 of your favorite stores and brands to start off.
         </HelpBlock>
         <FormControl
+          tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           id="email-box"
           type="text"
@@ -36,6 +38,7 @@ const SignUpPage = ({
           // onChange={this.handleChange}
         />
         <FormControl
+          tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           type="text"
           // value={this.state.value}
@@ -44,6 +47,7 @@ const SignUpPage = ({
         />
       </FormGroup>
       <input
+        tabIndex={shouldDisplay ? 0 : -1}
         type="submit"
         value="TRY IT OUT"
         className="submit-button"
