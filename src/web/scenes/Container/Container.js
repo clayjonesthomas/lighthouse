@@ -19,7 +19,6 @@ class Container extends Component {
   componentDidMount () {
     this.props.isUserMobile()
     this.props.getUserInfo()
-    this.props.showInfoModalIfAppropriate()
   }
 
   render() {
