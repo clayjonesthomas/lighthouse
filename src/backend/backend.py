@@ -136,7 +136,7 @@ def _spawn_dummy_email_user(shop_keys):
                   using_email_service=True,
                   emails=[],
                   # this field usually automatically populated during account creation
-                  email_address='clay@lightho.us')]
+                  email_address='michelle@lightho.us')]
     ndb.put_multi(users) 
 
 
