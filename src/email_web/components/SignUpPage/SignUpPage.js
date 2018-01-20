@@ -24,6 +24,7 @@ const SignUpPage = ({
         <ShopPicker
           className="shop-picker-box"
           tabIndex={shouldDisplay ? 0 : -1}
+          isSetupMode={true}
         />
         <HelpBlock id="store-helper-text">
           We recommend picking 5-6 of your favorite stores and brands to start off.

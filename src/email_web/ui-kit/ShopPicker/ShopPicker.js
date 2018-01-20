@@ -49,6 +49,7 @@ function mapStateToProps(state, ownProps) {
     pickedShops: (state.displayedShops || []),
     placeholder: (ownProps.placeholder || "search for a shop..."),
     selectedShopsForm: (state.form || {}),
+    isSetupMode: ownProps.isSetupMode
   })
 }
 

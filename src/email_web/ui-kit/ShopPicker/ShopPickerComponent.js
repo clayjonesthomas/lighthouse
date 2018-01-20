@@ -20,7 +20,10 @@ const ShopPickerComponent = (
     <InputGroup>
       <Typeahead
         inputProps={{"tabIndex":tabIndex}}
-        emptyLabel={<ShopRecommenderBox/>}  // TODO hide the (incorrect) warning this produces
+        // TODO hide the (incorrect) warning this produces
+        // issue caused from line 490 of typeaheadContainer.js
+        // see https://github.com/ericgio/react-bootstrap-typeahead/issues/292
+        emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {
           const selectedShops = selectedShopsForm.shops || pickedShops || []
