@@ -807,8 +807,8 @@ class EmailHandler(BaseHandler):
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
             _spawn_dummy_email_user(dummy_shops)
 
-            send_emails()
-            self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
+        send_emails()
+        self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
 config = {
