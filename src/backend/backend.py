@@ -22,8 +22,8 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Store, get_entity_from_url_key
-
+from models import Post, Store, User, get_entity_from_url_key
+from email import send_emails
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -48,7 +48,7 @@ def _spawn_admin():
     request_signup = webapp2.Request.blank('/rest/signup')
     request_signup.method = 'POST'
     request_signup.body = json.dumps(_contents)
-    response_signup = request_signup.get_response(app)
+    request_signup.get_response(app)
 
 
 def _spawn_dummy_posts(shop_keys):
@@ -123,6 +123,40 @@ def _spawn_dummy_shops():
                    website='www.oldnavy.com',
                    likes=324319)]
     return ndb.put_multi(shops)
+
+
+def _spawn_dummy_email_user(shop_keys):
+    # _contents = {'username': u'mflauer', 'email': u'michelle@lightho.us',
+    #              'password': u'password'}
+    # request_signup = webapp2.Request.blank('/rest/signup')
+    # request_signup.method = 'POST'
+    # request_signup.body = json.dumps(_contents)
+    # response_signup = request_signup.get_response(app)
+    users = [User(liked_stores=shop_keys,
+                  using_email_service=True,
+                  emails=[],
+                  # this field usually automatically populated during account creation
+                  email_address='michelle@lightho.us')]
+    ndb.put_multi(users) 
+
+
+def _spawn_dummy_posts_for_email(shop_keys):
+    email_posts = [Post(title='50% off all items on clearance',
+                        shop_key=shop_keys[0],
+                        likes=25074,
+                        timestamp=datetime.datetime.now()-datetime.timedelta(1),
+                        is_important=True),
+                   Post(title='Buy any oxford on the site, get one free',
+                        shop_key=shop_keys[1],
+                        likes=14543,
+                        timestamp=datetime.datetime.now()-datetime.timedelta(2),
+                        is_important=True),
+                   Post(title='$5 off the entire summer selection',
+                        shop_key=shop_keys[1],
+                        likes=30210,
+                        timestamp=datetime.datetime.now()-datetime.timedelta(1.5),
+                        is_important=False)]
+    return ndb.put_multi(email_posts)
 
 
 # Original Source: https://github.com/abahgat/webapp2-user-accounts
@@ -346,7 +380,7 @@ class Shops(BaseHandler):
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
-                          for shop in Store.query()]
+                         for shop in Store.query()]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
@@ -488,20 +522,22 @@ class SingleShop(BaseHandler):
             return
         ndb.Key(urlsafe=url_key).delete()
 
+
 class EditShop(BaseHandler):
 
     def post(self):
-      user = self.user
-      body = json.loads(self.request.body)
+        user = self.user
+        body = json.loads(self.request.body)
 
-      if user and user.is_moderator:
-          shop_key=body['key']
-          shop = ndb.Key(urlsafe=shop_key).get()
-          shop.name = body['name']
-          shop.website = body['website']
-          shop.icon_url = body['icon_url']
-          shop.put()
-          self.response.write(json.dumps({'key': shop_key}))
+        if user and user.is_moderator:
+            shop_key=body['key']
+            shop = ndb.Key(urlsafe=shop_key).get()
+            shop.name = body['name']
+            shop.website = body['website']
+            shop.icon_url = body['icon_url']
+            shop.put()
+            self.response.write(json.dumps({'key': shop_key}))
+
 
 class AddIconToShop(BaseHandler):
     '''
@@ -546,11 +582,11 @@ class AddIconToShop(BaseHandler):
 
 
 class ShopUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-    '''
+    """
         under severe construction, don't use unless you
         figure out what the fuck is going on with python
         gcs
-        '''
+    """
     def get(self):
         upload_url = blobstore.create_upload_url('/upload_photo')
         self.response.write(json.dumps({'upload_url': upload_url}))
@@ -765,10 +801,13 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
-        message = mail.EmailMessage(sender="michelle@lightho.us",subject="Testing email")
-        message.to = "michelle@lightho.us"
-        message.body = "email body"
-        message.send()
+        # admin has emil service enabled
+        if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+            dummy_shops = _spawn_dummy_shops()
+            dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
+            _spawn_dummy_email_user(dummy_shops)
+
+        send_emails()
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
