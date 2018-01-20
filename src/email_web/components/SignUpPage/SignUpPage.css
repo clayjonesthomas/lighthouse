@@ -77,11 +77,11 @@
     background-color: #e5dbff;
 }
 
-.shop-picker-box .token {
-    color: #333333;
+.shop-picker-box .rbt-token {
+    color: #6d5b61;
     background-color: #d1e4ff;
 }
 
-.shop-picker-box .bootstrap-tokenizer {
+.shop-picker-box .rbt-input {
     font-size: 16px;
 }

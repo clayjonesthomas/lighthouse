@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-.shop-picker-search .token{
+.shop-picker-search .rbt-token{
     background-color: #e7f4ff;
     border: 0;
     border-radius: 2px;
@@ -23,8 +23,12 @@
     position: relative;
 }
 
-.shop-picker-search .token .close-button{
-    margin-left: 3px;
+.shop-picker-search .rbt-token .rbt-token-remove-button{
+    position: initial;
+    padding-left: 3px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 }
 
 ul::-webkit-scrollbar {

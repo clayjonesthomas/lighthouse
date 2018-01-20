@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react'
 import {Typeahead} from 'react-bootstrap-typeahead'
+import 'react-bootstrap-typeahead/css/Typeahead.css'
 import {InputGroup} from 'react-bootstrap'
 import ShopRecommenderBox from 'ui-kit/ShopRecommenderBox'
 
@@ -19,7 +20,7 @@ const ShopPickerComponent = (
     <InputGroup>
       <Typeahead
         inputProps={{"tabIndex":tabIndex}}
-        emptyLabel={<ShopRecommenderBox/>}
+        emptyLabel={<ShopRecommenderBox/>}  // TODO hide the (incorrect) warning this produces
         labelKey="name"
         filterBy={(option, text) => {
           const selectedShops = selectedShopsForm.shops || pickedShops || []
