@@ -51,7 +51,8 @@ const ShopFinder = (
 
 ShopFinder.propTypes = {
   onAddNewShop: PropTypes.func,
-  submitShops: PropTypes.bool
+  submitShops: PropTypes.bool,
+  shops: PropTypes.isRequired
 }
 
 export default ShopFinder

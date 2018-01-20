@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
+
+.form-contents{
+    position: absolute;
+    top: 0;
+    transition: top .5s ease;
+    height: 100%;
+}
+
+.form-contents-hidden{
+    top: 100%;
+}
+
+.text-box{
+    margin-top: 2em;
+    background-color: #f1f1f1;
+}
+
+.submit-button {
+    margin-left: 0;
+    width: 100%;
+    background: #f1f1f1;
+}
+
+.form-wrapper {
+    background-color: #aec7ea;
+    padding-top: 10em;
+    padding-left: 60px;
+    padding-right: 120px;
+    height: 100%;
+    text-align: center;
+}
+
+.sign-up-helper-text {
+    color: #585858;
+}
+
+.form-title {
+    font-family: "Roboto", sans-serif;
+}

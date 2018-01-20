@@ -1,0 +1,38 @@
+#top-bar{
+    background: #003091;
+    position: fixed;
+    min-height: 55px;
+    min-width: 100%;
+    color: #ececec;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    z-index:2;
+}
+
+#logo{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+    color: #ececec;
+    float: left;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+#logo-icon-wrapper{
+    display: inline;
+    position: relative;
+}
+
+#nav-bar-links{
+    padding-top: 17px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    float: right;
+}
+
+
+.nav-bar-item{
+    padding: 5px;
+    padding-right: 40px;
+
+}

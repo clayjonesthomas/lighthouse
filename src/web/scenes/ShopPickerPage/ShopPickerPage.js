@@ -1,5 +1,5 @@
 import React from 'react'
-import ShopPickerHandler from './ShopPickerHandler'
+import ShopPickerHandler from './ShopPicker'
 import {InputGroup, Button} from 'react-bootstrap'
 
 const ShopPickerPage = ({

@@ -1,6 +1,6 @@
 // this should be broken out/refactored into difference reducers for
 // different forms
-import {SAVE_NEW_POST_FORM_REF, UPDATE_FORM_SHOPS,ADD_POST_FAILURE,
+import {SAVE_NEW_POST_FORM_REF, UPDATE_FORM_SHOPS, ADD_POST_FAILURE,
   ADD_POST_RETURN, VALIDATION_ERROR}
   from 'scenes/NewPostPage/NewPostActions'
 import {ADD_SHOP_FINDER_REF}
