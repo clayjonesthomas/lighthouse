@@ -7,7 +7,9 @@ import "./SignUpPage.css"
 import "../LandingPage/LandingPage.css"
 
 const SignUpPage = ({
-                  shouldDisplay
+                  shouldDisplay,
+                  value,
+                  handleEmailChange
                 }) => (
   <form className={shouldDisplay ? "form-contents" :
     "form-contents form-contents-hidden"}>
@@ -34,9 +36,9 @@ const SignUpPage = ({
           className="form-box"
           id="email-box"
           type="text"
-          // value={this.state.value}
+          value={value}
           placeholder="Email"
-          // onChange={this.handleChange}
+          onChange={handleEmailChange}
         />
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
