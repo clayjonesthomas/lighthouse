@@ -3,7 +3,7 @@ import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import NewPostForm from './NewPostForm'
 import {pushPost, cancelPost, onSaveRef, pullShops,
-  onUpdateFormShops, togglePostImportant} from './NewPostActions'
+  onUpdateFormShops} from './NewPostActions'
 import {clearErrorMessage} from'../modals/AuthActions'
 
 class NewPostHandler extends Component {

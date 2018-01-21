@@ -280,7 +280,7 @@ class SinglePost(BaseHandler):
         post_keys = []
         for shop in shops:
             post = Post(title=title,
-            			isImportant=isImportant,
+                        is_important=isImportant,
                         shop_key=ndb.Key(urlsafe=shop['key']),
                         author=ndb.Key(urlsafe=self.user.key.urlsafe()))
             post_keys.append(post.put().urlsafe())
