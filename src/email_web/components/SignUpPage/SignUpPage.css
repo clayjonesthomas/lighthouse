@@ -1,16 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
 
-.form-contents {
-    position: absolute;
-    top: 50px;
-    transition: top .5s ease;
-    height: calc(100% - 50px);
-    overflow-y: auto;
-    width: 100%;
-}
-
-.form-contents-hidden {
-    top: 100%;
+#sign-up-form {
+    height: 100%;
 }
 
 .scroll-wrapper {

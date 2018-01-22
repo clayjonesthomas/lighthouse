@@ -6,8 +6,8 @@ import {GO_TO_SIGN_UP} from './actions'
 import {REQUEST_SHOPS_RETURN} from 'scenes/NewPostPage/NewPostActions'
 import {REQUEST_MY_SHOPS_RETURN} from 'scenes/MyShopsPage/MyShopsPageActions'
 
-import {LANDING_PAGE} from './components/LandingPage/LandingPageHandler'
-import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPageHandler'
+import {LANDING_PAGE, SIGN_UP_PAGE}
+  from './Container'
 import {LOCATION_CHANGE} from 'react-router-redux'
 
 export function displayedShops(state = [], action) {

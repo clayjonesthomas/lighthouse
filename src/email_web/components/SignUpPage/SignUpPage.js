@@ -9,8 +9,7 @@ import "../LandingPage/LandingPage.css"
 const SignUpPage = ({
                   shouldDisplay
                 }) => (
-  <form className={shouldDisplay ? "form-contents" :
-    "form-contents form-contents-hidden"}>
+  <form id="sign-up-form">
     <div id="form-wrapper">
       <h1 id="form-title">
         Sign Up
