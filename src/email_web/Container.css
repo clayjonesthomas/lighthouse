@@ -13,7 +13,7 @@ html {
     background-image: url("../static/to_scale_picture_website_background.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: right;
+    background-position: center;
     background-size: cover;
     overflow: hidden;
 }
