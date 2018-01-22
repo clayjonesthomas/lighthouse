@@ -7,8 +7,7 @@ const LandingPage = ({
                        shouldDisplay,
                        goToSignUp
                      }) => (
-  <div className={shouldDisplay ? "landing-page-contents" :
-    "landing-page-contents landing-page-contents-hidden"}>
+  <div>
     <div id="logo">
       <div id="logo-wrapper">
         <Logo

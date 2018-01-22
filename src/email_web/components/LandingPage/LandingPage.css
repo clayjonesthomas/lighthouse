@@ -1,21 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
 
-.landing-page-contents {
-    position: absolute;
-    top:50px;
-    bottom: 0;
-    transition: bottom .5s ease;
-    height:calc(100% - 50px);
-    overflow-y: auto;
-
-}
-
-.landing-page-contents-hidden {
-    bottom: calc(100% - 50px);
-    top: inherit;
-}
-
-
 #landing-page-paragraph {
     font-family: 'Roboto', sans-serif;
     font-size: 30px;

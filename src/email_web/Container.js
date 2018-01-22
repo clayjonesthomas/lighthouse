@@ -8,8 +8,8 @@ import SignUpPageHandler from './components/SignUpPage/SignUpPageHandler'
 import {goToSignUp} from './actions'
 import {SIGN_UP_PAGE_URL} from './urls'
 
-import {LANDING_PAGE} from './components/LandingPage/LandingPageHandler'
-import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPageHandler'
+export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
+export const LANDING_PAGE = 'LANDING_PAGE'
 
 import "./Container.css"
 class Container extends Component {
@@ -26,14 +26,18 @@ class Container extends Component {
         />
         <div id="contents-container">
           {
-            <LandingPageHandler
-              shouldDisplay={page === LANDING_PAGE}
-            />
+            <div className={page === LANDING_PAGE ? "landing-page-contents" :
+              "landing-page-contents landing-page-contents-hidden"}>
+              <LandingPageHandler/>
+            </div>
           }
           {
-            <SignUpPageHandler
-              shouldDisplay={page === SIGN_UP_PAGE}
-            />
+            <div className={page === SIGN_UP_PAGE ? "sign-up-contents" :
+              "sign-up-contents sign-up-contents-hidden"}>
+              <SignUpPageHandler
+                shouldDisplay={page === SIGN_UP_PAGE}
+              />
+            </div>
           }
         </div>
       </div>
@@ -47,13 +51,15 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const timeOutDuration = 500
+
 const mapDispatchToProps = (dispatch) => {
   return {
     goToSignUp: () => {
       dispatch(goToSignUp())
       setTimeout(() =>
           dispatch(push(SIGN_UP_PAGE_URL)),
-        500)
+        timeOutDuration)
     }
   }
 }

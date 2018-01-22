@@ -11,8 +11,7 @@ const SignUpPage = ({
                   value,
                   handleEmailChange
                 }) => (
-  <form className={shouldDisplay ? "form-contents" :
-    "form-contents form-contents-hidden"}>
+  <form id="sign-up-form">
     <div id="form-wrapper">
       <h1 id="form-title">
         Sign Up
@@ -20,9 +19,7 @@ const SignUpPage = ({
       <p id="sign-up-helper-text">
         Already have an account? <a>Sign in</a>
       </p>
-      <FormGroup
-        // validationState={this.getValidationState()}
-      >
+      <FormGroup>
         <ShopPicker
           className="shop-picker-box"
           tabIndex={shouldDisplay ? 0 : -1}
@@ -37,16 +34,14 @@ const SignUpPage = ({
           id="email-box"
           type="text"
           value={value}
-          placeholder="Email"
           onChange={handleEmailChange}
+          placeholder="Email"
         />
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           type="text"
-          // value={this.state.value}
           placeholder="Password"
-          // onChange={this.handleChange}
         />
       </FormGroup>
       <input
@@ -61,4 +56,3 @@ const SignUpPage = ({
 )
 
 export default SignUpPage
-
