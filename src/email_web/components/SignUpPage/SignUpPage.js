@@ -17,9 +17,7 @@ const SignUpPage = ({
       <p id="sign-up-helper-text">
         Already have an account? <a>Sign in</a>
       </p>
-      <FormGroup
-        // validationState={this.getValidationState()}
-      >
+      <FormGroup>
         <ShopPicker
           className="shop-picker-box"
           tabIndex={shouldDisplay ? 0 : -1}
@@ -33,17 +31,13 @@ const SignUpPage = ({
           className="form-box"
           id="email-box"
           type="text"
-          // value={this.state.value}
           placeholder="Email"
-          // onChange={this.handleChange}
         />
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           type="text"
-          // value={this.state.value}
           placeholder="Password"
-          // onChange={this.handleChange}
         />
       </FormGroup>
       <input
@@ -58,4 +52,3 @@ const SignUpPage = ({
 )
 
 export default SignUpPage
-
