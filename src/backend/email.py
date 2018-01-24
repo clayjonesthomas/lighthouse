@@ -9,6 +9,7 @@ def send_emails():
         important_posts, unimportant_posts = get_active_posts_for_user(user)
         if important_posts:
             email = _compose_email_for_user(user, important_posts, unimportant_posts)
+            email.put()
             email.send()
             email.put()
 
