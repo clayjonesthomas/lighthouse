@@ -63,6 +63,7 @@ export function pushPost() {
     const state = getState()
     const refs = state.formRefs
     const title = refs.title.value
+    const isImportant = refs.isImportant.checked
 
     let errorMessages = {}
     if (!state.form.shops) {
@@ -83,7 +84,8 @@ export function pushPost() {
     })
     const post_data = {
       title: title,
-      shops: shops
+      shops: shops,
+      isImportant: isImportant
     }
     const args = {
       method: 'POST',
