@@ -1,5 +1,5 @@
 import React from 'react'
-import ShopPickerHandler from './ShopPicker'
+import ShopPickerHandler from '../../../email_web/ui-kit/ShopPicker/ShopPicker'
 import {InputGroup, Button} from 'react-bootstrap'
 
 const ShopPickerPage = ({

@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto|Roboto+Condensed");
+
+html {
+    height: 100%;
+}
+
+#main-page-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("../static/to_scale_picture_website_background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+@media (max-width: 700px) {
+    #main-page-container {
+        background-position: left;
+        background-image: url("../static/smaller_picture_website_background.png");
+    }
+}
+
+#contents-container {
+    margin-top: 50px;
+}
+
+.landing-page-contents {
+    position: absolute;
+    top:50px;
+    bottom: 0;
+    transition: bottom .5s ease;
+    height:calc(100% - 50px);
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.landing-page-contents-hidden {
+    bottom: calc(100% - 50px);
+    top: inherit;
+}
+
+.sign-up-contents {
+    position: absolute;
+    top: 50px;
+    transition: top .5s ease;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+    width: 100%;
+}
+
+.sign-up-contents-hidden {
+    top: 100%;
+}
