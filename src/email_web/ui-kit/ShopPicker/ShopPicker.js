@@ -57,8 +57,8 @@ function mapDispatchToProps(dispatch, ownProps) {
 }
 
 ShopPicker.propTypes = {
-  selectedShops: PropTypes.isRequired,
-  placeholder: PropTypes.string.isRequired,
+  selectedShops: PropTypes.array.isRequired,
+  placeholder: PropTypes.string,
   isSetupMode: PropTypes.bool,
   onPickedShopsChange: PropTypes.func.isRequired
 }

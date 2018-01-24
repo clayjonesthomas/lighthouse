@@ -28,7 +28,7 @@ class SignUpPageHandler extends Component {
         emailValue={emailValue}
         passwordValue={passwordValue}
         onPickedShopsChange={onPickedShopsChange}
-        onSubmit={onSubmitSignUp}
+        onSubmitSignUp={onSubmitSignUp}
         selectedShops={selectedShops}
       />
     )
@@ -49,7 +49,10 @@ const mapDispatchToProps = (dispatch) => {
     handleEmailChange: (e) => dispatch(emailChange(e.target.value)),
     handlePasswordChange: (e) => dispatch(passwordChange(e.target.value)),
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
-    onSubmitSignUp: () => dispatch(submitSignUpForm())
+    onSubmitSignUp: (e) => {
+      e.preventDefault()
+      dispatch(submitSignUpForm())
+    }
   }
 }
 

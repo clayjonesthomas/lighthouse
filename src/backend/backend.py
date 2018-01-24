@@ -596,41 +596,38 @@ class SignupHandler(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        user_name = body['username']
         email = body['email']
         password = body['password']
-
-        is_username_present = len(user_name) > 0
+        shops = body['selectedShops']
+        import pdb; pdb.set_trace()
         is_email_present = len(email) > 0
         is_password_present = len(password) > 0
         # won't work because of unsupported GAE modules
         # is_email_valid = validate_email(email, verify=True)
         is_email_valid = re.match(r"[^@]+@[^@]+\.[^@]+", email)
-        if (not is_username_present or not is_email_present
-                or not is_password_present or not is_email_valid):
+        if (not is_email_present or not is_password_present
+                or not is_email_valid):
             self.response.write(json.dumps({
                 'error': 'VALIDATION_ERROR',
-                'isUsernamePresent': is_username_present,
                 'isEmailPresent': is_email_present,
                 'isPasswordPresent': is_password_present,
                 'isEmailValid': is_email_valid
             }))
             return
 
-        unique_properties = ['email_address']  # username is automatically unique, we don't need it here too
+        unique_properties = ['email_address']
         is_moderator = False
-        if user_name == 'admin':  # so, so bad
+        if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
-        user_data = self.user_model.create_user(user_name,
-                                                unique_properties,
+        user_data = self.user_model.create_user(unique_properties,
                                                 email_address=email,
                                                 password_raw=password,
                                                 verified=False,
                                                 is_moderator=is_moderator)
         if not user_data[0]:  # user_data is a tuple
-            logging.info('Unable to create user for username %s because of '
-                         'duplicate keys %s' % (user_name, user_data[1]))
-            self.response.write(json.dumps({'error': 'DUPLICATE_USERNAME'}))
+            logging.info('Unable to create user for email %s because of '
+                         'duplicate keys %s' % (email, user_data[1]))
+            self.response.write(json.dumps({'error': 'DUPLICATE_EMAIL'}))
             return
 
         user = user_data[1]
@@ -641,9 +638,7 @@ class SignupHandler(BaseHandler):
                                         signup_token=token, _full=True)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        # I'm sorry rivest
-        # self.response.write(verification_url)
-        self.response.write(json.dumps({'username': user.username}))
+        self.response.write(json.dumps({'email': user.email}))
 
 
 class ForgotPasswordHandler(BaseHandler):

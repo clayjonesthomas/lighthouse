@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch'
 import {SIGN_UP_URL} from '../../urls'
 
 export const SIGNUP_EMAIL_CHANGE = 'SIGNUP_EMAIL_CHANGE'

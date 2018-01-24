@@ -29,6 +29,7 @@ const SignUpPage = ({
           className="shop-picker-box"
           tabIndex={shouldDisplay ? 0 : -1}
           isSetupMode={true}
+          selectedShops={selectedShops || []}
           onPickedShopsChange={onPickedShopsChange}
         />
         <HelpBlock id="store-helper-text">
