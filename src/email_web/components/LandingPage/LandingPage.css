@@ -3,14 +3,15 @@
 #landing-page-paragraph {
     font-family: 'Roboto', sans-serif;
     font-size: 30px;
-    max-width: 46%;
+    width: 46%;
+    max-width: 600px;
     padding-top: 20px;
     letter-spacing: 1px;
     margin-left: 4%;
 }
 
 #logo {
-    padding-top: 8%;
+    padding-top: 80px;
     font-family: 'Montserrat', sans-serif;
     font-size: 100px;
     color: #003091;
@@ -49,4 +50,8 @@
 
 .submit-button:hover {
     cursor: pointer;
+}
+
+#landing-page-wrapper {
+    min-width: 800px;
 }
