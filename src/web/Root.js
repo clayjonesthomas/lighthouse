@@ -41,7 +41,7 @@ const Root = () => (
         <Route path="/privacy_policy" component={PrivacyPolicyPage}/>
         <Route path="/email" component={EmailHandler}/>
         <Route path="/shop_picker" component={ShopPickerHandler}/>
-        <Route path="/rest/v/:user_id/:signup_token" component={VerificationSuccessHandler}/>
+        <Route path="/verification_success" component={VerificationSuccessHandler}/>
       </Route>
     </Router>
   </Provider>

@@ -698,8 +698,8 @@ class VerificationHandler(BaseHandler):
                 user.put()
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
-            #self.response.write("user {} has had their email verified".format(user.username))
-            return
+            self.response.write("user {} has had their email verified".format(user.username))
+            self.redirect(self.uri_for('verification_success'))
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -833,7 +833,7 @@ config = {
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
-    webapp2.Route('/rest/<type:v|p>/<user_id:\d+>/<signup_token:.+>', VerificationHandler, name='verification'),
+    webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
@@ -859,7 +859,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
-
+    webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
