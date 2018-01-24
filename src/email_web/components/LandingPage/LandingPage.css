@@ -10,7 +10,7 @@
 }
 
 #logo {
-    padding-top: 8%;
+    padding-top: 40px;
     font-family: 'Montserrat', sans-serif;
     font-size: 100px;
     color: #003091;
@@ -49,4 +49,8 @@
 
 .submit-button:hover {
     cursor: pointer;
+}
+
+#landing-page-wrapper {
+    min-width: 800px;
 }

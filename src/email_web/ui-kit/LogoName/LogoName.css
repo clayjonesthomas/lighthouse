@@ -1,0 +1,26 @@
+#logo-name-wrapper {
+    min-width: 50%;
+    min-height: 200px;
+}
+
+#logo-name-svg {
+
+}
+
+#logo-name-text {
+
+}
+
+#logo-graphic-wrapper {
+    width: 50%;
+    height: 100%;
+    display: block;
+}
+
+#logo-text-wrapper {
+    position: absolute;
+    left: 9%;
+    top: 7%;
+    width: 40%;
+    height: 1000px;
+}

@@ -1,14 +1,11 @@
 import React, {PropTypes} from 'react'
-import {white} from './colors'
+import {white} from '../colors'
 
 const Logo = ({
                 onClick,
-                scale,
                 color
               }) => (
   <svg
-    width={34 * scale + "px"}
-    height={61 * scale + "px"}
     viewBox="0 0 34 61"
   >
     <g

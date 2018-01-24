@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../../ui-kit/Logo'
+import LogoName from '../../ui-kit/LogoName/LogoName'
 import {smalt} from '../../ui-kit/colors'
 
 import "./LandingPage.css"
@@ -7,17 +7,12 @@ const LandingPage = ({
                        shouldDisplay,
                        goToSignUp
                      }) => (
-  <div>
+  <div id="landing-page-wrapper">
     <div id="logo">
-      <div id="logo-wrapper">
-        <Logo
-          scale={2}
-          color={smalt}
-        />
-      </div>
-      <span>
-      lightho.us
-    </span>
+      <LogoName
+        scale={2}
+        color={smalt}
+      />
     </div>
     <p id="landing-page-paragraph">
       We keep track of the stores you love so you

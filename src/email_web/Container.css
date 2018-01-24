@@ -18,6 +18,13 @@ html {
     overflow: hidden;
 }
 
+@media (max-width: 700px) {
+    #main-page-container {
+        background-position: left;
+        background-image: url("../static/smaller_picture_website_background.png");
+    }
+}
+
 #contents-container {
     margin-top: 50px;
 }
@@ -28,8 +35,9 @@ html {
     bottom: 0;
     transition: bottom .5s ease;
     height:calc(100% - 50px);
+    width: 100%;
     overflow-y: auto;
-
+    overflow-x: auto;
 }
 
 .landing-page-contents-hidden {

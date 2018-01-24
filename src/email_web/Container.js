@@ -24,7 +24,7 @@ class Container extends Component {
         <NavBar
           onClickSignUp={goToSignUp}
         />
-        <div id="contents-container">
+        <div id="contents-container" ref="contents">
           {
             <div className={page === LANDING_PAGE ? "landing-page-contents" :
               "landing-page-contents landing-page-contents-hidden"}>
