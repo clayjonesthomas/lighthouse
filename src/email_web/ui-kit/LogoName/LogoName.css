@@ -1,18 +1,11 @@
 #logo-name-wrapper {
     min-width: 50%;
-    min-height: 200px;
-}
-
-#logo-name-svg {
-
-}
-
-#logo-name-text {
-
+    padding-bottom: 20px;
 }
 
 #logo-graphic-wrapper {
     width: 50%;
+    max-width: 600px;
     height: 100%;
     display: block;
 }
@@ -23,4 +16,8 @@
     top: 7%;
     width: 40%;
     height: 1000px;
+}
+
+#logo-svg {
+    display: block;
 }

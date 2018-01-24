@@ -10,6 +10,7 @@ const LogoName = ({
     <span id="logo-graphic-wrapper">
       <svg
         viewBox="0 0 300 61"
+        id="logo-svg"
       >
         <g
           id="Page-1"
@@ -31,7 +32,6 @@ const LogoName = ({
           textAnchor="start"
           x="43"
           y="51"
-          id="logo-name-text"
           fill={color}
           fontSize={50}>
           lightho.us
