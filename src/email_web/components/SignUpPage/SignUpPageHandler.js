@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import SignUpPage from './SignUpPage'
 import {emailChange, passwordChange, pickedShopsChange,
-  submitSignUpForm, signUpRequest}
+  submitSignUpForm}
   from './SignUpPageActions'
 
 export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
@@ -54,8 +54,7 @@ const mapDispatchToProps = (dispatch) => {
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
     onSubmitSignUp: (e) => {
       e.preventDefault()
-      dispatch(signUpRequest())
-      // dispatch(submitSignUpForm())
+      dispatch(submitSignUpForm())
     }
   }
 }
