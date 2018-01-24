@@ -227,7 +227,6 @@ class PostsEmail(ndb.Model):
     important_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     unimportant_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-    has_been_sent = ndb.BooleanProperty(indexed=False, default=False)
 
     def send(self):
         receiving_user = self.to.get()
@@ -236,7 +235,5 @@ class PostsEmail(ndb.Model):
         message.html = self.body
         message.send()
         receiving_user.emails.append(self.key)
-        receiving_user.put()
-        self.has_been_sent = True
         receiving_user.put()
         
