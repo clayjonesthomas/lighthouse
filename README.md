@@ -41,6 +41,9 @@ and submit your code to the master branch.
 ```gcloud app deploy --no-promote app.yaml index.yaml```
 
 ## Testing
+
+To get our tests to run, download nosegae: https://github.com/Trii/NoseGAE
+
 ```nosetests -xs --with-gae --nologcapture```
 from the src subdirectory will run all python tests in the project.
 ```nosetests -xs --with-gae --nologcapture backend/tests/test_backend.py:TestAuth.test_stays_logged_in```
