@@ -8,7 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import reducers from './reducers/index'
 import Container from './Container'
 
-import {LANDING_PAGE, SIGN_UP_PAGE} from './Container'
+import {LANDING_PAGE, SIGN_UP_PAGE} from './components/FrontPage/FrontPage'
 
 
 const router = routerMiddleware(browserHistory)
@@ -27,6 +27,7 @@ const Root = () => (
       <Route path="/">
         <IndexRoute component={ContainerAtLandingPage}/>
         <Route path="/signup" component={ContainerAtSignUpPage}/>
+        <Route path="/Login" component={ContainerAtLogInPage}/>
       </Route>
     </Router>
   </Provider>
@@ -49,5 +50,15 @@ const ContainerAtSignUpPage = (props) => {
     />
   )
 }
+
+const ContainerAtLogInPage = (props) => {
+  return (
+    <Container
+      page={LOG_IN_PAGE}
+      {...props}
+    />
+  )
+}
+
 
 export default Root

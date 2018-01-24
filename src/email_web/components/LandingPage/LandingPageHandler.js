@@ -24,13 +24,15 @@ const mapStateToProps = () => {
   return {}
 }
 
+const timeoutDuration = 500
+
 const mapDispatchToProps = (dispatch) => {
   return {
     goToSignUp: () => {
       dispatch(goToSignUp())
       setTimeout(() =>
           dispatch(push(SIGN_UP_PAGE_URL)),
-        500)
+        timeoutDuration)
     }
 
   }
