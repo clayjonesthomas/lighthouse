@@ -10,11 +10,10 @@ const ShopPickerComponent = (
   {
     className,
     shops,
-    selectedShopsForm,
     pickedShops,
-    onAddNewShop,
-    onAddShopFinderRef,
-    tabIndex
+    onPickNewShop,
+    tabIndex,
+    placeholder
   }) => (
   <div className={className + " shop-picker-search"}>
     <InputGroup>
@@ -26,7 +25,7 @@ const ShopPickerComponent = (
         emptyLabel={<ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {
-          const selectedShops = selectedShopsForm.shops || pickedShops || []
+          const selectedShops = pickedShops || []
           const selectedShopKeys = selectedShops.map(shop => shop.key)
           if (selectedShopKeys.indexOf(option.key) !== -1) {
             return false
@@ -59,13 +58,9 @@ const ShopPickerComponent = (
             return 1
           return 0
         })}
-        placeholder={"Pick your shops"}
+        placeholder={placeholder || "Pick your shops"}
         selected={pickedShops}
-        onChange={onAddNewShop}
-        ref={ref => {
-          if(onAddShopFinderRef)
-            onAddShopFinderRef(ref)
-        }}
+        onChange={onPickNewShop}
         maxHeight={300} // in pixels
       />
     </InputGroup>

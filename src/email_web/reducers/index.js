@@ -1,13 +1,12 @@
 import {combineReducers} from 'redux'
 import {routerReducer} from 'react-router-redux'
 
-import {shops, displayedShops, switchToPage} from './newUserReducer'
-import {signup} from './formReducer'
+import {switchToPage} from './newUserReducer'
+import {allShops, signup} from './signUpReducer'
 
 
 export default combineReducers({
-  shops,
-  displayedShops,
+  allShops,
   switchToPage,
   signup,
   routing: routerReducer

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
 import LandingPage from './LandingPage'
-import {goToSignUp} from '../../actions'
+import {goToSignUp} from '../../services/NewUserActions'
 import {SIGN_UP_PAGE_URL} from '../../urls'
 
 class LandingPageHandler extends Component {

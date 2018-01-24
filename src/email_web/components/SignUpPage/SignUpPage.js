@@ -7,11 +7,16 @@ import "./SignUpPage.css"
 import "../LandingPage/LandingPage.css"
 
 const SignUpPage = ({
-                  shouldDisplay,
-                  value,
-                  handleEmailChange
-                }) => (
-  <form id="sign-up-form">
+                      shouldDisplay,
+                      handleEmailChange,
+                      handlePasswordChange,
+                      emailValue,
+                      passwordValue,
+                      onPickedShopsChange,
+                      onSubmitSignUp,
+                      selectedShops
+                    }) => (
+  <form id="sign-up-form" onSubmit={onSubmitSignUp}>
     <div id="form-wrapper">
       <h1 id="form-title">
         Sign Up
@@ -24,6 +29,7 @@ const SignUpPage = ({
           className="shop-picker-box"
           tabIndex={shouldDisplay ? 0 : -1}
           isSetupMode={true}
+          onPickedShopsChange={onPickedShopsChange}
         />
         <HelpBlock id="store-helper-text">
           We recommend picking 5-6 of your favorite stores and brands to start off.
@@ -33,7 +39,7 @@ const SignUpPage = ({
           className="form-box"
           id="email-box"
           type="text"
-          value={value}
+          value={emailValue}
           onChange={handleEmailChange}
           placeholder="Email"
         />
@@ -41,6 +47,8 @@ const SignUpPage = ({
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           type="text"
+          value={passwordValue}
+          onChange={handlePasswordChange}
           placeholder="Password"
         />
       </FormGroup>

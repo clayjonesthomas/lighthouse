@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
+import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import {onUpdateFormShops, pullShops} from 'scenes/NewPostPage/NewPostActions'
-import {addShopFinderRef, pullMyShops, pullNotMyShops, clearShopFinder}
-  from 'scenes/MyShopsPage/MyShopsPageActions'
+import {onUpdateFormShops} from 'scenes/NewPostPage/NewPostActions'
+import {addShopFinderRef} from 'scenes/MyShopsPage/MyShopsPageActions'
 import ShopPickerComponent from './ShopPickerComponent'
+
+import {pullMyShops, pullAllShops} from '../../services/ShopDataActions'
 
 class ShopPicker extends Component {
 
@@ -19,9 +20,7 @@ class ShopPicker extends Component {
       className,
       shops,
       pickedShops,
-      selectedShopsForm,
-      onAddShopFinderRef,
-      onAddNewShop,
+      onPickedShopsChange,
       placeholder,
       tabIndex
     } = this.props
@@ -31,11 +30,8 @@ class ShopPicker extends Component {
         tabIndex={tabIndex}
         className={className}
         shops={shops || []}
-        selectedShopsForm={selectedShopsForm}
-        onAddNewShop={shop => {
-          onAddNewShop(shop)}}
-        onAddShopFinderRef={ref =>
-          onAddShopFinderRef(ref)}
+        onPickNewShop={shop => {
+          onPickedShopsChange(shop)}}
         pickedShops={pickedShops}
         placeholder={placeholder}
       />
@@ -45,34 +41,26 @@ class ShopPicker extends Component {
 
 function mapStateToProps(state, ownProps) {
   return Object.assign({}, ownProps, {
-    shops:  state.shops,
-    pickedShops: (state.displayedShops || []),
-    placeholder: (ownProps.placeholder || "search for a shop..."),
-    selectedShopsForm: (state.form || {}),
+    shops:  state.allShops,
+    pickedShops: ownProps.selectedShops,
+    placeholder: ownProps.placeholder,
     isSetupMode: ownProps.isSetupMode
   })
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
   return {
-    getAllShops: () => {
-      dispatch(pullShops())
-    },
-    getMyShops: () => {
-      dispatch(pullMyShops())
-    },
-    getNotMyShops: () => {
-      dispatch(pullNotMyShops())
-    },
-    onAddNewShop: (shops) => {
-      dispatch(onUpdateFormShops(shops))
-    },
-    onAddShopFinderRef: (ref) => {
-      dispatch(addShopFinderRef(ref))
-    },
-    clearShopFinder: () => dispatch(clearShopFinder()),
-
+    getAllShops: () => dispatch(pullAllShops()),
+    getMyShops: () => dispatch(pullMyShops()),
+    onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops))
   }
+}
+
+ShopPicker.propTypes = {
+  selectedShops: PropTypes.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  isSetupMode: PropTypes.bool,
+  onPickedShopsChange: PropTypes.func.isRequired
 }
 
 export default connect(
