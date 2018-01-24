@@ -474,7 +474,7 @@ class LikeShops(BaseHandler):
 
         original_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_stores]
         for original_liked_shop in original_liked_shops:
-            if original_liked_shop not in selected_shops: #they no longer want this shop included in their liked shops
+            if original_liked_shop not in selected_shops:  # they no longer want this shop included in their liked shops
                 user.liked_stores.remove(original_liked_shop.key)
                 original_liked_shop.likes -= 1
                 original_liked_shop.put()
@@ -530,55 +530,13 @@ class EditShop(BaseHandler):
         body = json.loads(self.request.body)
 
         if user and user.is_moderator:
-            shop_key=body['key']
+            shop_key = body['key']
             shop = ndb.Key(urlsafe=shop_key).get()
             shop.name = body['name']
             shop.website = body['website']
             shop.icon_url = body['icon_url']
             shop.put()
             self.response.write(json.dumps({'key': shop_key}))
-
-
-class AddIconToShop(BaseHandler):
-    '''
-    under severe construction, don't use unless you
-    figure out what is going on with python
-    gcs
-    '''
-    def get(self, url_key):
-        blob_key = ndb.key(urlsafe=url_key)
-        img = images.Image(blob_key=blob_key)
-        img.resize(width=64, height=64)
-        img.execute_transforms(output_encoding=images.JPEG)
-
-        self.response.headers['Content-Type'] = 'image/jpeg'
-        self.response.out.write(img)
-
-    def post(self, url_key):
-        user = self.user
-        if user and user.is_moderator:
-            icon = self.request.get('icon')
-            # storage_client = gcs.Client()
-            # bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
-            # blob = bucket.blob(url_key)  # url_key used here as the filename
-            #
-            # blob.upload_from_string(
-            #     icon,
-            #     content_type='image/jpeg'
-            # )
-            #
-            # shop = ndb.Key(urlsafe=url_key)
-            # shop.icon_url = blob.public_url
-            # shop_key = shop.put()
-            gcs.blob
-            file = gcs.open(
-                url_key,
-                'w',
-                content_type='image/jpeg'
-            )
-            file.write(icon)
-            file.close()
-            self.response.write(json.dumps({'key': url_key}))
 
 
 class ShopUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
@@ -599,12 +557,10 @@ class SignupHandler(BaseHandler):
         email = body['email']
         password = body['password']
         shops = body['selectedShops']
-        import pdb; pdb.set_trace()
-        is_email_present = len(email) > 0
-        is_password_present = len(password) > 0
+        is_password_valid = len(password) > 6
         # won't work because of unsupported GAE modules
         # is_email_valid = validate_email(email, verify=True)
-        is_email_valid = bool(re.match(r"[^@]+@[^@]+\.[^@]+", email))
+        is_email_valid = bool(re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email))
         are_shops_valid = True
         for shop in shops:
             try:
@@ -612,13 +568,12 @@ class SignupHandler(BaseHandler):
             except (KeyError, AttributeError):
                 are_shops_valid = False
 
-        if (not is_email_present or not is_password_present
-                or not is_email_valid or not are_shops_valid):
+        if (not is_password_valid or not is_email_valid
+                or not are_shops_valid):
             self.response.write(json.dumps({
                 'error': 'VALIDATION_ERROR',
-                'isEmailPresent': is_email_present,
-                'isPasswordPresent': is_password_present,
                 'isEmailValid': is_email_valid,
+                'isPasswordValid': is_password_valid,
                 'areShopsValid': are_shops_valid
             }))
             return

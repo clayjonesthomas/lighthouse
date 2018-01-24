@@ -6,6 +6,22 @@ import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
 import "./SignUpPage.css"
 import "../LandingPage/LandingPage.css"
 
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+function validateEmail(emailValue, hasAttemptedSubmission) {
+  if (hasAttemptedSubmission)
+    if (!emailRegex.test(emailValue))
+      return 'error'
+  return null
+}
+
+function validatePassword(passwordValue, hasAttemptedSubmission) {
+  if (hasAttemptedSubmission)
+    if (passwordValue.length < 6)
+      return 'error'
+  return null
+}
+
 const SignUpPage = ({
                       shouldDisplay,
                       handleEmailChange,
@@ -14,7 +30,8 @@ const SignUpPage = ({
                       passwordValue,
                       onPickedShopsChange,
                       onSubmitSignUp,
-                      selectedShops
+                      selectedShops,
+                      hasAttemptedSubmission
                     }) => (
   <form id="sign-up-form" onSubmit={onSubmitSignUp}>
     <div id="form-wrapper">
@@ -24,26 +41,39 @@ const SignUpPage = ({
       <p id="sign-up-helper-text">
         Already have an account? <a>Sign in</a>
       </p>
-      <FormGroup>
-        <ShopPicker
-          className="shop-picker-box"
-          tabIndex={shouldDisplay ? 0 : -1}
-          isSetupMode={true}
-          selectedShops={selectedShops || []}
-          onPickedShopsChange={onPickedShopsChange}
-        />
-        <HelpBlock id="store-helper-text">
-          We recommend picking 5-6 of your favorite stores and brands to start off.
-        </HelpBlock>
+      <ShopPicker
+        className="shop-picker-box"
+        tabIndex={shouldDisplay ? 0 : -1}
+        isSetupMode={true}
+        selectedShops={selectedShops || []}
+        onPickedShopsChange={onPickedShopsChange}
+      />
+      <HelpBlock id="store-helper-text">
+        We recommend picking 5-6 of your favorite stores and brands to start off.
+      </HelpBlock>
+      <FormGroup
+        validationState={
+          validateEmail(emailValue, hasAttemptedSubmission)
+        }
+        id="email-box"
+      >
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
-          id="email-box"
           type="text"
           value={emailValue}
           onChange={handleEmailChange}
           placeholder="Email"
         />
+        <p id="email-error">
+          Please input a valid email.
+        </p>
+      </FormGroup>
+      <FormGroup
+        validationState={
+          validatePassword(passwordValue, hasAttemptedSubmission)
+        }
+      >
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
@@ -52,6 +82,9 @@ const SignUpPage = ({
           onChange={handlePasswordChange}
           placeholder="Password"
         />
+        <p id="password-error">
+          Your password must be at least 6 characters long.
+        </p>
       </FormGroup>
       <input
         tabIndex={shouldDisplay ? 0 : -1}

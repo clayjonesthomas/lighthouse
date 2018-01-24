@@ -17,7 +17,8 @@ const defaultSignUpState = {
   email: '',
   password: '',
   selectedShops: [],
-  submitSpinner: false
+  submitSpinner: false,
+  hasAttemptedSubmission: false
 }
 
 export function signup(state = defaultSignUpState, action) {
@@ -36,7 +37,8 @@ export function signup(state = defaultSignUpState, action) {
       })
     case SIGN_UP_REQUEST:
       return Object.assign({}, state, {
-        submitSpinner: true
+        submitSpinner: true,
+        hasAttemptedSubmission: true
       })
     case SIGN_UP_RESPONSE:
       return Object.assign({}, state, {

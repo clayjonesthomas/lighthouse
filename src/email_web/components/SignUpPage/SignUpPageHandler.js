@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import SignUpPage from './SignUpPage'
 import {emailChange, passwordChange, pickedShopsChange,
-  submitSignUpForm}
+  submitSignUpForm, signUpRequest}
   from './SignUpPageActions'
 
 export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
@@ -18,7 +18,8 @@ class SignUpPageHandler extends Component {
       passwordValue,
       onPickedShopsChange,
       onSubmitSignUp,
-      selectedShops
+      selectedShops,
+      hasAttemptedSubmission
     } = this.props
     return (
       <SignUpPage
@@ -30,6 +31,7 @@ class SignUpPageHandler extends Component {
         onPickedShopsChange={onPickedShopsChange}
         onSubmitSignUp={onSubmitSignUp}
         selectedShops={selectedShops}
+        hasAttemptedSubmission={hasAttemptedSubmission}
       />
     )
   }
@@ -40,7 +42,8 @@ const mapStateToProps = (state, ownProps) => {
     shouldDisplay: ownProps.shouldDisplay,
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
-    selectedShops: state.signup.selectedShops
+    selectedShops: state.signup.selectedShops,
+    hasAttemptedSubmission: state.signup.hasAttemptedSubmission
   }
 }
 
@@ -51,7 +54,8 @@ const mapDispatchToProps = (dispatch) => {
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
     onSubmitSignUp: (e) => {
       e.preventDefault()
-      dispatch(submitSignUpForm())
+      dispatch(signUpRequest())
+      // dispatch(submitSignUpForm())
     }
   }
 }
