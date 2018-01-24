@@ -269,7 +269,7 @@ class SinglePost(BaseHandler):
         body = json.loads(self.request.body)
         shops = body['shops']
         title = body['title']
-        isImportant = body['isImportant']
+        is_important = body['isImportant']
 
         if not shops or not title:
             self.response.write(json.dumps({
@@ -280,7 +280,7 @@ class SinglePost(BaseHandler):
         post_keys = []
         for shop in shops:
             post = Post(title=title,
-                        is_important=isImportant,
+                        is_important=is_important,
                         shop_key=ndb.Key(urlsafe=shop['key']),
                         author=ndb.Key(urlsafe=self.user.key.urlsafe()))
             post_keys.append(post.put().urlsafe())
