@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto|Roboto+Condensed");
+
+#form-title {
+	text-align: center;
+}
+
+.settings-section {
+	overflow: auto;
+	margin: 30px;
+}
+
+.section-title {
+	font-family: 'Roboto', sans-serif; 
+}
+
+.settings-section-break {
+	margin: 0px 30px;
+}
+
+#settings-form-button {
+
+}
+
+.shop-picker-search > span {
+	width: 100%;
+	max-width: 400px;
+}
+
+
+.shop-picker-search > span > div > div{
+	width: 100%;
+}
