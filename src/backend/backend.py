@@ -604,14 +604,22 @@ class SignupHandler(BaseHandler):
         is_password_present = len(password) > 0
         # won't work because of unsupported GAE modules
         # is_email_valid = validate_email(email, verify=True)
-        is_email_valid = re.match(r"[^@]+@[^@]+\.[^@]+", email)
+        is_email_valid = bool(re.match(r"[^@]+@[^@]+\.[^@]+", email))
+        are_shops_valid = True
+        for shop in shops:
+            try:
+                ndb.Key(urlsafe=shop['key']).get()
+            except (KeyError, AttributeError):
+                are_shops_valid = False
+
         if (not is_email_present or not is_password_present
-                or not is_email_valid):
+                or not is_email_valid or not are_shops_valid):
             self.response.write(json.dumps({
                 'error': 'VALIDATION_ERROR',
                 'isEmailPresent': is_email_present,
                 'isPasswordPresent': is_password_present,
-                'isEmailValid': is_email_valid
+                'isEmailValid': is_email_valid,
+                'areShopsValid': are_shops_valid
             }))
             return
 
@@ -619,11 +627,13 @@ class SignupHandler(BaseHandler):
         is_moderator = False
         if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
-        user_data = self.user_model.create_user(unique_properties,
+        user_data = self.user_model.create_user(email,
+                                                unique_properties,
                                                 email_address=email,
                                                 password_raw=password,
                                                 verified=False,
-                                                is_moderator=is_moderator)
+                                                is_moderator=is_moderator,
+                                                using_email_service=True)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for email %s because of '
                          'duplicate keys %s' % (email, user_data[1]))
@@ -638,7 +648,7 @@ class SignupHandler(BaseHandler):
                                         signup_token=token, _full=True)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        self.response.write(json.dumps({'email': user.email}))
+        self.response.write(json.dumps({'email': user.email_address}))
 
 
 class ForgotPasswordHandler(BaseHandler):
