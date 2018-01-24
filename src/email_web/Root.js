@@ -9,7 +9,6 @@ import reducer from './option_1a/ii/reducer'
 import FrontPage_1 from './option_1a/i/FrontPage'
 import FrontPage_2 from './option_1a/ii/FrontPage'
 import FrontPage_3 from './option_1a/iii/FrontPage'
-import VerificationSuccessHandler from ''
 import App from './App'
 
 let store = createStore(
@@ -27,6 +26,8 @@ const Root = () => (
         <Route path="option_1" component={FrontPage_1}/>
         <Route path="option_2" component={FrontPage_2}/>
         <Route path="option_3" component={FrontPage_3}/>
+
+        
       </Route>
     </Router>
   </Provider>

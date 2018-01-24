@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onRedirectToSettings: () => {dispatch(push('/settings'))},
+    onRedirectToSettings: () => {dispatch(push('/'))},
   }
 }
 

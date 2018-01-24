@@ -691,7 +691,7 @@ class VerificationHandler(BaseHandler):
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
         if verification_type == 'v':
             # remove signup token, we don't want users to come back with an old link
-            #self.user_model.delete_signup_token(user.get_id(), signup_token) TODO put back in
+            self.user_model.delete_signup_token(user.get_id(), signup_token) TODO put back in
 
             if not user.verified:
                 user.verified = True
@@ -700,6 +700,7 @@ class VerificationHandler(BaseHandler):
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
             self.redirect(self.uri_for('verification_success'))
+            return
         else:
             logging.info('verification type not supported')
             self.abort(404)
