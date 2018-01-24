@@ -7,10 +7,7 @@ import {goToSignUp} from '../../actions'
 import {SIGN_UP_PAGE_URL} from '../../urls'
 
 class LandingPageHandler extends Component {
-  componentWillMount() {
-    
-  }
-
+  
   render () {
     const {
       goToSignUp
