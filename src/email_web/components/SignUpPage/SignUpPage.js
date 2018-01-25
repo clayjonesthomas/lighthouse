@@ -94,7 +94,7 @@ const SignUpPage = ({
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
-          type="text"
+          type="password"
           value={passwordValue}
           onChange={handlePasswordChange}
           placeholder="Password"
