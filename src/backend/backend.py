@@ -567,7 +567,7 @@ class SignupHandler(BaseHandler):
             }))
             return
 
-        shop_keys = [ndb.Key(urlsafe=shop['key']).get() for shop in shops]
+        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in shops]
         unique_properties = ['email_address']
         is_moderator = False
         if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
