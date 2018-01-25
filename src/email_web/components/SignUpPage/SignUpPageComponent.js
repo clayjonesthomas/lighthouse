@@ -23,22 +23,25 @@ function validatePassword(passwordValue, hasAttemptedSubmission) {
 }
 
 const SignUpPageComponent = ({
-                      shouldDisplay,
-                      handleEmailChange,
-                      handlePasswordChange,
-                      emailValue,
-                      passwordValue,
-                      onPickedShopsChange,
-                      onSubmitSignUp,
-                      selectedShops,
-                      hasAttemptedSubmission
-                    }) => (
-  <form id="sign-up-form" onSubmit={onSubmitSignUp}>
-    <div id="form-wrapper">
-      <h1 id="form-title">
+                               shouldDisplay,
+                               handleEmailChange,
+                               handlePasswordChange,
+                               emailValue,
+                               passwordValue,
+                               onPickedShopsChange,
+                               onSubmitSignUp,
+                               selectedShops,
+                               hasAttemptedSubmission
+                             }) => (
+  <form
+    id="sign-up-form"
+    className="auth-form"
+    onSubmit={onSubmitSignUp}>
+    <div className="form-wrapper">
+      <h1 className="form-title">
         Sign Up
       </h1>
-      <p id="sign-up-helper-text">
+      <p className="helper-text">
         Already have an account? <a>Sign in</a>
       </p>
       <ShopPicker
@@ -48,14 +51,16 @@ const SignUpPageComponent = ({
         selectedShops={selectedShops || []}
         onPickedShopsChange={onPickedShopsChange}
       />
-      <HelpBlock id="store-helper-text">
+      <HelpBlock
+        className="helper-text"
+        id="store-helper-text">
         We recommend picking 5-6 of your favorite stores and brands to start off.
       </HelpBlock>
       <FormGroup
         validationState={
           validateEmail(emailValue, hasAttemptedSubmission)
         }
-        id="email-box"
+        className="email-box"
       >
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
@@ -65,7 +70,7 @@ const SignUpPageComponent = ({
           onChange={handleEmailChange}
           placeholder="Email"
         />
-        <p id="email-error">
+        <p className="email-error">
           Please input a valid email.
         </p>
       </FormGroup>
@@ -82,7 +87,7 @@ const SignUpPageComponent = ({
           onChange={handlePasswordChange}
           placeholder="Password"
         />
-        <p id="password-error">
+        <p className="password-error">
           Your password must be at least 6 characters long.
         </p>
       </FormGroup>
@@ -90,8 +95,7 @@ const SignUpPageComponent = ({
         tabIndex={shouldDisplay ? 0 : -1}
         type="submit"
         value="TRY IT OUT"
-        className="submit-button"
-        id="form-button"
+        className="submit-button form-button"
       />
     </div>
   </form>

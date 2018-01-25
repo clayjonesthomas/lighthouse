@@ -1,8 +1,8 @@
 import React from 'react'
 import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
-import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
-
+import "./LogInPageComponent.css"
+import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -22,49 +22,43 @@ function validatePassword(passwordValue, hasAttemptedSubmission) {
 }
 
 const LogInPageComponent = ({
-                      shouldDisplay,
-                      handleEmailChange,
-                      handlePasswordChange,
-                      emailValue,
-                      passwordValue,
-                      onPickedShopsChange,
-                      onSubmitSignUp,
-                      selectedShops,
-                      hasAttemptedSubmission
-                    }) => (
-  <form id="sign-up-form" onSubmit={onSubmitSignUp}>
-    <div id="form-wrapper">
-      <h1 id="form-title">
-        Sign Up
+                              handleEmailChange,
+                              handlePasswordChange,
+                              emailValue,
+                              passwordValue,
+                              onPickedShopsChange,
+                              onSubmitSignUp,
+                              selectedShops,
+                              hasAttemptedSubmission
+                            }) => (
+  <form
+    className="auth-form"
+    onSubmit={onSubmitSignUp}>
+    <div
+      className="form-wrapper"
+      id="log-in-form-wrapper">
+      <h1 className="form-title">
+        Log In
       </h1>
-      <p id="sign-up-helper-text">
-        Already have an account? <a>Sign in</a>
+      <p
+        className="helper-text"
+        id="log-in-helper-text">
+        Don't have an account? <a>Sign Up</a>
       </p>
-      <ShopPicker
-        className="shop-picker-box"
-        tabIndex={shouldDisplay ? 0 : -1}
-        isSetupMode={true}
-        selectedShops={selectedShops || []}
-        onPickedShopsChange={onPickedShopsChange}
-      />
-      <HelpBlock id="store-helper-text">
-        We recommend picking 5-6 of your favorite stores and brands to start off.
-      </HelpBlock>
       <FormGroup
         validationState={
           validateEmail(emailValue, hasAttemptedSubmission)
         }
-        id="email-box"
+        className="email-box"
       >
         <FormControl
-          tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           type="text"
           value={emailValue}
           onChange={handleEmailChange}
           placeholder="Email"
         />
-        <p id="email-error">
+        <p className="email-error">
           Please input a valid email.
         </p>
       </FormGroup>
@@ -74,23 +68,20 @@ const LogInPageComponent = ({
         }
       >
         <FormControl
-          tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
           type="text"
           value={passwordValue}
           onChange={handlePasswordChange}
           placeholder="Password"
         />
-        <p id="password-error">
+        <p className="password-error">
           Your password must be at least 6 characters long.
         </p>
       </FormGroup>
       <input
-        tabIndex={shouldDisplay ? 0 : -1}
         type="submit"
-        value="TRY IT OUT"
-        className="submit-button"
-        id="form-button"
+        value="LOG IN"
+        className="submit-button form-button"
       />
     </div>
   </form>
