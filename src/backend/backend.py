@@ -23,7 +23,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
-from email import send_emails
+from email import send_emails, send_verification_email
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -595,6 +595,8 @@ class SignupHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
+        send_verification_email(email, verification_url)
+        logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
         self.response.write(json.dumps({'email': user.email_address}))
@@ -652,6 +654,7 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
+            self.redirect(self.uri_for('verification_success'))
             return
         else:
             logging.info('verification type not supported')
@@ -688,7 +691,6 @@ class VerificationHandler(BaseHandler):
         else:
             logging.info('verification type not supported')
             self.abort(404)
-
 
 class LoginHandler(BaseHandler):
 
@@ -813,7 +815,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
-
+    webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
