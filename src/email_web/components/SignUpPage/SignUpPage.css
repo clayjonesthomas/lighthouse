@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto");
+
+#sign-up-form {
+    height: 100%;
+}
+
+.scroll-wrapper {
+    width: 100%;
+}
+
+#form-wrapper {
+    background-color: #aec7ea;
+    padding-top: 90px;
+    padding-left: 90px;
+    padding-right: 90px;
+    min-height: 100%;
+    text-align: center;
+    width: 500px;
+}
+
+#sign-up-helper-text, #store-helper-text {
+    color: #585858;
+}
+
+#store-helper-text {
+    text-align: left;
+    margin-bottom: 2em;
+    margin-left: 6px;
+}
+
+#form-title {
+    font-family: "Roboto", sans-serif;
+}
+
+.form-box {
+    background-color: #f1f1f1;
+}
+
+#email-box {
+    margin-bottom: 2em;
+}
+
+#form-button {
+    margin-left: 0;
+    width: 100%;
+}
+
+.shop-picker-box {
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 2em;
+}
+
+.shop-picker-box > span > div > div {
+    background-color: #f1f1f1;
+    /* TODO figure out a way to write this without !important */
+    border-radius: 4px !important;
+    border: 1px solid #ccc;
+}
+
+.shop-picker-box > span > div > ul {
+    background-color: #f1f1f1;
+}
+
+.shop-picker-box > span > div > .dropdown-menu > li > a:hover {
+    background-color: #e5dbff;
+}
+
+.shop-picker-box .rbt-token {
+    color: #555;
+    background-color: #d1e4ff;
+}
+
+.shop-picker-box .rbt-input {
+    font-size: 16px;
+}
+
+#sign-up-form .has-error > .form-control {
+    background-color: #ffe8e8;
+    border-color: rgba(169, 68, 66, 0.64);
+    border-width: 2px;
+}
+
+.email-error, #password-error {
+    color: rgba(169, 68, 66, 0.74);
+    display: none;
+    text-align: left;
+}
+
+.has-error > .email-error, .has-error > #password-error {
+    display: inherit;
+}

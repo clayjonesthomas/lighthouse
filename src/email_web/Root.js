@@ -2,35 +2,52 @@ import React from 'react'
 import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
-import {routerMiddleware} from 'react-router-redux'
+import {routerMiddleware, syncHistoryWithStore} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
-import reducer from './option_1a/ii/reducer'
-import FrontPage_1 from './option_1a/i/FrontPage'
-import FrontPage_2 from './option_1a/ii/FrontPage'
-import FrontPage_3 from './option_1a/iii/FrontPage'
-import App from './App'
+import reducers from './reducers/index'
+import Container from './Container'
 
-let store = createStore(
-  reducer,
+import {LANDING_PAGE, SIGN_UP_PAGE} from './Container'
+
+
+const router = routerMiddleware(browserHistory)
+const store = createStore(
+  reducers,
   applyMiddleware(
     thunkMiddleware,
-    routerMiddleware(browserHistory)
+    router
   )
 )
+const history = syncHistoryWithStore(browserHistory, store)
 
 const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <Route path="option_1" component={FrontPage_1}/>
-        <Route path="option_2" component={FrontPage_2}/>
-        <Route path="option_3" component={FrontPage_3}/>
-
-        
+      <Route path="/">
+        <IndexRoute component={ContainerAtLandingPage}/>
+        <Route path="/signup" component={ContainerAtSignUpPage}/>
       </Route>
     </Router>
   </Provider>
 )
+
+const ContainerAtLandingPage = (props) => {
+  return (
+    <Container
+      page={LANDING_PAGE}
+      {...props}
+    />
+  )
+}
+
+const ContainerAtSignUpPage = (props) => {
+  return (
+    <Container
+      page={SIGN_UP_PAGE}
+      {...props}
+    />
+  )
+}
 
 export default Root

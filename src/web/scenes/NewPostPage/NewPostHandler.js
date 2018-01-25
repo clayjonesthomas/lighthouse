@@ -18,6 +18,7 @@ class NewPostHandler extends Component {
         onSubmit={this.props.onSubmit}
         onCancel={this.props.onCancel}
         onSaveTitleRef={this.props.onSaveTitleRef}
+        onSaveCheckboxRef={this.props.onSaveCheckboxRef}
         onUpdateFormShops={this.props.onUpdateFormShops}
         isMobile={this.props.isMobile}
         errors={this.props.errors}
@@ -41,6 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSubmit: () => dispatch(pushPost()),
     onSaveTitleRef: (ref) => dispatch(onSaveRef(ref, 'title')),
+    onSaveCheckboxRef: (ref) => dispatch(onSaveRef(ref, 'isImportant')),
     clearErrorMessage: () => dispatch(clearErrorMessage())
   }
 }

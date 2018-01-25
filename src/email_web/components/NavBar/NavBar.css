@@ -1,0 +1,26 @@
+#nav-bar {
+    background: #003091;
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    color: #ececec;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    z-index: 2;
+}
+
+#nav-bar-link-container {
+    padding-top: 12px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-align: right;
+}
+
+.nav-bar-link {
+    padding: 5px;
+    padding-right: 40px;
+}
+
+.nav-bar-link:hover {
+    cursor: pointer;
+}
