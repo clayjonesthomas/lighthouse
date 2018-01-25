@@ -8,14 +8,21 @@ import "../LandingPage/LandingPage.css"
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-function validateEmail(emailValue, hasAttemptedSubmission) {
-  if (hasAttemptedSubmission)
-    if (!emailRegex.test(emailValue))
+export function validateEmail(emailValue,
+                              hasAttemptedSubmission,
+                              invalidEmailFromServer) {
+  if (hasAttemptedSubmission) {
+    if (!emailRegex.test(emailValue)) {
       return 'error'
-  return null
+    }
+    if (invalidEmailFromServer === emailValue)
+      return 'error'
+    return null
+  }
 }
 
-function validatePassword(passwordValue, hasAttemptedSubmission) {
+export function validatePassword(passwordValue,
+                                 hasAttemptedSubmission) {
   if (hasAttemptedSubmission)
     if (passwordValue.length < 6)
       return 'error'
@@ -31,7 +38,8 @@ const SignUpPage = ({
                       onPickedShopsChange,
                       onSubmitSignUp,
                       selectedShops,
-                      hasAttemptedSubmission
+                      hasAttemptedSubmission,
+                      invalidEmailFromServer
                     }) => (
   <form id="sign-up-form" onSubmit={onSubmitSignUp}>
     <div id="form-wrapper">
@@ -53,7 +61,8 @@ const SignUpPage = ({
       </HelpBlock>
       <FormGroup
         validationState={
-          validateEmail(emailValue, hasAttemptedSubmission)
+          validateEmail(emailValue, hasAttemptedSubmission,
+            invalidEmailFromServer)
         }
         id="email-box"
       >
@@ -65,9 +74,17 @@ const SignUpPage = ({
           onChange={handleEmailChange}
           placeholder="Email"
         />
-        <p id="email-error">
-          Please input a valid email.
-        </p>
+        {validateEmail(emailValue, hasAttemptedSubmission, false) &&
+          <p className="email-error">
+            Please input a valid email.
+          </p>
+        }
+        {invalidEmailFromServer === emailValue &&
+          <p className="email-error">
+            The email address you have chosen is already in use.
+            Please <a>log in</a> or use a different email.
+          </p>
+        }
       </FormGroup>
       <FormGroup
         validationState={

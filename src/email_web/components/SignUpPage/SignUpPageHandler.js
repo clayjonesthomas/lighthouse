@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import SignUpPage from './SignUpPage'
 import {emailChange, passwordChange, pickedShopsChange,
-  submitSignUpForm}
+  submitSignUpForm, attemptSignUp}
   from './SignUpPageActions'
 
 export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
@@ -19,7 +19,8 @@ class SignUpPageHandler extends Component {
       onPickedShopsChange,
       onSubmitSignUp,
       selectedShops,
-      hasAttemptedSubmission
+      hasAttemptedSubmission,
+      invalidEmailFromServer
     } = this.props
     return (
       <SignUpPage
@@ -32,6 +33,7 @@ class SignUpPageHandler extends Component {
         onSubmitSignUp={onSubmitSignUp}
         selectedShops={selectedShops}
         hasAttemptedSubmission={hasAttemptedSubmission}
+        invalidEmailFromServer={invalidEmailFromServer}
       />
     )
   }
@@ -43,7 +45,8 @@ const mapStateToProps = (state, ownProps) => {
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
     selectedShops: state.signup.selectedShops,
-    hasAttemptedSubmission: state.signup.hasAttemptedSubmission
+    hasAttemptedSubmission: state.signup.hasAttemptedSubmission,
+    invalidEmailFromServer: state.signup.invalidEmailFromServer
   }
 }
 

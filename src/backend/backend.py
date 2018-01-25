@@ -539,17 +539,6 @@ class EditShop(BaseHandler):
             self.response.write(json.dumps({'key': shop_key}))
 
 
-class ShopUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-    """
-        under severe construction, don't use unless you
-        figure out what the fuck is going on with python
-        gcs
-    """
-    def get(self):
-        upload_url = blobstore.create_upload_url('/upload_photo')
-        self.response.write(json.dumps({'upload_url': upload_url}))
-
-
 class SignupHandler(BaseHandler):
 
     def post(self):
@@ -578,6 +567,7 @@ class SignupHandler(BaseHandler):
             }))
             return
 
+        shop_keys = [ndb.Key(urlsafe=shop['key']).get() for shop in shops]
         unique_properties = ['email_address']
         is_moderator = False
         if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
@@ -588,11 +578,12 @@ class SignupHandler(BaseHandler):
                                                 password_raw=password,
                                                 verified=False,
                                                 is_moderator=is_moderator,
-                                                using_email_service=True)
+                                                using_email_service=True,
+                                                liked_stores=shop_keys)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for email %s because of '
                          'duplicate keys %s' % (email, user_data[1]))
-            self.response.write(json.dumps({'error': 'DUPLICATE_EMAIL'}))
+            self.response.write(json.dumps({'invalidEmail': email}))
             return
 
         user = user_data[1]
