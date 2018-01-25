@@ -5,7 +5,7 @@ import {push} from 'react-router-redux'
 import NavBar from './components/NavBar/NavBar'
 import LandingPageHandler from './components/LandingPage/LandingPageHandler'
 import SignUpPageHandler from './components/SignUpPage/SignUpPageHandler'
-import {goToSignUp} from './actions'
+import {goToSignUp} from './services/NewUserActions'
 import {SIGN_UP_PAGE_URL} from './urls'
 
 export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'

@@ -76,3 +76,19 @@
 .shop-picker-box .rbt-input {
     font-size: 16px;
 }
+
+#sign-up-form .has-error > .form-control {
+    background-color: #ffe8e8;
+    border-color: rgba(169, 68, 66, 0.64);
+    border-width: 2px;
+}
+
+.email-error, #password-error {
+    color: rgba(169, 68, 66, 0.74);
+    display: none;
+    text-align: left;
+}
+
+.has-error > .email-error, .has-error > #password-error {
+    display: inherit;
+}

@@ -1,11 +1,11 @@
 import React from 'react'
-import {createStore, applyMiddleware, combineReducers} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {routerMiddleware, syncHistoryWithStore} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
-import reducers from './reducer'
+import reducers from './reducers/index'
 import Container from './Container'
 
 import {LANDING_PAGE, SIGN_UP_PAGE} from './Container'

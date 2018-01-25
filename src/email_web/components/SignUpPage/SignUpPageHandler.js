@@ -2,17 +2,38 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import SignUpPage from './SignUpPage'
+import {emailChange, passwordChange, pickedShopsChange,
+  submitSignUpForm, attemptSignUp}
+  from './SignUpPageActions'
 
 export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
 
 class SignUpPageHandler extends Component {
   render() {
     const {
-      shouldDisplay
+      shouldDisplay,
+      handleEmailChange,
+      handlePasswordChange,
+      emailValue,
+      passwordValue,
+      onPickedShopsChange,
+      onSubmitSignUp,
+      selectedShops,
+      hasAttemptedSubmission,
+      invalidEmailFromServer
     } = this.props
     return (
       <SignUpPage
         shouldDisplay={shouldDisplay}
+        handleEmailChange={handleEmailChange}
+        handlePasswordChange={handlePasswordChange}
+        emailValue={emailValue}
+        passwordValue={passwordValue}
+        onPickedShopsChange={onPickedShopsChange}
+        onSubmitSignUp={onSubmitSignUp}
+        selectedShops={selectedShops}
+        hasAttemptedSubmission={hasAttemptedSubmission}
+        invalidEmailFromServer={invalidEmailFromServer}
       />
     )
   }
@@ -20,12 +41,25 @@ class SignUpPageHandler extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    shouldDisplay: ownProps.shouldDisplay
+    shouldDisplay: ownProps.shouldDisplay,
+    emailValue: state.signup.email,
+    passwordValue: state.signup.password,
+    selectedShops: state.signup.selectedShops,
+    hasAttemptedSubmission: state.signup.hasAttemptedSubmission,
+    invalidEmailFromServer: state.signup.invalidEmailFromServer
   }
 }
 
-const mapDispatchToProps = () => {
-  return {}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleEmailChange: (e) => dispatch(emailChange(e.target.value)),
+    handlePasswordChange: (e) => dispatch(passwordChange(e.target.value)),
+    onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
+    onSubmitSignUp: (e) => {
+      e.preventDefault()
+      dispatch(submitSignUpForm())
+    }
+  }
 }
 
 export default connect(
