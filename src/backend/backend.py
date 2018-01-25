@@ -691,7 +691,7 @@ class VerificationHandler(BaseHandler):
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
         if verification_type == 'v':
             # remove signup token, we don't want users to come back with an old link
-            self.user_model.delete_signup_token(user.get_id(), signup_token) TODO put back in
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
 
             if not user.verified:
                 user.verified = True
