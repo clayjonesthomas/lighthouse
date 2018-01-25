@@ -162,8 +162,6 @@ def send_verification_email(email, verification_url):
               <div class="verify-button" style="text-align: center;">
                 <a href="
                 """
-    print("SENDING VERIFICATION EMAIL")
-    print(verification_url)
     body += verification_url
     body += """
                 " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">VERIFY EMAIL</a>

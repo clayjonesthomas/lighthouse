@@ -5,10 +5,12 @@ import {push} from 'react-router-redux'
 import VerificationSuccessPage from './VerificationSuccessPage'
 
 class VerificationSuccessHandler extends Component {
+
   componentDidMount() {
+    const timeToSettingRedirect = 5000;
     setTimeout(() => {
       this.props.onRedirectToSettings();
-      }, 5000)
+      }, timeToSettingRedirect)
   }
 
   render () {

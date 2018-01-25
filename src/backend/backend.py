@@ -640,6 +640,7 @@ class SignupHandler(BaseHandler):
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
         send_verification_email(email, verification_url)
+        logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
         # I'm sorry rivest

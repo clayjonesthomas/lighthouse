@@ -1,4 +1,3 @@
-import PostBox from '../../features/PostBox/PostBox'
 import React, {PropTypes} from 'react'
 
 import "./VerificationSuccessPage.css"
