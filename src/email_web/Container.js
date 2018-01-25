@@ -4,10 +4,13 @@ import {push} from 'react-router-redux'
 
 import NavBar from './components/NavBar/NavBar'
 import FrontPage from './components/FrontPage/FrontPage'
+import LogInPage from './components/LogInPage/LogInPage'
 
 import {SIGN_UP_PAGE_URL} from './urls'
 
-import {LANDING_PAGE, SIGN_UP_PAGE} from './components/FrontPage/FrontPage'
+import {LANDING_PAGE} from './components/LandingPage/LandingPage'
+import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
+import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -26,6 +29,9 @@ class Container extends Component {
           <FrontPage
             page={page}
           />
+        }
+        {page === LOG_IN_PAGE &&
+          <LogInPage/>
         }
       </div>
     )

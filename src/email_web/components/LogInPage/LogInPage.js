@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import SignUpPage from './SignUpPage'
+import LogInPageComponent from './LogInPageComponent'
 import {emailChange, passwordChange, pickedShopsChange,
   submitSignUpForm}
-  from './SignUpPageActions'
+  from './LogInPageActions'
 
-export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
+export const LOG_IN_PAGE = 'LOG_IN_PAGE'
 
-class SignUpPageHandler extends Component {
+class LogInPage extends Component {
   render() {
     const {
       shouldDisplay,
@@ -22,7 +22,7 @@ class SignUpPageHandler extends Component {
       hasAttemptedSubmission
     } = this.props
     return (
-      <SignUpPage
+      <LogInPageComponent
         shouldDisplay={shouldDisplay}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
@@ -62,4 +62,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignUpPageHandler)
+)(LogInPage)

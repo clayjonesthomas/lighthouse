@@ -1,100 +1,65 @@
-import React from 'react'
-import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 
-import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
+import SignUpPageComponent from './SignUpPageComponent'
+import {emailChange, passwordChange, pickedShopsChange,
+  submitSignUpForm}
+  from './SignUpPageActions'
 
-import "./SignUpPage.css"
-import "../LandingPage/LandingPage.css"
+export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-function validateEmail(emailValue, hasAttemptedSubmission) {
-  if (hasAttemptedSubmission)
-    if (!emailRegex.test(emailValue))
-      return 'error'
-  return null
-}
-
-function validatePassword(passwordValue, hasAttemptedSubmission) {
-  if (hasAttemptedSubmission)
-    if (passwordValue.length < 6)
-      return 'error'
-  return null
-}
-
-const SignUpPage = ({
-                      shouldDisplay,
-                      handleEmailChange,
-                      handlePasswordChange,
-                      emailValue,
-                      passwordValue,
-                      onPickedShopsChange,
-                      onSubmitSignUp,
-                      selectedShops,
-                      hasAttemptedSubmission
-                    }) => (
-  <form id="sign-up-form" onSubmit={onSubmitSignUp}>
-    <div id="form-wrapper">
-      <h1 id="form-title">
-        Sign Up
-      </h1>
-      <p id="sign-up-helper-text">
-        Already have an account? <a>Sign in</a>
-      </p>
-      <ShopPicker
-        className="shop-picker-box"
-        tabIndex={shouldDisplay ? 0 : -1}
-        isSetupMode={true}
-        selectedShops={selectedShops || []}
+class SignUpPage extends Component {
+  render() {
+    const {
+      shouldDisplay,
+      handleEmailChange,
+      handlePasswordChange,
+      emailValue,
+      passwordValue,
+      onPickedShopsChange,
+      onSubmitSignUp,
+      selectedShops,
+      hasAttemptedSubmission
+    } = this.props
+    return (
+      <SignUpPageComponent
+        shouldDisplay={shouldDisplay}
+        handleEmailChange={handleEmailChange}
+        handlePasswordChange={handlePasswordChange}
+        emailValue={emailValue}
+        passwordValue={passwordValue}
         onPickedShopsChange={onPickedShopsChange}
+        onSubmitSignUp={onSubmitSignUp}
+        selectedShops={selectedShops}
+        hasAttemptedSubmission={hasAttemptedSubmission}
       />
-      <HelpBlock id="store-helper-text">
-        We recommend picking 5-6 of your favorite stores and brands to start off.
-      </HelpBlock>
-      <FormGroup
-        validationState={
-          validateEmail(emailValue, hasAttemptedSubmission)
-        }
-        id="email-box"
-      >
-        <FormControl
-          tabIndex={shouldDisplay ? 0 : -1}
-          className="form-box"
-          type="text"
-          value={emailValue}
-          onChange={handleEmailChange}
-          placeholder="Email"
-        />
-        <p id="email-error">
-          Please input a valid email.
-        </p>
-      </FormGroup>
-      <FormGroup
-        validationState={
-          validatePassword(passwordValue, hasAttemptedSubmission)
-        }
-      >
-        <FormControl
-          tabIndex={shouldDisplay ? 0 : -1}
-          className="form-box"
-          type="text"
-          value={passwordValue}
-          onChange={handlePasswordChange}
-          placeholder="Password"
-        />
-        <p id="password-error">
-          Your password must be at least 6 characters long.
-        </p>
-      </FormGroup>
-      <input
-        tabIndex={shouldDisplay ? 0 : -1}
-        type="submit"
-        value="TRY IT OUT"
-        className="submit-button"
-        id="form-button"
-      />
-    </div>
-  </form>
-)
+    )
+  }
+}
 
-export default SignUpPage
+const mapStateToProps = (state, ownProps) => {
+  return {
+    shouldDisplay: ownProps.shouldDisplay,
+    emailValue: state.signup.email,
+    passwordValue: state.signup.password,
+    selectedShops: state.signup.selectedShops,
+    hasAttemptedSubmission: state.signup.hasAttemptedSubmission
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleEmailChange: (e) => dispatch(emailChange(e.target.value)),
+    handlePasswordChange: (e) => dispatch(passwordChange(e.target.value)),
+    onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
+    onSubmitSignUp: (e) => {
+      e.preventDefault()
+      dispatch(submitSignUpForm())
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUpPage)

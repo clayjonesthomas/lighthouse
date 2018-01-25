@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import LandingPageHandler from '../LandingPage/LandingPageHandler'
-import SignUpPageHandler from '../SignUpPage/SignUpPageHandler'
+import LandingPageHandler from '../LandingPage/LandingPage'
+import SignUpPageHandler from '../SignUpPage/SignUpPage'
 
-
-export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
-export const LANDING_PAGE = 'LANDING_PAGE'
+import {SIGN_UP_PAGE} from '../SignUpPage/SignUpPage'
+import {LANDING_PAGE} from '../LandingPage/LandingPage'
 
 class FrontPage extends Component {
   render () {

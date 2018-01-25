@@ -1,6 +1,6 @@
 import {GO_TO_SIGN_UP} from '../services/NewUserActions'
 
-import {SIGN_UP_PAGE} from '../components/FrontPage/FrontPage'
+import {SIGN_UP_PAGE} from '../components/SignUpPage/SignUpPage'
 
 import {LOCATION_CHANGE} from 'react-router-redux'
 
