@@ -19,7 +19,8 @@ class SignUpPage extends Component {
       onPickedShopsChange,
       onSubmitSignUp,
       selectedShops,
-      hasAttemptedSubmission
+      hasAttemptedSubmission,
+      invalidEmailFromServer
     } = this.props
     return (
       <SignUpPageComponent
@@ -32,6 +33,7 @@ class SignUpPage extends Component {
         onSubmitSignUp={onSubmitSignUp}
         selectedShops={selectedShops}
         hasAttemptedSubmission={hasAttemptedSubmission}
+        invalidEmailFromServer={invalidEmailFromServer}
       />
     )
   }
@@ -43,7 +45,8 @@ const mapStateToProps = (state, ownProps) => {
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
     selectedShops: state.signup.selectedShops,
-    hasAttemptedSubmission: state.signup.hasAttemptedSubmission
+    hasAttemptedSubmission: state.signup.hasAttemptedSubmission,
+    invalidEmailFromServer: state.signup.invalidEmailFromServer
   }
 }
 

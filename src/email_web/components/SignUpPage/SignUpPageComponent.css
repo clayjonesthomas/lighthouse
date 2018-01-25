@@ -73,7 +73,7 @@
     font-size: 16px;
 }
 
-#sign-up-form .has-error>.form-control {
+#sign-up-form .has-error > .form-control {
     background-color: #ffe8e8;
     border-color: rgba(169, 68, 66, 0.64);
     border-width: 2px;

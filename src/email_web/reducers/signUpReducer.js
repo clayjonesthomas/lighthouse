@@ -1,5 +1,6 @@
 import {SIGNUP_EMAIL_CHANGE, SIGNUP_PASSWORD_CHANGE,
-  PICKED_SHOPS_CHANGE, SIGN_UP_REQUEST, SIGN_UP_RESPONSE} from '../components/SignUpPage/SignUpPageActions'
+  PICKED_SHOPS_CHANGE, SIGN_UP_REQUEST, SIGN_UP_RESPONSE,
+  SIGN_UP_RESPONSE_FAILED, ATTEMPT_SIGN_UP} from '../components/SignUpPage/SignUpPageActions'
 
 import {ALL_SHOPS_RESPONSE}
   from '../services/ShopDataActions'
@@ -18,7 +19,8 @@ const defaultSignUpState = {
   password: '',
   selectedShops: [],
   submitSpinner: false,
-  hasAttemptedSubmission: false
+  hasAttemptedSubmission: false,
+  invalidEmailFromServer: ''
 }
 
 export function signup(state = defaultSignUpState, action) {
@@ -35,14 +37,23 @@ export function signup(state = defaultSignUpState, action) {
       return Object.assign({}, state, {
         selectedShops: action.data
       })
+    case ATTEMPT_SIGN_UP:
+      return Object.assign({}, state, {
+        hasAttemptedSubmission: true
+      })
     case SIGN_UP_REQUEST:
       return Object.assign({}, state, {
-        submitSpinner: true,
-        hasAttemptedSubmission: true
+        submitSpinner: true
       })
     case SIGN_UP_RESPONSE:
       return Object.assign({}, state, {
-        submitSpinner: false
+        submitSpinner: false,
+        hasAttemptedSubmission: false
+      })
+    case SIGN_UP_RESPONSE_FAILED:
+      return Object.assign({}, state, {
+        submitSpinner: false,
+        invalidEmailFromServer: action.data
       })
     default:
       return state

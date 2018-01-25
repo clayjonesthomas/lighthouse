@@ -4,6 +4,7 @@ import {SIGN_UP_URL} from '../../urls'
 export const SIGNUP_EMAIL_CHANGE = 'SIGNUP_EMAIL_CHANGE'
 export const SIGNUP_PASSWORD_CHANGE = 'SIGNUP_PASSWORD_CHANGE'
 export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
+export const ATTEMPT_SIGN_UP = 'ATTEMPT_SIGN_UP'
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
 export const SIGN_UP_RESPONSE = 'SIGN_UP_RESPONSE'
 export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
@@ -26,6 +27,12 @@ export const pickedShopsChange = (listOfShops) => {
   return {
     type: PICKED_SHOPS_CHANGE,
     data: listOfShops
+  }
+}
+
+export const attemptSignUp = () => {
+  return {
+    type: ATTEMPT_SIGN_UP
   }
 }
 

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import LogInPageComponent from './LogInPageComponent'
 import {emailChange, passwordChange, pickedShopsChange,
-  submitSignUpForm}
+  submitSignUpForm, attemptSignUp}
   from './LogInPageActions'
 
 export const LOG_IN_PAGE = 'LOG_IN_PAGE'
@@ -19,7 +19,8 @@ class LogInPage extends Component {
       onPickedShopsChange,
       onSubmitSignUp,
       selectedShops,
-      hasAttemptedSubmission
+      hasAttemptedSubmission,
+      invalidEmailFromServer
     } = this.props
     return (
       <LogInPageComponent
@@ -32,6 +33,7 @@ class LogInPage extends Component {
         onSubmitSignUp={onSubmitSignUp}
         selectedShops={selectedShops}
         hasAttemptedSubmission={hasAttemptedSubmission}
+        invalidEmailFromServer={invalidEmailFromServer}
       />
     )
   }
@@ -43,7 +45,8 @@ const mapStateToProps = (state, ownProps) => {
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
     selectedShops: state.signup.selectedShops,
-    hasAttemptedSubmission: state.signup.hasAttemptedSubmission
+    hasAttemptedSubmission: state.signup.hasAttemptedSubmission,
+    invalidEmailFromServer: state.signup.invalidEmailFromServer
   }
 }
 
