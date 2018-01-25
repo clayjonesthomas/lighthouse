@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
 import {onSaveSettingsRef} from './SettingsPageActions'
+import UserNavBar from '../UserNavBar/UserNavBar'
 import SettingsPage from './SettingsPage'
 
 class SettingsPageHandler extends Component {
@@ -10,9 +11,12 @@ class SettingsPageHandler extends Component {
     const {
     } = this.props
     return (
-      <SettingsPage
-        onSaveCheckboxRef={this.props.onSaveCheckboxRef}
-      />
+      <div id="main-page-container">
+        <UserNavBar/>
+        <SettingsPage
+          onSaveCheckboxRef={this.props.onSaveCheckboxRef}
+        />
+      </div>
     )
   }
 }

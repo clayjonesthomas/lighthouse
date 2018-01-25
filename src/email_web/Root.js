@@ -9,6 +9,7 @@ import reducers from './reducer'
 import Container from './Container'
 
 import {LANDING_PAGE, SIGN_UP_PAGE} from './Container'
+import SettingsPageHandler from './components/SettingsPage/SettingsPageHandler'
 
 
 const router = routerMiddleware(browserHistory)
@@ -27,6 +28,7 @@ const Root = () => (
       <Route path="/">
         <IndexRoute component={ContainerAtLandingPage}/>
         <Route path="/signup" component={ContainerAtSignUpPage}/>
+        <Route path="/settings" component={SettingsPageHandler}/>
       </Route>
     </Router>
   </Provider>
