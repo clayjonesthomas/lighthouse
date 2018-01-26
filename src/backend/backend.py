@@ -702,17 +702,18 @@ class LoginHandler(BaseHandler):
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
                         'email': self.user.email,
+                        'isVerified': True,
                         'isModerator': self.user.is_moderator
                     }))
                 else:
                     logging.info('Login failed for user %s because they reset their password', email)
-                    self.response.write(json.dumps({'error': 'PASSWORD_RESET'}))
+                    self.response.write(json.dumps({'error': 'PASSWORD_RESET_ERROR'}))
             else:
                 # this still logs the user in
                 logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
                     'email': self.user.email,
-                    'error': 'UNVERIFIED',
+                    'isVerified': False,
                     'isModerator': self.user.is_moderator
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:

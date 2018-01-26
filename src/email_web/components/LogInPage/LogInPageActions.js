@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import {LOG_IN_URL} from '../../urls'
-import {validateEmail, validatePassword} from './LogInPageComponent'
+import {validateEmail} from './LogInPageComponent'
 
 export const LOG_IN_EMAIL_CHANGE = 'LOG_IN_EMAIL_CHANGE'
 export const LOG_IN_PASSWORD_CHANGE = 'LOG_IN_PASSWORD_CHANGE'
@@ -8,6 +8,10 @@ export const ATTEMPT_LOG_IN = 'ATTEMPT_LOG_IN'
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
 export const LOG_IN_RESPONSE = 'LOG_IN_RESPONSE'
 export const LOG_IN_RESPONSE_FAILED = 'LOG_IN_RESPONSE_FAILED'
+
+export const UNVERIFIED_ERROR = 'UNVERIFIED_ERROR'
+export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR'
+export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 
 export const emailChange = (value) => {
   return {
@@ -36,15 +40,21 @@ export const logInRequest = () => {
   }
 }
 
-export const logInResponse = () => {
+export const logInResponse = (json) => {
   return {
-    type: LOG_IN_RESPONSE
+    type: LOG_IN_RESPONSE,
+    data: {
+      email: json.email,
+      isVerified: json.isVerified,
+      isModerator: json.isModerator
+    }
   }
 }
 
-export const logInResponseFailed = () => {
+export const logInResponseFailed = (error) => {
   return {
-    type: LOG_IN_RESPONSE_FAILED
+    type: LOG_IN_RESPONSE_FAILED,
+    data: error
   }
 }
 
@@ -81,6 +91,6 @@ function _submitLogInForm(dispatch, getState) {
       if (json.email)
         dispatch(logInResponse(json))
       else
-        dispatch(logInResponseFailed())
+        dispatch(logInResponseFailed(json.error))
     })
 }
