@@ -7,11 +7,19 @@ import "../LandingPage/LandingPageComponent.css"
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-function validateEmail(emailValue, hasAttemptedSubmission) {
+export function validateEmail(emailValue,
+                              hasAttemptedSubmission) {
   if (hasAttemptedSubmission) {
     if (!emailRegex.test(emailValue)) {
       return 'error'
     }
+  }
+  return null
+}
+
+export function validateEmailPass(invalidEmailPass) {
+  if (invalidEmailPass) {
+    return 'error'
   }
   return null
 }
@@ -43,6 +51,7 @@ const LogInPageComponent = ({
       <FormGroup
         validationState={
           validateEmail(emailValue, hasAttemptedSubmission)
+          || validateEmailPass(invalidEmailPass)
         }
         className="email-box"
       >
@@ -53,11 +62,16 @@ const LogInPageComponent = ({
           onChange={handleEmailChange}
           placeholder="Email"
         />
-        <p className="email-error">
-          Please input a valid email.
-        </p>
+        {
+          validateEmail(emailValue, hasAttemptedSubmission) &&
+          <p className="email-error">
+            Please input a valid email.
+          </p>
+        }
       </FormGroup>
-      <FormGroup>
+      <FormGroup
+        validationState={validateEmailPass(invalidEmailPass)}
+      >
         <FormControl
           className="form-box"
           type="text"
@@ -65,6 +79,12 @@ const LogInPageComponent = ({
           onChange={handlePasswordChange}
           placeholder="Password"
         />
+        {
+          <p className="password-error">
+            The email-password combination you gave isn't right.
+            &nbsp;<a>Recover your password?</a>
+          </p>
+        }
       </FormGroup>
       <input
         type="submit"

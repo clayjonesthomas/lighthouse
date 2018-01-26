@@ -5,8 +5,7 @@ import {push} from 'react-router-redux'
 import {SIGN_UP_PAGE_URL} from '../../urls'
 
 import LogInPageComponent from './LogInPageComponent'
-import {emailChange, passwordChange, submitLogInForm,
-  attemptLogIn}
+import {emailChange, passwordChange, submitLogInForm}
   from './LogInPageActions'
 
 export const LOG_IN_PAGE = 'LOG_IN_PAGE'
