@@ -39,7 +39,8 @@ const SignUpPageComponent = ({
                                onSubmitSignUp,
                                selectedShops,
                                hasAttemptedSubmission,
-                               invalidEmailFromServer
+                               invalidEmailFromServer,
+                               goToLogIn
                              }) => (
   <form
     id="sign-up-form"
@@ -50,7 +51,7 @@ const SignUpPageComponent = ({
         Sign Up
       </h1>
       <p className="helper-text">
-        Already have an account? <a>Sign in</a>
+        Already have an account? <a onClick={goToLogIn}>Sign in</a>
       </p>
       <ShopPicker
         className="shop-picker-box"

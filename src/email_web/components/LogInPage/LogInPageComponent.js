@@ -74,7 +74,7 @@ const LogInPageComponent = ({
       >
         <FormControl
           className="form-box"
-          type="text"
+          type="password"
           value={passwordValue}
           onChange={handlePasswordChange}
           placeholder="Password"

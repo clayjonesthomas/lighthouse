@@ -5,6 +5,8 @@ import {SIGN_UP_EMAIL_CHANGE, SIGN_UP_PASSWORD_CHANGE,
 import {ALL_SHOPS_RESPONSE}
   from '../../services/ShopDataActions'
 
+import {LOCATION_CHANGE} from 'react-router-redux'
+
 export function allShops(state = [], action) {
   switch (action.type) {
     case ALL_SHOPS_RESPONSE:
@@ -55,6 +57,8 @@ export function signup(state = defaultSignUpState, action) {
         submitSpinner: false,
         invalidEmailFromServer: action.data
       })
+    case LOCATION_CHANGE:
+      return defaultSignUpState
     default:
       return state
   }

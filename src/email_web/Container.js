@@ -6,7 +6,7 @@ import NavBar from './components/NavBar/NavBar'
 import FrontPage from './components/FrontPage/FrontPage'
 import LogInPage from './components/LogInPage/LogInPage'
 
-import {SIGN_UP_PAGE_URL} from './urls'
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -18,12 +18,14 @@ class Container extends Component {
   render() {
     const {
       page,
-      goToSignUp
+      goToSignUp,
+      goToLogIn
     } = this.props
     return (
       <div id="container">
         <NavBar
           onClickSignUp={goToSignUp}
+          onClickLogIn={goToLogIn}
         />
         {(page === LANDING_PAGE || page === SIGN_UP_PAGE) &&
           <FrontPage
@@ -46,9 +48,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    goToSignUp: () => {
-      dispatch(push(SIGN_UP_PAGE_URL))
-    }
+    goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
+    goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL))
   }
 }
 

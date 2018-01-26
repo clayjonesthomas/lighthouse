@@ -701,7 +701,7 @@ class LoginHandler(BaseHandler):
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
-                        'email': self.user.email,
+                        'email': self.user.email_address,
                         'isVerified': True,
                         'isModerator': self.user.is_moderator
                     }))
@@ -712,7 +712,7 @@ class LoginHandler(BaseHandler):
                 # this still logs the user in
                 logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
-                    'email': self.user.email,
+                    'email': self.user.email_address,
                     'isVerified': False,
                     'isModerator': self.user.is_moderator
                 }))

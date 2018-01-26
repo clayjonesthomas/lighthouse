@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 
 import SignUpPageComponent from './SignUpPageComponent'
 import {emailChange, passwordChange, pickedShopsChange,
   submitSignUpForm}
   from './SignUpPageActions'
+import {LOG_IN_PAGE_URL} from '../../urls'
 
 export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
 
@@ -20,7 +22,8 @@ class SignUpPage extends Component {
       onSubmitSignUp,
       selectedShops,
       hasAttemptedSubmission,
-      invalidEmailFromServer
+      invalidEmailFromServer,
+      goToLogIn
     } = this.props
     return (
       <SignUpPageComponent
@@ -34,6 +37,7 @@ class SignUpPage extends Component {
         selectedShops={selectedShops}
         hasAttemptedSubmission={hasAttemptedSubmission}
         invalidEmailFromServer={invalidEmailFromServer}
+        goToLogIn={goToLogIn}
       />
     )
   }
@@ -58,7 +62,8 @@ const mapDispatchToProps = (dispatch) => {
     onSubmitSignUp: (e) => {
       e.preventDefault()
       dispatch(submitSignUpForm())
-    }
+    },
+    goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL))
   }
 }
 
