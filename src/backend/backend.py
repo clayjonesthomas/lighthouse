@@ -546,7 +546,7 @@ class SignupHandler(BaseHandler):
         email = body['email']
         password = body['password']
         shops = body['selectedShops']
-        is_password_valid = len(password) > 6
+        is_password_valid = len(password) >= 6
         # won't work because of unsupported GAE modules
         # is_email_valid = validate_email(email, verify=True)
         is_email_valid = bool(re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email))
