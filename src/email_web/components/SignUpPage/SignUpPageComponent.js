@@ -8,14 +8,21 @@ import "../LandingPage/LandingPageComponent.css"
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-function validateEmail(emailValue, hasAttemptedSubmission) {
-  if (hasAttemptedSubmission)
-    if (!emailRegex.test(emailValue))
+export function validateEmail(emailValue,
+                              hasAttemptedSubmission,
+                              invalidEmailFromServer) {
+  if (hasAttemptedSubmission) {
+    if (!emailRegex.test(emailValue)) {
       return 'error'
-  return null
+    }
+    if (invalidEmailFromServer === emailValue)
+      return 'error'
+    return null
+  }
 }
 
-function validatePassword(passwordValue, hasAttemptedSubmission) {
+export function validatePassword(passwordValue,
+                                 hasAttemptedSubmission) {
   if (hasAttemptedSubmission)
     if (passwordValue.length < 6)
       return 'error'
@@ -31,7 +38,8 @@ const SignUpPageComponent = ({
                                onPickedShopsChange,
                                onSubmitSignUp,
                                selectedShops,
-                               hasAttemptedSubmission
+                               hasAttemptedSubmission,
+                               invalidEmailFromServer
                              }) => (
   <form
     id="sign-up-form"
@@ -58,7 +66,8 @@ const SignUpPageComponent = ({
       </HelpBlock>
       <FormGroup
         validationState={
-          validateEmail(emailValue, hasAttemptedSubmission)
+          validateEmail(emailValue, hasAttemptedSubmission,
+            invalidEmailFromServer)
         }
         className="email-box"
       >
@@ -70,9 +79,19 @@ const SignUpPageComponent = ({
           onChange={handleEmailChange}
           placeholder="Email"
         />
-        <p className="email-error">
-          Please input a valid email.
-        </p>
+        {
+          validateEmail(emailValue, hasAttemptedSubmission, false) &&
+          <p className="email-error">
+            Please input a valid email.
+          </p>
+        }
+        {
+          invalidEmailFromServer === emailValue &&
+          <p className="email-error">
+            The email address you have chosen is already in use.
+            Please <a>log in</a> or use a different email.
+          </p>
+        }
       </FormGroup>
       <FormGroup
         validationState={
@@ -82,7 +101,7 @@ const SignUpPageComponent = ({
         <FormControl
           tabIndex={shouldDisplay ? 0 : -1}
           className="form-box"
-          type="text"
+          type="password"
           value={passwordValue}
           onChange={handlePasswordChange}
           placeholder="Password"
@@ -96,6 +115,7 @@ const SignUpPageComponent = ({
         type="submit"
         value="TRY IT OUT"
         className="submit-button form-button"
+        id="form-button"
       />
     </div>
   </form>

@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
+
+import {SIGN_UP_PAGE_URL} from '../../urls'
 
 import LogInPageComponent from './LogInPageComponent'
-import {emailChange, passwordChange, pickedShopsChange,
-  submitSignUpForm, attemptSignUp}
+import {emailChange, passwordChange, submitLogInForm,
+  attemptLogIn}
   from './LogInPageActions'
 
 export const LOG_IN_PAGE = 'LOG_IN_PAGE'
@@ -11,42 +14,36 @@ export const LOG_IN_PAGE = 'LOG_IN_PAGE'
 class LogInPage extends Component {
   render() {
     const {
-      shouldDisplay,
       handleEmailChange,
       handlePasswordChange,
       emailValue,
       passwordValue,
-      onPickedShopsChange,
-      onSubmitSignUp,
-      selectedShops,
+      onSubmitLogIn,
       hasAttemptedSubmission,
-      invalidEmailFromServer
+      invalidEmailPass,
+      onGoToSignUp
     } = this.props
     return (
       <LogInPageComponent
-        shouldDisplay={shouldDisplay}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
         emailValue={emailValue}
         passwordValue={passwordValue}
-        onPickedShopsChange={onPickedShopsChange}
-        onSubmitSignUp={onSubmitSignUp}
-        selectedShops={selectedShops}
+        onSubmitLogIn={onSubmitLogIn}
         hasAttemptedSubmission={hasAttemptedSubmission}
-        invalidEmailFromServer={invalidEmailFromServer}
+        invalidEmailPass={invalidEmailPass}
+        onGoToSignUp={onGoToSignUp}
       />
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    shouldDisplay: ownProps.shouldDisplay,
-    emailValue: state.signup.email,
-    passwordValue: state.signup.password,
-    selectedShops: state.signup.selectedShops,
-    hasAttemptedSubmission: state.signup.hasAttemptedSubmission,
-    invalidEmailFromServer: state.signup.invalidEmailFromServer
+    emailValue: state.login.email,
+    passwordValue: state.login.password,
+    hasAttemptedSubmission: state.login.hasAttemptedSubmission,
+    invalidEmailPass: state.login.invalidEmailPass
   }
 }
 
@@ -54,11 +51,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleEmailChange: (e) => dispatch(emailChange(e.target.value)),
     handlePasswordChange: (e) => dispatch(passwordChange(e.target.value)),
-    onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
-    onSubmitSignUp: (e) => {
+    onSubmitLogIn: (e) => {
       e.preventDefault()
-      dispatch(submitSignUpForm())
-    }
+      dispatch(submitLogInForm())
+    },
+    onGoToSignUp: () => {dispatch(push(SIGN_UP_PAGE_URL))}
   }
 }
 

@@ -5,7 +5,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {routerMiddleware, syncHistoryWithStore} from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 
-import reducers from './reducers/index'
+import reducers from './reducer'
 import Container from './Container'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'

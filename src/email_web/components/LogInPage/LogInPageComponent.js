@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
+import {FormGroup, FormControl} from 'react-bootstrap'
 
 import "./LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
@@ -8,16 +8,11 @@ import "../LandingPage/LandingPageComponent.css"
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 function validateEmail(emailValue, hasAttemptedSubmission) {
-  if (hasAttemptedSubmission)
-    if (!emailRegex.test(emailValue))
+  if (hasAttemptedSubmission) {
+    if (!emailRegex.test(emailValue)) {
       return 'error'
-  return null
-}
-
-function validatePassword(passwordValue, hasAttemptedSubmission) {
-  if (hasAttemptedSubmission)
-    if (passwordValue.length < 6)
-      return 'error'
+    }
+  }
   return null
 }
 
@@ -26,14 +21,14 @@ const LogInPageComponent = ({
                               handlePasswordChange,
                               emailValue,
                               passwordValue,
-                              onPickedShopsChange,
-                              onSubmitSignUp,
-                              selectedShops,
-                              hasAttemptedSubmission
+                              onSubmitLogIn,
+                              hasAttemptedSubmission,
+                              invalidEmailPass,
+                              onGoToSignUp
                             }) => (
   <form
     className="auth-form"
-    onSubmit={onSubmitSignUp}>
+    onSubmit={onSubmitLogIn}>
     <div
       className="form-wrapper"
       id="log-in-form-wrapper">
@@ -43,7 +38,7 @@ const LogInPageComponent = ({
       <p
         className="helper-text"
         id="log-in-helper-text">
-        Don't have an account? <a>Sign Up</a>
+        Don't have an account? <a onClick={onGoToSignUp}>Sign Up</a>
       </p>
       <FormGroup
         validationState={
@@ -62,11 +57,7 @@ const LogInPageComponent = ({
           Please input a valid email.
         </p>
       </FormGroup>
-      <FormGroup
-        validationState={
-          validatePassword(passwordValue, hasAttemptedSubmission)
-        }
-      >
+      <FormGroup>
         <FormControl
           className="form-box"
           type="text"
@@ -74,9 +65,6 @@ const LogInPageComponent = ({
           onChange={handlePasswordChange}
           placeholder="Password"
         />
-        <p className="password-error">
-          Your password must be at least 6 characters long.
-        </p>
       </FormGroup>
       <input
         type="submit"

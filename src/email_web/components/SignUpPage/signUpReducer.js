@@ -1,9 +1,9 @@
-import {SIGNUP_EMAIL_CHANGE, SIGNUP_PASSWORD_CHANGE,
+import {SIGN_UP_EMAIL_CHANGE, SIGN_UP_PASSWORD_CHANGE,
   PICKED_SHOPS_CHANGE, SIGN_UP_REQUEST, SIGN_UP_RESPONSE,
-  SIGN_UP_RESPONSE_FAILED, ATTEMPT_SIGN_UP} from '../components/SignUpPage/SignUpPageActions'
+  SIGN_UP_RESPONSE_FAILED, ATTEMPT_SIGN_UP} from './SignUpPageActions'
 
 import {ALL_SHOPS_RESPONSE}
-  from '../services/ShopDataActions'
+  from '../../services/ShopDataActions'
 
 export function allShops(state = [], action) {
   switch (action.type) {
@@ -25,11 +25,11 @@ const defaultSignUpState = {
 
 export function signup(state = defaultSignUpState, action) {
   switch (action.type) {
-    case SIGNUP_EMAIL_CHANGE:
+    case SIGN_UP_EMAIL_CHANGE:
       return Object.assign({}, state, {
         email: action.data
       })
-    case SIGNUP_PASSWORD_CHANGE:
+    case SIGN_UP_PASSWORD_CHANGE:
       return Object.assign({}, state, {
         password: action.data
       })

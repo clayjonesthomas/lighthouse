@@ -3,24 +3,24 @@ import {SIGN_UP_URL} from '../../urls'
 
 import {validateEmail, validatePassword} from './SignUpPageComponent'
 
-export const SIGNUP_EMAIL_CHANGE = 'SIGNUP_EMAIL_CHANGE'
-export const SIGNUP_PASSWORD_CHANGE = 'SIGNUP_PASSWORD_CHANGE'
+export const SIGN_UP_EMAIL_CHANGE = 'SIGN_UP_EMAIL_CHANGE'
+export const SIGN_UP_PASSWORD_CHANGE = 'SIGN_UP_PASSWORD_CHANGE'
 export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
 export const ATTEMPT_SIGN_UP = 'ATTEMPT_SIGN_UP'
-export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
-export const SIGN_UP_RESPONSE = 'SIGN_UP_RESPONSE'
-export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
+export const SIGN_UP_REQUEST = 'LOG_IN_REQUEST'
+export const SIGN_UP_RESPONSE = 'LOG_IN_RESPONSE'
+export const SIGN_UP_RESPONSE_FAILED = 'LOG_IN_RESPONSE_FAILED'
 
 export const emailChange = (value) => {
   return {
-    type: SIGNUP_EMAIL_CHANGE,
+    type: SIGN_UP_EMAIL_CHANGE,
     data: value
   }
 }
 
 export const passwordChange = (value) => {
   return {
-    type: SIGNUP_PASSWORD_CHANGE,
+    type: SIGN_UP_PASSWORD_CHANGE,
     data: value
   }
 }
