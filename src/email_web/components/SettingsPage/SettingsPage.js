@@ -13,6 +13,7 @@ const SettingsPage = ({
     <h1 id="form-title">
       Settings
     </h1>
+    <hr className="settings-section-break"/>
     <FormGroup>
       <div className="settings-section">
         <h2 className="section-title">Update Your Shops</h2>
