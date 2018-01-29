@@ -4,25 +4,22 @@
     margin-top: 80px;
 }
 
-#form-title {
-    margin-left: 30px;
+#settings-form-title {
+    font-family: 'Roboto', sans-serif;
+    margin-left: 50px;
+    margin-top: 100px;
 }
 
 .settings-section {
     overflow: auto;
-    margin: 0px 30px;
-    margin-bottom: 25px;
+    margin: 30px;
+    margin-left: 50px;
 }
 
 .section-title {
     font-family: 'Roboto', sans-serif; 
     margin-top: 10px;
     font-size: 25px;
-}
-
-.settings-section-break {
-    max-width: 420px;
-    margin: 15px 20px;
 }
 
 .shop-picker-search {
@@ -34,11 +31,15 @@
     max-width: 400px;
 }
 
-
 .shop-picker-search > span > div > div{
     width: 100%;
 }
 
 .radio > label {
     padding-left: 21px;
+}
+
+#settings-form-button {
+    margin-top: 10px;
+    margin-left: 50px;
 }

@@ -6,14 +6,17 @@ import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
 
 import "./SettingsPage.css"
 
+export const HIGH_FREQUENCY_EMAIL = 'HIGH_FREQUENCY_EMAIL'
+export const MID_FREQUENCY_EMAIL = 'MID_FREQUENCY_EMAIL'
+export const UNSUBSCRIBE_EMAIL = 'UNSUBSCRIBE_EMAIL'
+
 const SettingsPage = ({
-  onSaveRadioRef
+  handleEmailFrequencyChange
 }) => (
   <form id="update-settings-form">
-    <h1 id="form-title">
+    <h1 id="settings-form-title">
       Settings
     </h1>
-    <hr className="settings-section-break"/>
     <FormGroup>
       <div className="settings-section">
         <h2 className="section-title">Update Your Shops</h2>
@@ -23,16 +26,15 @@ const SettingsPage = ({
         />
       </div>
     </FormGroup>
-    <hr className="settings-section-break"/>
-    <FormGroup>
+    <FormGroup
+      onClick={handleEmailFrequencyChange /*switch to onChange once this bug is resolved https://github.com/facebook/react/issues/10168*/}>
       <div className="settings-section">
         <h2 className="section-title">Email Preferences</h2>
-        <Radio name="emailOptions">High frequency - daily email with all your sales</Radio>
-        <Radio name="emailOptions" defaultChecked>Standard frequency - important sales only</Radio>
-        <Radio name="emailOptions">Unsubscribe me from all emails</Radio>
+        <Radio name="emailOptions" value="HIGH_FREQUENCY_EMAIL">High frequency - daily email with all your sales</Radio>
+        <Radio name="emailOptions" value="MID_FREQUENCY_EMAIL" defaultChecked>Standard frequency - important sales only</Radio>
+        <Radio name="emailOptions" value="UNSUBSCRIBE_EMAIL">Unsubscribe me from all emails</Radio>
       </div>
     </FormGroup>
-    <hr className="settings-section-break"/>
     <input
       type="submit"
       value="SAVE CHANGES"

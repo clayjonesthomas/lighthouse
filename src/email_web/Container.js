@@ -17,12 +17,16 @@ class Container extends Component {
   render() {
     const {
       goToSignUp,
+      goToSettings,
+      logout,
       page
     } = this.props
     return (
       <div id="main-page-container">
         <NavBar
           onClickSignUp={goToSignUp}
+          onClickSettings={goToSettings}
+          onClickLogout={logout}
         />
         <div id="contents-container" ref="contents">
           {
@@ -60,6 +64,12 @@ const mapDispatchToProps = (dispatch) => {
       setTimeout(() =>
           dispatch(push(SIGN_UP_PAGE_URL)),
         timeOutDuration)
+    },
+    goToSettings: () => {
+      dispatch() //TODO in backend pr
+    },
+    logout: () => {
+      dispatch() //TODO in backend pr
     }
   }
 }
