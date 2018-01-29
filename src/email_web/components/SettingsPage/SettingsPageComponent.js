@@ -11,6 +11,8 @@ export const MID_FREQUENCY_EMAIL = 'MID_FREQUENCY_EMAIL'
 export const UNSUBSCRIBE_EMAIL = 'UNSUBSCRIBE_EMAIL'
 
 const SettingsPageComponent = ({
+  selectedShops,
+  onPickedShopsChange,
   handleEmailFrequencyChange
 }) => (
   <form id="update-settings-form">
@@ -22,7 +24,10 @@ const SettingsPageComponent = ({
         <h2 className="section-title">Update Your Shops</h2>
         <ShopPicker
           className="shop-picker-box"
+          tabIndex={-1 /*TODO what do here*/}
           isSetupMode={false}
+          selectedShops={selectedShops || []}
+          onPickedShopsChange={onPickedShopsChange}
         />
       </div>
     </FormGroup>
