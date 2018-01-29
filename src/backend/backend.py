@@ -23,7 +23,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
-from email import send_emails
+from email import send_emails, send_verification_email
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -477,7 +477,7 @@ class LikeShops(BaseHandler):
 
         original_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_stores]
         for original_liked_shop in original_liked_shops:
-            if original_liked_shop not in selected_shops: #they no longer want this shop included in their liked shops
+            if original_liked_shop not in selected_shops:  # they no longer want this shop included in their liked shops
                 user.liked_stores.remove(original_liked_shop.key)
                 original_liked_shop.likes -= 1
                 original_liked_shop.put()
@@ -533,7 +533,7 @@ class EditShop(BaseHandler):
         body = json.loads(self.request.body)
 
         if user and user.is_moderator:
-            shop_key=body['key']
+            shop_key = body['key']
             shop = ndb.Key(urlsafe=shop_key).get()
             shop.name = body['name']
             shop.website = body['website']
@@ -542,98 +542,51 @@ class EditShop(BaseHandler):
             self.response.write(json.dumps({'key': shop_key}))
 
 
-class AddIconToShop(BaseHandler):
-    '''
-    under severe construction, don't use unless you
-    figure out what is going on with python
-    gcs
-    '''
-    def get(self, url_key):
-        blob_key = ndb.key(urlsafe=url_key)
-        img = images.Image(blob_key=blob_key)
-        img.resize(width=64, height=64)
-        img.execute_transforms(output_encoding=images.JPEG)
-
-        self.response.headers['Content-Type'] = 'image/jpeg'
-        self.response.out.write(img)
-
-    def post(self, url_key):
-        user = self.user
-        if user and user.is_moderator:
-            icon = self.request.get('icon')
-            # storage_client = gcs.Client()
-            # bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
-            # blob = bucket.blob(url_key)  # url_key used here as the filename
-            #
-            # blob.upload_from_string(
-            #     icon,
-            #     content_type='image/jpeg'
-            # )
-            #
-            # shop = ndb.Key(urlsafe=url_key)
-            # shop.icon_url = blob.public_url
-            # shop_key = shop.put()
-            gcs.blob
-            file = gcs.open(
-                url_key,
-                'w',
-                content_type='image/jpeg'
-            )
-            file.write(icon)
-            file.close()
-            self.response.write(json.dumps({'key': url_key}))
-
-
-class ShopUrl(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-    """
-        under severe construction, don't use unless you
-        figure out what the fuck is going on with python
-        gcs
-    """
-    def get(self):
-        upload_url = blobstore.create_upload_url('/upload_photo')
-        self.response.write(json.dumps({'upload_url': upload_url}))
-
-
 class SignupHandler(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        user_name = body['username']
         email = body['email']
         password = body['password']
-
-        is_username_present = len(user_name) > 0
-        is_email_present = len(email) > 0
-        is_password_present = len(password) > 0
+        shops = body['selectedShops']
+        is_password_valid = len(password) >= 6
         # won't work because of unsupported GAE modules
         # is_email_valid = validate_email(email, verify=True)
-        is_email_valid = re.match(r"[^@]+@[^@]+\.[^@]+", email)
-        if (not is_username_present or not is_email_present
-                or not is_password_present or not is_email_valid):
+        is_email_valid = bool(re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email))
+        are_shops_valid = True
+        for shop in shops:
+            try:
+                ndb.Key(urlsafe=shop['key']).get()
+            except (KeyError, AttributeError):
+                are_shops_valid = False
+
+        if (not is_password_valid or not is_email_valid
+                or not are_shops_valid):
             self.response.write(json.dumps({
                 'error': 'VALIDATION_ERROR',
-                'isUsernamePresent': is_username_present,
-                'isEmailPresent': is_email_present,
-                'isPasswordPresent': is_password_present,
-                'isEmailValid': is_email_valid
+                'isEmailValid': is_email_valid,
+                'isPasswordValid': is_password_valid,
+                'areShopsValid': are_shops_valid
             }))
             return
 
-        unique_properties = ['email_address']  # username is automatically unique, we don't need it here too
+        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in shops]
+        unique_properties = ['email_address']
         is_moderator = False
-        if user_name == 'admin':  # so, so bad
+        if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
-        user_data = self.user_model.create_user(user_name,
+        user_data = self.user_model.create_user(email,
                                                 unique_properties,
                                                 email_address=email,
                                                 password_raw=password,
                                                 verified=False,
-                                                is_moderator=is_moderator)
+                                                is_moderator=is_moderator,
+                                                using_email_service=True,
+                                                liked_stores=shop_keys)
         if not user_data[0]:  # user_data is a tuple
-            logging.info('Unable to create user for username %s because of '
-                         'duplicate keys %s' % (user_name, user_data[1]))
-            self.response.write(json.dumps({'error': 'DUPLICATE_USERNAME'}))
+            logging.info('Unable to create user for email %s because of '
+                         'duplicate keys %s' % (email, user_data[1]))
+            self.response.write(json.dumps({'invalidEmail': email}))
             return
 
         user = user_data[1]
@@ -642,11 +595,11 @@ class SignupHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
+        send_verification_email(email, verification_url)
+        logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        # I'm sorry rivest
-        # self.response.write(verification_url)
-        self.response.write(json.dumps({'username': user.username}))
+        self.response.write(json.dumps({'email': user.email_address}))
 
 
 class ForgotPasswordHandler(BaseHandler):
@@ -701,6 +654,7 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
+            self.redirect(self.uri_for('verification_success'))
             return
         else:
             logging.info('verification type not supported')
@@ -738,47 +692,37 @@ class VerificationHandler(BaseHandler):
             logging.info('verification type not supported')
             self.abort(404)
 
-
 class LoginHandler(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        username = body['username']
+        email = body['email']
         password = body['password']
 
-        is_username_present = len(username) > 0
-        is_password_present = len(password) > 0
-        if not is_username_present or not is_password_present:
-            self.response.write(json.dumps({
-                'error': 'VALIDATION_ERROR',
-                'isUsernamePresent': is_username_present,
-                'isPasswordPresent': is_password_present,
-            }))
-            return
-
         try:
-            user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
+            user_dict = self.auth.get_user_by_password(email, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
 
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
-                        'username': self.user.username,
+                        'email': self.user.email_address,
+                        'isVerified': True,
                         'isModerator': self.user.is_moderator
                     }))
                 else:
-                    logging.info('Login failed for user %s because they reset their password', username)
-                    self.response.write(json.dumps({'error': 'PASSWORD_RESET'}))
+                    logging.info('Login failed for user %s because they reset their password', email)
+                    self.response.write(json.dumps({'error': 'PASSWORD_RESET_ERROR'}))
             else:
                 # this still logs the user in
-                logging.info('Login failed for user %s because they are unverified', username)
+                logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
-                    'username': self.user.username,
-                    'error': 'UNVERIFIED',
+                    'email': self.user.email_address,
+                    'isVerified': False,
                     'isModerator': self.user.is_moderator
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
-            logging.info('Login failed for user %s because of %s', username, type(e))
+            logging.info('Login failed for user %s because of %s', email, type(e))
             self.response.write(json.dumps({'error': 'AUTHENTICATION_ERROR'}))
 
     def get(self):
@@ -862,7 +806,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
-
+    webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

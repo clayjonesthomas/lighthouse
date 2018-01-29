@@ -1,6 +1,8 @@
 import webapp2_extras.appengine.auth.models
 
 from google.appengine.ext import ndb
+from google.appengine.api import mail
+
 from models import Store, Post, User, PostsEmail
 
 
@@ -147,4 +149,32 @@ def _generate_important_post_tile(post):
 def _generate_unimportant_post_line(post):
     store = post.shop_key.get()
     return("<div class='other-sale'><a href='" + store.website + "'>" + store.name + "</a> - " + post.title + "</div>")
+
+
+def send_verification_email(email, verification_url):
+    body = """
+    <html>
+      <body style="font-family: 'Century Gothic', sans-serif;">
+        <table style="width: 100%;">
+          <tr>
+            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;background-color: #F0F0F0;padding: 10px;">
+              <p>Welcome to <a class="no-link-text" style="font-weight: normal;">lightho.us</a>! To complete the sign up process, please confirm your email here:
+              <div class="verify-button" style="text-align: center;">
+                <a href="
+                """
+    body += verification_url
+    body += """
+                " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">VERIFY EMAIL</a>
+              </div>
+              </p><p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>"""
+    
+    message = mail.EmailMessage(sender="michelle@lightho.us", subject='Welcome to lightho.us!')
+    message.to = email
+    message.html = body
+    message.send()
 

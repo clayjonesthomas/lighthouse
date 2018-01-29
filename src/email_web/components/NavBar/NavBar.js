@@ -3,6 +3,7 @@ import React from 'react'
 import "./NavBar.css"
 const NavBar = ({
                   onClickSignUp,
+                  onClickLogIn,
                   onClickSettings,
                   onClickLogout
                 }) => (
@@ -12,7 +13,7 @@ const NavBar = ({
         <div id="general-nav-bar"> 
           <span className="nav-bar-link" tabIndex="0">How It Works</span>
           <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
-          <span className="nav-bar-link" tabIndex="0">Log In</span>
+          <span className="nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</span>
         </div>
         :
         <div id="user-nav-bar">
@@ -20,7 +21,6 @@ const NavBar = ({
           <span className="nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</span>
         </div>
       }
-      
     </div>
   </div>
 )

@@ -3,47 +3,47 @@ import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
 import NavBar from './components/NavBar/NavBar'
-import LandingPageHandler from './components/LandingPage/LandingPageHandler'
-import SignUpPageHandler from './components/SignUpPage/SignUpPageHandler'
-import {goToSignUp} from './actions'
-import {SIGN_UP_PAGE_URL} from './urls'
+import FrontPage from './components/FrontPage/FrontPage'
+import LogInPage from './components/LogInPage/LogInPage'
+import SettingsPage from './components/SettingsPage/SettingsPage'
 
-export const SIGN_UP_PAGE = 'SIGN_UP_PAGE'
-export const LANDING_PAGE = 'LANDING_PAGE'
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL} from './urls'
+
+import {LANDING_PAGE} from './components/LandingPage/LandingPage'
+import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
+import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
+import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 import "./Container.css"
 class Container extends Component {
 
   render() {
     const {
+      page,
       goToSignUp,
+      goToLogIn,
       goToSettings,
-      logout,
-      page
+      logout
     } = this.props
     return (
-      <div id="main-page-container">
+      <div id="container">
         <NavBar
           onClickSignUp={goToSignUp}
+          onClickLogIn={goToLogIn}
           onClickSettings={goToSettings}
           onClickLogout={logout}
         />
-        <div id="contents-container" ref="contents">
-          {
-            <div className={page === LANDING_PAGE ? "landing-page-contents" :
-              "landing-page-contents landing-page-contents-hidden"}>
-              <LandingPageHandler/>
-            </div>
-          }
-          {
-            <div className={page === SIGN_UP_PAGE ? "sign-up-contents" :
-              "sign-up-contents sign-up-contents-hidden"}>
-              <SignUpPageHandler
-                shouldDisplay={page === SIGN_UP_PAGE}
-              />
-            </div>
-          }
-        </div>
+        {(page === LANDING_PAGE || page === SIGN_UP_PAGE) &&
+          <FrontPage
+            page={page}
+          />
+        }
+        {page === LOG_IN_PAGE &&
+          <LogInPage/>
+        }
+        {page === SETTINGS_PAGE &&
+          <SettingsPage/>
+        }
       </div>
     )
   }
@@ -51,23 +51,15 @@ class Container extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    page: state.switchToPage || ownProps.page
+    page: ownProps.page
   }
 }
 
-const timeOutDuration = 500
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    goToSignUp: () => {
-      dispatch(goToSignUp())
-      setTimeout(() =>
-          dispatch(push(SIGN_UP_PAGE_URL)),
-        timeOutDuration)
-    },
-    goToSettings: () => {
-      dispatch() //TODO in backend pr
-    },
+    goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
+    goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
+    goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logout: () => {
       dispatch() //TODO in backend pr
     }
