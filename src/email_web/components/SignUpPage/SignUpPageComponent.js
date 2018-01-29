@@ -51,7 +51,7 @@ const SignUpPageComponent = ({
         Sign Up
       </h1>
       <p className="helper-text">
-        Already have an account? <a onClick={goToLogIn}>Sign in</a>
+        Already have an account? <a onClick={goToLogIn}>Log in</a>
       </p>
       <ShopPicker
         className="shop-picker-box"

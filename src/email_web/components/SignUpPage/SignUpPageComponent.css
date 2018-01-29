@@ -18,6 +18,10 @@
     color: #585858;
 }
 
+.helper-text > a:hover {
+    cursor: pointer;
+}
+
 #store-helper-text {
     text-align: left;
     margin-bottom: 30px;
@@ -79,12 +83,12 @@
     border-width: 2px;
 }
 
-.email-error, .password-error{
+.email-error, .password-error {
     color: rgba(169, 68, 66, 0.74);
     display: none;
     text-align: left;
 }
 
-.has-error>.email-error, .has-error>.password-error{
+.has-error > .email-error, .has-error > .password-error {
     display: inherit;
 }
