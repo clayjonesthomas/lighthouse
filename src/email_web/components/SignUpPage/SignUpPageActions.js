@@ -1,10 +1,11 @@
 import fetch from 'isomorphic-fetch'
-import {SIGN_UP_URL} from '../../urls'
+import {push} from 'react-router-redux'
+import {SIGN_UP_URL, LANDING_PAGE_URL} from '../../urls'
 
-import {validateEmail, validatePassword} from './SignUpPage'
+import {validateEmail, validatePassword} from './SignUpPageComponent'
 
-export const SIGNUP_EMAIL_CHANGE = 'SIGNUP_EMAIL_CHANGE'
-export const SIGNUP_PASSWORD_CHANGE = 'SIGNUP_PASSWORD_CHANGE'
+export const SIGN_UP_EMAIL_CHANGE = 'SIGN_UP_EMAIL_CHANGE'
+export const SIGN_UP_PASSWORD_CHANGE = 'SIGN_UP_PASSWORD_CHANGE'
 export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
 export const ATTEMPT_SIGN_UP = 'ATTEMPT_SIGN_UP'
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
@@ -13,14 +14,14 @@ export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
 
 export const emailChange = (value) => {
   return {
-    type: SIGNUP_EMAIL_CHANGE,
+    type: SIGN_UP_EMAIL_CHANGE,
     data: value
   }
 }
 
 export const passwordChange = (value) => {
   return {
-    type: SIGNUP_PASSWORD_CHANGE,
+    type: SIGN_UP_PASSWORD_CHANGE,
     data: value
   }
 }
@@ -44,9 +45,14 @@ export const signUpRequest = () => {
   }
 }
 
-export const signUpResponse = () => {
+export const signUpResponse = (json) => {
   return {
-    type: SIGN_UP_RESPONSE
+    type: SIGN_UP_RESPONSE,
+    data: {
+      email: json.email,
+      isVerified: json.isVerified,
+      isModerator: json.isModerator
+    }
   }
 }
 
@@ -91,9 +97,10 @@ function _submitSignUpForm(dispatch, getState) {
   return fetch(SIGN_UP_URL, args)
     .then(response => response.json())
     .then(json => {
-      if (json.email)
+      if (json.email) {
         dispatch(signUpResponse(json))
-      else
+        dispatch(push(LANDING_PAGE_URL))
+      } else
         dispatch(signUpResponseFailed(json.invalidEmail))
     })
 }

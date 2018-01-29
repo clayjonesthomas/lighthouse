@@ -1,31 +1,46 @@
-import React from 'react'
-import LogoName from '../../ui-kit/LogoName/LogoName'
-import {smalt} from '../../ui-kit/colors'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 
-import "./LandingPage.css"
-const LandingPage = ({
-                       shouldDisplay,
-                       goToSignUp
-                     }) => (
-  <div id="landing-page-wrapper">
-    <div id="logo">
-      <LogoName
-        scale={2}
-        color={smalt}
+import LandingPageComponent from './LandingPageComponent'
+import {goToSignUp} from '../../services/NewUserActions'
+import {SIGN_UP_PAGE_URL} from '../../urls'
+
+export const LANDING_PAGE = 'LANDING_PAGE'
+
+class LandingPage extends Component {
+  
+  render () {
+    const {
+      goToSignUp
+    } = this.props
+    return (
+      <LandingPageComponent
+        goToSignUp={goToSignUp}
       />
-    </div>
-    <p id="landing-page-paragraph">
-      We keep track of the stores you love so you
-      don't have to, sending the best sales straight to
-      your inbox.
-    </p>
-    <input
-      type="button"
-      className='submit-button'
-      onClick={goToSignUp}
-      value="SIGN ME UP"
-    />
-  </div>
-)
+    )
+  }
+}
 
-export default LandingPage
+const mapStateToProps = () => {
+  return {}
+}
+
+const timeoutDuration = 500
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    goToSignUp: () => {
+      dispatch(goToSignUp())
+      setTimeout(() =>
+          dispatch(push(SIGN_UP_PAGE_URL)),
+        timeoutDuration)
+    }
+
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LandingPage)

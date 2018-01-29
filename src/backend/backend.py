@@ -549,7 +549,7 @@ class SignupHandler(BaseHandler):
         email = body['email']
         password = body['password']
         shops = body['selectedShops']
-        is_password_valid = len(password) > 6
+        is_password_valid = len(password) >= 6
         # won't work because of unsupported GAE modules
         # is_email_valid = validate_email(email, verify=True)
         is_email_valid = bool(re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email))
@@ -696,42 +696,33 @@ class LoginHandler(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        username = body['username']
+        email = body['email']
         password = body['password']
 
-        is_username_present = len(username) > 0
-        is_password_present = len(password) > 0
-        if not is_username_present or not is_password_present:
-            self.response.write(json.dumps({
-                'error': 'VALIDATION_ERROR',
-                'isUsernamePresent': is_username_present,
-                'isPasswordPresent': is_password_present,
-            }))
-            return
-
         try:
-            user_dict = self.auth.get_user_by_password(username, password, remember=True, save_session=True)
+            user_dict = self.auth.get_user_by_password(email, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
 
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
-                        'username': self.user.username,
+                        'email': self.user.email_address,
+                        'isVerified': True,
                         'isModerator': self.user.is_moderator
                     }))
                 else:
-                    logging.info('Login failed for user %s because they reset their password', username)
-                    self.response.write(json.dumps({'error': 'PASSWORD_RESET'}))
+                    logging.info('Login failed for user %s because they reset their password', email)
+                    self.response.write(json.dumps({'error': 'PASSWORD_RESET_ERROR'}))
             else:
                 # this still logs the user in
-                logging.info('Login failed for user %s because they are unverified', username)
+                logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
-                    'username': self.user.username,
-                    'error': 'UNVERIFIED',
+                    'email': self.user.email_address,
+                    'isVerified': False,
                     'isModerator': self.user.is_moderator
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
-            logging.info('Login failed for user %s because of %s', username, type(e))
+            logging.info('Login failed for user %s because of %s', email, type(e))
             self.response.write(json.dumps({'error': 'AUTHENTICATION_ERROR'}))
 
     def get(self):

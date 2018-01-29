@@ -4,7 +4,7 @@ html {
     height: 100%;
 }
 
-#main-page-container {
+#container {
     position: absolute;
     top: 0;
     left: 0;
@@ -19,7 +19,7 @@ html {
 }
 
 @media (max-width: 700px) {
-    #main-page-container {
+    #container {
         background-position: left;
         background-image: url("../static/smaller_picture_website_background.png");
     }
