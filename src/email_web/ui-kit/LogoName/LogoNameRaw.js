@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react'
 import './LogoName.css'
 const LogoName = ({
                     onClick,
-                    scale,
                     color
                   }) => (
   <div id="logo-name-wrapper">
@@ -42,8 +41,7 @@ const LogoName = ({
 )
 
 LogoName.propTypes = {
-  onClick: PropTypes.func,
-  scale: PropTypes.number.isRequired
+  onClick: PropTypes.func
 }
 
 export default LogoName
