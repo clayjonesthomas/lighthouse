@@ -32,7 +32,8 @@ const LogInPageComponent = ({
                               onSubmitLogIn,
                               hasAttemptedSubmission,
                               invalidEmailPass,
-                              onGoToSignUp
+                              onGoToSignUp,
+                              goToForgotPassword
                             }) => (
   <form
     className="auth-form"
@@ -91,6 +92,7 @@ const LogInPageComponent = ({
         value="LOG IN"
         className="submit-button form-button"
       />
+      <a onClick={goToForgotPassword}>Forgot Password</a>
     </div>
   </form>
 )

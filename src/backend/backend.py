@@ -604,22 +604,25 @@ class SignupHandler(BaseHandler):
 
 class ForgotPasswordHandler(BaseHandler):
     def post(self):
-        username = self.request.get('username')
+        import pdb; pdb.set_trace()
+        body = json.loads(self.request.body)
+        email = body['email']
 
-        user = self.user_model.get_by_auth_id(username)
+        user = self.user_model.get_by_auth_id(email)
         if not user:
-            logging.info('Could not find any user entry for username %s', username)
-            self.response.write('Could not find any user entry for username {}'.format(username))
+            logging.info('Could not find any user entry for email %s', email)
+            self.response.write(json.dumps({'error': 'NO_EMAIL_FOUND'}))
             return
 
         user_id = user.get_id()
         token = self.user_model.create_signup_token(user_id)
-        u = self.user_model.get_by_auth_id(username)
+        u = self.user_model.get_by_auth_id(email)
         u.toggle_login(enable=False)
         u.put()
         verification_url = self.uri_for('verification', type='p', user_id=user_id,
                                         signup_token=token, _full=True)
 
+        logging.info("verification url: " + verification_url)
         self.response.write(verification_url)
 
 
@@ -654,8 +657,16 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
-            self.redirect(self.uri_for('verification_success'))
+            self.redirect_to('verification_success')
             return
+        elif verification_type == 'p':
+            # supply user to the page
+            params = {
+                'user_id': user.key.id(),
+                'token': signup_token
+            }
+            self.response.write(json.dumps(params))
+            self.redirect_to('new_password_success')
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -691,6 +702,7 @@ class VerificationHandler(BaseHandler):
         else:
             logging.info('verification type not supported')
             self.abort(404)
+
 
 class LoginHandler(BaseHandler):
 
@@ -807,6 +819,7 @@ app = webapp2.WSGIApplication([
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
+    webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
