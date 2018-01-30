@@ -1,7 +1,5 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
-import {onUpdateFormShops} from 'scenes/NewPostPage/NewPostActions'
-import {addShopFinderRef} from 'scenes/MyShopsPage/MyShopsPageActions'
 import ShopPickerComponent from './ShopPickerComponent'
 
 import {pullMyShops, pullMyEmailFrequency, pullAllShops} 

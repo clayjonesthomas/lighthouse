@@ -2,10 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {emailFrequencyChange, submitSettingsForm} 
+import {emailFrequencyChange, pickedShopsChange, submitSettingsForm} 
   from './SettingsPageActions'
 import SettingsPageComponent from './SettingsPageComponent'
-import {pickedShopsChange} from '../SignUpPage/SignUpPageActions' //TODO contamination
 
 export const SETTINGS_PAGE = 'SETTINGS_PAGE'
 
