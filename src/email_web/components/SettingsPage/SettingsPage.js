@@ -15,6 +15,8 @@ class SettingsPage extends Component {
       selectedShops,
       emailFrequency,
       isSettingsUnchanged,
+      displaySpinner,
+      showSavedMessage,
       onPickedShopsChange,
       handleEmailFrequencyChange,
       onSubmitSettings
@@ -25,6 +27,8 @@ class SettingsPage extends Component {
           selectedShops={selectedShops}
           emailFrequency={emailFrequency}
           isSettingsUnchanged={isSettingsUnchanged}
+          displaySpinner={displaySpinner}
+          showSavedMessage={showSavedMessage}
           onPickedShopsChange={onPickedShopsChange}
           handleEmailFrequencyChange={handleEmailFrequencyChange}
           onSubmitSettings={onSubmitSettings}
@@ -40,7 +44,9 @@ const mapStateToProps = (state, ownProps) => {
     emailFrequency: state.settings.emailFrequency,
     isSettingsUnchanged: 
       state.settings.myPreviousEmailFrequency === state.settings.emailFrequency &&
-        _.isEqual(state.settings.myPreviousShops, state.settings.selectedShops)
+        _.isEqual(state.settings.myPreviousShops, state.settings.selectedShops),
+    displaySpinner: state.settings.submitSpinner || !state.settings.spinnerComplete,
+    showSavedMessage: state.settings.showSavedMessage && state.settings.spinnerComplete
   }
 }
 

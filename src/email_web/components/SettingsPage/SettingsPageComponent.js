@@ -14,6 +14,8 @@ const SettingsPageComponent = ({
   selectedShops,
   emailFrequency,
   isSettingsUnchanged,
+  displaySpinner,
+  showSavedMessage,
   onPickedShopsChange,
   handleEmailFrequencyChange,
   onSubmitSettings
@@ -51,6 +53,10 @@ const SettingsPageComponent = ({
       className="submit-button"
       id="settings-form-button"
     />
+    {displaySpinner && 
+      <span>Spinner</span>}
+    {showSavedMessage && 
+      <span>Changes saved!</span>}
   </form>
 )
 

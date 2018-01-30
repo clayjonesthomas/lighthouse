@@ -1,9 +1,12 @@
 import {UPDATE_SETTINGS_URL} from '../../urls'
+import {pullMyShops, pullMyEmailFrequency} 
+  from '../../services/ShopDataActions'
 
 export const EMAIL_FREQUENCY_CHANGE = 'EMAIL_FREQUENCY_CHANGE'
 export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
 export const UPDATE_SETTINGS_REQUEST = 'UPDATE_SETTINGS_REQUEST'
 export const UPDATE_SETTINGS_RETURN = 'UPDATE_SETTINGS_RETURN'
+export const SETTINGS_SPINNER_TIMEOUT = 'SETTINGS_SPINNER_TIMEOUT'
 
 export const emailFrequencyChange = (value) => {
   return {
@@ -25,8 +28,7 @@ export const requestUpdateSettings = () => {
   }
 }
 
-export const requestUpdateSettingsReturn = (rename) => {
-  console.log(rename) //TODO do something with these actions
+export const requestUpdateSettingsReturn = (success) => {
   return {
     type: UPDATE_SETTINGS_RETURN
   }
@@ -48,8 +50,27 @@ export const submitSettingsForm = () => {
     }
 
     dispatch(requestUpdateSettings())
+    dispatch(startDummySpinnerTimer())
     return fetch(UPDATE_SETTINGS_URL, args)
       .then(response => response.json())
       .then(json => dispatch(requestUpdateSettingsReturn(json)))
+      .then(() => dispatch(pullMyShops()))
+      .then(() => dispatch(pullMyEmailFrequency()))
   } 
+}
+
+export function startDummySpinnerTimer() {
+  const SPINNER_MIN_DURATION = 1000 //ms
+  return dispatch => {
+    return setTimeout(function() {
+      dispatch(settingsSpinnerTimeout());
+    }, SPINNER_MIN_DURATION);
+
+  }
+}
+
+const settingsSpinnerTimeout = () => {
+  return {
+    type: SETTINGS_SPINNER_TIMEOUT
+  }
 }
