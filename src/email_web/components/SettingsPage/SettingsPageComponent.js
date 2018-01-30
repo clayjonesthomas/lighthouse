@@ -48,7 +48,7 @@ const SettingsPageComponent = ({
     </FormGroup>
     <input
       type="submit"
-      disabled={isSettingsUnchanged}
+      disabled={isSettingsUnchanged && !displaySpinner}
       value="SAVE CHANGES"
       className="submit-button"
       id="settings-form-button"
