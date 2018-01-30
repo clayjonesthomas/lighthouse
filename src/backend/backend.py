@@ -819,7 +819,7 @@ app = webapp2.WSGIApplication([
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
-    webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
+    webapp2.Route('/new_password', MainPage, name='new_password'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

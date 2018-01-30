@@ -11,6 +11,7 @@ import Container from './Container'
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
+import {NEW_PASSWORD_PAGE} from './components/NewPasswordPage/NewPasswordPage'
 
 
 
@@ -28,15 +29,16 @@ const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/">
-        <IndexRoute component={ContainerAtLandingPage}/>
-        <Route path="/signup" component={ContainerAtSignUpPage}/>
-        <Route path="/login" component={ContainerAtLogInPage}/>
+        <IndexRoute component={LandingPage}/>
+        <Route path="/signup" component={SignUpPage}/>
+        <Route path="/login" component={LogInPage}/>
+        <Route path="/new_password" component={ForgotPasswordPage}/>
       </Route>
     </Router>
   </Provider>
 )
 
-const ContainerAtLandingPage = (props) => {
+const LandingPage = (props) => {
   return (
     <Container
       page={LANDING_PAGE}
@@ -45,7 +47,7 @@ const ContainerAtLandingPage = (props) => {
   )
 }
 
-const ContainerAtSignUpPage = (props) => {
+const SignUpPage = (props) => {
   return (
     <Container
       page={SIGN_UP_PAGE}
@@ -54,7 +56,7 @@ const ContainerAtSignUpPage = (props) => {
   )
 }
 
-const ContainerAtLogInPage = (props) => {
+const LogInPage = (props) => {
   return (
     <Container
       page={LOG_IN_PAGE}
@@ -63,5 +65,13 @@ const ContainerAtLogInPage = (props) => {
   )
 }
 
+const ForgotPasswordPage = (props) => {
+  return (
+    <Container
+      page={FORGOT_PASSWORD_PAGE}
+      {...props}
+    />
+  )
+}
 
 export default Root
