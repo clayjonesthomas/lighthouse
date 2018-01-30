@@ -1,62 +1,48 @@
-import {LOG_IN_EMAIL_CHANGE, LOG_IN_PASSWORD_CHANGE,
-  LOG_IN_REQUEST, LOG_IN_RESPONSE, LOG_IN_RESPONSE_FAILED,
-  ATTEMPT_LOG_IN} from './LogInPageActions'
+import {NEW_PASS_PASSWORD_CHANGE,
+  NEW_PASS_CONFIRM_PASSWORD_CHANGE, ATTEMPT_SUBMIT_NEW_PASS,
+  SUBMIT_NEW_PASS_REQUEST, SUBMIT_NEW_PASS_RESPONSE,
+  SUBMIT_NEW_PASS_RESPONSE_FAILED, AUTH_KEY_ERROR}
+  from './NewPasswordActions'
 
-import {UNVERIFIED_ERROR, PASSWORD_RESET_ERROR,
-  AUTHENTICATION_ERROR, SEND_FORGOT_PASSWORD_EMAIL}
-  from './LogInPageActions'
 
 import {LOCATION_CHANGE} from 'react-router-redux'
 
-const defaultLogInState = {
-  email: '',
+const defaultNewPassState = {
   password: '',
+  confirmPassword: '',
   submitSpinner: false,
   hasAttemptedSubmission: false,
-  invalidEmailPass: false
+  invalidPass: false
 }
 
-export function login(state = defaultLogInState, action) {
+export function newPass(state = defaultNewPassState, action) {
   switch (action.type) {
-    case LOG_IN_EMAIL_CHANGE:
-      return Object.assign({}, state, {
-        email: action.data
-      })
-    case LOG_IN_PASSWORD_CHANGE:
+    case NEW_PASS_PASSWORD_CHANGE:
       return Object.assign({}, state, {
         password: action.data
       })
-    case ATTEMPT_LOG_IN:
+    case NEW_PASS_CONFIRM_PASSWORD_CHANGE:
+      return Object.assign({}, state, {
+        confirmPassword: action.data
+      })
+    case ATTEMPT_SUBMIT_NEW_PASS:
       return Object.assign({}, state, {
         hasAttemptedSubmission: true
       })
-    case LOG_IN_REQUEST:
+    case SUBMIT_NEW_PASS_REQUEST:
       return Object.assign({}, state, {
         submitSpinner: true
       })
-    case LOG_IN_RESPONSE:
-      return Object.assign({}, state, {
-        submitSpinner: false,
-        hasAttemptedSubmission: false
-      })
-    case LOG_IN_RESPONSE_FAILED:
-      if (action.data === PASSWORD_RESET_ERROR) {
-        return Object.assign({}, state, {
-          submitSpinner: false
-        })
-        // TODO to be completed in the password reset pr
-      }
-      if (action.data === AUTHENTICATION_ERROR) {
+    case SUBMIT_NEW_PASS_RESPONSE:
+      return defaultNewPassState
+    case SUBMIT_NEW_PASS_RESPONSE_FAILED:
+      if (action.data === AUTH_KEY_ERROR) {
         return Object.assign({}, state, {
           submitSpinner: false,
           invalidEmailPass: true
         })
       }
       return state
-    case LOCATION_CHANGE:
-      return defaultLogInState
-    case SEND_FORGOT_PASSWORD_EMAIL:
-
     default:
       return state
   }

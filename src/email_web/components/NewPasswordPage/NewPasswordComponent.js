@@ -5,73 +5,59 @@ import "./LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
 
-const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-export function validateEmail(emailValue,
-                              hasAttemptedSubmission) {
+export function validatePasswords(password,
+                                  confirmPassword,
+                                  hasAttemptedSubmission) {
   if (hasAttemptedSubmission) {
-    if (!emailRegex.test(emailValue)) {
+    if (password !== confirmPassword) {
       return 'error'
     }
   }
   return null
 }
 
-export function validateEmailPass(invalidEmailPass) {
-  if (invalidEmailPass) {
-    return 'error'
+export function validatePassword(passwordValue,
+                                 hasAttemptedSubmission) {
+  if (hasAttemptedSubmission) {
+    if (passwordValue.length < 6)
+      return 'error'
   }
-  return null
 }
 
-const LogInPageComponent = ({
-                              handleEmailChange,
-                              handlePasswordChange,
-                              emailValue,
-                              passwordValue,
-                              onSubmitLogIn,
-                              hasAttemptedSubmission,
-                              invalidEmailPass,
-                              onGoToSignUp,
-                              goToForgotPassword
-                            }) => (
+const NewPasswordComponent = ({
+                                email,
+                                handlePasswordChange,
+                                handleConfirmPasswordChange,
+                                passwordValue,
+                                confirmPasswordValue,
+                                onSubmitNewPass,
+                                hasAttemptedSubmission,
+                                invalidPass
+                              }) => (
   <form
     className="auth-form"
-    onSubmit={onSubmitLogIn}>
+    onSubmit={onSubmitNewPass}>
     <div
-      className="form-wrapper"
-      id="log-in-form-wrapper">
+      className="form-wrapper">
       <h1 className="form-title">
-        Log In
+        {
+          "Update password for " + email
+        }
       </h1>
       <p
-        className="helper-text"
-        id="log-in-helper-text">
-        Don't have an account? <a onClick={onGoToSignUp}>Sign Up</a>
+        className="helper-text">
+        If this is not your email address, please close this
+        page and mail&nbsp;
+        <a
+          href="mailto:info@lightho.us"
+          target="_top">
+          info@lightho.us
+        </a>
+        &nbsp;for help.
       </p>
       <FormGroup
-        validationState={
-          validateEmail(emailValue, hasAttemptedSubmission)
-          || validateEmailPass(invalidEmailPass)
-        }
-        className="email-box"
-      >
-        <FormControl
-          className="form-box"
-          type="text"
-          value={emailValue}
-          onChange={handleEmailChange}
-          placeholder="Email"
-        />
-        {
-          validateEmail(emailValue, hasAttemptedSubmission) &&
-          <p className="email-error">
-            Please input a valid email.
-          </p>
-        }
-      </FormGroup>
-      <FormGroup
-        validationState={validateEmailPass(invalidEmailPass)}
+        validationState={validatePassword(passwordValue)}
+        className="password-box"
       >
         <FormControl
           className="form-box"
@@ -81,20 +67,40 @@ const LogInPageComponent = ({
           placeholder="Password"
         />
         {
+          validatePassword(passwordValue, hasAttemptedSubmission) &&
           <p className="password-error">
-            The email-password combination you gave isn't right.
-            &nbsp;<a>Recover your password?</a>
+            Please input a password that is at least 6 characters long.
+          </p>
+        }
+      </FormGroup>
+      <FormGroup
+        validationState={
+          validatePasswords(passwordValue,
+            confirmPasswordValue, hasAttemptedSubmission)
+        }
+      >
+        <FormControl
+          className="form-box"
+          type="password"
+          value={passwordValue}
+          onChange={handlePasswordChange}
+          placeholder="Confirm Password"
+        />
+        {
+          validatePasswords(passwordValue, confirmPasswordValue) &&
+          <p className="password-error">
+            This password doesn't match the other.
+            Please give matching passwords.
           </p>
         }
       </FormGroup>
       <input
         type="submit"
-        value="LOG IN"
+        value="UPDATE PASSWORD"
         className="submit-button form-button"
       />
-      <a onClick={goToForgotPassword}>Forgot Password</a>
     </div>
   </form>
 )
 
-export default LogInPageComponent
+export default NewPasswordComponent

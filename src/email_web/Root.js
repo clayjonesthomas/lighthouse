@@ -32,7 +32,7 @@ const Root = () => (
         <IndexRoute component={LandingPage}/>
         <Route path="/signup" component={SignUpPage}/>
         <Route path="/login" component={LogInPage}/>
-        <Route path="/new_password" component={ForgotPasswordPage}/>
+        <Route path="/new_password/:email/:signup_key" component={NewPasswordPage}/>
       </Route>
     </Router>
   </Provider>
@@ -65,10 +65,10 @@ const LogInPage = (props) => {
   )
 }
 
-const ForgotPasswordPage = (props) => {
+const NewPasswordPage = (props) => {
   return (
     <Container
-      page={FORGOT_PASSWORD_PAGE}
+      page={NEW_PASSWORD_PAGE}
       {...props}
     />
   )

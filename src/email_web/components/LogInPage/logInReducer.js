@@ -40,12 +40,6 @@ export function login(state = defaultLogInState, action) {
         hasAttemptedSubmission: false
       })
     case LOG_IN_RESPONSE_FAILED:
-      if (action.data === PASSWORD_RESET_ERROR) {
-        return Object.assign({}, state, {
-          submitSpinner: false
-        })
-        // TODO to be completed in the password reset pr
-      }
       if (action.data === AUTHENTICATION_ERROR) {
         return Object.assign({}, state, {
           submitSpinner: false,

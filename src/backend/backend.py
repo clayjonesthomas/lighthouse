@@ -604,7 +604,6 @@ class SignupHandler(BaseHandler):
 
 class ForgotPasswordHandler(BaseHandler):
     def post(self):
-        import pdb; pdb.set_trace()
         body = json.loads(self.request.body)
         email = body['email']
 
@@ -660,13 +659,9 @@ class VerificationHandler(BaseHandler):
             self.redirect_to('verification_success')
             return
         elif verification_type == 'p':
-            # supply user to the page
-            params = {
-                'user_id': user.key.id(),
-                'token': signup_token
-            }
-            self.response.write(json.dumps(params))
-            self.redirect_to('new_password_success')
+            # self.response.write(json.dumps(params))
+            self.redirect('/new_password/'+user.email_address+'/'+signup_token)
+            return
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -819,7 +814,7 @@ app = webapp2.WSGIApplication([
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
-    webapp2.Route('/new_password', MainPage, name='new_password'),
+    webapp2.Route('/new_password/<:[a-zA-Z0-9-_]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

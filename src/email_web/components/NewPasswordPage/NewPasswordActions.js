@@ -1,19 +1,20 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
 
-import {LANDING_PAGE_URL, FORGOT_PASSWORD_URL}
+import {LANDING_PAGE_URL, NEW_PASSWORD_URL}
   from '../../urls'
 
-export const LOG_IN_PASSWORD_CHANGE = 'LOG_IN_PASSWORD_CHANGE'
-export const ATTEMPT_LOG_IN = 'ATTEMPT_LOG_IN'
-export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
-export const LOG_IN_RESPONSE = 'LOG_IN_RESPONSE'
-export const LOG_IN_RESPONSE_FAILED = 'LOG_IN_RESPONSE_FAILED'
+import {validatePassword, validatePasswords}
+  from './NewPasswordComponent'
 
-export const UNVERIFIED_ERROR = 'UNVERIFIED_ERROR'
-export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR'
-export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
-export const SEND_FORGOT_PASSWORD_EMAIL = 'SEND_FORGOT_PASSWORD_EMAIL'
+export const NEW_PASS_PASSWORD_CHANGE = 'NEW_PASS_PASSWORD_CHANGE'
+export const NEW_PASS_CONFIRM_PASSWORD_CHANGE = 'NEW_PASS_CONFIRM_PASSWORD_CHANGE'
+export const ATTEMPT_SUBMIT_NEW_PASS = 'ATTEMPT_SUBMIT_NEW_PASS'
+export const SUBMIT_NEW_PASS_REQUEST = 'SUBMIT_NEW_PASS_REQUEST'
+export const SUBMIT_NEW_PASS_RESPONSE = 'SUBMIT_NEW_PASS_RESPONSE'
+export const SUBMIT_NEW_PASS_RESPONSE_FAILED = 'SUBMIT_NEW_PASS_RESPONSE_FAILED'
+
+export const AUTH_KEY_ERROR = 'AUTH_KEY_ERROR'
 
 export const passwordChange = (value) => {
   return {
@@ -41,14 +42,9 @@ export const submitNewPassRequest = () => {
   }
 }
 
-export const submitNewPassResponse = (json) => {
+export const submitNewPassResponse = () => {
   return {
-    type: SUBMIT_NEW_PASS_RESPONSE,
-    data: {
-      email: json.email,
-      isVerified: json.isVerified,
-      isModerator: json.isModerator
-    }
+    type: SUBMIT_NEW_PASS_RESPONSE
   }
 }
 
@@ -60,37 +56,39 @@ export const submitNewPassResponseFailed = (error) => {
 }
 
 
-export function submitNewPass() {
+export function submitNewPass(email, token) {
   return (dispatch, getState) => {
     const state = getState()
-    const email = state.login.email
-    const emailValidation = validateEmail(email, true, false)
+    const password = state.newPass.password
+    const confirmPassword = state.newPass.confirmPassword
+    const passMatchValidation = validatePasswords(password, confirmPassword, true)
+    const passLengthValidation = validatePassword(password, true)
 
-    dispatch(attemptLogIn())
-    if (!emailValidation) {
-      _submitLogInForm(dispatch, getState)
+    dispatch(attemptSubmitNewPass())
+    if (!passMatchValidation && !passLengthValidation) {
+      _submitNewPass(dispatch, getState, email, token)
     }
   }
 }
-////////// working on all needed actions, then everything else
-function _submitLogInForm(dispatch, getState) {
+
+function _submitNewPass(dispatch, getState, email, token) {
   const state = getState()
-  const email = state.login.email
-  const password = state.login.password
+  const password = state.newPass.password
+  const confirmPassword = state.newPass.confirmPassword
   const args = {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      email: email,
-      password: password
+      password: password,
+      confirmPassword: confirmPassword
     })
   }
   dispatch(submitNewPassRequest())
-  return fetch(NEW_PASS_URL, args)
+  return fetch(NEW_PASSWORD_URL+'/'+email+'/'+token, args)
     .then(response => response.json())
     .then(json => {
       if (json.email) {
-        dispatch(submitNewPassResponse(json))
+        dispatch(submitNewPassResponse())
         dispatch(push(LANDING_PAGE_URL))
       }
       else

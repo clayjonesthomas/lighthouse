@@ -2,66 +2,63 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {SIGN_UP_PAGE_URL} from '../../urls'
+import LogInPageComponent from './NewPasswordComponent'
+import {passwordChange, confirmPasswordChange, submitNewPass}
+  from './NewPasswordActions'
 
-import LogInPageComponent from './LogInPageComponent'
-import {emailChange, passwordChange, submitLogInForm,
-  sendForgotPasswordEmail} from './LogInPageActions'
+export const NEW_PASSWORD_PAGE = 'NEW_PASSWORD_PAGE'
 
-export const LOG_IN_PAGE = 'LOG_IN_PAGE'
-
-class LogInPage extends Component {
+class NewPasswordPage extends Component {
   render() {
     const {
-      handleEmailChange,
+      email,
       handlePasswordChange,
-      emailValue,
+      handleConfirmPasswordChange,
       passwordValue,
-      onSubmitLogIn,
+      confirmPasswordValue,
+      onSubmitNewPass,
       hasAttemptedSubmission,
-      invalidEmailPass,
-      onGoToSignUp,
-      goToForgotPassword
+      invalidPass
     } = this.props
     return (
       <LogInPageComponent
-        handleEmailChange={handleEmailChange}
+        email={email}
         handlePasswordChange={handlePasswordChange}
-        emailValue={emailValue}
+        handleConfirmPasswordChange={handleConfirmPasswordChange}
         passwordValue={passwordValue}
-        onSubmitLogIn={onSubmitLogIn}
+        confirmPasswordValue={confirmPasswordValue}
+        onSubmitNewPass={onSubmitNewPass}
         hasAttemptedSubmission={hasAttemptedSubmission}
-        invalidEmailPass={invalidEmailPass}
-        onGoToSignUp={onGoToSignUp}
-        goToForgotPassword={goToForgotPassword}
+        invalidPass={invalidPass}
       />
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    emailValue: state.login.email,
-    passwordValue: state.login.password,
-    hasAttemptedSubmission: state.login.hasAttemptedSubmission,
-    invalidEmailPass: state.login.invalidEmailPass
+    email: ownProps.params.email,
+    passwordValue: state.newPass.password,
+    confirmPasswordValue: state.newPass.password,
+    hasAttemptedSubmission: state.newPass.hasAttemptedSubmission,
+    invalidPass: state.newPass.invalidPass
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleEmailChange: (e) => dispatch(emailChange(e.target.value)),
-    handlePasswordChange: (e) => dispatch(passwordChange(e.target.value)),
-    onSubmitLogIn: (e) => {
+    handlePasswordChange: (e) =>
+      dispatch(passwordChange(e.target.value)),
+    handleConfirmPasswordChange: (e) =>
+      dispatch(confirmPasswordChange(e.target.value)),
+    onSubmitNewPass: (e) => {
       e.preventDefault()
-      dispatch(submitLogInForm())
-    },
-    onGoToSignUp: () => {dispatch(push(SIGN_UP_PAGE_URL))},
-    goToForgotPassword: () => {dispatch(sendForgotPasswordEmail())}
+      dispatch(submitNewPass())
+    }
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LogInPage)
+)(NewPasswordPage)
