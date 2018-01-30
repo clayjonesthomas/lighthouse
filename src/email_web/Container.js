@@ -50,6 +50,8 @@ class Container extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log("CONTAINER STATE")
+  console.log(state.user)
   return {
     page: ownProps.page
   }

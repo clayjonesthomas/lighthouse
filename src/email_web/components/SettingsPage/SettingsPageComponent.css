@@ -11,7 +11,6 @@
 }
 
 .settings-section {
-    overflow: auto;
     margin: 30px;
     margin-left: 50px;
 }
@@ -24,6 +23,7 @@
 
 .shop-picker-search {
     margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 .shop-picker-search > span {

@@ -12,10 +12,13 @@ export const UNSUBSCRIBE_EMAIL = 'UNSUBSCRIBE_EMAIL'
 
 const SettingsPageComponent = ({
   selectedShops,
+  emailFrequency,
   onPickedShopsChange,
-  handleEmailFrequencyChange
+  handleEmailFrequencyChange,
+  onSubmitSettings
 }) => (
-  <form id="update-settings-form">
+  <form id="update-settings-form"
+    onSubmit={onSubmitSettings}>
     <h1 id="settings-form-title">
       Settings
     </h1>
@@ -35,9 +38,9 @@ const SettingsPageComponent = ({
       onClick={handleEmailFrequencyChange /*switch to onChange once this bug is resolved https://github.com/facebook/react/issues/10168*/}>
       <div className="settings-section">
         <h2 className="section-title">Email Preferences</h2>
-        <Radio name="emailOptions" value="HIGH_FREQUENCY_EMAIL">High frequency - daily email with all your sales</Radio>
-        <Radio name="emailOptions" value="MID_FREQUENCY_EMAIL" defaultChecked>Standard frequency - important sales only</Radio>
-        <Radio name="emailOptions" value="UNSUBSCRIBE_EMAIL">Unsubscribe me from all emails</Radio>
+        <Radio name="emailOptions" value="HIGH_FREQUENCY_EMAIL" checked={emailFrequency===HIGH_FREQUENCY_EMAIL}>High frequency - daily email with all your sales</Radio>
+        <Radio name="emailOptions" value="MID_FREQUENCY_EMAIL" checked={emailFrequency===MID_FREQUENCY_EMAIL}>Standard frequency - important sales only</Radio>
+        <Radio name="emailOptions" value="UNSUBSCRIBE_EMAIL" checked={emailFrequency===UNSUBSCRIBE_EMAIL}>Unsubscribe me from all emails</Radio>
       </div>
     </FormGroup>
     <input

@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {emailFrequencyChange} from './SettingsPageActions'
+import {emailFrequencyChange, submitSettingsForm} 
+  from './SettingsPageActions'
 import SettingsPageComponent from './SettingsPageComponent'
 import {pickedShopsChange} from '../SignUpPage/SignUpPageActions' //TODO contamination
 
@@ -12,15 +13,19 @@ class SettingsPage extends Component {
   render() {
     const {
       selectedShops,
+      emailFrequency,
       onPickedShopsChange,
       handleEmailFrequencyChange,
+      onSubmitSettings
     } = this.props
     return (
       <div id="main-page-container">
         <SettingsPageComponent
           selectedShops={selectedShops}
+          emailFrequency={emailFrequency}
           onPickedShopsChange={onPickedShopsChange}
           handleEmailFrequencyChange={handleEmailFrequencyChange}
+          onSubmitSettings={onSubmitSettings}
         />
       </div>
     )
@@ -28,15 +33,22 @@ class SettingsPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log("STATTTEEEE")
+  console.log(state)
   return {
-    selectedShops: state.myShops,
+    selectedShops: state.settings.selectedShops,
+    emailFrequency: state.settings.emailFrequency
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
-    handleEmailFrequencyChange: (e) => {console.log(e.target.value)},
+    handleEmailFrequencyChange: (e) => dispatch(emailFrequencyChange(e.target.value)),
+    onSubmitSettings: (e) => {
+      e.preventDefault()
+      dispatch(submitSettingsForm())
+    },
   }
 }
 

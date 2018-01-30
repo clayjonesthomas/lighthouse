@@ -1,11 +1,14 @@
 import fetch from 'isomorphic-fetch'
 
-import {MY_SHOPS_URL, SHOPS_URL} from '../urls'
+import {MY_SHOPS_URL, MY_EMAIL_FREQUENCY_URL, SHOPS_URL}
+  from '../urls'
 
 export const ALL_SHOPS_REQUEST = 'ALL_SHOPS_REQUEST'
 export const ALL_SHOPS_RESPONSE = 'ALL_SHOPS_RESPONSE'
 export const MY_SHOPS_REQUEST = 'MY_SHOPS_REQUEST'
 export const MY_SHOPS_RESPONSE = 'MY_SHOPS_RESPONSE'
+export const MY_EMAIL_FREQUENCY_REQUEST = 'MY_EMAIL_FREQUENCY_REQUEST'
+export const MY_EMAIL_FREQUENCY_RESPONSE = 'MY_EMAIL_FREQUENCY_RESPONSE'
 
 export const myShopsRequest = () => {
   return {
@@ -59,5 +62,31 @@ export function pullAllShops() {
       .then(json => {
         dispatch(requestShopsResponse(json.shops))
       })
+  }
+}
+
+export const myEmailFrequencyRequest = () => {
+  return {
+    type: MY_EMAIL_FREQUENCY_REQUEST
+  }
+}
+
+export const myEmailFrequencyResponse = (frequency) => {
+  return {
+    type: MY_EMAIL_FREQUENCY_RESPONSE,
+    data: frequency
+  }
+}
+
+export function pullMyEmailFrequency() {
+  const args = {
+    method: 'GET',
+    credentials: 'same-origin',
+  }
+  return dispatch => {
+    dispatch(myEmailFrequencyRequest())
+    return fetch(MY_EMAIL_FREQUENCY_URL, args)
+      .then(response => response.json())
+      .then(json => dispatch(myEmailFrequencyResponse(json)))
   }
 }

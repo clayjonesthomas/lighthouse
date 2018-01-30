@@ -24,9 +24,12 @@ from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
 from email import send_emails, send_verification_email
+#import enums.EmailFrequency as ef
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
+
+EMAIL_FREQUENCIES = ['HIGH_FREQUENCY_EMAIL', 'MID_FREQUENCY_EMAIL', 'UNSUBSCRIBE_EMAIL']
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -415,6 +418,16 @@ class MyShops(BaseHandler):
         self.response.write(json.dumps(fetched_shops))  # included in state as "displayedShops"
 
 
+class MyEmailFrequency(BaseHandler):
+
+    def get(self):
+        user = self.user
+        if not user:
+            return
+        email_frequency = EMAIL_FREQUENCIES[user.email_frequency]
+        self.response.write(json.dumps(email_frequency))
+
+
 class ShopPosts(BaseHandler):
 
     def get(self, url_key, offset):
@@ -582,6 +595,7 @@ class SignupHandler(BaseHandler):
                                                 verified=False,
                                                 is_moderator=is_moderator,
                                                 using_email_service=True,
+                                                email_frequency=1,
                                                 liked_stores=shop_keys)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for email %s because of '
@@ -758,6 +772,24 @@ class EmailHandler(BaseHandler):
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
+class SettingsHandler(BaseHandler):
+
+    def post(self):
+        body = json.loads(self.request.body)
+        selectedShops = body['selectedShops']
+        emailFrequency = str(body['emailFrequency'])
+
+        user = self.user
+        if not user:
+            return
+
+        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selectedShops]
+        user.liked_stores = shop_keys
+        user.email_frequency = EMAIL_FREQUENCIES.index(emailFrequency)
+        user.put()
+        self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -784,6 +816,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
+    webapp2.Route('/rest/settings', SettingsHandler, name='settings'),
 
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
@@ -792,6 +825,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
+    webapp2.Route('/rest/my_email_frequency', MyEmailFrequency, name='my_email_frequency'),
     webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shops/like', LikeShops, name='like_shops'),
