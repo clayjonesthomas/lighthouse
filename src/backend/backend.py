@@ -668,21 +668,19 @@ class VerificationHandler(BaseHandler):
 
     def post(self, *args, **kwargs):
         user = None
-        user_id = kwargs['user_id']
+        email = kwargs['email']
         signup_token = kwargs['signup_token']
         verification_type = kwargs['type']
         new_password = self.request.get('password')
 
-        # it should be something more concise like
-        # self.auth.get_user_by_token(user_id, signup_token)
-        # unfortunately the auth interface does not (yet) allow to manipulate
-        # signup tokens concisely
+        user_id = self.user_model.query(self.user_model.email_address == email,
+                                        keys_only=True).fetch(1)[0].id()
         user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
                                                             'signup')
 
         if not user:
-            logging.info('Could not find any user with id "%s" signup token "%s"',
-                         user_id, signup_token)
+            logging.info('Could not find any user with email "%s" signup token "%s"',
+                         email, signup_token)
             self.abort(404)
 
         # store user data in the session
@@ -814,7 +812,7 @@ app = webapp2.WSGIApplication([
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
-    webapp2.Route('/new_password/<:[a-zA-Z0-9-_]*>/<:.*>', MainPage, name='new_password'),
+    webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

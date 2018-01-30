@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import LogInPageComponent from './NewPasswordComponent'
+import NewPasswordComponent from './NewPasswordComponent'
 import {passwordChange, confirmPasswordChange, submitNewPass}
   from './NewPasswordActions'
 
@@ -21,7 +21,7 @@ class NewPasswordPage extends Component {
       invalidPass
     } = this.props
     return (
-      <LogInPageComponent
+      <NewPasswordComponent
         email={email}
         handlePasswordChange={handlePasswordChange}
         handleConfirmPasswordChange={handleConfirmPasswordChange}
@@ -37,7 +37,7 @@ class NewPasswordPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    email: ownProps.params.email,
+    email: ownProps.email,
     passwordValue: state.newPass.password,
     confirmPasswordValue: state.newPass.password,
     hasAttemptedSubmission: state.newPass.hasAttemptedSubmission,

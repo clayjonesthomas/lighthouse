@@ -1,7 +1,7 @@
 import React from 'react'
 import {FormGroup, FormControl} from 'react-bootstrap'
 
-import "./LogInPageComponent.css"
+import "../LogInPage/LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
 
