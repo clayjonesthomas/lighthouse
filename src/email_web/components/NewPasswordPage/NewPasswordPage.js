@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     email: ownProps.email,
     passwordValue: state.newPass.password,
-    confirmPasswordValue: state.newPass.password,
+    confirmPasswordValue: state.newPass.confirmPassword,
     hasAttemptedSubmission: state.newPass.hasAttemptedSubmission,
     invalidPass: state.newPass.invalidPass
   }

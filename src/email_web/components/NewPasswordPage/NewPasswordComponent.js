@@ -56,7 +56,7 @@ const NewPasswordComponent = ({
         &nbsp;for help.
       </p>
       <FormGroup
-        validationState={validatePassword(passwordValue)}
+        validationState={validatePassword(passwordValue, hasAttemptedSubmission)}
         className="password-box"
       >
         <FormControl
@@ -82,12 +82,13 @@ const NewPasswordComponent = ({
         <FormControl
           className="form-box"
           type="password"
-          value={passwordValue}
-          onChange={handlePasswordChange}
+          value={confirmPasswordValue}
+          onChange={handleConfirmPasswordChange}
           placeholder="Confirm Password"
         />
         {
-          validatePasswords(passwordValue, confirmPasswordValue) &&
+          validatePasswords(passwordValue,
+            confirmPasswordValue, hasAttemptedSubmission) &&
           <p className="password-error">
             This password doesn't match the other.
             Please give matching passwords.
