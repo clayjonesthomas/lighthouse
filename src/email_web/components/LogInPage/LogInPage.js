@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {SIGN_UP_PAGE_URL} from '../../urls'
+import {SIGN_UP_PAGE_URL, SETTINGS_PAGE_URL} from '../../urls'
 
 import LogInPageComponent from './LogInPageComponent'
 import {emailChange, passwordChange, submitLogInForm}

@@ -4,7 +4,9 @@ import {MY_SHOPS_RESPONSE, MY_EMAIL_FREQUENCY_RESPONSE} from '../../services/Sho
 import {MID_FREQUENCY_EMAIL} from './SettingsPageComponent'
 
 const defaultSettingsState = {
+  myPreviousShops: [],
   selectedShops: [],
+  myPreviousEmailFrequency: MID_FREQUENCY_EMAIL,
   emailFrequency: MID_FREQUENCY_EMAIL
 } 
 
@@ -12,10 +14,12 @@ export function settings(state = defaultSettingsState, action) {
   switch (action.type) {
     case MY_EMAIL_FREQUENCY_RESPONSE:
       return Object.assign({}, state, {
+        myPreviousEmailFrequency: action.data,
         emailFrequency: action.data
       })
     case MY_SHOPS_RESPONSE:
       return Object.assign({}, state, {
+        myPreviousShops: action.data,
         selectedShops: action.data
       })
     case EMAIL_FREQUENCY_CHANGE:

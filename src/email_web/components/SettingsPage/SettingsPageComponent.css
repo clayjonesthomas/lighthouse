@@ -43,3 +43,8 @@
     margin-top: 10px;
     margin-left: 50px;
 }
+
+#settings-form-button:disabled {
+    opacity: .4;
+    cursor: auto;
+}

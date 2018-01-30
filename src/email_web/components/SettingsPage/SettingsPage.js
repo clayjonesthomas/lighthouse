@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
+import _ from 'underscore'
 
 import {emailFrequencyChange, pickedShopsChange, submitSettingsForm} 
   from './SettingsPageActions'
@@ -13,6 +14,7 @@ class SettingsPage extends Component {
     const {
       selectedShops,
       emailFrequency,
+      isSettingsUnchanged,
       onPickedShopsChange,
       handleEmailFrequencyChange,
       onSubmitSettings
@@ -22,6 +24,7 @@ class SettingsPage extends Component {
         <SettingsPageComponent
           selectedShops={selectedShops}
           emailFrequency={emailFrequency}
+          isSettingsUnchanged={isSettingsUnchanged}
           onPickedShopsChange={onPickedShopsChange}
           handleEmailFrequencyChange={handleEmailFrequencyChange}
           onSubmitSettings={onSubmitSettings}
@@ -32,11 +35,12 @@ class SettingsPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("STATTTEEEE")
-  console.log(state)
   return {
     selectedShops: state.settings.selectedShops,
-    emailFrequency: state.settings.emailFrequency
+    emailFrequency: state.settings.emailFrequency,
+    isSettingsUnchanged: 
+      state.settings.myPreviousEmailFrequency === state.settings.emailFrequency &&
+        _.isEqual(state.settings.myPreviousShops, state.settings.selectedShops)
   }
 }
 

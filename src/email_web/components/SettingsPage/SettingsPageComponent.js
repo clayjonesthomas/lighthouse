@@ -13,6 +13,7 @@ export const UNSUBSCRIBE_EMAIL = 'UNSUBSCRIBE_EMAIL'
 const SettingsPageComponent = ({
   selectedShops,
   emailFrequency,
+  isSettingsUnchanged,
   onPickedShopsChange,
   handleEmailFrequencyChange,
   onSubmitSettings
@@ -45,6 +46,7 @@ const SettingsPageComponent = ({
     </FormGroup>
     <input
       type="submit"
+      disabled={isSettingsUnchanged}
       value="SAVE CHANGES"
       className="submit-button"
       id="settings-form-button"
