@@ -38,7 +38,7 @@ const SettingsPageComponent = ({
       </div>
     </FormGroup>
     <FormGroup
-      onClick={handleEmailFrequencyChange /*switch to onChange once this bug is resolved https://github.com/facebook/react/issues/10168*/}>
+      onChange={handleEmailFrequencyChange}>
       <div className="settings-section">
         <h2 className="section-title">Email Preferences</h2>
         <Radio name="emailOptions" value="HIGH_FREQUENCY_EMAIL" checked={emailFrequency===HIGH_FREQUENCY_EMAIL}>High frequency - daily email with all your sales</Radio>
