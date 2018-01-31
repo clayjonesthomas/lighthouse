@@ -55,8 +55,10 @@ export const submitSettingsForm = () => {
     return fetch(UPDATE_SETTINGS_URL, args)
       .then(response => response.json())
       .then(json => dispatch(updateSettingsReturn(json)))
-      .then(() => dispatch(pullMyShops()))
-      .then(() => dispatch(pullUserData()))
+      .then(() => {
+        dispatch(pullMyShops())
+        dispatch(pullUserData())
+      })
   } 
 }
 

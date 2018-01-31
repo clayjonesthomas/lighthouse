@@ -775,7 +775,7 @@ class SettingsHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
         selectedShops = body['selectedShops']
-        emailFrequency = str(body['emailFrequency'])
+        emailFrequency = body['emailFrequency']
 
         user = self.user
         if not user:
