@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
 
-import {LOG_IN_URL, LANDING_PAGE_URL} from '../../urls'
+import {LOG_IN_URL, SETTINGS_PAGE_URL} from '../../urls'
 import {validateEmail} from './LogInPageComponent'
 
 export const LOG_IN_EMAIL_CHANGE = 'LOG_IN_EMAIL_CHANGE'
@@ -92,7 +92,7 @@ function _submitLogInForm(dispatch, getState) {
     .then(json => {
       if (json.email) {
         dispatch(logInResponse(json))
-        dispatch(push(LANDING_PAGE_URL))
+        dispatch(push(SETTINGS_PAGE_URL))
       }
       else
         dispatch(logInResponseFailed(json.error))
