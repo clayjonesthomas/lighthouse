@@ -4,9 +4,6 @@ import {NEW_PASS_PASSWORD_CHANGE,
   SUBMIT_NEW_PASS_RESPONSE_FAILED, AUTH_KEY_ERROR}
   from './NewPasswordActions'
 
-
-import {LOCATION_CHANGE} from 'react-router-redux'
-
 const defaultNewPassState = {
   password: '',
   confirmPassword: '',

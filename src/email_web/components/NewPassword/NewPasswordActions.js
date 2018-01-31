@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
 
-import {LANDING_PAGE_URL, NEW_PASSWORD_URL}
+import {NEW_PASSWORD_SUCCESS_URL, NEW_PASSWORD_URL}
   from '../../urls'
 
 import {validatePassword, validatePasswords}
@@ -87,9 +87,9 @@ function _submitNewPass(dispatch, getState, email, token) {
   return fetch(NEW_PASSWORD_URL, args)
     .then(response => response.json())
     .then(json => {
-      if (json.email) {
+      if (json.success) {
         dispatch(submitNewPassResponse())
-        dispatch(push(LANDING_PAGE_URL))
+        dispatch(push(NEW_PASSWORD_SUCCESS_URL))
       }
       else
         dispatch(submitNewPassResponseFailed(json.error))

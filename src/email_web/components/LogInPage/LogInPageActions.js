@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
 
-import {LOG_IN_URL, LANDING_PAGE_URL, FORGOT_PASSWORD_URL}
+import {LOG_IN_URL, LANDING_PAGE_URL, FORGOT_PASSWORD_BACKEND_URL}
   from '../../urls'
 import {validateEmail} from './LogInPageComponent'
 
@@ -11,11 +11,11 @@ export const ATTEMPT_LOG_IN = 'ATTEMPT_LOG_IN'
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
 export const LOG_IN_RESPONSE = 'LOG_IN_RESPONSE'
 export const LOG_IN_RESPONSE_FAILED = 'LOG_IN_RESPONSE_FAILED'
+export const SEND_FORGOT_PASSWORD_EMAIL = 'SEND_FORGOT_PASSWORD_EMAIL'
 
 export const UNVERIFIED_ERROR = 'UNVERIFIED_ERROR'
 export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR'
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
-export const SEND_FORGOT_PASSWORD_EMAIL = 'SEND_FORGOT_PASSWORD_EMAIL'
 
 export const emailChange = (value) => {
   return {
@@ -112,6 +112,6 @@ export function sendForgotPasswordEmail() {
         email: email
       })
     }
-    return fetch(FORGOT_PASSWORD_URL, args)
+    return fetch(FORGOT_PASSWORD_BACKEND_URL, args)
   }
 }

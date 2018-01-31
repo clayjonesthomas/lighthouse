@@ -682,7 +682,8 @@ class VerificationHandler(BaseHandler):
         if not user:
             logging.info('Could not find any user with email "%s" and signup token "%s"',
                          email, signup_token)
-            self.abort(404)
+            self.response.write(json.dumps({'error': 'AUTH_KEY_ERROR'}))
+            return
 
         # store user data in the session
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
@@ -811,7 +812,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
-    webapp2.Route('/reset_password_success', MainPage, name='new_password_success'),
+    webapp2.Route('/reset_password', MainPage, name='reset_password'),
+    webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

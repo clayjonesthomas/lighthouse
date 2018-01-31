@@ -7,6 +7,7 @@ import FrontPage from './components/FrontPage/FrontPage'
 import LogInPage from './components/LogInPage/LogInPage'
 import NewPasswordPage from './components/NewPassword/NewPasswordPage'
 import NewPasswordSuccessPage from './components/NewPassword/NewPasswordSuccessPage'
+import ForgotPasswordPage from './components/ForgotPassword/ForgotPasswordPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL} from './urls'
 
@@ -15,6 +16,7 @@ import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
 import {NEW_PASSWORD_PAGE} from './components/NewPassword/NewPasswordPage'
 import {NEW_PASSWORD_SUCCESS_PAGE} from './components/NewPassword/NewPasswordSuccessPage'
+import {FORGOT_PASSWORD_PAGE} from './components/ForgotPassword/ForgotPasswordPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -47,6 +49,9 @@ class Container extends Component {
         }
         {page === NEW_PASSWORD_SUCCESS_PAGE &&
           <NewPasswordSuccessPage/>
+        }
+        {page === FORGOT_PASSWORD_PAGE &&
+          <ForgotPasswordPage/>
         }
       </div>
     )

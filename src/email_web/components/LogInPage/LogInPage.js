@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {SIGN_UP_PAGE_URL} from '../../urls'
+import {SIGN_UP_PAGE_URL, FORGOT_PASSWORD_URL}
+  from '../../urls'
 
 import LogInPageComponent from './LogInPageComponent'
 import {emailChange, passwordChange, submitLogInForm,
@@ -57,7 +58,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(submitLogInForm())
     },
     onGoToSignUp: () => {dispatch(push(SIGN_UP_PAGE_URL))},
-    goToForgotPassword: () => {dispatch(sendForgotPasswordEmail())}
+    goToForgotPassword: () => {
+      dispatch(sendForgotPasswordEmail())
+      dispatch(push(FORGOT_PASSWORD_URL))
+    }
   }
 }
 
