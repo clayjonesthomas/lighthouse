@@ -670,7 +670,6 @@ class VerificationHandler(BaseHandler):
         """just for updating passwords"""
 
         user = None
-        import pdb; pdb.set_trace()
         body = json.loads(self.request.body)
         email = body['email']
         signup_token = body['signupToken']
@@ -681,7 +680,7 @@ class VerificationHandler(BaseHandler):
                                                             'signup')
 
         if not user:
-            logging.info('Could not find any user with email "%s" signup token "%s"',
+            logging.info('Could not find any user with email "%s" and signup token "%s"',
                          email, signup_token)
             self.abort(404)
 
@@ -812,6 +811,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
+    webapp2.Route('/reset_password_success', MainPage, name='new_password_success'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

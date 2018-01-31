@@ -5,6 +5,7 @@ import {push} from 'react-router-redux'
 import NewPasswordComponent from './NewPasswordComponent'
 import {passwordChange, confirmPasswordChange, submitNewPass}
   from './NewPasswordActions'
+import {NEW_PASSWORD_SUCCESS_URL} from '../../urls'
 
 export const NEW_PASSWORD_PAGE = 'NEW_PASSWORD_PAGE'
 
@@ -54,6 +55,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onSubmitNewPass: (e) => {
       e.preventDefault()
       dispatch(submitNewPass(ownProps.email, ownProps.signupKey))
+      dispatch(push(NEW_PASSWORD_SUCCESS_URL))
     }
   }
 }

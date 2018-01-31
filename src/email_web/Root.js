@@ -11,9 +11,11 @@ import Container from './Container'
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
-import {NEW_PASSWORD_PAGE} from './components/NewPasswordPage/NewPasswordPage'
+import {NEW_PASSWORD_PAGE} from './components/NewPassword/NewPasswordPage'
+import {NEW_PASSWORD_SUCCESS_PAGE} from './components/NewPassword/NewPasswordSuccessPage'
 
-
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL}
+  from './urls'
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -30,9 +32,10 @@ const Root = () => (
     <Router history={browserHistory}>
       <Route path="/">
         <IndexRoute component={LandingPage}/>
-        <Route path="/signup" component={SignUpPage}/>
-        <Route path="/login" component={LogInPage}/>
+        <Route path={SIGN_UP_PAGE_URL} component={SignUpPage}/>
+        <Route path={LOG_IN_PAGE_URL} component={LogInPage}/>
         <Route path="/new_password/:email/:signupKey" component={NewPasswordPage}/>
+        <Route path={NEW_PASSWORD_SUCCESS_URL} component={NewPasswordSuccessPage}/>
       </Route>
     </Router>
   </Provider>
@@ -69,6 +72,15 @@ const NewPasswordPage = (props) => {
   return (
     <Container
       page={NEW_PASSWORD_PAGE}
+      {...props}
+    />
+  )
+}
+
+const NewPasswordSuccessPage = (props) => {
+  return (
+    <Container
+      page={NEW_PASSWORD_SUCCESS_PAGE}
       {...props}
     />
   )

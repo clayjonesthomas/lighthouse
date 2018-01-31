@@ -5,14 +5,16 @@ import {push} from 'react-router-redux'
 import NavBar from './components/NavBar/NavBar'
 import FrontPage from './components/FrontPage/FrontPage'
 import LogInPage from './components/LogInPage/LogInPage'
-import NewPasswordPage from './components/NewPasswordPage/NewPasswordPage'
+import NewPasswordPage from './components/NewPassword/NewPasswordPage'
+import NewPasswordSuccessPage from './components/NewPassword/NewPasswordSuccessPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
-import {NEW_PASSWORD_PAGE} from './components/NewPasswordPage/NewPasswordPage'
+import {NEW_PASSWORD_PAGE} from './components/NewPassword/NewPasswordPage'
+import {NEW_PASSWORD_SUCCESS_PAGE} from './components/NewPassword/NewPasswordSuccessPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -42,6 +44,9 @@ class Container extends Component {
             email={this.props.params.email}
             signupKey={this.props.params.signupKey}
           />
+        }
+        {page === NEW_PASSWORD_SUCCESS_PAGE &&
+          <NewPasswordSuccessPage/>
         }
       </div>
     )

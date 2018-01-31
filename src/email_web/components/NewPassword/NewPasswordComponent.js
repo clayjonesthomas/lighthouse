@@ -46,8 +46,7 @@ const NewPasswordComponent = ({
       </h1>
       <p
         className="helper-text">
-        If this is not your email address, please close this
-        page and mail&nbsp;
+        If this is not your email address, please mail&nbsp;
         <a
           href="mailto:info@lightho.us"
           target="_top">
