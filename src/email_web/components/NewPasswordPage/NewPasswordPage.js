@@ -45,7 +45,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handlePasswordChange: (e) =>
       dispatch(passwordChange(e.target.value)),
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(confirmPasswordChange(e.target.value)),
     onSubmitNewPass: (e) => {
       e.preventDefault()
-      dispatch(submitNewPass())
+      dispatch(submitNewPass(ownProps.email, ownProps.signupKey))
     }
   }
 }

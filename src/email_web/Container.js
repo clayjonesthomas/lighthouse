@@ -40,6 +40,7 @@ class Container extends Component {
         {page === NEW_PASSWORD_PAGE &&
           <NewPasswordPage
             email={this.props.params.email}
+            signupKey={this.props.params.signupKey}
           />
         }
       </div>

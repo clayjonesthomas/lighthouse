@@ -32,7 +32,7 @@ const Root = () => (
         <IndexRoute component={LandingPage}/>
         <Route path="/signup" component={SignUpPage}/>
         <Route path="/login" component={LogInPage}/>
-        <Route path="/new_password/:email/:signup_key" component={NewPasswordPage}/>
+        <Route path="/new_password/:email/:signupKey" component={NewPasswordPage}/>
       </Route>
     </Router>
   </Provider>

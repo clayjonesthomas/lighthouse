@@ -667,14 +667,16 @@ class VerificationHandler(BaseHandler):
             self.abort(404)
 
     def post(self, *args, **kwargs):
-        user = None
-        email = kwargs['email']
-        signup_token = kwargs['signup_token']
-        verification_type = kwargs['type']
-        new_password = self.request.get('password')
+        """just for updating passwords"""
 
-        user_id = self.user_model.query(self.user_model.email_address == email,
-                                        keys_only=True).fetch(1)[0].id()
+        user = None
+        import pdb; pdb.set_trace()
+        body = json.loads(self.request.body)
+        email = body['email']
+        signup_token = body['signupToken']
+        new_password = body['password']
+
+        user_id = self.user_model.query(self.user_model.email_address == email).fetch(1)[0].key.id()
         user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
                                                             'signup')
 
@@ -686,15 +688,11 @@ class VerificationHandler(BaseHandler):
         # store user data in the session
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
 
-        if verification_type == 'p':
-            self.user_model.delete_signup_token(user.get_id(), signup_token)
-            user.set_password(new_password)
-            user.toggle_login(enable=True)
-            user.put()
-            self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
-        else:
-            logging.info('verification type not supported')
-            self.abort(404)
+        self.user_model.delete_signup_token(user.get_id(), signup_token)
+        user.set_password(new_password)
+        user.toggle_login(enable=True)
+        user.put()
+        self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
 
 
 class LoginHandler(BaseHandler):
@@ -785,6 +783,7 @@ config = {
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
+    webapp2.Route('/rest/p', VerificationHandler, name='verification_pass'),
     webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),

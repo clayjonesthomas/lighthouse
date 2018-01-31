@@ -74,17 +74,17 @@ export function submitNewPass(email, token) {
 function _submitNewPass(dispatch, getState, email, token) {
   const state = getState()
   const password = state.newPass.password
-  const confirmPassword = state.newPass.confirmPassword
   const args = {
     method: 'POST',
     credentials: 'same-origin',
     body: JSON.stringify({
-      password: password,
-      confirmPassword: confirmPassword
+      email: email,
+      signupToken: token,
+      password: password
     })
   }
   dispatch(submitNewPassRequest())
-  return fetch(NEW_PASSWORD_URL+'/'+email+'/'+token, args)
+  return fetch(NEW_PASSWORD_URL, args)
     .then(response => response.json())
     .then(json => {
       if (json.email) {
