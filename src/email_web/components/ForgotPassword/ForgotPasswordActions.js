@@ -29,9 +29,10 @@ export const forgotPasswordRequest = () => {
   }
 }
 
-export const forgotPasswordResponse = () => {
+export const forgotPasswordResponse = (email) => {
   return {
-    type: FORGOT_PASSWORD_RESPONSE
+    type: FORGOT_PASSWORD_RESPONSE,
+    data: email
   }
 }
 
@@ -63,7 +64,7 @@ function _submitForgotPassword(dispatch, getState) {
     .then(response => response.json())
     .then(json => {
       if (json.email) {
-        dispatch(forgotPasswordResponse(json))
+        dispatch(forgotPasswordResponse(json.email))
         dispatch(push(FORGOT_PASSWORD_SUCCESS_URL))
       }
     })

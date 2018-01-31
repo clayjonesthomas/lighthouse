@@ -21,8 +21,7 @@ const ForgotPasswordComponent = ({
                                    emailValue,
                                    handleEmailChange,
                                    onSubmitEmail,
-                                   hasAttemptedSubmission,
-                                   invalidEmail
+                                   hasAttemptedSubmission
                                  }) => (
   <form
     className="auth-form"

@@ -610,7 +610,10 @@ class ForgotPasswordHandler(BaseHandler):
         user = self.user_model.get_by_auth_id(email)
         if not user:
             logging.info('Could not find any user entry for email %s', email)
-            self.response.write(json.dumps({'error': 'NO_EMAIL_FOUND'}))
+            self.response.write(json.dumps({
+                'error': 'NO_EMAIL_FOUND',
+                'email': email,
+            }))
             return
 
         user_id = user.get_id()
@@ -622,8 +625,7 @@ class ForgotPasswordHandler(BaseHandler):
                                         signup_token=token, _full=True)
 
         logging.info("verification url: " + verification_url)
-        self.response.write(verification_url)
-
+        self.response.write(json.dumps({'email': email}))
 
 class VerificationHandler(BaseHandler):
     def get(self, *args, **kwargs):

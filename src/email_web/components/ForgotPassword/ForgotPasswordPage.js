@@ -14,8 +14,7 @@ class ForgotPasswordPage extends Component {
       emailValue,
       handleEmailChange,
       onSubmitEmail,
-      hasAttemptedSubmission,
-      invalidEmail
+      hasAttemptedSubmission
     } = this.props
     return (
       <ForgotPasswordComponent
@@ -23,7 +22,6 @@ class ForgotPasswordPage extends Component {
         handleEmailChange={handleEmailChange}
         onSubmitEmail={onSubmitEmail}
         hasAttemptedSubmission={hasAttemptedSubmission}
-        invalidEmail={invalidEmail}
       />
     )
   }
@@ -31,9 +29,8 @@ class ForgotPasswordPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    emailValue: state.forgotPassword.emailValue,
+    emailValue: state.forgotPassword.email,
     hasAttemptedSubmission: state.forgotPassword.hasAttemptedSubmission,
-    invalidEmail: state.forgotPassword.invalidEmail
   }
 }
 
