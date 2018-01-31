@@ -72,7 +72,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
-    goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL))
+    goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
   }
 }
 
