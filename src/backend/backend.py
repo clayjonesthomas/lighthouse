@@ -23,7 +23,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
-from email import send_emails, send_verification_email
+from email import send_emails, send_verification_email, send_forgot_password_email
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -32,6 +32,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
 
 # CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
@@ -55,51 +56,51 @@ def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
                   shop_key=shop_keys[0],
                   likes=25074,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
                   shop_key=shop_keys[1],
                   likes=14543,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(2)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
                   shop_key=shop_keys[1],
                   likes=30210,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1.5)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
                   shop_key=shop_keys[1],
                   likes=12532,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.4)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
                   shop_key=shop_keys[2],
                   likes=2664,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1.9)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1))
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1))
              ]
     ndb.put_multi(posts)
 
@@ -137,24 +138,24 @@ def _spawn_dummy_email_user(shop_keys):
                   emails=[],
                   # this field usually automatically populated during account creation
                   email_address='michelle@lightho.us')]
-    ndb.put_multi(users) 
+    ndb.put_multi(users)
 
 
 def _spawn_dummy_posts_for_email(shop_keys):
     email_posts = [Post(title='50% off all items on clearance',
                         shop_key=shop_keys[0],
                         likes=25074,
-                        timestamp=datetime.datetime.now()-datetime.timedelta(1),
+                        timestamp=datetime.datetime.now() - datetime.timedelta(1),
                         is_important=True),
                    Post(title='Buy any oxford on the site, get one free',
                         shop_key=shop_keys[1],
                         likes=14543,
-                        timestamp=datetime.datetime.now()-datetime.timedelta(2),
+                        timestamp=datetime.datetime.now() - datetime.timedelta(2),
                         is_important=True),
                    Post(title='$5 off the entire summer selection',
                         shop_key=shop_keys[1],
                         likes=30210,
-                        timestamp=datetime.datetime.now()-datetime.timedelta(1.5),
+                        timestamp=datetime.datetime.now() - datetime.timedelta(1.5),
                         is_important=False)]
     return ndb.put_multi(email_posts)
 
@@ -165,6 +166,7 @@ def user_required(handler):
       Decorator that checks if there's a user associated with the current session.
       Will also fail if there's no session present.
     """
+
     def check_login(self, *args, **kwargs):
         auth = self.auth
         if not auth.get_user_by_session():
@@ -241,7 +243,6 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class MainPage(BaseHandler):
-
     def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             # development, otherwise prod
@@ -254,7 +255,6 @@ class MainPage(BaseHandler):
 
 
 class Feed(BaseHandler):
-
     def get(self, offset, _should_get_all_posts):
         user = self.user
         # convert from '0' or '1' to True or False
@@ -282,20 +282,18 @@ class Feed(BaseHandler):
 
 
 class MyPosts(BaseHandler):
-
     def get(self, offset):
         user = self.user
         if not user:
             return
         _offset = int(offset)
         fetched_posts = [post_key.get().prepare_post(user)
-                         for post_key in user.liked_posts[_offset:_offset+10]]
+                         for post_key in user.liked_posts[_offset:_offset + 10]]
         logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
 
 class SinglePost(BaseHandler):
-
     def post(self):
         user = self.user
         if not user:
@@ -379,7 +377,6 @@ class LikePost(BaseHandler):
 
 
 class Shops(BaseHandler):
-
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
@@ -397,14 +394,13 @@ class NotMyShops(BaseHandler):
         fetched_shops = [shop.prepare_shop(user)
                          for shop in Store.query()]
         fetched_shops = list(filter((lambda s: ndb.Key(urlsafe=s['key'])
-                                     not in user.liked_stores),
+                                               not in user.liked_stores),
                                     fetched_shops))
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
 
 class MyShops(BaseHandler):
-
     def get(self):
         user = self.user
         if not user:
@@ -416,7 +412,6 @@ class MyShops(BaseHandler):
 
 
 class ShopPosts(BaseHandler):
-
     def get(self, url_key, offset):
         user = self.user
         shop = ndb.Key(urlsafe=url_key).get()
@@ -429,7 +424,6 @@ class ShopPosts(BaseHandler):
 
 
 class LikeShop(BaseHandler):
-
     def post(self):
         user = self.user
         if not user:
@@ -456,7 +450,6 @@ class LikeShop(BaseHandler):
 
 
 class LikeShops(BaseHandler):
-
     def post(self):
         user = self.user
         if not user:
@@ -467,7 +460,7 @@ class LikeShops(BaseHandler):
             selected_shops = [ndb.Key(urlsafe=body['key']).get()]
         if 'keys' in body:
             selected_shops = [ndb.Key(urlsafe=key).get()
-                     for key in body['keys']]
+                              for key in body['keys']]
 
         for shop in selected_shops:
             if shop.key not in user.liked_stores:
@@ -481,7 +474,7 @@ class LikeShops(BaseHandler):
                 user.liked_stores.remove(original_liked_shop.key)
                 original_liked_shop.likes -= 1
                 original_liked_shop.put()
-        
+
         user.put()
 
         shops = [shop.prepare_shop(user) for shop in selected_shops]
@@ -489,7 +482,6 @@ class LikeShops(BaseHandler):
 
 
 class SingleShop(BaseHandler):
-
     def get(self, url_key):
         shop = get_entity_from_url_key(url_key)
         shop_dict = shop.to_dict()
@@ -527,7 +519,6 @@ class SingleShop(BaseHandler):
 
 
 class EditShop(BaseHandler):
-
     def post(self):
         user = self.user
         body = json.loads(self.request.body)
@@ -543,7 +534,6 @@ class EditShop(BaseHandler):
 
 
 class SignupHandler(BaseHandler):
-
     def post(self):
         body = json.loads(self.request.body)
         email = body['email']
@@ -561,7 +551,7 @@ class SignupHandler(BaseHandler):
                 are_shops_valid = False
 
         if (not is_password_valid or not is_email_valid
-                or not are_shops_valid):
+            or not are_shops_valid):
             self.response.write(json.dumps({
                 'error': 'VALIDATION_ERROR',
                 'isEmailValid': is_email_valid,
@@ -621,11 +611,14 @@ class ForgotPasswordHandler(BaseHandler):
         u = self.user_model.get_by_auth_id(email)
         u.toggle_login(enable=False)
         u.put()
-        verification_url = self.uri_for('verification', type='p', user_id=user_id,
-                                        signup_token=token, _full=True)
+        forgot_password_url = self.uri_for('verification', type='p', user_id=user_id,
+                                           signup_token=token, _full=True)
 
-        logging.info("verification url: " + verification_url)
+        logging.info("forgot password url: " + forgot_password_url)
         self.response.write(json.dumps({'email': email}))
+        send_forgot_password_email(email, forgot_password_url)
+        return
+
 
 class VerificationHandler(BaseHandler):
     def get(self, *args, **kwargs):
@@ -662,7 +655,7 @@ class VerificationHandler(BaseHandler):
             return
         elif verification_type == 'p':
             # self.response.write(json.dumps(params))
-            self.redirect('/new_password/'+user.email_address+'/'+signup_token)
+            self.redirect('/new_password/' + user.email_address + '/' + signup_token)
             return
         else:
             logging.info('verification type not supported')
@@ -698,7 +691,6 @@ class VerificationHandler(BaseHandler):
 
 
 class LoginHandler(BaseHandler):
-
     def post(self):
         body = json.loads(self.request.body)
         email = body['email']
@@ -781,7 +773,6 @@ config = {
         'secret_key': auth_config.secret_key
     }
 }
-
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
