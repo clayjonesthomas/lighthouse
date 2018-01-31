@@ -3,6 +3,7 @@ import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 import {Radio} from 'react-bootstrap'
 
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
+import Spinner from '../../ui-kit/Spinner'
 
 import "./SettingsPageComponent.css"
 
@@ -46,17 +47,19 @@ const SettingsPageComponent = ({
         <Radio name="emailOptions" value="UNSUBSCRIBE_EMAIL" checked={emailFrequency===UNSUBSCRIBE_EMAIL}>Unsubscribe me from all emails</Radio>
       </div>
     </FormGroup>
-    <input
-      type="submit"
-      disabled={isSettingsUnchanged && !displaySpinner}
-      value="SAVE CHANGES"
-      className="submit-button"
-      id="settings-form-button"
-    />
-    {displaySpinner && 
-      <span>Spinner</span>}
-    {showSavedMessage && 
-      <span>Changes saved!</span>}
+    <div>
+      <input
+        type="submit"
+        disabled={isSettingsUnchanged && !displaySpinner}
+        value="SAVE CHANGES"
+        className="submit-button"
+        id="settings-form-button"
+      />
+      {displaySpinner && 
+        <div id="settings-form-spinner"><Spinner/></div>}
+      {showSavedMessage && 
+        <div id="settings-form-saved-message">Changes saved!</div>}
+    </div>
   </form>
 )
 

@@ -42,9 +42,20 @@
 #settings-form-button {
     margin-top: 10px;
     margin-left: 50px;
+    float:left;
 }
 
 #settings-form-button:disabled {
     opacity: .4;
     cursor: auto;
+}
+
+#settings-form-spinner {
+    float: left;
+    margin-top: 14px;
+}
+
+#settings-form-saved-message {
+    float: left;
+    margin-top: 24px;
 }
