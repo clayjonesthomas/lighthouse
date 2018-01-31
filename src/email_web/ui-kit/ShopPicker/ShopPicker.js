@@ -2,8 +2,7 @@ import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import ShopPickerComponent from './ShopPickerComponent'
 
-import {pullMyShops, pullMyEmailFrequency, pullAllShops} 
-  from '../../services/ShopDataActions'
+import {pullMyShops, pullAllShops} from '../../services/ShopDataActions'
 
 class ShopPicker extends Component {
 
@@ -11,7 +10,6 @@ class ShopPicker extends Component {
     this.props.getAllShops()
     if (!this.props.isSetupMode) {
       this.props.getMyShops()
-      this.props.getMyEmailFrequency()
     }
   }
 
@@ -52,7 +50,6 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     getAllShops: () => dispatch(pullAllShops()),
     getMyShops: () => dispatch(pullMyShops()),
-    getMyEmailFrequency: () => dispatch(pullMyEmailFrequency()),
     onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops))
   }
 }

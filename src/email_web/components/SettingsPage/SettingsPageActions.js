@@ -1,12 +1,13 @@
-import {UPDATE_SETTINGS_URL} from '../../urls'
-import {pullMyShops, pullMyEmailFrequency} 
-  from '../../services/ShopDataActions'
+import {UPDATE_SETTINGS_URL, USER_DATA_URL} from '../../urls'
+import {pullMyShops} from '../../services/ShopDataActions'
 
 export const EMAIL_FREQUENCY_CHANGE = 'EMAIL_FREQUENCY_CHANGE'
 export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
 export const UPDATE_SETTINGS_REQUEST = 'UPDATE_SETTINGS_REQUEST'
 export const UPDATE_SETTINGS_RETURN = 'UPDATE_SETTINGS_RETURN'
 export const SETTINGS_SPINNER_TIMEOUT = 'SETTINGS_SPINNER_TIMEOUT'
+export const USER_DATA_REQUEST = 'USER_DATA_REQUEST'
+export const USER_DATA_RETURN = 'USER_DATA_RETURN'
 
 export const emailFrequencyChange = (value) => {
   return {
@@ -22,13 +23,13 @@ export const pickedShopsChange = (listOfShops) => {
   }
 }
 
-export const requestUpdateSettings = () => {
+export const updateSettingsRequest = () => {
   return {
     type: UPDATE_SETTINGS_REQUEST
   }
 }
 
-export const requestUpdateSettingsReturn = (success) => {
+export const updateSettingsReturn = (success) => {
   return {
     type: UPDATE_SETTINGS_RETURN
   }
@@ -49,13 +50,13 @@ export const submitSettingsForm = () => {
       })
     }
 
-    dispatch(requestUpdateSettings())
+    dispatch(updateSettingsRequest())
     dispatch(startDummySpinnerTimer())
     return fetch(UPDATE_SETTINGS_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(requestUpdateSettingsReturn(json)))
+      .then(json => dispatch(updateSettingsReturn(json)))
       .then(() => dispatch(pullMyShops()))
-      .then(() => dispatch(pullMyEmailFrequency()))
+      .then(() => dispatch(pullUserData()))
   } 
 }
 
@@ -72,5 +73,31 @@ export function startDummySpinnerTimer() {
 const settingsSpinnerTimeout = () => {
   return {
     type: SETTINGS_SPINNER_TIMEOUT
+  }
+}
+
+export const userDataRequest = () => {
+  return {
+    type: USER_DATA_REQUEST
+  }
+}
+
+export const userDataReturn = (userData) => {
+  return {
+    type: USER_DATA_RETURN,
+    data: userData
+  }
+}
+
+export function pullUserData() {
+  const args = {
+    method: 'GET',
+    credentials: 'same-origin',
+  }
+  return dispatch => {
+    dispatch(userDataRequest())
+    return fetch(USER_DATA_URL, args)
+      .then(response => response.json())
+      .then(json => dispatch(userDataReturn(json)))
   }
 }

@@ -3,13 +3,18 @@ import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import _ from 'underscore'
 
-import {emailFrequencyChange, pickedShopsChange, submitSettingsForm} 
+import {emailFrequencyChange, pickedShopsChange, pullUserData, submitSettingsForm} 
   from './SettingsPageActions'
 import SettingsPageComponent from './SettingsPageComponent'
 
 export const SETTINGS_PAGE = 'SETTINGS_PAGE'
 
 class SettingsPage extends Component {
+
+  componentDidMount() {
+    this.props.getUserData()
+  }
+
   render() {
     const {
       selectedShops,
@@ -52,6 +57,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getUserData: () => dispatch(pullUserData()),
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
     handleEmailFrequencyChange: (e) => dispatch(emailFrequencyChange(e.target.value)),
     onSubmitSettings: (e) => {

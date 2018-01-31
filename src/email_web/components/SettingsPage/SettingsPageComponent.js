@@ -31,9 +31,8 @@ const SettingsPageComponent = ({
         <h2 className="section-title">Update Your Shops</h2>
         <ShopPicker
           className="shop-picker-box"
-          tabIndex={-1 /*TODO what do here*/}
           isSetupMode={false}
-          selectedShops={selectedShops || []}
+          selectedShops={selectedShops}
           onPickedShopsChange={onPickedShopsChange}
         />
       </div>
@@ -42,9 +41,24 @@ const SettingsPageComponent = ({
       onChange={handleEmailFrequencyChange}>
       <div className="settings-section">
         <h2 className="section-title">Email Preferences</h2>
-        <Radio name="emailOptions" value="HIGH_FREQUENCY_EMAIL" checked={emailFrequency===HIGH_FREQUENCY_EMAIL}>High frequency - daily email with all your sales</Radio>
-        <Radio name="emailOptions" value="MID_FREQUENCY_EMAIL" checked={emailFrequency===MID_FREQUENCY_EMAIL}>Standard frequency - important sales only</Radio>
-        <Radio name="emailOptions" value="UNSUBSCRIBE_EMAIL" checked={emailFrequency===UNSUBSCRIBE_EMAIL}>Unsubscribe me from all emails</Radio>
+        <Radio
+          name="emailOptions" 
+          value="HIGH_FREQUENCY_EMAIL" 
+          checked={emailFrequency===HIGH_FREQUENCY_EMAIL}>
+            High frequency - daily email with all your sales
+        </Radio>
+        <Radio 
+          name="emailOptions" 
+          value="MID_FREQUENCY_EMAIL" 
+          checked={emailFrequency===MID_FREQUENCY_EMAIL}>
+            Standard frequency - important sales only
+        </Radio>
+        <Radio 
+          name="emailOptions" 
+          value="UNSUBSCRIBE_EMAIL" 
+          checked={emailFrequency===UNSUBSCRIBE_EMAIL}>
+            Unsubscribe me from all emails
+        </Radio>
       </div>
     </FormGroup>
     <div>

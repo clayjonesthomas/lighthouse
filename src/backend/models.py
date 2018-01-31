@@ -10,6 +10,8 @@ from google.appengine.api import mail
 from webapp2_extras import security
 from webapp2_extras import auth
 
+import enums.EmailFrequency as EmailFrequency
+
 
 def get_entity_from_url_key(url_key):
     return ndb.Key(urlsafe=url_key).get()
@@ -145,7 +147,7 @@ class User(webapp2_extras.appengine.auth.models.User):
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
     using_email_service = ndb.BooleanProperty(indexed=True, default=False)
-    email_frequency = ndb.IntegerProperty(indexed=True, default=1) # see EmailFrequency enum
+    email_frequency = ndb.StringProperty(indexed=True, default=EmailFrequency.MID_FREQUENCY_EMAIL)
     # must be in order from earliest to latest email
     emails = ndb.KeyProperty(indexed=False, kind='PostsEmail', repeated=True)
 

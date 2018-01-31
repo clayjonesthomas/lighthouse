@@ -23,7 +23,7 @@ class Container extends Component {
       goToSignUp,
       goToLogIn,
       goToSettings,
-      logout
+      logOut
     } = this.props
     return (
       <div id="container">
@@ -31,7 +31,7 @@ class Container extends Component {
           onClickSignUp={goToSignUp}
           onClickLogIn={goToLogIn}
           onClickSettings={goToSettings}
-          onClickLogout={logout}
+          onClickLogout={logOut}
         />
         {(page === LANDING_PAGE || page === SIGN_UP_PAGE) &&
           <FrontPage
@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => {
     goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
     goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
-    logout: () => {
+    logOut: () => {
       dispatch() //TODO in backend pr
     }
   }

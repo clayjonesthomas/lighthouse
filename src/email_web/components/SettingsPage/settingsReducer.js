@@ -1,7 +1,8 @@
 import {EMAIL_FREQUENCY_CHANGE, PICKED_SHOPS_CHANGE, 
-  UPDATE_SETTINGS_REQUEST, UPDATE_SETTINGS_RETURN, SETTINGS_SPINNER_TIMEOUT} 
+  UPDATE_SETTINGS_REQUEST, UPDATE_SETTINGS_RETURN, 
+  USER_DATA_RETURN, SETTINGS_SPINNER_TIMEOUT} 
     from './SettingsPageActions'
-import {MY_SHOPS_RESPONSE, MY_EMAIL_FREQUENCY_RESPONSE} from '../../services/ShopDataActions'
+import {MY_SHOPS_RESPONSE} from '../../services/ShopDataActions'
 import {MID_FREQUENCY_EMAIL} from './SettingsPageComponent'
 
 const defaultSettingsState = {
@@ -16,10 +17,10 @@ const defaultSettingsState = {
 
 export function settings(state = defaultSettingsState, action) {
   switch (action.type) {
-    case MY_EMAIL_FREQUENCY_RESPONSE:
+    case USER_DATA_RETURN:
       return Object.assign({}, state, {
-        myPreviousEmailFrequency: action.data,
-        emailFrequency: action.data
+        myPreviousEmailFrequency: action.data.email_frequency,
+        emailFrequency: action.data.email_frequency
       })
     case MY_SHOPS_RESPONSE:
       return Object.assign({}, state, {
