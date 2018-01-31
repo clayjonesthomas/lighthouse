@@ -5,12 +5,14 @@ import {push} from 'react-router-redux'
 import NavBar from './components/NavBar/NavBar'
 import FrontPage from './components/FrontPage/FrontPage'
 import LogInPage from './components/LogInPage/LogInPage'
+import VerificationSuccessPage from './components/VerificationSuccessPage/VerificationSuccessPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
+import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -34,6 +36,9 @@ class Container extends Component {
         }
         {page === LOG_IN_PAGE &&
           <LogInPage/>
+        }
+        {page === VERIFICATION_SUCCESS_PAGE &&
+          <VerificationSuccessPage/>
         }
       </div>
     )

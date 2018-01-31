@@ -11,6 +11,7 @@ import Container from './Container'
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
+import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 
 
 
@@ -31,6 +32,7 @@ const Root = () => (
         <IndexRoute component={ContainerAtLandingPage}/>
         <Route path="/signup" component={ContainerAtSignUpPage}/>
         <Route path="/login" component={ContainerAtLogInPage}/>
+        <Route path="/verified" component={ContainerAtVerificationSuccessPage}/>
       </Route>
     </Router>
   </Provider>
@@ -58,6 +60,15 @@ const ContainerAtLogInPage = (props) => {
   return (
     <Container
       page={LOG_IN_PAGE}
+      {...props}
+    />
+  )
+}
+
+const ContainerAtVerificationSuccessPage = (props) => {
+  return (
+    <Container
+      page={VERIFICATION_SUCCESS_PAGE}
       {...props}
     />
   )
