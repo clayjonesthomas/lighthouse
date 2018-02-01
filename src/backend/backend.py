@@ -617,7 +617,6 @@ class ForgotPasswordHandler(BaseHandler):
         logging.info("forgot password url: " + forgot_password_url)
         self.response.write(json.dumps({'email': email}))
         send_forgot_password_email(email, forgot_password_url)
-        return
 
 
 class VerificationHandler(BaseHandler):
@@ -652,16 +651,13 @@ class VerificationHandler(BaseHandler):
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
             self.redirect_to('verification_success')
-            return
         elif verification_type == 'p':
-            # self.response.write(json.dumps(params))
             self.redirect('/new_password/' + user.email_address + '/' + signup_token)
-            return
         else:
             logging.info('verification type not supported')
             self.abort(404)
 
-    def post(self, *args, **kwargs):
+    def post(self):
         """just for updating passwords"""
 
         user = None
@@ -673,7 +669,6 @@ class VerificationHandler(BaseHandler):
         user_id = self.user_model.query(self.user_model.email_address == email).fetch(1)[0].key.id()
         user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
                                                             'signup')
-
         if not user:
             logging.info('Could not find any user with email "%s" and signup token "%s"',
                          email, signup_token)
