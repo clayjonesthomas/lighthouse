@@ -23,7 +23,8 @@ class Container extends Component {
       goToSignUp,
       goToLogIn,
       goToSettings,
-      logOut
+      logOut,
+      email
     } = this.props
     return (
       <div id="container">
@@ -32,6 +33,7 @@ class Container extends Component {
           onClickLogIn={goToLogIn}
           onClickSettings={goToSettings}
           onClickLogout={logOut}
+          email={email}
         />
         {(page === LANDING_PAGE || page === SIGN_UP_PAGE) &&
           <FrontPage
@@ -51,7 +53,8 @@ class Container extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    page: ownProps.page
+    page: ownProps.page,
+    email: state.user.email
   }
 }
 

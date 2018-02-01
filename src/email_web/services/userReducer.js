@@ -16,8 +16,7 @@ export function user(state = defaultUserState, action) {
       })
     case SIGN_UP_RESPONSE:
       return Object.assign({}, state, {
-        email: action.data.email,
-        isVerified: false
+        email: action.data.email
       })
     default:
       return state

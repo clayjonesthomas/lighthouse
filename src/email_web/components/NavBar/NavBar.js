@@ -5,11 +5,12 @@ const NavBar = ({
                   onClickSignUp,
                   onClickLogIn,
                   onClickSettings,
-                  onClickLogout
+                  onClickLogout,
+                  username
                 }) => (
   <div id="nav-bar">
     <div id="nav-bar-link-container">
-      {true ? //TODO change depending on if user is logged in
+      {username ?
         <div id="general-nav-bar"> 
           <span className="nav-bar-link" tabIndex="0">How It Works</span>
           <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
