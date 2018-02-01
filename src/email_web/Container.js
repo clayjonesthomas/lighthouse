@@ -58,7 +58,9 @@ class Container extends Component {
         />
         }
         {page === NEW_PASSWORD_SUCCESS_PAGE &&
-        <NewPasswordSuccessPage/>
+        <NewPasswordSuccessPage
+          goToSettings={goToSettings}
+        />
         }
         {page === FORGOT_PASSWORD_PAGE &&
         <ForgotPasswordPage/>

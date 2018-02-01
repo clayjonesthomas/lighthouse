@@ -23,12 +23,8 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
-<<<<<<< HEAD
 from email import send_emails, send_verification_email, send_forgot_password_email
-=======
-from email import send_emails, send_verification_email
 import enums.EmailFrequency as EmailFrequency
->>>>>>> master
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -666,14 +662,9 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
-<<<<<<< HEAD
             self.redirect_to('verification_success')
         elif verification_type == 'p':
             self.redirect('/new_password/' + user.email_address + '/' + signup_token)
-=======
-            self.redirect(self.uri_for('verified'))
-            return
->>>>>>> master
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -837,16 +828,13 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
-
     webapp2.Route('/rest/email', EmailHandler, name='email'),
-<<<<<<< HEAD
+
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
-=======
-    webapp2.Route('/verified', MainPage, name='verified'),
->>>>>>> master
+
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

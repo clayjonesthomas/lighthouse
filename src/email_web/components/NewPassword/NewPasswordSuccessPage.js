@@ -8,7 +8,7 @@ import "./NewPasswordSuccessPage.css"
 export const NEW_PASSWORD_SUCCESS_PAGE = 'NEW_PASSWORD_SUCCESS_PAGE'
 
 const NewPasswordSuccessPage = ({
-                                  goToSettings //TODO add link when setting page is merged
+                                  goToSettings
                                 }) => (
   <div
     className="auth-form">
