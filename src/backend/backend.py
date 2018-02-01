@@ -619,7 +619,16 @@ class SignupHandler(BaseHandler):
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        self.response.write(json.dumps({'email': user.email_address}))
+
+        liked_stores = [store.get().prepare_shop(user) for store in user.liked_stores]
+
+        self.response.write(json.dumps({
+            'email': self.user.email_address,
+            'isVerified': True,
+            'isModerator': self.user.is_moderator,
+            'myShops': liked_stores,
+            'myEmailFrequency': self.user.email_frequency
+        }))
 
 
 class ForgotPasswordHandler(BaseHandler):
