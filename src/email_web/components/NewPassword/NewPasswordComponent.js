@@ -5,6 +5,7 @@ import "../LogInPage/LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
 
+import "./NewPasswordComponent.css"
 export function validatePasswords(password,
                                   confirmPassword,
                                   hasAttemptedSubmission) {
@@ -32,7 +33,9 @@ const NewPasswordComponent = ({
                                 confirmPasswordValue,
                                 onSubmitNewPass,
                                 hasAttemptedSubmission,
-                                invalidPass
+                                invalidPass,
+                                invalidToken,
+                                goToForgotPassword
                               }) => (
   <form
     className="auth-form"
@@ -54,6 +57,17 @@ const NewPasswordComponent = ({
         </a>
         &nbsp;for help.
       </p>
+      <div
+        className="new-pass-server-error"
+      >
+        The link you are using is invalid. You may have waited too long
+        to reset your password or copied it incorrectly. Please go to&nbsp;
+        <a
+          onClick={goToForgotPassword}>
+          Forgot Password
+        </a>
+        &nbsp;and try again.
+      </div>
       <FormGroup
         validationState={validatePassword(passwordValue, hasAttemptedSubmission)}
         className="password-box"

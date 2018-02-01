@@ -17,7 +17,8 @@ class NewPasswordPage extends Component {
       confirmPasswordValue,
       onSubmitNewPass,
       hasAttemptedSubmission,
-      invalidPass
+      invalidPass,
+      invalidToken
     } = this.props
     return (
       <NewPasswordComponent
@@ -29,6 +30,7 @@ class NewPasswordPage extends Component {
         onSubmitNewPass={onSubmitNewPass}
         hasAttemptedSubmission={hasAttemptedSubmission}
         invalidPass={invalidPass}
+        invalidToken={invalidToken}
       />
     )
   }
