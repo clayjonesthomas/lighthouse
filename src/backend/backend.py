@@ -712,6 +712,7 @@ class VerificationHandler(BaseHandler):
             logging.info('verification type not supported')
             self.abort(404)
 
+
 class LoginHandler(BaseHandler):
 
     def post(self):
@@ -722,13 +723,16 @@ class LoginHandler(BaseHandler):
         try:
             user_dict = self.auth.get_user_by_password(email, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
+            liked_stores = [store.get().prepare_shop(user) for store in user.liked_stores]
 
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
                         'email': self.user.email_address,
                         'isVerified': True,
-                        'isModerator': self.user.is_moderator
+                        'isModerator': self.user.is_moderator,
+                        'myShops': liked_stores,
+                        'myEmailFrequency': self.user.email_frequency
                     }))
                 else:
                     logging.info('Login failed for user %s because they reset their password', email)
@@ -739,25 +743,13 @@ class LoginHandler(BaseHandler):
                 self.response.write(json.dumps({
                     'email': self.user.email_address,
                     'isVerified': False,
-                    'isModerator': self.user.is_moderator
+                    'isModerator': self.user.is_moderator,
+                    'myShops': liked_stores,
+                    'myEmailFrequency': self.user.email_frequency
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', email, type(e))
             self.response.write(json.dumps({'error': 'AUTHENTICATION_ERROR'}))
-
-    def get(self):
-        """
-        lowkey just used to ensure a user is logged in after verification,
-        but likely will be used in the future to pull login data
-        """
-        if self.user:
-            self.response.write(json.dumps({
-                'username': self.user.username,
-                'isModerator': self.user.is_moderator,
-                'logged_in': True
-            }))
-        else:
-            self.response.write(json.dumps({'logged_in': False}))
 
 
 class LogoutHandler(BaseHandler):
