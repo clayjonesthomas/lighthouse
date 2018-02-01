@@ -68,9 +68,7 @@ const mapDispatchToProps = (dispatch) => {
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
       dispatch(logOut())
-        .then(
-          window.location.reload()
-        )
+      dispatch(push(LANDING_PAGE_URL))
     }
   }
 }

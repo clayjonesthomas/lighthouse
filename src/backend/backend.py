@@ -169,7 +169,7 @@ def user_required(handler):
     def check_login(self, *args, **kwargs):
         auth = self.auth
         if not auth.get_user_by_session():
-            self.redirect(self.uri_for('login'), abort=True)
+            self.redirect_to('login_page')
         else:
             return handler(self, *args, **kwargs)
 
@@ -250,6 +250,14 @@ class MainPage(BaseHandler):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class UsersOnlyMainPage(BaseHandler):
+
+    @user_required
+    def get(self):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -836,9 +844,13 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
-
     webapp2.Route('/rest/email', EmailHandler, name='email'),
+
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
+    webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
+    webapp2.Route('/signup', MainPage, name='signup_page'),
+    webapp2.Route('/login', MainPage, name='login_page'),
+
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
