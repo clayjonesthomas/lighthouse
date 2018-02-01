@@ -5,6 +5,7 @@ import {switchToPage} from './components/FrontPage/frontPageReducer'
 import {allShops, signup} from './components/SignUpPage/signUpReducer'
 import {login} from './components/LogInPage/logInReducer'
 import {user} from './services/userReducer'
+import {settings} from './components/SettingsPage/settingsReducer'
 
 export default combineReducers({
   allShops,
@@ -12,5 +13,6 @@ export default combineReducers({
   signup,
   login,
   user,
+  settings,
   routing: routerReducer
 })
