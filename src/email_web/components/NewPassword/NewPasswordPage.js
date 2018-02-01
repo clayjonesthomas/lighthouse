@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 
 import NewPasswordComponent from './NewPasswordComponent'
 import {passwordChange, confirmPasswordChange, submitNewPass}
   from './NewPasswordActions'
+
+import {FORGOT_PASSWORD_URL} from '../../urls'
 
 export const NEW_PASSWORD_PAGE = 'NEW_PASSWORD_PAGE'
 
@@ -18,7 +21,8 @@ class NewPasswordPage extends Component {
       onSubmitNewPass,
       hasAttemptedSubmission,
       invalidPass,
-      invalidToken
+      invalidToken,
+      goToForgotPassword
     } = this.props
     return (
       <NewPasswordComponent
@@ -31,6 +35,7 @@ class NewPasswordPage extends Component {
         hasAttemptedSubmission={hasAttemptedSubmission}
         invalidPass={invalidPass}
         invalidToken={invalidToken}
+        goToForgotPassword={goToForgotPassword}
       />
     )
   }
@@ -42,7 +47,8 @@ const mapStateToProps = (state, ownProps) => {
     passwordValue: state.newPass.password,
     confirmPasswordValue: state.newPass.confirmPassword,
     hasAttemptedSubmission: state.newPass.hasAttemptedSubmission,
-    invalidPass: state.newPass.invalidPass
+    invalidPass: state.newPass.invalidPass,
+    invalidToken: state.newPass.invalidToken
   }
 }
 
@@ -55,6 +61,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onSubmitNewPass: (e) => {
       e.preventDefault()
       dispatch(submitNewPass(ownProps.email, ownProps.signupKey))
+    },
+    goToForgotPassword: () => {
+      dispatch(push(FORGOT_PASSWORD_URL))
     }
   }
 }
