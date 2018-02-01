@@ -1,6 +1,6 @@
 import {LOG_IN_RESPONSE} from '../components/LogInPage/LogInPageActions'
 import {SIGN_UP_RESPONSE} from '../components/SignUpPage/SignUpPageActions'
-import {LOG_OUT_RESPONSE} from '../services/UserActions'
+import {LOG_OUT_RESPONSE, USER_DATA_RETURN} from '../services/UserActions'
 
 import {MID_FREQUENCY_EMAIL} from '../components/SettingsPage/SettingsPageComponent'
 
@@ -27,6 +27,14 @@ export function user(state = defaultUserState, action) {
         email: action.data.email,
         myShops: action.data.myShops,
         myEmailFrequency: action.data.myEmailFrequency
+      })
+    case USER_DATA_RETURN:
+      return Object.assign({}, state, {
+        myEmailFrequency: action.data.emailFrequency,
+        myShops: action.data.myShops,
+        email: action.data.email,
+        isVerified: action.data.isVerified,
+        isModerator: action.data.isModerator
       })
     case LOG_OUT_RESPONSE:
       return defaultUserState

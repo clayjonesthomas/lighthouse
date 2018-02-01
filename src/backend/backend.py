@@ -428,10 +428,20 @@ class UserData(BaseHandler):
 
     def get(self):
         user = self.user
+
         if not user:
             return
+
         email_frequency = user.email_frequency
-        self.response.write(json.dumps({'email_frequency': email_frequency}))
+        liked_stores = [store.get().prepare_shop(user) for store in user.liked_stores]
+
+        self.response.write(json.dumps({
+            'email': user.email_address,
+            'isVerified': user.verified,
+            'isModerator': user.is_moderator,
+            'myShops': liked_stores,
+            'emailFrequency': email_frequency,
+        }))
 
 
 class ShopPosts(BaseHandler):

@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
+import {FormGroup} from 'react-bootstrap'
 import {Radio} from 'react-bootstrap'
 
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
