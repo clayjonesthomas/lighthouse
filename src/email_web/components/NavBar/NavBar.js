@@ -12,14 +12,14 @@ const NavBar = ({
     <div id="nav-bar-link-container">
       {email ?
         <div id="user-nav-bar">
-          <span className="nav-bar-link" onClick={onClickSettings} tabIndex="0">Settings</span>
-          <span className="nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</span>
+          <a className="nav-bar-link" onClick={onClickSettings} tabIndex="0">Settings</a>
+          <a className="nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</a>
         </div>
         :
         <div id="general-nav-bar">
-          <span className="nav-bar-link" tabIndex="0">How It Works</span>
-          <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
-          <span className="nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</span>
+          <a className="nav-bar-link" tabIndex="0">How It Works</a>
+          <a className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</a>
+          <a className="nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</a>
         </div>
       }
     </div>
