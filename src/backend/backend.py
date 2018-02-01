@@ -23,7 +23,12 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
+<<<<<<< HEAD
 from email import send_emails, send_verification_email, send_forgot_password_email
+=======
+from email import send_emails, send_verification_email
+import enums.EmailFrequency as EmailFrequency
+>>>>>>> master
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -411,6 +416,16 @@ class MyShops(BaseHandler):
         self.response.write(json.dumps(fetched_shops))  # included in state as "displayedShops"
 
 
+class UserData(BaseHandler):
+
+    def get(self):
+        user = self.user
+        if not user:
+            return
+        email_frequency = user.email_frequency
+        self.response.write(json.dumps({'email_frequency': email_frequency}))
+
+
 class ShopPosts(BaseHandler):
     def get(self, url_key, offset):
         user = self.user
@@ -572,6 +587,7 @@ class SignupHandler(BaseHandler):
                                                 verified=False,
                                                 is_moderator=is_moderator,
                                                 using_email_service=True,
+                                                email_frequency=EmailFrequency.MID_FREQUENCY_EMAIL,
                                                 liked_stores=shop_keys)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for email %s because of '
@@ -650,9 +666,14 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
+<<<<<<< HEAD
             self.redirect_to('verification_success')
         elif verification_type == 'p':
             self.redirect('/new_password/' + user.email_address + '/' + signup_token)
+=======
+            self.redirect(self.uri_for('verified'))
+            return
+>>>>>>> master
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -750,6 +771,24 @@ class EmailHandler(BaseHandler):
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
+class SettingsHandler(BaseHandler):
+
+    def post(self):
+        body = json.loads(self.request.body)
+        selectedShops = body['selectedShops']
+        emailFrequency = body['emailFrequency']
+
+        user = self.user
+        if not user:
+            return
+
+        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selectedShops]
+        user.liked_stores = shop_keys
+        user.email_frequency = emailFrequency
+        user.put()
+        self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -776,6 +815,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
+    webapp2.Route('/rest/settings', SettingsHandler, name='settings'),
 
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
     webapp2.Route('/rest/posts', Feed, name='feed'),
@@ -784,6 +824,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
+    webapp2.Route('/rest/user_data', UserData, name='user_data'),
     webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shops/like', LikeShops, name='like_shops'),
@@ -798,10 +839,14 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
 
     webapp2.Route('/rest/email', EmailHandler, name='email'),
+<<<<<<< HEAD
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
+=======
+    webapp2.Route('/verified', MainPage, name='verified'),
+>>>>>>> master
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),

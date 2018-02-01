@@ -9,8 +9,10 @@ import NewPasswordPage from './components/NewPassword/NewPasswordPage'
 import NewPasswordSuccessPage from './components/NewPassword/NewPasswordSuccessPage'
 import ForgotPasswordPage from './components/ForgotPassword/ForgotPasswordPage'
 import ForgotPasswordSuccessPage from './components/ForgotPassword/ForgotPasswordSuccessPage'
+import VerificationSuccessPage from './components/VerificationSuccessPage/VerificationSuccessPage'
+import SettingsPage from './components/SettingsPage/SettingsPage'
 
-import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL} from './urls'
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -19,6 +21,8 @@ import {NEW_PASSWORD_PAGE} from './components/NewPassword/NewPasswordPage'
 import {NEW_PASSWORD_SUCCESS_PAGE} from './components/NewPassword/NewPasswordSuccessPage'
 import {FORGOT_PASSWORD_PAGE} from './components/ForgotPassword/ForgotPasswordPage'
 import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPasswordSuccessPage'
+import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
+import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -27,36 +31,46 @@ class Container extends Component {
     const {
       page,
       goToSignUp,
-      goToLogIn
+      goToLogIn,
+      goToSettings,
+      logOut
     } = this.props
     return (
       <div id="container">
         <NavBar
           onClickSignUp={goToSignUp}
           onClickLogIn={goToLogIn}
+          onClickSettings={goToSettings}
+          onClickLogout={logOut}
         />
         {(page === LANDING_PAGE || page === SIGN_UP_PAGE) &&
-          <FrontPage
-            page={page}
-          />
+        <FrontPage
+          page={page}
+        />
         }
         {page === LOG_IN_PAGE &&
-          <LogInPage/>
+        <LogInPage/>
         }
         {page === NEW_PASSWORD_PAGE &&
-          <NewPasswordPage
-            email={this.props.params.email}
-            signupKey={this.props.params.signupKey}
-          />
+        <NewPasswordPage
+          email={this.props.params.email}
+          signupKey={this.props.params.signupKey}
+        />
         }
         {page === NEW_PASSWORD_SUCCESS_PAGE &&
-          <NewPasswordSuccessPage/>
+        <NewPasswordSuccessPage/>
         }
         {page === FORGOT_PASSWORD_PAGE &&
-          <ForgotPasswordPage/>
+        <ForgotPasswordPage/>
         }
         {page === FORGOT_PASSWORD_SUCCESS_PAGE &&
-          <ForgotPasswordSuccessPage/>
+        <ForgotPasswordSuccessPage/>
+        }
+        {page === VERIFICATION_SUCCESS_PAGE &&
+        <VerificationSuccessPage/>
+        }
+        {page === SETTINGS_PAGE &&
+        <SettingsPage/>
         }
       </div>
     )
@@ -73,6 +87,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
     goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
+    goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
+    logOut: () => {
+      dispatch() //TODO in backend pr
+    }
   }
 }
 

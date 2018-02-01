@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto|Roboto+Condensed");
+
+#update-settings-form {
+    margin-top: 80px;
+}
+
+#settings-form-title {
+    font-family: 'Roboto', sans-serif;
+    margin-left: 50px;
+    margin-top: 100px;
+}
+
+.settings-section {
+    margin: 30px;
+    margin-left: 50px;
+}
+
+.section-title {
+    font-family: 'Roboto', sans-serif; 
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+.shop-picker-search {
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.shop-picker-search > span {
+    width: 100%;
+    max-width: 400px;
+}
+
+.shop-picker-search > span > div > div{
+    width: 100%;
+}
+
+.radio > label {
+    padding-left: 21px;
+}
+
+#settings-form-button {
+    margin-top: 10px;
+    margin-left: 50px;
+    float:left;
+}
+
+#settings-form-button:disabled {
+    opacity: .4;
+    cursor: auto;
+}
+
+#settings-form-spinner {
+    float: left;
+    margin-top: 14px;
+}
+
+#settings-form-saved-message {
+    float: left;
+    margin-top: 24px;
+}

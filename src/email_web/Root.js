@@ -15,6 +15,8 @@ import {NEW_PASSWORD_PAGE} from './components/NewPassword/NewPasswordPage'
 import {NEW_PASSWORD_SUCCESS_PAGE} from './components/NewPassword/NewPasswordSuccessPage'
 import {FORGOT_PASSWORD_PAGE} from './components/ForgotPassword/ForgotPasswordPage'
 import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPasswordSuccessPage'
+import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
+import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
   FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL} from './urls'
@@ -40,6 +42,8 @@ const Root = () => (
         <Route path={NEW_PASSWORD_SUCCESS_URL} component={NewPasswordSuccessPage}/>
         <Route path={FORGOT_PASSWORD_URL} component={ForgotPasswordPage}/>
         <Route path={FORGOT_PASSWORD_SUCCESS_URL} component={ForgotPasswordSuccessPage}/>
+        <Route path="/verified" component={VerificationSuccessPage}/>
+        <Route path="/settings" component={SettingsPage}/>
       </Route>
     </Router>
   </Provider>
@@ -76,6 +80,15 @@ const NewPasswordPage = (props) => {
   return (
     <Container
       page={NEW_PASSWORD_PAGE}
+  {...props}
+  />
+  )
+}
+
+const VerificationSuccessPage = (props) => {
+  return (
+    <Container
+      page={VERIFICATION_SUCCESS_PAGE}
       {...props}
     />
   )
@@ -85,6 +98,15 @@ const NewPasswordSuccessPage = (props) => {
   return (
     <Container
       page={NEW_PASSWORD_SUCCESS_PAGE}
+  {...props}
+  />
+  )
+}
+
+const SettingsPage = (props) => {
+  return (
+    <Container
+      page={SETTINGS_PAGE}
       {...props}
     />
   )
@@ -98,6 +120,7 @@ const ForgotPasswordPage = (props) => {
     />
   )
 }
+
 const ForgotPasswordSuccessPage = (props) => {
   return (
     <Container

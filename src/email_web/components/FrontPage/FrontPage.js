@@ -7,6 +7,8 @@ import SignUpPageHandler from '../SignUpPage/SignUpPage'
 import {SIGN_UP_PAGE} from '../SignUpPage/SignUpPage'
 import {LANDING_PAGE} from '../LandingPage/LandingPage'
 
+
+import './FrontPage.css'
 class FrontPage extends Component {
   render () {
     const {
