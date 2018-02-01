@@ -11,6 +11,7 @@ import Container from './Container'
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
+import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 const router = routerMiddleware(browserHistory)
@@ -30,6 +31,7 @@ const Root = () => (
         <IndexRoute component={ContainerAtLandingPage}/>
         <Route path="/signup" component={ContainerAtSignUpPage}/>
         <Route path="/login" component={ContainerAtLogInPage}/>
+        <Route path="/verified" component={ContainerAtVerificationSuccessPage}/>
         <Route path="/settings" component={ContainerAtSettingsPage}/>
       </Route>
     </Router>
@@ -63,6 +65,15 @@ const ContainerAtLogInPage = (props) => {
   )
 }
 
+const ContainerAtVerificationSuccessPage = (props) => {
+  return (
+    <Container
+      page={VERIFICATION_SUCCESS_PAGE}
+      {...props}
+    />
+  )
+}
+    
 const ContainerAtSettingsPage = (props) => {
   return (
     <Container
