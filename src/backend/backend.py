@@ -433,13 +433,12 @@ class UserData(BaseHandler):
             return
 
         email_frequency = user.email_frequency
-        liked_stores = [store.get().prepare_shop(user) for store in user.liked_stores]
 
         self.response.write(json.dumps({
             'email': user.email_address,
             'isVerified': user.verified,
             'isModerator': user.is_moderator,
-            'myShops': liked_stores,
+            'myShops': user.jsonable_liked_stores,
             'emailFrequency': email_frequency,
         }))
 
@@ -630,13 +629,11 @@ class SignupHandler(BaseHandler):
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
 
-        liked_stores = [store.get().prepare_shop(user) for store in user.liked_stores]
-
         self.response.write(json.dumps({
             'email': self.user.email_address,
             'isVerified': True,
             'isModerator': self.user.is_moderator,
-            'myShops': liked_stores,
+            'myShops': self.user.jsonable_liked_stores,
             'myEmailFrequency': self.user.email_frequency
         }))
 
@@ -742,16 +739,15 @@ class LoginHandler(BaseHandler):
         try:
             user_dict = self.auth.get_user_by_password(email, password, remember=True, save_session=True)
             user = self.user_model.get_by_id(user_dict['user_id'])
-            liked_stores = [store.get().prepare_shop(user) for store in user.liked_stores]
 
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
-                        'email': self.user.email_address,
+                        'email': user.email_address,
                         'isVerified': True,
-                        'isModerator': self.user.is_moderator,
-                        'myShops': liked_stores,
-                        'myEmailFrequency': self.user.email_frequency
+                        'isModerator': user.is_moderator,
+                        'myShops': user.jsonable_liked_stores,
+                        'myEmailFrequency': user.email_frequency
                     }))
                 else:
                     logging.info('Login failed for user %s because they reset their password', email)
@@ -760,11 +756,11 @@ class LoginHandler(BaseHandler):
                 # this still logs the user in
                 logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
-                    'email': self.user.email_address,
+                    'email': user.email_address,
                     'isVerified': False,
-                    'isModerator': self.user.is_moderator,
-                    'myShops': liked_stores,
-                    'myEmailFrequency': self.user.email_frequency
+                    'isModerator': user.is_moderator,
+                    'myShops': user.jsonable_liked_stores,
+                    'myEmailFrequency': user.email_frequency
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', email, type(e))

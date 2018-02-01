@@ -16,7 +16,6 @@ const defaultSettingsState = {
 export function settings(state = defaultSettingsState, action) {
   switch (action.type) {
     case USER_DATA_RETURN:
-      debugger
       return Object.assign({}, state, {
         selectedShops: action.data.myShops,
         emailFrequency: action.data.emailFrequency
