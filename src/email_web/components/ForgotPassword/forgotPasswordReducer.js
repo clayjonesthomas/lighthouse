@@ -4,7 +4,6 @@ import {FORGOT_PASSWORD_EMAIL_CHANGE, ATTEMPT_SUBMIT_FORGOT_PASSWORD,
 
 const defaultForgotPasswordState = {
   email: '',
-  submittedEmail: '',
   submitSpinner: false,
   hasAttemptedSubmission: false
 }
@@ -24,9 +23,7 @@ export function forgotPassword(state = defaultForgotPasswordState, action) {
         submitSpinner: true
       })
     case FORGOT_PASSWORD_RESPONSE:
-      return Object.assign({}, defaultForgotPasswordState, {
-        submittedEmail: action.data
-      })
+      return defaultForgotPasswordState
     default:
       return state
   }

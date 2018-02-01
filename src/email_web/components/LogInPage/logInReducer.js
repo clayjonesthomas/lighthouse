@@ -2,8 +2,7 @@ import {LOG_IN_EMAIL_CHANGE, LOG_IN_PASSWORD_CHANGE,
   LOG_IN_REQUEST, LOG_IN_RESPONSE, LOG_IN_RESPONSE_FAILED,
   ATTEMPT_LOG_IN} from './LogInPageActions'
 
-import {UNVERIFIED_ERROR, PASSWORD_RESET_ERROR,
-  AUTHENTICATION_ERROR, SEND_FORGOT_PASSWORD_EMAIL}
+import {AUTHENTICATION_ERROR}
   from './LogInPageActions'
 
 import {LOCATION_CHANGE} from 'react-router-redux'
@@ -49,8 +48,6 @@ export function login(state = defaultLogInState, action) {
       return state
     case LOCATION_CHANGE:
       return defaultLogInState
-    case SEND_FORGOT_PASSWORD_EMAIL:
-
     default:
       return state
   }
