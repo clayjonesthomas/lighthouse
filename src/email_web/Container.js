@@ -7,7 +7,10 @@ import FrontPage from './components/FrontPage/FrontPage'
 import LogInPage from './components/LogInPage/LogInPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
 
-import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL} from './urls'
+import {logOut} from './services/UserActions'
+
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
+  LANDING_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -64,7 +67,10 @@ const mapDispatchToProps = (dispatch) => {
     goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
-      dispatch() //TODO in backend pr
+      dispatch(logOut())
+        .then(
+          window.location.reload()
+        )
     }
   }
 }

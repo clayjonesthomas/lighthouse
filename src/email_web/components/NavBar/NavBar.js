@@ -6,20 +6,20 @@ const NavBar = ({
                   onClickLogIn,
                   onClickSettings,
                   onClickLogout,
-                  username
+                  email
                 }) => (
   <div id="nav-bar">
     <div id="nav-bar-link-container">
-      {username ?
-        <div id="general-nav-bar"> 
-          <span className="nav-bar-link" tabIndex="0">How It Works</span>
-          <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
-          <span className="nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</span>
-        </div>
-        :
+      {email ?
         <div id="user-nav-bar">
           <span className="nav-bar-link" onClick={onClickSettings} tabIndex="0">Settings</span>
           <span className="nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</span>
+        </div>
+        :
+        <div id="general-nav-bar">
+          <span className="nav-bar-link" tabIndex="0">How It Works</span>
+          <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
+          <span className="nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</span>
         </div>
       }
     </div>
