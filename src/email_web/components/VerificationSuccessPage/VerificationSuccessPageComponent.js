@@ -12,6 +12,4 @@ const VerificationSuccessPageComponent =
   </div>
 )
 
-VerificationSuccessPageComponent.propTypes = {}
-
 export default VerificationSuccessPageComponent
