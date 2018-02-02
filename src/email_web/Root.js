@@ -13,6 +13,7 @@ import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
+import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -33,6 +34,7 @@ const Root = () => (
         <Route path="/login" component={ContainerAtLogInPage}/>
         <Route path="/verified" component={ContainerAtVerificationSuccessPage}/>
         <Route path="/settings" component={ContainerAtSettingsPage}/>
+        <Route path="/how_it_works" component={ContainerAtHowItWorksPage}/>
       </Route>
     </Router>
   </Provider>
@@ -78,6 +80,15 @@ const ContainerAtSettingsPage = (props) => {
   return (
     <Container
       page={SETTINGS_PAGE}
+      {...props}
+    />
+  )
+}
+
+const ContainerAtHowItWorksPage = (props) => {
+  return (
+    <Container
+      page={HOW_IT_WORKS_PAGE}
       {...props}
     />
   )

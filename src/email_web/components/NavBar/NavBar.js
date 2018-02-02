@@ -4,6 +4,7 @@ import "./NavBar.css"
 const NavBar = ({
                   onClickSignUp,
                   onClickLogIn,
+                  onClickHowItWorks,
                   onClickSettings,
                   onClickLogout
                 }) => (
@@ -11,7 +12,7 @@ const NavBar = ({
     <div id="nav-bar-link-container">
       {true ? //TODO change depending on if user is logged in
         <div id="general-nav-bar"> 
-          <span className="nav-bar-link" tabIndex="0">How It Works</span>
+          <span className="nav-bar-link" onClick={onClickHowItWorks} tabIndex="0">How It Works</span>
           <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
           <span className="nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</span>
         </div>
