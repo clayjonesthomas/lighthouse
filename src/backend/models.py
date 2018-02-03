@@ -222,6 +222,10 @@ class User(webapp2_extras.appengine.auth.models.User):
         user_key = ndb.Key(cls, user_id)
         return user_key.get()
 
+    @property
+    def jsonable_liked_stores(self):
+        return [store.get().prepare_shop(self) for store in self.liked_stores]
+
 
 class PostsEmail(ndb.Model):
 

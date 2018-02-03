@@ -12,7 +12,10 @@ import ForgotPasswordSuccessPage from './components/ForgotPassword/ForgotPasswor
 import VerificationSuccessPage from './components/VerificationSuccessPage/VerificationSuccessPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
 
-import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL} from './urls'
+import {logOut, pullUserData} from './services/UserActions'
+
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
+  LANDING_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -27,13 +30,18 @@ import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import "./Container.css"
 class Container extends Component {
 
+  componentDidMount () {
+    this.props.pullUserData()
+  }
+
   render() {
     const {
       page,
       goToSignUp,
       goToLogIn,
       goToSettings,
-      logOut
+      logOut,
+      email
     } = this.props
     return (
       <div id="container">
@@ -42,6 +50,7 @@ class Container extends Component {
           onClickLogIn={goToLogIn}
           onClickSettings={goToSettings}
           onClickLogout={logOut}
+          email={email}
         />
         {(page === LANDING_PAGE || page === SIGN_UP_PAGE) &&
         <FrontPage
@@ -81,7 +90,8 @@ class Container extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    page: ownProps.page
+    page: ownProps.page,
+    email: state.user.email
   }
 }
 
@@ -91,8 +101,10 @@ const mapDispatchToProps = (dispatch) => {
     goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
-      dispatch() //TODO in backend pr
-    }
+      dispatch(logOut())
+      dispatch(push(LANDING_PAGE_URL))
+    },
+    pullUserData: () => dispatch(pullUserData())
   }
 }
 

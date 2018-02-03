@@ -19,8 +19,21 @@
 .nav-bar-link {
     padding: 5px;
     padding-right: 40px;
+    color: #ececec;
+}
+
+.nav-bar-span {
+    padding-right: 40px;
 }
 
 .nav-bar-link:hover {
     cursor: pointer;
+    text-decoration: none;
+    color: #ececec;
+}
+
+.nav-bar-link:focus {
+    outline: none;
+    text-decoration: none;
+    color: #ececec;
 }
