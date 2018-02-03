@@ -16,7 +16,6 @@ import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
-
 const router = routerMiddleware(browserHistory)
 const store = createStore(
   reducers,
