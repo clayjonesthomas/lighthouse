@@ -12,6 +12,7 @@ const NavBar = ({
     <div id="nav-bar-link-container">
       {email ?
         <div id="user-nav-bar">
+          <span className="nav-bar-span">{"Signed in as " + email}</span>
           <a className="nav-bar-link" onClick={onClickSettings} tabIndex="0">Settings</a>
           <a className="nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</a>
         </div>

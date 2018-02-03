@@ -22,6 +22,10 @@
     color: #ececec;
 }
 
+.nav-bar-span {
+    padding-right: 40px;
+}
+
 .nav-bar-link:hover {
     cursor: pointer;
     text-decoration: none;

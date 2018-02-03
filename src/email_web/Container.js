@@ -7,7 +7,7 @@ import FrontPage from './components/FrontPage/FrontPage'
 import LogInPage from './components/LogInPage/LogInPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
 
-import {logOut} from './services/UserActions'
+import {logOut, pullUserData} from './services/UserActions'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
   LANDING_PAGE_URL} from './urls'
@@ -19,6 +19,10 @@ import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 import "./Container.css"
 class Container extends Component {
+
+  componentDidMount () {
+    this.props.pullUserData()
+  }
 
   render() {
     const {
@@ -69,7 +73,8 @@ const mapDispatchToProps = (dispatch) => {
     logOut: () => {
       dispatch(logOut())
       dispatch(push(LANDING_PAGE_URL))
-    }
+    },
+    pullUserData: () => dispatch(pullUserData())
   }
 }
 
