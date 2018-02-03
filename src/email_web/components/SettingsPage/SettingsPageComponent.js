@@ -30,7 +30,7 @@ const SettingsPageComponent = ({
       <div className="settings-section">
         <h2 className="section-title">Update Your Shops</h2>
         <ShopPicker
-          className="shop-picker-box"
+          className="settings-shop-picker-box shop-picker-box"
           isSetupMode={false}
           selectedShops={selectedShops}
           onPickedShopsChange={onPickedShopsChange}

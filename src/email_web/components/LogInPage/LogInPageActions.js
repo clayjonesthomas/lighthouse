@@ -1,7 +1,8 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
 
-import {LOG_IN_URL, SETTINGS_PAGE_URL} from '../../urls'
+import {LOG_IN_URL, FORGOT_PASSWORD_BACKEND_URL, SETTINGS_PAGE_URL}
+  from '../../urls'
 import {validateEmail} from './LogInPageComponent'
 
 export const LOG_IN_EMAIL_CHANGE = 'LOG_IN_EMAIL_CHANGE'
@@ -11,8 +12,8 @@ export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
 export const LOG_IN_RESPONSE = 'LOG_IN_RESPONSE'
 export const LOG_IN_RESPONSE_FAILED = 'LOG_IN_RESPONSE_FAILED'
 
-export const UNVERIFIED_ERROR = 'UNVERIFIED_ERROR'
-export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR'
+export const UNVERIFIED_ERROR = 'UNVERIFIED_ERROR' //TODO
+export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR' //TODO
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 
 export const emailChange = (value) => {
@@ -99,4 +100,19 @@ function _submitLogInForm(dispatch, getState) {
       else
         dispatch(logInResponseFailed(json.error))
     })
+}
+
+export function sendForgotPasswordEmail() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const email = state.login.email
+    const args = {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        email: email
+      })
+    }
+    return fetch(FORGOT_PASSWORD_BACKEND_URL, args)
+  }
 }
