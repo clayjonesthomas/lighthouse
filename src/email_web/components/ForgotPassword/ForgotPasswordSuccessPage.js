@@ -15,10 +15,10 @@ const ForgotPasswordSuccessPage = ({}) => (
         Email Sent!
       </h1>
       <p
+        id="forgot-password-success-helper-text"
         className="helper-text">
-        If an account exists for the email you entered,
-        we have sent an email with instructions for how to
-        reset your password. If you don't receive this email,
+        We've sent a password reset link to the email you entered, if
+        it exists. If you don't receive this email,
         please contact&nbsp;
         <a
           href="mailto:info@lightho.us"
