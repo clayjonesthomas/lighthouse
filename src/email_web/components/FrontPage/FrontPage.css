@@ -16,7 +16,6 @@
 }
 
 .sign-up-contents {
-    margin-top: 50px;
     position: absolute;
     top: 50px;
     transition: top .5s ease;

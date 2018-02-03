@@ -26,6 +26,7 @@ class Container extends Component {
   render() {
     const {
       page,
+      isDisplayLogo,
       goToHome,
       goToSignUp,
       goToLogIn,
@@ -36,6 +37,7 @@ class Container extends Component {
     return (
       <div id="container">
         <NavBar
+          isDisplayLogo={isDisplayLogo}
           onClickLogo={goToHome}
           onClickSignUp={goToSignUp}
           onClickLogIn={goToLogIn}
@@ -67,7 +69,8 @@ class Container extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    page: ownProps.page
+    page: ownProps.page,
+    isDisplayLogo: ownProps.page !== LANDING_PAGE
   }
 }
 
