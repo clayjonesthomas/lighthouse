@@ -678,7 +678,12 @@ class VerificationHandler(BaseHandler):
         signup_token = body['signupToken']
         new_password = body['password']
 
-        user_id = self.user_model.query(self.user_model.email_address == email).fetch(1)[0].key.id()
+        matching_users = self.user_model.query(self.user_model.email_address == email).fetch(1)
+        if matching_users:
+            user_id = matching_users[0].key.id()
+        else:
+            self.response.write(json.dumps({'error': 'AUTH_EMAIL_ERROR'}))
+            return
         user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
                                                             'signup')
         if not user:

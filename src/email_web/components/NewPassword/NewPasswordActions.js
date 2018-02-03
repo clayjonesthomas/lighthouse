@@ -15,6 +15,7 @@ export const SUBMIT_NEW_PASS_RESPONSE = 'SUBMIT_NEW_PASS_RESPONSE'
 export const SUBMIT_NEW_PASS_RESPONSE_FAILED = 'SUBMIT_NEW_PASS_RESPONSE_FAILED'
 
 export const AUTH_KEY_ERROR = 'AUTH_KEY_ERROR'
+export const AUTH_EMAIL_ERROR = 'AUTH_EMAIL_ERROR'
 
 export const passwordChange = (value) => {
   return {

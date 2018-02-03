@@ -21,6 +21,7 @@ class NewPasswordPage extends Component {
       onSubmitNewPass,
       hasAttemptedSubmission,
       invalidPass,
+      invalidEmail,
       invalidToken,
       goToForgotPassword
     } = this.props
@@ -34,6 +35,7 @@ class NewPasswordPage extends Component {
         onSubmitNewPass={onSubmitNewPass}
         hasAttemptedSubmission={hasAttemptedSubmission}
         invalidPass={invalidPass}
+        invalidEmail={invalidEmail}
         invalidToken={invalidToken}
         goToForgotPassword={goToForgotPassword}
       />
@@ -48,6 +50,7 @@ const mapStateToProps = (state, ownProps) => {
     confirmPasswordValue: state.newPass.confirmPassword,
     hasAttemptedSubmission: state.newPass.hasAttemptedSubmission,
     invalidPass: state.newPass.invalidPass,
+    invalidEmail: state.newPass.invalidEmail,
     invalidToken: state.newPass.invalidToken
   }
 }

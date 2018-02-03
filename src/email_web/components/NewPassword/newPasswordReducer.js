@@ -1,7 +1,10 @@
 import {NEW_PASS_PASSWORD_CHANGE,
   NEW_PASS_CONFIRM_PASSWORD_CHANGE, ATTEMPT_SUBMIT_NEW_PASS,
   SUBMIT_NEW_PASS_REQUEST, SUBMIT_NEW_PASS_RESPONSE,
-  SUBMIT_NEW_PASS_RESPONSE_FAILED, AUTH_KEY_ERROR}
+  SUBMIT_NEW_PASS_RESPONSE_FAILED}
+  from './NewPasswordActions'
+
+import {AUTH_KEY_ERROR, AUTH_EMAIL_ERROR}
   from './NewPasswordActions'
 
 import {LOCATION_CHANGE} from 'react-router-redux'
@@ -12,6 +15,7 @@ const defaultNewPassState = {
   submitSpinner: false,
   hasAttemptedSubmission: false,
   invalidPass: false,
+  invalidEmail: false,
   invalidToken: false
 }
 
@@ -39,7 +43,14 @@ export function newPass(state = defaultNewPassState, action) {
       if (action.data === AUTH_KEY_ERROR) {
         return Object.assign({}, state, {
           submitSpinner: false,
-          invalidEmailPass: true,
+          invalidPass: true,
+          invalidToken: true
+        })
+      }
+      if (action.data === AUTH_EMAIL_ERROR) {
+        return Object.assign({}, state, {
+          submitSpinner: false,
+          invalidEmail: true,
           invalidToken: true
         })
       }

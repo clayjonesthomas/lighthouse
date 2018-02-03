@@ -34,6 +34,7 @@ const NewPasswordComponent = ({
                                 onSubmitNewPass,
                                 hasAttemptedSubmission,
                                 invalidPass,
+                                invalidEmail,
                                 invalidToken,
                                 goToForgotPassword
                               }) => (
@@ -57,7 +58,8 @@ const NewPasswordComponent = ({
         </a>
         &nbsp;for help.
       </p>
-      {invalidToken &&
+      {
+        (invalidToken || invalidEmail) &&
         <div
           className="new-pass-server-error"
         >
