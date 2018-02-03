@@ -169,7 +169,7 @@ def user_required(handler):
     def check_login(self, *args, **kwargs):
         auth = self.auth
         if not auth.get_user_by_session():
-            self.redirect(self.uri_for('login'), abort=True)
+            self.redirect_to('login_page')
         else:
             return handler(self, *args, **kwargs)
 
@@ -250,6 +250,14 @@ class MainPage(BaseHandler):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class UsersOnlyMainPage(BaseHandler):
+
+    @user_required
+    def get(self):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -420,10 +428,22 @@ class UserData(BaseHandler):
 
     def get(self):
         user = self.user
+
         if not user:
+            self.response.write(json.dumps({
+                'error': 'NO_USER_ERROR'
+            }))
             return
+
         email_frequency = user.email_frequency
-        self.response.write(json.dumps({'email_frequency': email_frequency}))
+
+        self.response.write(json.dumps({
+            'email': user.email_address,
+            'isVerified': user.verified,
+            'isModerator': user.is_moderator,
+            'myShops': user.jsonable_liked_stores,
+            'emailFrequency': email_frequency,
+        }))
 
 
 class ShopPosts(BaseHandler):
@@ -611,7 +631,14 @@ class SignupHandler(BaseHandler):
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        self.response.write(json.dumps({'email': user.email_address}))
+
+        self.response.write(json.dumps({
+            'email': self.user.email_address,
+            'isVerified': True,
+            'isModerator': self.user.is_moderator,
+            'myShops': self.user.jsonable_liked_stores,
+            'myEmailFrequency': self.user.email_frequency
+        }))
 
 
 class ForgotPasswordHandler(BaseHandler):
@@ -704,6 +731,7 @@ class VerificationHandler(BaseHandler):
             logging.info('verification type not supported')
             self.abort(404)
 
+
 class LoginHandler(BaseHandler):
 
     def post(self):
@@ -718,9 +746,11 @@ class LoginHandler(BaseHandler):
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
-                        'email': self.user.email_address,
+                        'email': user.email_address,
                         'isVerified': True,
-                        'isModerator': self.user.is_moderator
+                        'isModerator': user.is_moderator,
+                        'myShops': user.jsonable_liked_stores,
+                        'myEmailFrequency': user.email_frequency
                     }))
                 else:
                     logging.info('Login failed for user %s because they reset their password', email)
@@ -729,27 +759,15 @@ class LoginHandler(BaseHandler):
                 # this still logs the user in
                 logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
-                    'email': self.user.email_address,
+                    'email': user.email_address,
                     'isVerified': False,
-                    'isModerator': self.user.is_moderator
+                    'isModerator': user.is_moderator,
+                    'myShops': user.jsonable_liked_stores,
+                    'myEmailFrequency': user.email_frequency
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', email, type(e))
             self.response.write(json.dumps({'error': 'AUTHENTICATION_ERROR'}))
-
-    def get(self):
-        """
-        lowkey just used to ensure a user is logged in after verification,
-        but likely will be used in the future to pull login data
-        """
-        if self.user:
-            self.response.write(json.dumps({
-                'username': self.user.username,
-                'isModerator': self.user.is_moderator,
-                'logged_in': True
-            }))
-        else:
-            self.response.write(json.dumps({'logged_in': False}))
 
 
 class LogoutHandler(BaseHandler):
@@ -836,8 +854,12 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
-
     webapp2.Route('/rest/email', EmailHandler, name='email'),
+
+    webapp2.Route('/verification_success', MainPage, name='verification_success'),
+    webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
+    webapp2.Route('/signup', MainPage, name='signup_page'),
+    webapp2.Route('/login', MainPage, name='login_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),

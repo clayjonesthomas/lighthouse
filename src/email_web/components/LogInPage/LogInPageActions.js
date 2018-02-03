@@ -48,7 +48,9 @@ export const logInResponse = (json) => {
     data: {
       email: json.email,
       isVerified: json.isVerified,
-      isModerator: json.isModerator
+      isModerator: json.isModerator,
+      myShops: json.myShops,
+      myEmailFrequency: json.myEmailFrequency
     }
   }
 }
