@@ -1,7 +1,9 @@
 import React from 'react'
+import LogoCircle from '../../ui-kit/LogoCircle/LogoCircle'
 
 import "./NavBar.css"
 const NavBar = ({
+                  onClickLogo,
                   onClickSignUp,
                   onClickLogIn,
                   onClickHowItWorks,
@@ -9,6 +11,10 @@ const NavBar = ({
                   onClickLogout
                 }) => (
   <div id="nav-bar">
+    <LogoCircle
+      onClick={onClickLogo}
+      scale={.5}
+    />
     <div id="nav-bar-link-container">
       {true ? //TODO change depending on if user is logged in
         <div id="general-nav-bar"> 
