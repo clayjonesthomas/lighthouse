@@ -1,6 +1,7 @@
 import {LOG_IN_RESPONSE} from '../components/LogInPage/LogInPageActions'
 import {SIGN_UP_RESPONSE} from '../components/SignUpPage/SignUpPageActions'
-import {LOG_OUT_RESPONSE, USER_DATA_RETURN} from '../services/UserActions'
+import {LOG_OUT_RESPONSE, USER_DATA_RETURN, USER_DATA_RETURN_FAILED}
+  from '../services/UserActions'
 
 import {MID_FREQUENCY_EMAIL} from '../components/SettingsPage/SettingsPageComponent'
 
@@ -36,6 +37,8 @@ export function user(state = defaultUserState, action) {
         isVerified: action.data.isVerified,
         isModerator: action.data.isModerator
       })
+    case USER_DATA_RETURN_FAILED:
+      return defaultUserState
     case LOG_OUT_RESPONSE:
       return defaultUserState
     default:

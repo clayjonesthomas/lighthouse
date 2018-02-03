@@ -430,6 +430,9 @@ class UserData(BaseHandler):
         user = self.user
 
         if not user:
+            self.response.write(json.dumps({
+                'error': 'NO_USER_ERROR'
+            }))
             return
 
         email_frequency = user.email_frequency

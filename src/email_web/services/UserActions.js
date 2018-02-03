@@ -5,6 +5,7 @@ export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST'
 export const LOG_OUT_RESPONSE = 'LOG_OUT_RESPONSE'
 export const USER_DATA_REQUEST = 'USER_DATA_REQUEST'
 export const USER_DATA_RETURN = 'USER_DATA_RETURN'
+export const USER_DATA_RETURN_FAILED = 'USER_DATA_RETURN_FAILED'
 
 const logOutRequest = () => {
   return {
@@ -48,6 +49,12 @@ export const userDataReturn = (userData) => {
   }
 }
 
+export const userDataReturnFailed = () => {
+  return {
+    type: USER_DATA_RETURN_FAILED
+  }
+}
+
 export function pullUserData() {
   const args = {
     method: 'GET',
@@ -57,6 +64,11 @@ export function pullUserData() {
     dispatch(userDataRequest())
     return fetch(USER_DATA_URL, args)
       .then(response => response.json())
-      .then(json => dispatch(userDataReturn(json)))
+      .then(json => {
+        if(json.email)
+          dispatch(userDataReturn(json))
+        else
+          dispatch(userDataReturnFailed())
+      })
   }
 }
