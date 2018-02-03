@@ -693,7 +693,7 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
-            self.redirect(self.uri_for('verification_success'))
+            self.redirect(self.uri_for('verified'))
             return
         else:
             logging.info('verification type not supported')
@@ -860,7 +860,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
     webapp2.Route('/signup', MainPage, name='signup_page'),
     webapp2.Route('/login', MainPage, name='login_page'),
-
+    webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
