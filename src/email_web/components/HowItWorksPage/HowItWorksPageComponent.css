@@ -1,3 +1,14 @@
-#body {
-	background-color:red;
+#how-it-works-container {
+    margin-left: 30px;
+    width: 46%;
+}
+
+#how-it-works-title {
+    margin-top: 100px;
+}
+
+.how-it-works-section {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    margin: 30px 0px;
 }
