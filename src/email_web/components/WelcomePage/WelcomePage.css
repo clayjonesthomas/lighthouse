@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+#welcome-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #aec7ea;
+}
+
+#welcome-page {
+    width: 530px;
+    margin: auto;
+    margin-top: 150px;
+    background: #ececec;
+    padding: 60px;
+    text-align: center;
+}
+
+#title-logo {
+    font-family: 'Montserrat', sans-serif;
+    color: #003091;
+}
+
+#welcome-paragraph {
+    text-align: left;
+}

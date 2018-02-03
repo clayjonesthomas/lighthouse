@@ -7,12 +7,15 @@ import thunkMiddleware from 'redux-thunk'
 
 import reducers from './reducer'
 import Container from './Container'
+import WelcomePage from './components/WelcomePage/WelcomePage'
+
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
+
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -33,6 +36,7 @@ const Root = () => (
         <Route path="/login" component={ContainerAtLogInPage}/>
         <Route path="/verified" component={ContainerAtVerificationSuccessPage}/>
         <Route path="/settings" component={ContainerAtSettingsPage}/>
+        <Route path="/welcome" component={WelcomePage}/>
       </Route>
     </Router>
   </Provider>

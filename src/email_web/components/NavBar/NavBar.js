@@ -9,7 +9,7 @@ const NavBar = ({
                 }) => (
   <div id="nav-bar">
     <div id="nav-bar-link-container">
-      {true ? //TODO change depending on if user is logged in
+      {false ? //TODO change depending on if user is logged in
         <div id="general-nav-bar"> 
           <span className="nav-bar-link" tabIndex="0">How It Works</span>
           <span className="nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</span>
