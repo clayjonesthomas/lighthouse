@@ -46,8 +46,11 @@ def populate_dummy_datastore():
 
 
 def _spawn_admin():
-    _contents = {'username': u'admin', 'email': u'ctjones@mit.edu',
-                 'password': auth_config.admin_pass}
+    _contents = {
+        'email': u'ctjones@mit.edu',
+        'password': auth_config.admin_pass,
+        'selectedShops': []
+    }
     request_signup = webapp2.Request.blank('/rest/signup')
     request_signup.method = 'POST'
     request_signup.body = json.dumps(_contents)
@@ -248,17 +251,18 @@ has_script_run = False
 
 
 class MainPage(BaseHandler):
-    def get(self, *args):
-        global has_script_run
-        if not has_script_run:
-            has_script_run = True
-            migration_script()
 
+    def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             # development, otherwise prod
             if not Post.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
+
+        global has_script_run
+        if not has_script_run:
+            has_script_run = True
+            migration_script()
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
