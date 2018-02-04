@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
-from models import Post, Store, User, get_entity_from_url_key
+from models import Post, Store, Shop, User, get_entity_from_url_key
 import logging
 
 
@@ -17,11 +17,10 @@ def migration_script():
     # emails
     # make email auth id
     count = 0
-    for post in Post.query():
-        post.is_archived = post.isArchived
-        post.is_important = False
-        post.put()
+    for store in Store.query():
+        store.alternate_names = []
+        store.put()
         count += 1
 
-    logging.info("{} posts updated".format(count))
+    logging.info("{} shops updated updated".format(count))
 
