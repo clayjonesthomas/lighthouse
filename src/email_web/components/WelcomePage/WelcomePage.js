@@ -5,21 +5,29 @@ import {push} from 'react-router-redux'
 import NavBar from '../NavBar/NavBar'
 import WelcomePageComponent from './WelcomePageComponent'
 
+import {logOut, pullUserData} from '../../services/UserActions'
+
 import {SETTINGS_PAGE_URL} from '../../urls'
 
 import "./WelcomePage.css"
 class WelcomePage extends Component {
 
+  componentDidMount() {
+    this.props.pullUserData()
+  }
+
   render() {
     const {
       logOut,
-      goToSettings
+      goToSettings,
+      email
     } = this.props
     return (
       <div id="welcome-container">
         <NavBar
           onClickSettings={goToSettings}
           onClickLogout={logOut}
+          email={email}
         />
         <WelcomePageComponent
           goToSettings={goToSettings}
@@ -29,16 +37,19 @@ class WelcomePage extends Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = (state) => {
+  return {
+    email: state.user.email
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
-      dispatch() //TODO in backend pr
-    }
+      dispatch(logOut())
+    },
+    pullUserData: () => dispatch(pullUserData())
   }
 }
 

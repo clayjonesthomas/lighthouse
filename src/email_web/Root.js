@@ -21,7 +21,8 @@ import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/Ve
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
-  FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL} from './urls'
+  FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL, WELCOME_PAGE_URL,
+  SETTINGS_PAGE_URL, VERIFIED_PAGE_URL} from './urls'
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -44,9 +45,9 @@ const Root = () => (
         <Route path={NEW_PASSWORD_SUCCESS_URL} component={NewPasswordSuccessPage}/>
         <Route path={FORGOT_PASSWORD_URL} component={ForgotPasswordPage}/>
         <Route path={FORGOT_PASSWORD_SUCCESS_URL} component={ForgotPasswordSuccessPage}/>
-        <Route path="/verified" component={VerificationSuccessPage}/>
-        <Route path="/settings" component={SettingsPage}/>
-        <Route path="/welcome" component={WelcomePage}/>
+        <Route path={VERIFIED_PAGE_URL} component={VerificationSuccessPage}/>
+        <Route path={SETTINGS_PAGE_URL} component={SettingsPage}/>
+        <Route path={WELCOME_PAGE_URL} component={WelcomePage}/>
       </Route>
     </Router>
   </Provider>
