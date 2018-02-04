@@ -10,17 +10,13 @@
 }
 
 #nav-bar-link-container {
-    padding-top: 12px;
     font-size: 16px;
     letter-spacing: 1px;
-    text-align: right;
-    float: right;
 }
 
 .nav-bar-link {
     padding: 5px;
-    padding-right: 40px;
-    color: #ececec;
+    color: #ececec !important;
 }
 
 .nav-bar-span {
@@ -40,6 +36,16 @@
 }
 
 #nav-bar .logo-circle-svg {
-    margin: 8px;
     cursor: pointer;
+}
+
+.show .dropdown{
+    background: #003091;
+    opacity:.8;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    padding: 0px 20px;
+    width: 100%;
+    text-align: right;
 }
