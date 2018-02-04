@@ -292,11 +292,11 @@ class Feed(BaseHandler):
             liked_shop_keys = user.liked_stores
             if liked_shop_keys:
                 query = Post.query(ndb.AND(Post.shop_key.IN(liked_shop_keys),
-                                           Post.isArchived == False))
+                                           Post.is_archived == False))
             else:
                 return []
         else:
-            query = Post.query(Post.isArchived == False)
+            query = Post.query(Post.is_archived == False)
         ordered_posts = query.order(-Post.timestamp)
         result = ordered_posts.fetch(10, offset=offset)
         # result = filter_archived_posts.fetch(19, offset=offset)
@@ -376,7 +376,7 @@ class ArchivePost(BaseHandler):
         body = json.loads(self.request.body)
         post_key = body['key']
         post = ndb.Key(urlsafe=post_key).get()
-        post.isArchived = not post.isArchived
+        post.is_archived = not post.is_archived
         post.put()
         self.response.write(json.dumps({'isArchived': True}))
 
@@ -460,7 +460,7 @@ class ShopPosts(BaseHandler):
         user = self.user
         shop = ndb.Key(urlsafe=url_key).get()
         shop_posts_query = Post.query(Post.shop_key == shop.key)
-        unarchived_posts_query = shop_posts_query.filter(Post.isArchived == False)
+        unarchived_posts_query = shop_posts_query.filter(Post.is_archived == False)
         posts = unarchived_posts_query.fetch(10, offset=int(offset))
         ordered_posts = Post.order_posts(posts)
         prepared_posts = [post.prepare_post(user) for post in ordered_posts]

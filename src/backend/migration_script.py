@@ -23,6 +23,5 @@ def migration_script():
         post.put()
         count += 1
 
-    import pdb; pdb.set_trace()
     logging.info("{} posts updated".format(count))
 
