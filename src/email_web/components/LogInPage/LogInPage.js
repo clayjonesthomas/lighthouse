@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {SIGN_UP_PAGE_URL} from '../../urls'
+import {SIGN_UP_PAGE_URL, FORGOT_PASSWORD_URL}
+  from '../../urls'
 
 import LogInPageComponent from './LogInPageComponent'
-import {emailChange, passwordChange, submitLogInForm}
-  from './LogInPageActions'
+import {emailChange, passwordChange, submitLogInForm,
+  sendForgotPasswordEmail} from './LogInPageActions'
 
 export const LOG_IN_PAGE = 'LOG_IN_PAGE'
 
@@ -20,7 +21,8 @@ class LogInPage extends Component {
       onSubmitLogIn,
       hasAttemptedSubmission,
       invalidEmailPass,
-      onGoToSignUp
+      onGoToSignUp,
+      goToForgotPassword
     } = this.props
     return (
       <LogInPageComponent
@@ -32,6 +34,7 @@ class LogInPage extends Component {
         hasAttemptedSubmission={hasAttemptedSubmission}
         invalidEmailPass={invalidEmailPass}
         onGoToSignUp={onGoToSignUp}
+        goToForgotPassword={goToForgotPassword}
       />
     )
   }
@@ -54,7 +57,11 @@ const mapDispatchToProps = (dispatch) => {
       e.preventDefault()
       dispatch(submitLogInForm())
     },
-    onGoToSignUp: () => {dispatch(push(SIGN_UP_PAGE_URL))}
+    onGoToSignUp: () => {dispatch(push(SIGN_UP_PAGE_URL))},
+    goToForgotPassword: () => {
+      dispatch(sendForgotPasswordEmail())
+      dispatch(push(FORGOT_PASSWORD_URL))
+    }
   }
 }
 

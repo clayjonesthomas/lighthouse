@@ -146,6 +146,7 @@ def _generate_important_post_tile(post):
       </tr>
       """)
 
+
 def _generate_unimportant_post_line(post):
     store = post.shop_key.get()
     return("<div class='other-sale'><a href='" + store.website + "'>" + store.name + "</a> - " + post.title + "</div>")
@@ -158,7 +159,7 @@ def send_verification_email(email, verification_url):
         <table style="width: 100%;">
           <tr>
             <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;background-color: #F0F0F0;padding: 10px;">
-              <p>Welcome to <a class="no-link-text" style="font-weight: normal;">lightho.us</a>! To complete the sign up process, please confirm your email here:
+              <p>Welcome to <a class="no-link-text" style="font-weight: normal;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
               <div class="verify-button" style="text-align: center;">
                 <a href="
                 """
@@ -166,7 +167,7 @@ def send_verification_email(email, verification_url):
     body += """
                 " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">VERIFY EMAIL</a>
               </div>
-              </p><p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
+              <p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
             </td>
           </tr>
         </table>
@@ -178,3 +179,31 @@ def send_verification_email(email, verification_url):
     message.html = body
     message.send()
 
+
+def send_forgot_password_email(email, forgot_password_url):
+
+    body = """
+    <html>
+      <body style="font-family: 'Century Gothic', sans-serif;">
+        <table style="width: 100%;">
+          <tr>
+            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;background-color: #F0F0F0;padding: 10px;">
+              <p>Hey there! Click the button below to change your password. If you think you got this email by mistake, just ignore it.</p>
+                <div class="verify-button" style="text-align: center;">
+                  <a href="
+                  """
+    body += forgot_password_url
+    body += """
+                  " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">CHANGE PASSWORD</a>
+                </div>
+              <p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>"""
+
+    message = mail.EmailMessage(sender="michelle@lightho.us", subject='lightho.us Password Recovery Email')
+    message.to = email
+    message.html = body
+    message.send()

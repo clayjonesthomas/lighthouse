@@ -1,7 +1,7 @@
 import React from 'react'
 import {FormGroup, FormControl} from 'react-bootstrap'
 
-import "./LogInPageComponent.css"
+import "../LogInPage/LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
 
@@ -17,42 +17,31 @@ export function validateEmail(emailValue,
   return null
 }
 
-export function validateEmailPass(invalidEmailPass) {
-  if (invalidEmailPass) {
-    return 'error'
-  }
-  return null
-}
-
-const LogInPageComponent = ({
-                              handleEmailChange,
-                              handlePasswordChange,
-                              emailValue,
-                              passwordValue,
-                              onSubmitLogIn,
-                              hasAttemptedSubmission,
-                              invalidEmailPass,
-                              onGoToSignUp,
-                              goToForgotPassword
-                            }) => (
+const ForgotPasswordComponent = ({
+                                   emailValue,
+                                   handleEmailChange,
+                                   onSubmitEmail,
+                                   hasAttemptedSubmission
+                                 }) => (
   <form
     className="auth-form"
-    onSubmit={onSubmitLogIn}>
+    onSubmit={onSubmitEmail}>
     <div
       className="form-wrapper"
       id="log-in-form-wrapper">
       <h1 className="form-title">
-        Log In
+        Forgot your password?
       </h1>
       <p
         className="helper-text"
         id="log-in-helper-text">
-        Don't have an account? <a onClick={onGoToSignUp}>Sign Up</a>
+        No problem! It happens to everyone. Fill out your email below,
+        and if we find a matching account, we'll email you with the next
+        step to resetting your password.
       </p>
       <FormGroup
         validationState={
           validateEmail(emailValue, hasAttemptedSubmission)
-          || validateEmailPass(invalidEmailPass)
         }
         className="email-box"
       >
@@ -70,31 +59,13 @@ const LogInPageComponent = ({
           </p>
         }
       </FormGroup>
-      <FormGroup
-        validationState={validateEmailPass(invalidEmailPass)}
-      >
-        <FormControl
-          className="form-box"
-          type="password"
-          value={passwordValue}
-          onChange={handlePasswordChange}
-          placeholder="Password"
-        />
-        {
-          <p className="password-error">
-            The email-password combination you gave isn't right.
-            &nbsp;<a>Recover your password?</a>
-          </p>
-        }
-      </FormGroup>
       <input
         type="submit"
-        value="LOG IN"
+        value="SEND"
         className="submit-button form-button"
       />
-      <a onClick={goToForgotPassword}>Forgot Password</a>
     </div>
   </form>
 )
 
-export default LogInPageComponent
+export default ForgotPasswordComponent
