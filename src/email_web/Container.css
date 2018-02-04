@@ -10,7 +10,7 @@ html {
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: url("../static/to_scale_picture_website_background.png");
+    background-image: url("../static/original_large_scale_compressed.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -21,6 +21,6 @@ html {
 @media (max-width: 700px) {
     #container {
         background-position: left;
-        background-image: url("../static/smaller_picture_website_background.png");
+        background-image: url("../static/original_small_scale_compressed.png");
     }
 }

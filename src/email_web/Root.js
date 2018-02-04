@@ -13,8 +13,15 @@ import WelcomePage from './components/WelcomePage/WelcomePage'
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
 import {LOG_IN_PAGE} from './components/LogInPage/LogInPage'
+import {NEW_PASSWORD_PAGE} from './components/NewPassword/NewPasswordPage'
+import {NEW_PASSWORD_SUCCESS_PAGE} from './components/NewPassword/NewPasswordSuccessPage'
+import {FORGOT_PASSWORD_PAGE} from './components/ForgotPassword/ForgotPasswordPage'
+import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPasswordSuccessPage'
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
+
+import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
+  FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL} from './urls'
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -30,18 +37,22 @@ const Root = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/">
-        <IndexRoute component={ContainerAtLandingPage}/>
-        <Route path="/signup" component={ContainerAtSignUpPage}/>
-        <Route path="/login" component={ContainerAtLogInPage}/>
-        <Route path="/verified" component={ContainerAtVerificationSuccessPage}/>
-        <Route path="/settings" component={ContainerAtSettingsPage}/>
+        <IndexRoute component={LandingPage}/>
+        <Route path={SIGN_UP_PAGE_URL} component={SignUpPage}/>
+        <Route path={LOG_IN_PAGE_URL} component={LogInPage}/>
+        <Route path="/new_password/:email/:signupKey" component={NewPasswordPage}/>
+        <Route path={NEW_PASSWORD_SUCCESS_URL} component={NewPasswordSuccessPage}/>
+        <Route path={FORGOT_PASSWORD_URL} component={ForgotPasswordPage}/>
+        <Route path={FORGOT_PASSWORD_SUCCESS_URL} component={ForgotPasswordSuccessPage}/>
+        <Route path="/verified" component={VerificationSuccessPage}/>
+        <Route path="/settings" component={SettingsPage}/>
         <Route path="/welcome" component={WelcomePage}/>
       </Route>
     </Router>
   </Provider>
 )
 
-const ContainerAtLandingPage = (props) => {
+const LandingPage = (props) => {
   return (
     <Container
       page={LANDING_PAGE}
@@ -50,7 +61,7 @@ const ContainerAtLandingPage = (props) => {
   )
 }
 
-const ContainerAtSignUpPage = (props) => {
+const SignUpPage = (props) => {
   return (
     <Container
       page={SIGN_UP_PAGE}
@@ -59,7 +70,7 @@ const ContainerAtSignUpPage = (props) => {
   )
 }
 
-const ContainerAtLogInPage = (props) => {
+const LogInPage = (props) => {
   return (
     <Container
       page={LOG_IN_PAGE}
@@ -68,7 +79,16 @@ const ContainerAtLogInPage = (props) => {
   )
 }
 
-const ContainerAtVerificationSuccessPage = (props) => {
+const NewPasswordPage = (props) => {
+  return (
+    <Container
+      page={NEW_PASSWORD_PAGE}
+  {...props}
+  />
+  )
+}
+
+const VerificationSuccessPage = (props) => {
   return (
     <Container
       page={VERIFICATION_SUCCESS_PAGE}
@@ -76,8 +96,17 @@ const ContainerAtVerificationSuccessPage = (props) => {
     />
   )
 }
-    
-const ContainerAtSettingsPage = (props) => {
+
+const NewPasswordSuccessPage = (props) => {
+  return (
+    <Container
+      page={NEW_PASSWORD_SUCCESS_PAGE}
+  {...props}
+  />
+  )
+}
+
+const SettingsPage = (props) => {
   return (
     <Container
       page={SETTINGS_PAGE}
@@ -86,5 +115,22 @@ const ContainerAtSettingsPage = (props) => {
   )
 }
 
+const ForgotPasswordPage = (props) => {
+  return (
+    <Container
+      page={FORGOT_PASSWORD_PAGE}
+      {...props}
+    />
+  )
+}
+
+const ForgotPasswordSuccessPage = (props) => {
+  return (
+    <Container
+      page={FORGOT_PASSWORD_SUCCESS_PAGE}
+      {...props}
+    />
+  )
+}
 
 export default Root

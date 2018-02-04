@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
-import {SIGN_UP_URL, LANDING_PAGE_URL} from '../../urls'
+import {SIGN_UP_URL, SETTINGS_PAGE_URL} from '../../urls'
 
 import {validateEmail, validatePassword} from './SignUpPageComponent'
 
@@ -51,7 +51,9 @@ export const signUpResponse = (json) => {
     data: {
       email: json.email,
       isVerified: json.isVerified,
-      isModerator: json.isModerator
+      isModerator: json.isModerator,
+      myShops: json.myShops,
+      myEmailFrequency: json.myEmailFrequency
     }
   }
 }
@@ -99,7 +101,7 @@ function _submitSignUpForm(dispatch, getState) {
     .then(json => {
       if (json.email) {
         dispatch(signUpResponse(json))
-        dispatch(push(LANDING_PAGE_URL))
+        dispatch(push(SETTINGS_PAGE_URL))
       } else
         dispatch(signUpResponseFailed(json.invalidEmail))
     })

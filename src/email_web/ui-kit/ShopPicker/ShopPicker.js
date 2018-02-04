@@ -2,15 +2,12 @@ import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import ShopPickerComponent from './ShopPickerComponent'
 
-import {pullMyShops, pullAllShops} from '../../services/ShopDataActions'
+import {pullAllShops} from '../../services/ShopDataActions'
 
 class ShopPicker extends Component {
 
   componentDidMount () {
     this.props.getAllShops()
-    if (!this.props.isSetupMode) {
-      this.props.getMyShops()
-    }
   }
 
   render () {
@@ -41,15 +38,13 @@ function mapStateToProps(state, ownProps) {
   return Object.assign({}, ownProps, {
     shops:  state.allShops,
     pickedShops: ownProps.selectedShops,
-    placeholder: ownProps.placeholder,
-    isSetupMode: ownProps.isSetupMode
+    placeholder: ownProps.placeholder
   })
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
     getAllShops: () => dispatch(pullAllShops()),
-    getMyShops: () => dispatch(pullMyShops()),
     onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops))
   }
 }
@@ -57,7 +52,6 @@ function mapDispatchToProps(dispatch, ownProps) {
 ShopPicker.propTypes = {
   selectedShops: PropTypes.array.isRequired,
   placeholder: PropTypes.string,
-  isSetupMode: PropTypes.bool,
   onPickedShopsChange: PropTypes.func.isRequired
 }
 

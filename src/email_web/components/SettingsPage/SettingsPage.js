@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {push} from 'react-router-redux'
 import _ from 'underscore'
 
-import {emailFrequencyChange, pickedShopsChange, pullUserData, submitSettingsForm} 
+import {emailFrequencyChange, pickedShopsChange, submitSettingsForm}
   from './SettingsPageActions'
+import {pullUserData} from '../../services/UserActions'
 import SettingsPageComponent from './SettingsPageComponent'
 
 export const SETTINGS_PAGE = 'SETTINGS_PAGE'
@@ -43,13 +43,13 @@ class SettingsPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     selectedShops: state.settings.selectedShops,
     emailFrequency: state.settings.emailFrequency,
     isSettingsUnchanged: 
-      state.settings.myPreviousEmailFrequency === state.settings.emailFrequency &&
-        _.isEqual(state.settings.myPreviousShops, state.settings.selectedShops),
+      state.user.myEmailFrequency === state.settings.emailFrequency &&
+        _.isEqual(state.user.myShops, state.settings.selectedShops),
     displaySpinner: state.settings.submitSpinner || !state.settings.spinnerComplete,
     showSavedMessage: state.settings.showSavedMessage && state.settings.spinnerComplete
   }
