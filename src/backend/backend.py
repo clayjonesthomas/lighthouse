@@ -24,7 +24,7 @@ from google.appengine.ext import deferred
 
 from models import Post, Store, User, get_entity_from_url_key
 from migration_script import migration_script
-from email import send_emails, send_verification_email
+from email import send_emails, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
 from google.appengine.api import app_identity, mail
@@ -34,6 +34,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
 
 # CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
@@ -57,51 +58,51 @@ def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
                   shop_key=shop_keys[0],
                   likes=25074,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
                   shop_key=shop_keys[1],
                   likes=14543,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(2)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
                   shop_key=shop_keys[1],
                   likes=30210,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1.5)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
                   shop_key=shop_keys[1],
                   likes=12532,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.4)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
                   shop_key=shop_keys[2],
                   likes=2664,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(1.9)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1)),
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
                   likes=352,
-                  timestamp=datetime.datetime.now()-datetime.timedelta(.1))
+                  timestamp=datetime.datetime.now() - datetime.timedelta(.1))
              ]
     ndb.put_multi(posts)
 
@@ -139,24 +140,24 @@ def _spawn_dummy_email_user(shop_keys):
                   emails=[],
                   # this field usually automatically populated during account creation
                   email_address='michelle@lightho.us')]
-    ndb.put_multi(users) 
+    ndb.put_multi(users)
 
 
 def _spawn_dummy_posts_for_email(shop_keys):
     email_posts = [Post(title='50% off all items on clearance',
                         shop_key=shop_keys[0],
                         likes=25074,
-                        timestamp=datetime.datetime.now()-datetime.timedelta(1),
+                        timestamp=datetime.datetime.now() - datetime.timedelta(1),
                         is_important=True),
                    Post(title='Buy any oxford on the site, get one free',
                         shop_key=shop_keys[1],
                         likes=14543,
-                        timestamp=datetime.datetime.now()-datetime.timedelta(2),
+                        timestamp=datetime.datetime.now() - datetime.timedelta(2),
                         is_important=True),
                    Post(title='$5 off the entire summer selection',
                         shop_key=shop_keys[1],
                         likes=30210,
-                        timestamp=datetime.datetime.now()-datetime.timedelta(1.5),
+                        timestamp=datetime.datetime.now() - datetime.timedelta(1.5),
                         is_important=False)]
     return ndb.put_multi(email_posts)
 
@@ -167,10 +168,11 @@ def user_required(handler):
       Decorator that checks if there's a user associated with the current session.
       Will also fail if there's no session present.
     """
+
     def check_login(self, *args, **kwargs):
         auth = self.auth
         if not auth.get_user_by_session():
-            self.redirect(self.uri_for('login'), abort=True)
+            self.redirect_to('login_page')
         else:
             return handler(self, *args, **kwargs)
 
@@ -246,7 +248,6 @@ has_script_run = False
 
 
 class MainPage(BaseHandler):
-
     def get(self, *args):
         global has_script_run
         if not has_script_run:
@@ -263,8 +264,15 @@ class MainPage(BaseHandler):
         self.response.write(template.render())
 
 
-class Feed(BaseHandler):
+class UsersOnlyMainPage(BaseHandler):
 
+    @user_required
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class Feed(BaseHandler):
     def get(self, offset, _should_get_all_posts):
         user = self.user
         # convert from '0' or '1' to True or False
@@ -292,20 +300,18 @@ class Feed(BaseHandler):
 
 
 class MyPosts(BaseHandler):
-
     def get(self, offset):
         user = self.user
         if not user:
             return
         _offset = int(offset)
         fetched_posts = [post_key.get().prepare_post(user)
-                         for post_key in user.liked_posts[_offset:_offset+10]]
+                         for post_key in user.liked_posts[_offset:_offset + 10]]
         logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
         self.response.write(json.dumps(fetched_posts))
 
 
 class SinglePost(BaseHandler):
-
     def post(self):
         user = self.user
         if not user:
@@ -389,7 +395,6 @@ class LikePost(BaseHandler):
 
 
 class Shops(BaseHandler):
-
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
@@ -407,14 +412,13 @@ class NotMyShops(BaseHandler):
         fetched_shops = [shop.prepare_shop(user)
                          for shop in Store.query()]
         fetched_shops = list(filter((lambda s: ndb.Key(urlsafe=s['key'])
-                                     not in user.liked_stores),
+                                               not in user.liked_stores),
                                     fetched_shops))
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
 
 class MyShops(BaseHandler):
-
     def get(self):
         user = self.user
         if not user:
@@ -429,14 +433,25 @@ class UserData(BaseHandler):
 
     def get(self):
         user = self.user
+
         if not user:
+            self.response.write(json.dumps({
+                'error': 'NO_USER_ERROR'
+            }))
             return
+
         email_frequency = user.email_frequency
-        self.response.write(json.dumps({'email_frequency': email_frequency}))
+
+        self.response.write(json.dumps({
+            'email': user.email_address,
+            'isVerified': user.verified,
+            'isModerator': user.is_moderator,
+            'myShops': user.jsonable_liked_stores,
+            'emailFrequency': email_frequency,
+        }))
 
 
 class ShopPosts(BaseHandler):
-
     def get(self, url_key, offset):
         user = self.user
         shop = ndb.Key(urlsafe=url_key).get()
@@ -449,7 +464,6 @@ class ShopPosts(BaseHandler):
 
 
 class LikeShop(BaseHandler):
-
     def post(self):
         user = self.user
         if not user:
@@ -476,7 +490,6 @@ class LikeShop(BaseHandler):
 
 
 class LikeShops(BaseHandler):
-
     def post(self):
         user = self.user
         if not user:
@@ -487,7 +500,7 @@ class LikeShops(BaseHandler):
             selected_shops = [ndb.Key(urlsafe=body['key']).get()]
         if 'keys' in body:
             selected_shops = [ndb.Key(urlsafe=key).get()
-                     for key in body['keys']]
+                              for key in body['keys']]
 
         for shop in selected_shops:
             if shop.key not in user.liked_stores:
@@ -501,7 +514,7 @@ class LikeShops(BaseHandler):
                 user.liked_stores.remove(original_liked_shop.key)
                 original_liked_shop.likes -= 1
                 original_liked_shop.put()
-        
+
         user.put()
 
         shops = [shop.prepare_shop(user) for shop in selected_shops]
@@ -509,7 +522,6 @@ class LikeShops(BaseHandler):
 
 
 class SingleShop(BaseHandler):
-
     def get(self, url_key):
         shop = get_entity_from_url_key(url_key)
         shop_dict = shop.to_dict()
@@ -547,7 +559,6 @@ class SingleShop(BaseHandler):
 
 
 class EditShop(BaseHandler):
-
     def post(self):
         user = self.user
         body = json.loads(self.request.body)
@@ -563,7 +574,6 @@ class EditShop(BaseHandler):
 
 
 class SignupHandler(BaseHandler):
-
     def post(self):
         body = json.loads(self.request.body)
         email = body['email']
@@ -581,7 +591,7 @@ class SignupHandler(BaseHandler):
                 are_shops_valid = False
 
         if (not is_password_valid or not is_email_valid
-                or not are_shops_valid):
+            or not are_shops_valid):
             self.response.write(json.dumps({
                 'error': 'VALIDATION_ERROR',
                 'isEmailValid': is_email_valid,
@@ -620,28 +630,41 @@ class SignupHandler(BaseHandler):
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        self.response.write(json.dumps({'email': user.email_address}))
+
+        self.response.write(json.dumps({
+            'email': self.user.email_address,
+            'isVerified': True,
+            'isModerator': self.user.is_moderator,
+            'myShops': self.user.jsonable_liked_stores,
+            'myEmailFrequency': self.user.email_frequency
+        }))
 
 
 class ForgotPasswordHandler(BaseHandler):
     def post(self):
-        username = self.request.get('username')
+        body = json.loads(self.request.body)
+        email = body['email']
 
-        user = self.user_model.get_by_auth_id(username)
+        user = self.user_model.get_by_auth_id(email)
         if not user:
-            logging.info('Could not find any user entry for username %s', username)
-            self.response.write('Could not find any user entry for username {}'.format(username))
+            logging.info('Could not find any user entry for email %s', email)
+            self.response.write(json.dumps({
+                'error': 'NO_EMAIL_FOUND',
+                'email': email,
+            }))
             return
 
         user_id = user.get_id()
         token = self.user_model.create_signup_token(user_id)
-        u = self.user_model.get_by_auth_id(username)
+        u = self.user_model.get_by_auth_id(email)
         u.toggle_login(enable=False)
         u.put()
-        verification_url = self.uri_for('verification', type='p', user_id=user_id,
-                                        signup_token=token, _full=True)
+        forgot_password_url = self.uri_for('verification', type='p', user_id=user_id,
+                                           signup_token=token, _full=True)
 
-        self.response.write(verification_url)
+        logging.info("forgot password url: " + forgot_password_url)
+        self.response.write(json.dumps({'email': email}))
+        send_forgot_password_email(email, forgot_password_url)
 
 
 class VerificationHandler(BaseHandler):
@@ -675,46 +698,47 @@ class VerificationHandler(BaseHandler):
             # very fragile way to grab the username, should be changed if more advanced
             # auth_ids usage needed
             self.response.write("user {} has had their email verified".format(user.username))
-            self.redirect(self.uri_for('verified'))
-            return
+            self.redirect_to('verification_success')
+        elif verification_type == 'p':
+            self.redirect('/new_password/' + user.email_address + '/' + signup_token)
         else:
             logging.info('verification type not supported')
             self.abort(404)
 
-    def post(self, *args, **kwargs):
-        user = None
-        user_id = kwargs['user_id']
-        signup_token = kwargs['signup_token']
-        verification_type = kwargs['type']
-        new_password = self.request.get('password')
+    def post(self):
+        """just for updating passwords"""
 
-        # it should be something more concise like
-        # self.auth.get_user_by_token(user_id, signup_token)
-        # unfortunately the auth interface does not (yet) allow to manipulate
-        # signup tokens concisely
+        user = None
+        body = json.loads(self.request.body)
+        email = body['email']
+        signup_token = body['signupToken']
+        new_password = body['password']
+
+        matching_users = self.user_model.query(self.user_model.email_address == email).fetch(1)
+        if matching_users:
+            user_id = matching_users[0].key.id()
+        else:
+            self.response.write(json.dumps({'error': 'AUTH_EMAIL_ERROR'}))
+            return
         user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
                                                             'signup')
-
         if not user:
-            logging.info('Could not find any user with id "%s" signup token "%s"',
-                         user_id, signup_token)
-            self.abort(404)
+            logging.info('Could not find any user with email "%s" and signup token "%s"',
+                         email, signup_token)
+            self.response.write(json.dumps({'error': 'AUTH_KEY_ERROR'}))
+            return
 
         # store user data in the session
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
 
-        if verification_type == 'p':
-            self.user_model.delete_signup_token(user.get_id(), signup_token)
-            user.set_password(new_password)
-            user.toggle_login(enable=True)
-            user.put()
-            self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
-        else:
-            logging.info('verification type not supported')
-            self.abort(404)
+        self.user_model.delete_signup_token(user.get_id(), signup_token)
+        user.set_password(new_password)
+        user.toggle_login(enable=True)
+        user.put()
+        self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
+        
 
 class LoginHandler(BaseHandler):
-
     def post(self):
         body = json.loads(self.request.body)
         email = body['email']
@@ -727,9 +751,11 @@ class LoginHandler(BaseHandler):
             if user.verified:
                 if user.is_login_enabled:
                     self.response.write(json.dumps({
-                        'email': self.user.email_address,
+                        'email': user.email_address,
                         'isVerified': True,
-                        'isModerator': self.user.is_moderator
+                        'isModerator': user.is_moderator,
+                        'myShops': user.jsonable_liked_stores,
+                        'myEmailFrequency': user.email_frequency
                     }))
                 else:
                     logging.info('Login failed for user %s because they reset their password', email)
@@ -738,27 +764,15 @@ class LoginHandler(BaseHandler):
                 # this still logs the user in
                 logging.info('Login succeeded for user %s, but they are unverified', email)
                 self.response.write(json.dumps({
-                    'email': self.user.email_address,
+                    'email': user.email_address,
                     'isVerified': False,
-                    'isModerator': self.user.is_moderator
+                    'isModerator': user.is_moderator,
+                    'myShops': user.jsonable_liked_stores,
+                    'myEmailFrequency': user.email_frequency
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
             logging.info('Login failed for user %s because of %s', email, type(e))
             self.response.write(json.dumps({'error': 'AUTHENTICATION_ERROR'}))
-
-    def get(self):
-        """
-        lowkey just used to ensure a user is logged in after verification,
-        but likely will be used in the future to pull login data
-        """
-        if self.user:
-            self.response.write(json.dumps({
-                'username': self.user.username,
-                'isModerator': self.user.is_moderator,
-                'logged_in': True
-            }))
-        else:
-            self.response.write(json.dumps({'logged_in': False}))
 
 
 class LogoutHandler(BaseHandler):
@@ -816,9 +830,9 @@ config = {
     }
 }
 
-
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
+    webapp2.Route('/rest/p', VerificationHandler, name='verification_pass'),
     webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
@@ -845,8 +859,15 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
-
     webapp2.Route('/rest/email', EmailHandler, name='email'),
+
+    webapp2.Route('/verification_success', MainPage, name='verification_success'),
+    webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
+    webapp2.Route('/reset_password', MainPage, name='reset_password'),
+    webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
+    webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
+    webapp2.Route('/signup', MainPage, name='signup_page'),
+    webapp2.Route('/login', MainPage, name='login_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),

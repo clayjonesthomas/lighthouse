@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
+import {FormGroup} from 'react-bootstrap'
 import {Radio} from 'react-bootstrap'
 
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
@@ -30,7 +30,7 @@ const SettingsPageComponent = ({
       <div className="settings-section">
         <h2 className="section-title">Update Your Shops</h2>
         <ShopPicker
-          className="shop-picker-box"
+          className="settings-shop-picker-box shop-picker-box"
           isSetupMode={false}
           selectedShops={selectedShops}
           onPickedShopsChange={onPickedShopsChange}
