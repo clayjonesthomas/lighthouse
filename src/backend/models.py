@@ -37,7 +37,7 @@ class PostNoShopException(Exception):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    shop_key = ndb.KeyProperty(indexed=True, kind='Store')
+    shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
@@ -115,29 +115,6 @@ class Post(ndb.Model):
 
 
 # TODO: rename shop
-class Store(ndb.Model):
-    name = ndb.StringProperty(indexed=True)
-    alternate_names = ndb.StringProperty(indexed=False, repeated=True)
-    website = ndb.StringProperty(indexed=False)
-    likes = ndb.IntegerProperty(indexed=True, default=1)
-    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-    icon_url = ndb.StringProperty(indexed=False)
-
-    def prepare_shop(self, user):
-        shop_dict = self.to_dict()
-        shop_dict['key'] = self.key.urlsafe()
-        shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
-
-        if user:
-            shop_dict['isLiked'] = self.key in user.liked_stores
-            shop_dict['canDelete'] = user.is_moderator
-        else:
-            shop_dict['isLiked'] = False
-            shop_dict['canDelete'] = False
-
-        return shop_dict
-
-
 class Shop(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     alternate_names = ndb.StringProperty(indexed=False, repeated=True)
@@ -166,7 +143,7 @@ class User(webapp2_extras.appengine.auth.models.User):
 
     # outdated naming, should be liked_shops, but will need to update prod datastore for that
     email_address = ndb.StringProperty(indexed=True)
-    liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
+    liked_stores = ndb.KeyProperty(indexed=True, kind='Shop', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
     using_email_service = ndb.BooleanProperty(indexed=True, default=False)
@@ -246,7 +223,7 @@ class User(webapp2_extras.appengine.auth.models.User):
 
     @property
     def jsonable_liked_stores(self):
-        return [store.get().prepare_shop(self) for store in self.liked_stores]
+        return [shop.get().prepare_shop(self) for shop in self.liked_stores]
 
 
 class PostsEmail(ndb.Model):

@@ -22,7 +22,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Store, User, get_entity_from_url_key
+from models import Post, Shop, User, get_entity_from_url_key
 from migration_script import migration_script
 from email import send_emails, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
@@ -111,23 +111,23 @@ def _spawn_dummy_posts(shop_keys):
 
 
 def _spawn_dummy_shops():
-    shops = [Store(name='American Eagle',
-                   alternate_names=['ae'],
-                   website='www.ae.com',
-                   likes=0),
-             Store(name='JCrew',
-                   website='www.jcrew.com',
-                   likes=493218),
-             Store(name="Levi's Jeans",
-                   website='www.levis.com',
-                   likes=124341),
-             Store(name='Lulu Lemon',
-                   website='www.lululemon.com',
-                   likes=295831,
-                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
-             Store(name='Old Navy',
-                   website='www.oldnavy.com',
-                   likes=324319)]
+    shops = [Shop(name='American Eagle',
+                  alternate_names=['ae'],
+                  website='www.ae.com',
+                  likes=0),
+             Shop(name='JCrew',
+                  website='www.jcrew.com',
+                  likes=493218),
+             Shop(name="Levi's Jeans",
+                  website='www.levis.com',
+                  likes=124341),
+             Shop(name='Lulu Lemon',
+                  website='www.lululemon.com',
+                  likes=295831,
+                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+             Shop(name='Old Navy',
+                  website='www.oldnavy.com',
+                  likes=324319)]
     return ndb.put_multi(shops)
 
 
@@ -402,7 +402,7 @@ class Shops(BaseHandler):
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
-                         for shop in Store.query()]
+                         for shop in Shop.query()]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
@@ -414,7 +414,7 @@ class NotMyShops(BaseHandler):
         if not user:
             return
         fetched_shops = [shop.prepare_shop(user)
-                         for shop in Store.query()]
+                         for shop in Shop.query()]
         fetched_shops = list(filter((lambda s: ndb.Key(urlsafe=s['key'])
                                                not in user.liked_stores),
                                     fetched_shops))
@@ -547,7 +547,7 @@ class SingleShop(BaseHandler):
         body = json.loads(self.request.body)
 
         if user and user.is_moderator:
-            shop = Store(
+            shop = Shop(
                 name=body['name'],
                 website=body['website'],
                 icon_url=body['icon_url']

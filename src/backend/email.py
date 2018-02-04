@@ -3,7 +3,7 @@ import webapp2_extras.appengine.auth.models
 from google.appengine.ext import ndb
 from google.appengine.api import mail
 
-from models import Store, Post, User, PostsEmail
+from models import Shop, Post, User, PostsEmail
 
 
 def send_emails():
@@ -27,9 +27,9 @@ def get_active_posts_for_user(user, new_only=True):
     """
     important_posts = []
     unimportant_posts = []
-    for liked_store_key in user.liked_stores:
-        active_posts = Post.query(ndb.AND(Post.isArchived == False,
-                                          Post.shop_key == liked_store_key)).fetch()
+    for liked_shop_key in user.liked_stores:
+        active_posts = Post.query(ndb.AND(Post.is_archived == False,
+                                          Post.shop_key == liked_shop_key)).fetch()
 
         for post in active_posts:
             if not new_only:
@@ -60,23 +60,23 @@ def _compose_email_for_user(user, important_posts, unimportant_posts):
     return email
 
 
-SUBJECT_STORE_LIMIT = 3  # TODO: decide on the number for this
+SUBJECT_shop_LIMIT = 3  # TODO: decide on the number for this
 
 
 def _generate_subject(important_posts, unimportant_posts):
     """ assumes >=1 of the posts is important """
     subject = "lightho.us \\\\"
-    for i_post in important_posts[:SUBJECT_STORE_LIMIT]:
+    for i_post in important_posts[:SUBJECT_shop_LIMIT]:
         subject += " " + i_post.shop_key.get().name + ","
 
-    store_count = len(important_posts)
-    if store_count < SUBJECT_STORE_LIMIT:
+    shop_count = len(important_posts)
+    if shop_count < SUBJECT_shop_LIMIT:
         for u_post in unimportant_posts:
-            if store_count >= SUBJECT_STORE_LIMIT:
+            if shop_count >= SUBJECT_shop_LIMIT:
                 subject += " +"
                 break
             subject += " " + u_post.shop_key.get().name + ","
-            store_count += 1
+            shop_count += 1
 
     if subject[-1] == ",":
         subject = subject[:-1]
@@ -134,13 +134,13 @@ def _generate_body(important_posts, unimportant_posts):
 
 
 def _generate_important_post_tile(post):
-    store = post.shop_key.get()
+    shop = post.shop_key.get()
 
     return("""
       <tr>
         <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
           <div class="sale-tile important-sale" style="background-color: #F0F0F0;padding: 10px;">
-            <a href='""" + store.website + "'>" + store.name + "</a><div>" + post.title  + """</div>
+            <a href='""" + shop.website + "'>" + shop.name + "</a><div>" + post.title  + """</div>
           </div>
         </td>
       </tr>
@@ -148,8 +148,8 @@ def _generate_important_post_tile(post):
 
 
 def _generate_unimportant_post_line(post):
-    store = post.shop_key.get()
-    return("<div class='other-sale'><a href='" + store.website + "'>" + store.name + "</a> - " + post.title + "</div>")
+    shop = post.shop_key.get()
+    return("<div class='other-sale'><a href='" + shop.website + "'>" + shop.name + "</a> - " + post.title + "</div>")
 
 
 def send_verification_email(email, verification_url):
