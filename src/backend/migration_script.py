@@ -20,9 +20,13 @@ def migration_script():
     count = 0
     for post in Post.query():
         name = post.shop_key.get().name
-        post.shop_key = Shop.query(Shop.name == name).fetch(1)[0].key
+        post.temp_shop_key = Shop.query(Shop.name == name).fetch(1)[0].key
         post.put()
+        count += 1
 
+    logging.info("{} posts updated".format(count))
+
+    count = 0
     for user in User.query():
         user.liked_shops = []
         for liked_store_key in user.liked_stores:
@@ -31,6 +35,6 @@ def migration_script():
             liked_shop = Shop.query(Shop.name == name).fetch(1)[0]
             user.liked_shops.append(liked_shop.key)
         user.put()
+        count += 1
 
-    logging.info("{} posts updated".format(count))
-
+    logging.info("{} users updated".format(count))

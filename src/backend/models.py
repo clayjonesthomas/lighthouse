@@ -37,7 +37,8 @@ class PostNoShopException(Exception):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
+    shop_key = ndb.KeyProperty(indexed=True, kind='Store')
+    temp_shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
@@ -165,7 +166,7 @@ class User(webapp2_extras.appengine.auth.models.User):
 
     # outdated naming, should be liked_shops, but will need to update prod datastore for that
     email_address = ndb.StringProperty(indexed=True)
-    liked_stores = ndb.KeyProperty(indexed=True, kind='Shop', repeated=True)
+    liked_stores = ndb.KeyProperty(indexed=True, kind='Store', repeated=True)
     liked_shops = ndb.KeyProperty(indexed=True, kind='Shop', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
