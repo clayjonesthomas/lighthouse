@@ -23,7 +23,6 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Shop, User, get_entity_from_url_key
-from migration_script import migration_script
 from email import send_emails, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
@@ -247,9 +246,6 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
-has_script_run = False
-
-
 class MainPage(BaseHandler):
 
     def get(self, *args):
@@ -258,11 +254,6 @@ class MainPage(BaseHandler):
             if not Post.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
-
-        global has_script_run
-        if not has_script_run:
-            has_script_run = True
-            migration_script()
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
