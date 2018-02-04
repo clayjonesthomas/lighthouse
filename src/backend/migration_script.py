@@ -18,9 +18,17 @@ def migration_script():
     # make email auth id
     count = 0
     for store in Store.query():
-        store.alternate_names = []
-        store.put()
+        shop = Shop(
+            name=store.name,
+            alternate_names=store.alternate_names,
+            website=store.website,
+            likes=store.likes,
+            timestamp=store.timestamp,
+            icon_url=store.icon_url
+        )
+
+        shop.put()
         count += 1
 
-    logging.info("{} shops updated updated".format(count))
+    logging.info("{} shops created".format(count))
 
