@@ -13,22 +13,24 @@ def migration_script():
     # user
     # email_address
     # using_email_service
+    # liked_stores to liked_shops
     # email_frequency
     # emails
     # make email auth id
     count = 0
-    for store in Shop.query():
-        shop = Shop(
-            name=store.name,
-            alternate_names=store.alternate_names,
-            website=store.website,
-            likes=store.likes,
-            timestamp=store.timestamp,
-            icon_url=store.icon_url
-        )
+    for post in Post.query():
+        name = post.shop_key.get().name
+        post.shop_key = Shop.query(Shop.name == name).fetch(1)[0].key
+        post.put()
 
-        shop.put()
-        count += 1
+    for user in User.query():
+        user.liked_shops = []
+        for liked_store_key in user.liked_stores:
+            liked_store = liked_store_key.get()
+            name = liked_store.name
+            liked_shop = Shop.query(Shop.name == name).fetch(1)[0]
+            user.liked_shops.append(liked_shop.key)
+        user.put()
 
-    logging.info("{} shops created".format(count))
+    logging.info("{} posts updated".format(count))
 
