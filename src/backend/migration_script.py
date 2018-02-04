@@ -17,14 +17,6 @@ def migration_script():
     # email_frequency
     # emails
     # make email auth id
-    count = 0
-    for post in Post.query():
-        name = post.shop_key.get().name
-        post.temp_shop_key = Shop.query(Shop.name == name).fetch(1)[0].key
-        post.put()
-        count += 1
-
-    logging.info("{} posts updated".format(count))
 
     count = 0
     for user in User.query():

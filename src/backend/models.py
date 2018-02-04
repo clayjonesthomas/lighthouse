@@ -129,7 +129,7 @@ class Store(ndb.Model):
         shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
 
         if user:
-            shop_dict['isLiked'] = self.key in user.liked_stores
+            shop_dict['isLiked'] = self.key in user.liked_shops
             shop_dict['canDelete'] = user.is_moderator
         else:
             shop_dict['isLiked'] = False
@@ -152,7 +152,7 @@ class Shop(ndb.Model):
         shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
 
         if user:
-            shop_dict['isLiked'] = self.key in user.liked_stores
+            shop_dict['isLiked'] = self.key in user.liked_shops
             shop_dict['canDelete'] = user.is_moderator
         else:
             shop_dict['isLiked'] = False
@@ -246,8 +246,8 @@ class User(webapp2_extras.appengine.auth.models.User):
         return user_key.get()
 
     @property
-    def jsonable_liked_stores(self):
-        return [shop.get().prepare_shop(self) for shop in self.liked_stores]
+    def jsonable_liked_shops(self):
+        return [shop.get().prepare_shop(self) for shop in self.liked_shops]
 
 
 class PostsEmail(ndb.Model):

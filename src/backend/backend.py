@@ -138,7 +138,7 @@ def _spawn_dummy_email_user(shop_keys):
     # request_signup.method = 'POST'
     # request_signup.body = json.dumps(_contents)
     # response_signup = request_signup.get_response(app)
-    users = [User(liked_stores=shop_keys,
+    users = [User(liked_shops=shop_keys,
                   using_email_service=True,
                   emails=[],
                   # this field usually automatically populated during account creation
@@ -289,7 +289,7 @@ class Feed(BaseHandler):
     @staticmethod
     def _get_posts(user, should_get_all_posts, offset):
         if not should_get_all_posts and user:
-            liked_shop_keys = user.liked_stores
+            liked_shop_keys = user.liked_shops
             if liked_shop_keys:
                 query = Post.query(ndb.AND(Post.shop_key.IN(liked_shop_keys),
                                            Post.is_archived == False))
@@ -416,7 +416,7 @@ class NotMyShops(BaseHandler):
         fetched_shops = [shop.prepare_shop(user)
                          for shop in Shop.query()]
         fetched_shops = list(filter((lambda s: ndb.Key(urlsafe=s['key'])
-                                               not in user.liked_stores),
+                                               not in user.liked_shops),
                                     fetched_shops))
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
@@ -428,7 +428,7 @@ class MyShops(BaseHandler):
         if not user:
             return
         fetched_shops = [shop_key.get().prepare_shop(user)
-                         for shop_key in user.liked_stores]
+                         for shop_key in user.liked_shops]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps(fetched_shops))  # included in state as "displayedShops"
 
@@ -450,7 +450,7 @@ class UserData(BaseHandler):
             'email': user.email_address,
             'isVerified': user.verified,
             'isModerator': user.is_moderator,
-            'myShops': user.jsonable_liked_stores,
+            'myShops': user.jsonable_liked_shops,
             'emailFrequency': email_frequency,
         }))
 
@@ -481,11 +481,11 @@ class LikeShop(BaseHandler):
                      for key in body['keys']]
 
         for shop in shops:
-            if shop.key in user.liked_stores:
-                user.liked_stores.remove(shop.key)
+            if shop.key in user.liked_shops:
+                user.liked_shops.remove(shop.key)
                 shop.likes -= 1
             else:
-                user.liked_stores.append(shop.key)
+                user.liked_shops.append(shop.key)
                 shop.likes += 1
             shop.put()
         user.put()
@@ -507,15 +507,15 @@ class LikeShops(BaseHandler):
                               for key in body['keys']]
 
         for shop in selected_shops:
-            if shop.key not in user.liked_stores:
-                user.liked_stores.append(shop.key)
+            if shop.key not in user.liked_shops:
+                user.liked_shops.append(shop.key)
                 shop.likes += 1
                 shop.put()
 
-        original_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_stores]
+        original_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_shops]
         for original_liked_shop in original_liked_shops:
             if original_liked_shop not in selected_shops:  # they no longer want this shop included in their liked shops
-                user.liked_stores.remove(original_liked_shop.key)
+                user.liked_shops.remove(original_liked_shop.key)
                 original_liked_shop.likes -= 1
                 original_liked_shop.put()
 
@@ -534,7 +534,7 @@ class SingleShop(BaseHandler):
 
         user = self.user
         if user:
-            shop_dict['isLiked'] = shop.key in user.liked_stores
+            shop_dict['isLiked'] = shop.key in user.liked_shops
         else:
             shop_dict['isLiked'] = False
 
@@ -617,7 +617,7 @@ class SignupHandler(BaseHandler):
                                                 is_moderator=is_moderator,
                                                 using_email_service=True,
                                                 email_frequency=EmailFrequency.MID_FREQUENCY_EMAIL,
-                                                liked_stores=shop_keys)
+                                                liked_shops=shop_keys)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for email %s because of '
                          'duplicate keys %s' % (email, user_data[1]))
@@ -639,7 +639,7 @@ class SignupHandler(BaseHandler):
             'email': self.user.email_address,
             'isVerified': True,
             'isModerator': self.user.is_moderator,
-            'myShops': self.user.jsonable_liked_stores,
+            'myShops': self.user.jsonable_liked_shops,
             'myEmailFrequency': self.user.email_frequency
         }))
 
@@ -758,7 +758,7 @@ class LoginHandler(BaseHandler):
                         'email': user.email_address,
                         'isVerified': True,
                         'isModerator': user.is_moderator,
-                        'myShops': user.jsonable_liked_stores,
+                        'myShops': user.jsonable_liked_shops,
                         'myEmailFrequency': user.email_frequency
                     }))
                 else:
@@ -771,7 +771,7 @@ class LoginHandler(BaseHandler):
                     'email': user.email_address,
                     'isVerified': False,
                     'isModerator': user.is_moderator,
-                    'myShops': user.jsonable_liked_stores,
+                    'myShops': user.jsonable_liked_shops,
                     'myEmailFrequency': user.email_frequency
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
@@ -809,7 +809,7 @@ class SettingsHandler(BaseHandler):
             return
 
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selectedShops]
-        user.liked_stores = shop_keys
+        user.liked_shops = shop_keys
         user.email_frequency = emailFrequency
         user.put()
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))

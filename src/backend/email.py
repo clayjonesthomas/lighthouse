@@ -18,7 +18,7 @@ def send_emails():
 
 def get_active_posts_for_user(user, new_only=True):
     """
-    Returns currently active posts from a user's liked_stores in a tuple,
+    Returns currently active posts from a user's liked_shops in a tuple,
     separated by important posts and unimportant posts.
     :param user: the User to get posts for
     :param new_only: set to True if you only want posts posted since the last
@@ -27,7 +27,7 @@ def get_active_posts_for_user(user, new_only=True):
     """
     important_posts = []
     unimportant_posts = []
-    for liked_shop_key in user.liked_stores:
+    for liked_shop_key in user.liked_shops:
         active_posts = Post.query(ndb.AND(Post.is_archived == False,
                                           Post.shop_key == liked_shop_key)).fetch()
 
