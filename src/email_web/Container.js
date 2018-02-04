@@ -109,7 +109,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    goToHome: () => dispatch(push('LANDING_PAGE_URL')),
+    goToHome: () => dispatch(push(LANDING_PAGE_URL)),
     goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
     goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
     goToHowItWorks: () => dispatch(push(HOW_IT_WORKS_PAGE_URL)),
