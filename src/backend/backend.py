@@ -139,7 +139,7 @@ def _spawn_dummy_email_user(shop_keys):
     # request_signup.body = json.dumps(_contents)
     # response_signup = request_signup.get_response(app)
     users = [User(liked_shops=shop_keys,
-                  using_email_service=True,
+                  email_frequency=EmailFrequency.UNSUBSCRIBE_EMAIL,
                   emails=[],
                   # this field usually automatically populated during account creation
                   email_address='michelle@lightho.us')]
@@ -615,7 +615,6 @@ class SignupHandler(BaseHandler):
                                                 password_raw=password,
                                                 verified=False,
                                                 is_moderator=is_moderator,
-                                                using_email_service=True,
                                                 email_frequency=EmailFrequency.MID_FREQUENCY_EMAIL,
                                                 liked_shops=shop_keys)
         if not user_data[0]:  # user_data is a tuple

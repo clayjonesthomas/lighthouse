@@ -5,11 +5,12 @@ from google.appengine.api import mail
 
 from models import Shop, Post, User, PostsEmail
 
+import enums.EmailFrequency as EmailFrequency
 
 def send_emails():
-    for user in User.query(User.using_email_service == True):
+    for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
         important_posts, unimportant_posts = get_active_posts_for_user(user)
-        if important_posts:
+        if important_posts or user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL:
             email = _compose_email_for_user(user, important_posts, unimportant_posts)
             email.put()
             email.send()

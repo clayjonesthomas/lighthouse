@@ -170,7 +170,6 @@ class User(webapp2_extras.appengine.auth.models.User):
     liked_shops = ndb.KeyProperty(indexed=True, kind='Shop', repeated=True)
     liked_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     is_moderator = ndb.BooleanProperty(indexed=True, default=False)
-    using_email_service = ndb.BooleanProperty(indexed=True, default=False)
     email_frequency = ndb.StringProperty(indexed=True, default=EmailFrequency.MID_FREQUENCY_EMAIL)
     # must be in order from earliest to latest email
     emails = ndb.KeyProperty(indexed=False, kind='PostsEmail', repeated=True)
@@ -267,4 +266,3 @@ class PostsEmail(ndb.Model):
         message.send()
         receiving_user.emails.append(self.key)
         receiving_user.put()
-        
