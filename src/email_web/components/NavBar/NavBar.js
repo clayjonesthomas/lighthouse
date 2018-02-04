@@ -30,14 +30,25 @@ const NavBar = ({
         />
       }
     </a>
-    <div className="collapse navbar-collapse" id="nav-bar-link-container">
-      <ul className="navbar-nav ml-auto dropdown">
-        <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickHowItWorks} tabIndex="0">How It Works</a></li>
-        <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSignUp} tabIndex="0">Sign Up</a></li>
-        <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogIn} tabIndex="0">Log In</a></li>
-      </ul>
-    </div>
+    {email ? 
+      <div className="collapse navbar-collapse" id="nav-bar-link-container">
+        <ul className="navbar-nav ml-auto dropdown">
+          <li><span className="nav-item nav-bar-span">{"Signed in as " + email}</span></li>
+          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSettings} tabIndex="0">Settings</a></li>
+          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogout} tabIndex="0">Log Out</a></li>
+        </ul>
+      </div>
+      :
+      <div className="collapse navbar-collapse" id="nav-bar-link-container">
+        <ul className="navbar-nav ml-auto dropdown">
+          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickHowItWorks} tabIndex="0">How It Works</a></li>
+          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSignUp} tabIndex="0">Sign Up</a></li>
+          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogIn} tabIndex="0">Log In</a></li>
+        </ul>
+      </div>
+    }
   </nav>   
 )
 
 export default NavBar
+
