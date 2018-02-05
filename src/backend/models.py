@@ -238,10 +238,9 @@ class PostsEmail(ndb.Model):
 
     def send(self):
         receiving_user = self.to.get()
-        message = mail.EmailMessage(sender="michelle@lightho.us", subject=self.subject)
+        message = mail.EmailMessage(sender="beacon@lightho.us", subject=self.subject)
         message.to = receiving_user.email_address
         message.html = self.body
         message.send()
         receiving_user.emails.append(self.key)
         receiving_user.put()
-        
