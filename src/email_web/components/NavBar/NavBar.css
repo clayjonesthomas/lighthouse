@@ -1,3 +1,22 @@
+@media screen and (min-width: 992px) {
+    .nav-bar-span {
+        padding-right: 40px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .dropdown{
+        background: #003091;
+        opacity:.8;
+        position: absolute;
+        top: 50px;
+        left: 0px;
+        padding: 0px 20px;
+        width: 100%;
+        text-align: right;
+    }
+}
+
 #nav-bar {
     background: #003091;
     position: fixed;
@@ -19,8 +38,8 @@
     color: #ececec !important;
 }
 
-.nav-bar-span {
-    padding-right: 40px;
+.nav-link {
+    display: inline;
 }
 
 .nav-bar-link:hover {
@@ -37,15 +56,4 @@
 
 #nav-bar .logo-circle-svg {
     cursor: pointer;
-}
-
-.show .dropdown{
-    background: #003091;
-    opacity:.8;
-    position: absolute;
-    top: 50px;
-    left: 0px;
-    padding: 0px 20px;
-    width: 100%;
-    text-align: right;
 }
