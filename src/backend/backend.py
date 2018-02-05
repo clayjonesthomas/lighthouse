@@ -22,7 +22,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
-from models import Post, Store, User, get_entity_from_url_key
+from models import Post, Shop, User, get_entity_from_url_key
 from email import send_emails, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
@@ -45,8 +45,11 @@ def populate_dummy_datastore():
 
 
 def _spawn_admin():
-    _contents = {'username': u'admin', 'email': u'ctjones@mit.edu',
-                 'password': auth_config.admin_pass}
+    _contents = {
+        'email': u'ctjones@mit.edu',
+        'password': auth_config.admin_pass,
+        'selectedShops': []
+    }
     request_signup = webapp2.Request.blank('/rest/signup')
     request_signup.method = 'POST'
     request_signup.body = json.dumps(_contents)
@@ -107,23 +110,23 @@ def _spawn_dummy_posts(shop_keys):
 
 
 def _spawn_dummy_shops():
-    shops = [Store(name='American Eagle',
-                   alternate_names=['ae'],
-                   website='www.ae.com',
-                   likes=0),
-             Store(name='JCrew',
-                   website='www.jcrew.com',
-                   likes=493218),
-             Store(name="Levi's Jeans",
-                   website='www.levis.com',
-                   likes=124341),
-             Store(name='Lulu Lemon',
-                   website='www.lululemon.com',
-                   likes=295831,
-                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
-             Store(name='Old Navy',
-                   website='www.oldnavy.com',
-                   likes=324319)]
+    shops = [Shop(name='American Eagle',
+                  alternate_names=['ae'],
+                  website='www.ae.com',
+                  likes=0),
+             Shop(name='JCrew',
+                  website='www.jcrew.com',
+                  likes=493218),
+             Shop(name="Levi's Jeans",
+                  website='www.levis.com',
+                  likes=124341),
+             Shop(name='Lulu Lemon',
+                  website='www.lululemon.com',
+                  likes=295831,
+                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+             Shop(name='Old Navy',
+                  website='www.oldnavy.com',
+                  likes=324319)]
     return ndb.put_multi(shops)
 
 
@@ -134,8 +137,8 @@ def _spawn_dummy_email_user(shop_keys):
     # request_signup.method = 'POST'
     # request_signup.body = json.dumps(_contents)
     # response_signup = request_signup.get_response(app)
-    users = [User(liked_stores=shop_keys,
-                  using_email_service=True,
+    users = [User(liked_shops=shop_keys,
+                  email_frequency=EmailFrequency.UNSUBSCRIBE_EMAIL,
                   emails=[],
                   # this field usually automatically populated during account creation
                   email_address='michelle@lightho.us')]
@@ -244,6 +247,7 @@ class BaseHandler(webapp2.RequestHandler):
 
 
 class MainPage(BaseHandler):
+
     def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             # development, otherwise prod
@@ -276,14 +280,14 @@ class Feed(BaseHandler):
     @staticmethod
     def _get_posts(user, should_get_all_posts, offset):
         if not should_get_all_posts and user:
-            liked_shop_keys = user.liked_stores
+            liked_shop_keys = user.liked_shops
             if liked_shop_keys:
                 query = Post.query(ndb.AND(Post.shop_key.IN(liked_shop_keys),
-                                           Post.isArchived == False))
+                                           Post.is_archived == False))
             else:
                 return []
         else:
-            query = Post.query(Post.isArchived == False)
+            query = Post.query(Post.is_archived == False)
         ordered_posts = query.order(-Post.timestamp)
         result = ordered_posts.fetch(10, offset=offset)
         # result = filter_archived_posts.fetch(19, offset=offset)
@@ -363,7 +367,7 @@ class ArchivePost(BaseHandler):
         body = json.loads(self.request.body)
         post_key = body['key']
         post = ndb.Key(urlsafe=post_key).get()
-        post.isArchived = not post.isArchived
+        post.is_archived = not post.is_archived
         post.put()
         self.response.write(json.dumps({'isArchived': True}))
 
@@ -389,7 +393,7 @@ class Shops(BaseHandler):
     def get(self):
         user = self.user
         fetched_shops = [shop.prepare_shop(user)
-                         for shop in Store.query()]
+                         for shop in Shop.query()]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
 
@@ -401,9 +405,9 @@ class NotMyShops(BaseHandler):
         if not user:
             return
         fetched_shops = [shop.prepare_shop(user)
-                         for shop in Store.query()]
+                         for shop in Shop.query()]
         fetched_shops = list(filter((lambda s: ndb.Key(urlsafe=s['key'])
-                                               not in user.liked_stores),
+                                               not in user.liked_shops),
                                     fetched_shops))
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps({'shops': fetched_shops}))
@@ -415,7 +419,7 @@ class MyShops(BaseHandler):
         if not user:
             return
         fetched_shops = [shop_key.get().prepare_shop(user)
-                         for shop_key in user.liked_stores]
+                         for shop_key in user.liked_shops]
         logging.info("pulling shops from the datastore, {}".format(str(len(fetched_shops))))
         self.response.write(json.dumps(fetched_shops))  # included in state as "displayedShops"
 
@@ -437,7 +441,7 @@ class UserData(BaseHandler):
             'email': user.email_address,
             'isVerified': user.verified,
             'isModerator': user.is_moderator,
-            'myShops': user.jsonable_liked_stores,
+            'myShops': user.jsonable_liked_shops,
             'emailFrequency': email_frequency,
         }))
 
@@ -447,7 +451,7 @@ class ShopPosts(BaseHandler):
         user = self.user
         shop = ndb.Key(urlsafe=url_key).get()
         shop_posts_query = Post.query(Post.shop_key == shop.key)
-        unarchived_posts_query = shop_posts_query.filter(Post.isArchived == False)
+        unarchived_posts_query = shop_posts_query.filter(Post.is_archived == False)
         posts = unarchived_posts_query.fetch(10, offset=int(offset))
         ordered_posts = Post.order_posts(posts)
         prepared_posts = [post.prepare_post(user) for post in ordered_posts]
@@ -468,11 +472,11 @@ class LikeShop(BaseHandler):
                      for key in body['keys']]
 
         for shop in shops:
-            if shop.key in user.liked_stores:
-                user.liked_stores.remove(shop.key)
+            if shop.key in user.liked_shops:
+                user.liked_shops.remove(shop.key)
                 shop.likes -= 1
             else:
-                user.liked_stores.append(shop.key)
+                user.liked_shops.append(shop.key)
                 shop.likes += 1
             shop.put()
         user.put()
@@ -494,15 +498,15 @@ class LikeShops(BaseHandler):
                               for key in body['keys']]
 
         for shop in selected_shops:
-            if shop.key not in user.liked_stores:
-                user.liked_stores.append(shop.key)
+            if shop.key not in user.liked_shops:
+                user.liked_shops.append(shop.key)
                 shop.likes += 1
                 shop.put()
 
-        original_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_stores]
+        original_liked_shops = [ndb.Key(urlsafe=liked_key.urlsafe()).get() for liked_key in user.liked_shops]
         for original_liked_shop in original_liked_shops:
             if original_liked_shop not in selected_shops:  # they no longer want this shop included in their liked shops
-                user.liked_stores.remove(original_liked_shop.key)
+                user.liked_shops.remove(original_liked_shop.key)
                 original_liked_shop.likes -= 1
                 original_liked_shop.put()
 
@@ -521,7 +525,7 @@ class SingleShop(BaseHandler):
 
         user = self.user
         if user:
-            shop_dict['isLiked'] = shop.key in user.liked_stores
+            shop_dict['isLiked'] = shop.key in user.liked_shops
         else:
             shop_dict['isLiked'] = False
 
@@ -534,7 +538,7 @@ class SingleShop(BaseHandler):
         body = json.loads(self.request.body)
 
         if user and user.is_moderator:
-            shop = Store(
+            shop = Shop(
                 name=body['name'],
                 website=body['website'],
                 icon_url=body['icon_url']
@@ -602,9 +606,8 @@ class SignupHandler(BaseHandler):
                                                 password_raw=password,
                                                 verified=False,
                                                 is_moderator=is_moderator,
-                                                using_email_service=True,
                                                 email_frequency=EmailFrequency.MID_FREQUENCY_EMAIL,
-                                                liked_stores=shop_keys)
+                                                liked_shops=shop_keys)
         if not user_data[0]:  # user_data is a tuple
             logging.info('Unable to create user for email %s because of '
                          'duplicate keys %s' % (email, user_data[1]))
@@ -626,7 +629,7 @@ class SignupHandler(BaseHandler):
             'email': self.user.email_address,
             'isVerified': True,
             'isModerator': self.user.is_moderator,
-            'myShops': self.user.jsonable_liked_stores,
+            'myShops': self.user.jsonable_liked_shops,
             'myEmailFrequency': self.user.email_frequency
         }))
 
@@ -745,7 +748,7 @@ class LoginHandler(BaseHandler):
                         'email': user.email_address,
                         'isVerified': True,
                         'isModerator': user.is_moderator,
-                        'myShops': user.jsonable_liked_stores,
+                        'myShops': user.jsonable_liked_shops,
                         'myEmailFrequency': user.email_frequency
                     }))
                 else:
@@ -758,7 +761,7 @@ class LoginHandler(BaseHandler):
                     'email': user.email_address,
                     'isVerified': False,
                     'isModerator': user.is_moderator,
-                    'myShops': user.jsonable_liked_stores,
+                    'myShops': user.jsonable_liked_shops,
                     'myEmailFrequency': user.email_frequency
                 }))
         except (InvalidAuthIdError, InvalidPasswordError) as e:
@@ -796,7 +799,7 @@ class SettingsHandler(BaseHandler):
             return
 
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selectedShops]
-        user.liked_stores = shop_keys
+        user.liked_shops = shop_keys
         user.email_frequency = emailFrequency
         user.put()
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
