@@ -1,6 +1,7 @@
 export const LANDING_PAGE_URL = '/'
 export const SIGN_UP_PAGE_URL = '/signup'
 export const LOG_IN_PAGE_URL = '/login'
+export const HOW_IT_WORKS_PAGE_URL = '/how_it_works'
 export const SETTINGS_PAGE_URL = '/settings'
 export const MY_SHOPS_URL = '/rest/my_shops'
 export const USER_DATA_URL = '/rest/user_data'

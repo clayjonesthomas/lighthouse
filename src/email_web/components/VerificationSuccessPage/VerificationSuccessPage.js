@@ -6,7 +6,7 @@ import VerificationSuccessPageComponent from './VerificationSuccessPageComponent
 
 export const VERIFICATION_SUCCESS_PAGE = 'VERIFICATION_SUCCESS_PAGE'
 
-class VerificationSuccess extends Component {
+class VerificationSuccessPage extends Component {
 
   componentDidMount() {
     const timeToSettingRedirect = 5000;
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(VerificationSuccess)
+)(VerificationSuccessPage)

@@ -17,6 +17,7 @@ import {FORGOT_PASSWORD_PAGE} from './components/ForgotPassword/ForgotPasswordPa
 import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPasswordSuccessPage'
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
+import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
   FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL} from './urls'
@@ -44,6 +45,7 @@ const Root = () => (
         <Route path={FORGOT_PASSWORD_SUCCESS_URL} component={ForgotPasswordSuccessPage}/>
         <Route path="/verified" component={VerificationSuccessPage}/>
         <Route path="/settings" component={SettingsPage}/>
+        <Route path="/how_it_works" component={ContainerAtHowItWorksPage}/>
       </Route>
     </Router>
   </Provider>
@@ -107,6 +109,15 @@ const SettingsPage = (props) => {
   return (
     <Container
       page={SETTINGS_PAGE}
+      {...props}
+    />
+  )
+}
+
+const ContainerAtHowItWorksPage = (props) => {
+  return (
+    <Container
+      page={HOW_IT_WORKS_PAGE}
       {...props}
     />
   )

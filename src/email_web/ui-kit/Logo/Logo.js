@@ -3,9 +3,13 @@ import {white} from '../colors'
 
 const Logo = ({
                 onClick,
-                color
+                color,
+                scale
               }) => (
   <svg
+    className="logo-svg"
+    width={69*scale+"px"}
+    height={68*scale+"px"}
     viewBox="0 0 34 61"
   >
     <g

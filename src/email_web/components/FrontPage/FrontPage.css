@@ -16,9 +16,9 @@
 }
 
 .sign-up-contents {
-    margin-top: 50px;
     position: absolute;
     top: 0;
+    margin-top:50px;
     transition: top .5s ease;
     height: calc(100% - 50px);
     overflow-y: auto;
