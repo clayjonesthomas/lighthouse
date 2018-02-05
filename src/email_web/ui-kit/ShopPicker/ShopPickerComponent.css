@@ -31,6 +31,14 @@
     padding-bottom: 0;
 }
 
+.shop-picker-search .rbt {
+    width: 100%;
+}
+
+.shop-picker-search .rbt-input {
+    width: 100%;
+}
+
 ul::-webkit-scrollbar {
     width:12px;
 }

@@ -23,7 +23,7 @@ const SettingsPageComponent = ({
 }) => (
   <form id="update-settings-form"
     onSubmit={onSubmitSettings}>
-    <h1 id="settings-form-title">
+    <h1 id="settings-form-title" className="settings-section">
       Settings
     </h1>
     <FormGroup>
