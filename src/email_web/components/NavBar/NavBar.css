@@ -15,6 +15,10 @@
         width: 100%;
         text-align: right;
     }
+
+    #nav-bar {
+        padding-top: 0px;
+    }
 }
 
 #nav-bar {
@@ -57,3 +61,13 @@
 #nav-bar .logo-circle-svg {
     cursor: pointer;
 }
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    width: 2em;
+    height: 2em;
+}
+
