@@ -11,11 +11,12 @@ import ForgotPasswordPage from './components/ForgotPassword/ForgotPasswordPage'
 import ForgotPasswordSuccessPage from './components/ForgotPassword/ForgotPasswordSuccessPage'
 import VerificationSuccessPage from './components/VerificationSuccessPage/VerificationSuccessPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
+import HowItWorksPage from './components/HowItWorksPage/HowItWorksPage'
 
 import {logOut, pullUserData} from './services/UserActions'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
-  LANDING_PAGE_URL} from './urls'
+  LANDING_PAGE_URL, HOW_IT_WORKS_PAGE_URL} from './urls'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -26,6 +27,7 @@ import {FORGOT_PASSWORD_PAGE} from './components/ForgotPassword/ForgotPasswordPa
 import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPasswordSuccessPage'
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
+import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -37,8 +39,11 @@ class Container extends Component {
   render() {
     const {
       page,
+      isDisplayLogo,
+      goToHome,
       goToSignUp,
       goToLogIn,
+      goToHowItWorks,
       goToSettings,
       logOut,
       email
@@ -46,8 +51,11 @@ class Container extends Component {
     return (
       <div id="container">
         <NavBar
+          isDisplayLogo={isDisplayLogo}
+          onClickLogo={email ? goToSettings : goToHome}
           onClickSignUp={goToSignUp}
           onClickLogIn={goToLogIn}
+          onClickHowItWorks={goToHowItWorks}
           onClickSettings={goToSettings}
           onClickLogout={logOut}
           email={email}
@@ -83,6 +91,9 @@ class Container extends Component {
         {page === SETTINGS_PAGE &&
         <SettingsPage/>
         }
+        {page === HOW_IT_WORKS_PAGE &&
+          <HowItWorksPage/>
+        }
       </div>
     )
   }
@@ -91,14 +102,17 @@ class Container extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     page: ownProps.page,
+    isDisplayLogo: ownProps.page !== LANDING_PAGE,
     email: state.user.email
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    goToHome: () => dispatch(push(LANDING_PAGE_URL)),
     goToSignUp: () => dispatch(push(SIGN_UP_PAGE_URL)),
     goToLogIn: () => dispatch(push(LOG_IN_PAGE_URL)),
+    goToHowItWorks: () => dispatch(push(HOW_IT_WORKS_PAGE_URL)),
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
       dispatch(logOut())
