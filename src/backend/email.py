@@ -175,7 +175,7 @@ def send_verification_email(email, verification_url):
       </body>
     </html>"""
     
-    message = mail.EmailMessage(sender="michelle@lightho.us", subject='Welcome to lightho.us!')
+    message = mail.EmailMessage(sender="no-reply@lightho.us", subject='Welcome to lightho.us!')
     message.to = email
     message.html = body
     message.send()
@@ -204,7 +204,7 @@ def send_forgot_password_email(email, forgot_password_url):
       </body>
     </html>"""
 
-    message = mail.EmailMessage(sender="michelle@lightho.us", subject='lightho.us Password Recovery Email')
+    message = mail.EmailMessage(sender="no-reply@lightho.us", subject='lightho.us Password Recovery Email')
     message.to = email
     message.html = body
     message.send()

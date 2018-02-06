@@ -116,7 +116,6 @@ const mapDispatchToProps = (dispatch) => {
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
       dispatch(logOut())
-      dispatch(push(LANDING_PAGE_URL))
     },
     pullUserData: () => dispatch(pullUserData())
   }
