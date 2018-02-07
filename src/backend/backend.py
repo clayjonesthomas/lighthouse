@@ -58,51 +58,51 @@ def _spawn_admin():
 
 def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
-                  shop_key=shop_keys[0],
+                  temp_shop_key=shop_keys[0],
                   likes=25074,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  shop_key=shop_keys[1],
+                  temp_shop_key=shop_keys[1],
                   likes=14543,
                   timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  shop_key=shop_keys[1],
+                  temp_shop_key=shop_keys[1],
                   likes=30210,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  shop_key=shop_keys[1],
+                  temp_shop_key=shop_keys[1],
                   likes=12532,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  shop_key=shop_keys[2],
+                  temp_shop_key=shop_keys[2],
                   likes=2664,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1))
              ]
@@ -181,6 +181,18 @@ def user_required(handler):
     return check_login
 
 
+def guest_required(handler):
+
+    def check_guest(self, *args, **kwargs):
+        auth = self.auth
+        if not auth.get_user_by_session():
+            return handler(self, *args, **kwargs)
+        else:
+            self.redirect_to('settings')
+
+    return check_guest
+
+
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
     def auth(self):
@@ -251,7 +263,7 @@ class MainPage(BaseHandler):
     def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             # development, otherwise prod
-            if not Post.query().fetch(1):
+            if not User.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
@@ -262,6 +274,14 @@ class MainPage(BaseHandler):
 class UsersOnlyMainPage(BaseHandler):
 
     @user_required
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class GuestsOnlyPage(BaseHandler):
+    
+    @guest_required
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
@@ -861,8 +881,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
     webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
-    webapp2.Route('/signup', MainPage, name='signup_page'),
-    webapp2.Route('/login', MainPage, name='login_page'),
+    webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
+    webapp2.Route('/login', GuestsOnlyPage, name='login_page'),
+    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),

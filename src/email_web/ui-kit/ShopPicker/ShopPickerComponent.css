@@ -23,12 +23,24 @@
     position: relative;
 }
 
+.form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #999999;
+}
+
 .shop-picker-search .rbt-token .rbt-token-remove-button{
     position: initial;
     padding-left: 3px;
     padding-top: 0;
     padding-right: 0;
     padding-bottom: 0;
+}
+
+.shop-picker-search .rbt {
+    width: 100%;
+}
+
+.shop-picker-search .rbt-input {
+    width: 100%;
 }
 
 ul::-webkit-scrollbar {
