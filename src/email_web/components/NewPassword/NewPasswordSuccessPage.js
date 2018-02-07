@@ -23,7 +23,7 @@ const NewPasswordSuccessPage = ({
       </p>
       <p
         className="helper-text">
-        <a onClick={goToSettings}>Your Settings</a>
+        <a onClick={goToSettings} tabIndex="-1">Your Settings</a>
       </p>
     </div>
   </div>

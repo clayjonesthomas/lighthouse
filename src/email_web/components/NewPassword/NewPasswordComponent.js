@@ -67,7 +67,8 @@ const NewPasswordComponent = ({
           to reset your password or used a reset link that has already been used.
           Please go to&nbsp;
           <a
-            onClick={goToForgotPassword}>
+            onClick={goToForgotPassword}
+            tabIndex="-1">
             Forgot Password
           </a>
           &nbsp;and try again.
