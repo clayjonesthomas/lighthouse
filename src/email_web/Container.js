@@ -49,7 +49,9 @@ class Container extends Component {
       email
     } = this.props
     return (
-      <div id="container">
+      <div
+        id="container"
+        className={page === SETTINGS_PAGE && "container-settings"}>
         <NavBar
           isDisplayLogo={isDisplayLogo}
           onClickLogo={email ? goToSettings : goToHome}
