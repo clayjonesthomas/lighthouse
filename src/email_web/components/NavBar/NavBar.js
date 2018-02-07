@@ -31,12 +31,14 @@ const NavBar = ({
       }
     </a>
     {email ? 
-      <div className="collapse navbar-collapse" id="nav-bar-link-container">
-        <ul className="navbar-nav ml-auto dropdown">
-          <li><span className="nav-item nav-bar-span">{"Signed in as " + email}</span></li>
-          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSettings} tabIndex="0">Settings</a></li>
-          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogout} tabIndex="0">Log Out</a></li>
-        </ul>
+      <div>
+        <span className="nav-bar-span">{"Signed in as " + email}</span>
+        <div className="collapse navbar-collapse" id="nav-bar-link-container">
+          <ul className="navbar-nav ml-auto dropdown">
+            <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSettings} tabIndex="0">Settings</a></li>
+            <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogout} tabIndex="0">Log Out</a></li>
+          </ul>
+        </div>
       </div>
       :
       <div className="collapse navbar-collapse" id="nav-bar-link-container">

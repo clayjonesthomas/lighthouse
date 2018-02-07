@@ -15,6 +15,16 @@
     .settings-section {
         margin: 30px;
     }
+
+    #settings-form-spinner {
+        width: 100%;
+        text-align: center;
+    }
+
+    #settings-form-saved-message {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 #update-settings-form {
@@ -49,6 +59,8 @@
 .radio > label > input {
     margin-left: 5px;
     margin-right: 10px;
+    min-width: 17px;
+    min-height: 17px;
 }
 
 #settings-form-button {
