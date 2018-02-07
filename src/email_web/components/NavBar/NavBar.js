@@ -22,7 +22,7 @@ const NavBar = ({
       aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <a className="mr-auto" href="#">
+    <a className="mr-auto">
       {isDisplayLogo &&
         <LogoCircle
           onClick={onClickLogo}
