@@ -12,7 +12,7 @@ const NavBar = ({
                   onClickLogout,
                   email
                 }) => (
-  <nav id="nav-bar" className="navbar navbar-toggleable-md navbar-inverse bg-faded">
+  <nav id="nav-bar" className="navbar navbar-toggleable navbar-inverse bg-faded">
     <button 
       className="navbar-toggler navbar-toggler-right" 
       type="button" data-toggle="collapse" 
@@ -35,17 +35,17 @@ const NavBar = ({
         <span className="nav-bar-span">{"Signed in as " + email}</span>
         <div className="collapse navbar-collapse" id="nav-bar-link-container">
           <ul className="navbar-nav ml-auto dropdown">
-            <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSettings} tabIndex="0">Settings</a></li>
-            <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogout} tabIndex="0">Log Out</a></li>
+            <li className="nav-item nav-link nav-bar-link" onClick={onClickSettings} tabIndex="0">Settings</li>
+            <li className="nav-item nav-link nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</li>
           </ul>
         </div>
       </div>
       :
       <div className="collapse navbar-collapse" id="nav-bar-link-container">
         <ul className="navbar-nav ml-auto dropdown">
-          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickHowItWorks} tabIndex="0">How It Works</a></li>
-          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickSignUp} tabIndex="0">Sign Up</a></li>
-          <li><a className="nav-item nav-link nav-bar-link" href="#" onClick={onClickLogIn} tabIndex="0">Log In</a></li>
+          <li className="nav-item nav-link nav-bar-link" onClick={onClickHowItWorks} tabIndex="0">How It Works</li>
+          <li className="nav-item nav-link nav-bar-link" onClick={onClickSignUp} tabIndex="0">Sign Up</li>
+          <li className="nav-item nav-link nav-bar-link" onClick={onClickLogIn} tabIndex="0">Log In</li>
         </ul>
       </div>
     }
