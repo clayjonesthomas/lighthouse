@@ -58,51 +58,51 @@ def _spawn_admin():
 
 def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
-                  shop_key=shop_keys[0],
+                  temp_shop_key=shop_keys[0],
                   likes=25074,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  shop_key=shop_keys[1],
+                  temp_shop_key=shop_keys[1],
                   likes=14543,
                   timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  shop_key=shop_keys[1],
+                  temp_shop_key=shop_keys[1],
                   likes=30210,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  shop_key=shop_keys[1],
+                  temp_shop_key=shop_keys[1],
                   likes=12532,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  shop_key=shop_keys[2],
+                  temp_shop_key=shop_keys[2],
                   likes=2664,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  shop_key=shop_keys[3],
+                  temp_shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1))
              ]
@@ -251,7 +251,7 @@ class MainPage(BaseHandler):
     def get(self, *args):
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             # development, otherwise prod
-            if not Post.query().fetch(1):
+            if not User.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
