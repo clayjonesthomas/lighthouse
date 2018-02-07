@@ -181,6 +181,18 @@ def user_required(handler):
     return check_login
 
 
+def guest_required(handler):
+
+    def check_guest(self, *args, **kwargs):
+        auth = self.auth
+        if not auth.get_user_by_session():
+            return handler(self, *args, **kwargs)
+        else:
+            self.redirect_to('settings')
+
+    return check_guest
+
+
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
     def auth(self):
@@ -262,6 +274,14 @@ class MainPage(BaseHandler):
 class UsersOnlyMainPage(BaseHandler):
 
     @user_required
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class GuestsOnlyPage(BaseHandler):
+    
+    @guest_required
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
@@ -861,8 +881,9 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
     webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
-    webapp2.Route('/signup', MainPage, name='signup_page'),
-    webapp2.Route('/login', MainPage, name='login_page'),
+    webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
+    webapp2.Route('/login', GuestsOnlyPage, name='login_page'),
+    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),

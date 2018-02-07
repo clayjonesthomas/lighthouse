@@ -35,6 +35,7 @@ const NavBar = ({
         <span className="nav-bar-span">{"Signed in as " + email}</span>
         <div className="collapse navbar-collapse" id="nav-bar-link-container">
           <ul className="navbar-nav ml-auto dropdown">
+            <li className="nav-item nav-link nav-bar-link" onClick={onClickHowItWorks} tabIndex="0">How It Works</li>
             <li className="nav-item nav-link nav-bar-link" onClick={onClickSettings} tabIndex="0">Settings</li>
             <li className="nav-item nav-link nav-bar-link" onClick={onClickLogout} tabIndex="0">Log Out</li>
           </ul>
