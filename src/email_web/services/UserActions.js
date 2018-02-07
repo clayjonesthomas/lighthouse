@@ -1,4 +1,7 @@
-import {LOG_OUT_URL, USER_DATA_URL} from '../urls'
+import {push} from 'react-router-redux'
+
+import {LOG_OUT_URL, USER_DATA_URL, LANDING_PAGE_URL}
+  from '../urls'
 import fetch from 'isomorphic-fetch'
 
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST'
@@ -31,6 +34,7 @@ export const logOut = () => {
       .then(response => response.json())
       .then(() => {
         dispatch(logOutResponse())
+        dispatch(push(LANDING_PAGE_URL))
       })
   }
 }
