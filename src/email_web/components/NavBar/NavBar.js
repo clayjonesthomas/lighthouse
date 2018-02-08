@@ -33,10 +33,7 @@ const NavBar = ({
     {email ? 
       <div>
         <span className="nav-bar-span">
-          {
-            "Signed in as " +
-            (email.length > 10 ? email.substring(0, 10) + "..." : email)
-          }
+          {"Signed in as " + email}
         </span>
         <div className="collapse navbar-collapse" id="nav-bar-link-container">
           <ul className="navbar-nav ml-auto dropdown">

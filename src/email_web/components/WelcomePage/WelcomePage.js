@@ -7,7 +7,7 @@ import WelcomePageComponent from './WelcomePageComponent'
 
 import {logOut, pullUserData} from '../../services/UserActions'
 
-import {SETTINGS_PAGE_URL} from '../../urls'
+import {HOW_IT_WORKS_PAGE_URL, SETTINGS_PAGE_URL} from '../../urls'
 
 import "./WelcomePage.css"
 class WelcomePage extends Component {
@@ -19,12 +19,15 @@ class WelcomePage extends Component {
   render() {
     const {
       logOut,
+      goToHowItWorks,
       goToSettings,
       email
     } = this.props
     return (
       <div id="welcome-container">
         <NavBar
+          isDisplayLogo={true}
+          onClickHowItWorks={goToHowItWorks}
           onClickSettings={goToSettings}
           onClickLogout={logOut}
           email={email}
@@ -45,6 +48,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    goToHowItWorks: () => dispatch(push(HOW_IT_WORKS_PAGE_URL)),
     goToSettings: () => dispatch(push(SETTINGS_PAGE_URL)),
     logOut: () => {
       dispatch(logOut())
