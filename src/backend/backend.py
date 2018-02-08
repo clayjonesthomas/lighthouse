@@ -200,9 +200,14 @@ def handle_shop_change_for_admin(should_add, shop_keys):
             if shop.likes == 0:
                 admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
                 admin.liked_shops.append(shop.key)
+                admin.put()
             shop.likes += 1
         else:
             shop.likes -= 1
+            if shop.likes == 0:
+                admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+                admin.liked_shops.remove(shop.key)
+                admin.put()
         shop.put()
 
 
