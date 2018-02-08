@@ -821,8 +821,23 @@ class SettingsHandler(BaseHandler):
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selected_shops]
         user.liked_shops = shop_keys
         user.email_frequency = email_frequency
+        self._handle_shop_change_for_admin(email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL,
+                                           shop_keys)
         user.put()
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
+
+    @staticmethod
+    def _handle_shop_change_for_admin(should_add, shop_keys):
+        for shop_key in shop_keys:
+            shop = shop_key.get()
+            if should_add:
+                if shop.likes == 0:
+                    admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+                    admin.liked_shops.append(shop.key)
+                shop.likes += 1
+            else:
+                shop.likes -= 1
+            shop.put()
 
 
 config = {
