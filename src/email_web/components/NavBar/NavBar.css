@@ -1,18 +1,16 @@
-@media screen and (min-width: 992px) {
-    .nav-bar-span {
-        padding-right: 40px;
+@media screen and (min-width: 575px) {
+    .nav-bar-link {
+        color: #ffffff !important;
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 575px) {
     .dropdown{
         background: #F0F0F0;
         position: absolute;
         top: 50px;
         right: 0px;
-        padding: 0px 20px;
         width: 100%;
-        max-width: 300px;
         text-align: center;
         border-radius: 3px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -24,6 +22,10 @@
 
     .nav-bar-link {
         color: #003091 !important;
+    }
+
+    .navbar-nav li:hover {
+        background-color: #d8d8d8;
     }
 }
 
@@ -45,7 +47,6 @@
 
 .nav-bar-link {
     padding: 5px;
-    color: #ececec;
 }
 
 .nav-link {
@@ -78,8 +79,12 @@
     height: 2em;
 }
 
+.navbar-toggler-icon:hover {
+    cursor: pointer;
+}
+
 .navbar-nav li {
-    margin: 5px 0px;
+    padding: 5px 0px;
 }
 
 .nav-bar-span {
@@ -89,3 +94,13 @@
     letter-spacing: 1px;
 }
 
+.navbar-nav li:hover {
+    cursor: pointer;
+}
+
+.collapsing {
+    height: 0;
+    -webkit-transition: height .01s;
+    -o-transition: height .01s;
+    transition: height .01s;
+}
