@@ -32,7 +32,12 @@ const NavBar = ({
     </a>
     {email ? 
       <div>
-        <span className="nav-bar-span">{"Signed in as " + email}</span>
+        <span className="nav-bar-span">
+          {
+            "Signed in as " +
+            (email.length > 10 ? email.substring(0, 10) + "..." : email)
+          }
+        </span>
         <div className="collapse navbar-collapse" id="nav-bar-link-container">
           <ul className="navbar-nav ml-auto dropdown">
             <li className="nav-item nav-link nav-bar-link" onClick={onClickHowItWorks} tabIndex="0">How It Works</li>
