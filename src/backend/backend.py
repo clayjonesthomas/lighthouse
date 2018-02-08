@@ -193,21 +193,23 @@ def guest_required(handler):
     return check_guest
 
 
-def handle_shop_change_for_admin(should_add, shop_keys):
-    for shop_key in shop_keys:
+def handle_shop_change_for_admin(shops_to_add, shops_to_remove):
+    for shop_key in shops_to_add:
         shop = shop_key.get()
-        if should_add:
-            if shop.likes == 0:
-                admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
-                admin.liked_shops.append(shop.key)
-                admin.put()
-            shop.likes += 1
-        else:
-            shop.likes -= 1
-            if shop.likes == 0:
-                admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
-                admin.liked_shops.remove(shop.key)
-                admin.put()
+        if shop.likes == 0:
+            admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+            admin.liked_shops.append(shop.key)
+            admin.put()
+        shop.likes += 1
+        shop.put()
+
+    for shop_key in shops_to_remove:
+        shop = shop_key.get()
+        shop.likes -= 1
+        if shop.likes == 0:
+            admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+            admin.liked_shops.remove(shop.key)
+            admin.put()
         shop.put()
 
 
@@ -662,7 +664,7 @@ class SignupHandler(BaseHandler):
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-        handle_shop_change_for_admin(True, shop_keys)
+        handle_shop_change_for_admin(shop_keys, [])
         self.response.write(json.dumps({
             'email': self.user.email_address,
             'isVerified': True,
@@ -837,10 +839,13 @@ class SettingsHandler(BaseHandler):
             return
 
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selected_shops]
+
+        shops_to_remove = list(set(shop_keys).intersection(user.liked_shops))
+        shops_to_add = list(set(shop_keys) - set(shops_to_remove))
+        handle_shop_change_for_admin(shops_to_add, shops_to_remove)
+
         user.liked_shops = shop_keys
         user.email_frequency = email_frequency
-        handle_shop_change_for_admin(email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL,
-                                     shop_keys)
         user.put()
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
 
