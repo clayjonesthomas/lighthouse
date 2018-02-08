@@ -811,16 +811,16 @@ class SettingsHandler(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        selectedShops = body['selectedShops']
-        emailFrequency = body['emailFrequency']
+        selected_shops = body['selectedShops']
+        email_frequency = body['emailFrequency']
 
         user = self.user
         if not user:
             return
 
-        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selectedShops]
+        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selected_shops]
         user.liked_shops = shop_keys
-        user.email_frequency = emailFrequency
+        user.email_frequency = email_frequency
         user.put()
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
 
