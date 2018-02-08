@@ -4,19 +4,24 @@ import logging
 
 import enums.EmailFrequency as EmailFrequency
 
+import csv
+
 
 def migration_script():
-
-    # user
-    # email_address
-    # email_frequency
-    # emails
-    # make email auth id
-
     count = 0
-    for user in User.query():
-        user.email_frequency = EmailFrequency.UNSUBSCRIBE_EMAIL
-        user.add_auth_id(user.email_address)
-        user.put()
-
-    logging.info("{} users updated".format(count))
+    with open("stores.csv", "rb") as f:
+        reader = csv.reader(f)
+        reader.next()
+        reader.next()
+        reader.next()
+        reader.next()
+        for row in reader:
+            if Shop.query(Shop.name == row[0]).fetch(1):
+                continue
+            shop = Shop(name=row[0],
+                        alternate_names=row[1].split(", "),
+                        website=row[2]
+                        )
+            shop.put()
+            count += 1
+    logging.info("Stores added: {}".format(count))

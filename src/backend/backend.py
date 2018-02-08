@@ -25,6 +25,7 @@ from google.appengine.ext import deferred
 from models import Post, Shop, User, get_entity_from_url_key
 from email import send_emails, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
+from migration_script import migration_script
 
 from google.appengine.api import app_identity, mail
 import lib.cloudstorage as gcs
@@ -258,6 +259,9 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
+did_script_run = False
+
+
 class MainPage(BaseHandler):
 
     def get(self, *args):
@@ -266,6 +270,11 @@ class MainPage(BaseHandler):
             if not User.query().fetch(1):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
+
+        global did_script_run
+        if not did_script_run:
+            migration_script()
+            did_script_run = True
 
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
