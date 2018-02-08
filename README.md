@@ -38,7 +38,11 @@ the PR until it satisfies your reviewers. After that, you can run the necessary 
 and submit your code to the master branch.
 
 ## Deploys
+To deploy to gcloud:
 ```gcloud app deploy --no-promote app.yaml index.yaml```
+
+To build a production version of the frontend: 
+```webpack -p --env.prod```
 
 ## Testing
 
