@@ -276,9 +276,20 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
+has_script_run = False
+
+
 class MainPage(BaseHandler):
 
     def get(self, *args):
+        global has_script_run
+        if not has_script_run:
+            admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+            admin.liked_shops = []
+            for shop in Shop.query(Shop.likes > 0):
+                admin.liked_shops.append(shop.key)
+            admin.put()
+            has_script_run = True
         if os.getenv('SERVER_SOFTWARE', '').startswith('Development'):
             # development, otherwise prod
             if not Shop.query().fetch(1):
@@ -837,7 +848,7 @@ class SettingsHandler(BaseHandler):
             return
 
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selected_shops]
-        
+
         shops_to_remain = set(shop_keys).intersection(user.liked_shops)
         shops_to_remove = set(user.liked_shops) - shops_to_remain
         shops_to_add = set(shop_keys) - shops_to_remain
