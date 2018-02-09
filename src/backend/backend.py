@@ -276,18 +276,9 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
-has_script_run = False
-
-
 class MainPage(BaseHandler):
 
     def get(self, *args):
-        global has_script_run
-        if not has_script_run:
-            for post in Post.query():
-                post.shop_key = post.temp_shop_key
-                post.put()
-            has_script_run = True
         if os.getenv('SERVER_SOFTWARE', '').startswith('Development'):
             # development, otherwise prod
             if not Shop.query().fetch(1):

@@ -38,7 +38,6 @@ class PostNoShopException(Exception):
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
     shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
-    temp_shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
