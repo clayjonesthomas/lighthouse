@@ -276,20 +276,9 @@ class BaseHandler(webapp2.RequestHandler):
             self.session_store.save_sessions(self.response)
 
 
-has_script_run = False
-
-
 class MainPage(BaseHandler):
 
     def get(self, *args):
-        global has_script_run
-        if not has_script_run:
-            admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
-            admin.liked_shops = []
-            for shop in Shop.query(Shop.likes > 0):
-                admin.liked_shops.append(shop.key)
-            admin.put()
-            has_script_run = True
         if os.getenv('SERVER_SOFTWARE', '').startswith('Development'):
             # development, otherwise prod
             if not Shop.query().fetch(1):
