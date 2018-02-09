@@ -48,6 +48,7 @@ def _spawn_admin():
     _contents = {
         'email': u'ctjones@mit.edu',
         'password': auth_config.admin_pass,
+        'is_moderator': True,
         'selectedShops': []
     }
     request_signup = webapp2.Request.blank('/rest/signup')
@@ -116,17 +117,17 @@ def _spawn_dummy_shops():
                   likes=0),
              Shop(name='JCrew',
                   website='www.jcrew.com',
-                  likes=493218),
+                  likes=0),
              Shop(name="Levi's Jeans",
                   website='www.levis.com',
-                  likes=124341),
+                  likes=0),
              Shop(name='Lulu Lemon',
                   website='www.lululemon.com',
-                  likes=295831,
+                  likes=0,
                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Shop(name='Old Navy',
                   website='www.oldnavy.com',
-                  likes=324319)]
+                  likes=0)]
     return ndb.put_multi(shops)
 
 
@@ -148,17 +149,14 @@ def _spawn_dummy_email_user(shop_keys):
 def _spawn_dummy_posts_for_email(shop_keys):
     email_posts = [Post(title='50% off all items on clearance',
                         shop_key=shop_keys[0],
-                        likes=25074,
                         timestamp=datetime.datetime.now() - datetime.timedelta(1),
                         is_important=True),
                    Post(title='Buy any oxford on the site, get one free',
                         shop_key=shop_keys[1],
-                        likes=14543,
                         timestamp=datetime.datetime.now() - datetime.timedelta(2),
                         is_important=True),
                    Post(title='$5 off the entire summer selection',
                         shop_key=shop_keys[1],
-                        likes=30210,
                         timestamp=datetime.datetime.now() - datetime.timedelta(1.5),
                         is_important=False)]
     return ndb.put_multi(email_posts)
@@ -839,9 +837,10 @@ class SettingsHandler(BaseHandler):
             return
 
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selected_shops]
-
-        shops_to_remove = list(set(shop_keys).intersection(user.liked_shops))
-        shops_to_add = list(set(shop_keys) - set(shops_to_remove))
+        
+        shops_to_remain = set(shop_keys).intersection(user.liked_shops)
+        shops_to_remove = set(user.liked_shops) - shops_to_remain
+        shops_to_add = set(shop_keys) - shops_to_remain
         handle_shop_change_for_admin(shops_to_add, shops_to_remove)
 
         user.liked_shops = shop_keys
@@ -908,7 +907,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
     webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
     webapp2.Route('/login', GuestsOnlyPage, name='login_page'),
-    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
+    webapp2.Route('/', MainPage, name='landing_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/my_feed', MainPage, name='my_feed'),
