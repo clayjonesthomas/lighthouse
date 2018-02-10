@@ -23,7 +23,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Shop, User, get_entity_from_url_key
-from email import send_emails, send_verification_email, send_forgot_password_email
+from email import send_email_to_user, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
 from google.appengine.api import app_identity, mail
@@ -715,6 +715,12 @@ class VerificationHandler(BaseHandler):
             self.redirect_to('verification_success')
         elif verification_type == 'p':
             self.redirect('/new_password/' + user.email_address + '/' + signup_token)
+        elif verification_type == 'u':
+            user.email_frequency = EmailFrequency.UNSUBSCRIBE_EMAIL
+            user.put()
+            self.redirect('/settings')
+        elif verification_type == 's':
+            self.self.redirect('/settings')
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -803,7 +809,15 @@ class EmailHandler(BaseHandler):
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
             _spawn_dummy_email_user(dummy_shops)
 
-        send_emails()
+        for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
+            user_id = user.get_id()
+            token = self.user_model.create_signup_token(user_id)
+            unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
+                                                signup_token=token, _full=True)
+            settings_url = self.uri_for('verification', type='s', user_id=user_id,
+                                                signup_token=token, _full=True)
+            send_email_to_user(user, unsubscribe_url, settings_url)
+
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
@@ -847,7 +861,7 @@ config = {
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
     webapp2.Route('/rest/p', VerificationHandler, name='verification_pass'),
-    webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
+    webapp2.Route('/rest/<type:v|p|u|s>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),

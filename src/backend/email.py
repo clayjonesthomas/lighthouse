@@ -7,14 +7,13 @@ from models import Shop, Post, User, PostsEmail
 
 import enums.EmailFrequency as EmailFrequency
 
-def send_emails():
-    for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
-        important_posts, unimportant_posts = get_active_posts_for_user(user)
-        if important_posts or user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL:
-            email = _compose_email_for_user(user, important_posts, unimportant_posts)
-            email.put()
-            email.send()
-            email.put()
+def send_email_to_user(user, unsubscribe_url, settings_url):
+    important_posts, unimportant_posts = get_active_posts_for_user(user)
+    if important_posts or user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL:
+        email = _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url)
+        email.put()
+        email.send()
+        email.put()
 
 
 def get_active_posts_for_user(user, new_only=True):
@@ -47,8 +46,8 @@ def get_active_posts_for_user(user, new_only=True):
     return important_posts, unimportant_posts
 
 
-def _compose_email_for_user(user, important_posts, unimportant_posts):
-    body = _generate_body(important_posts, unimportant_posts)
+def _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url):
+    body = _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url)
     subject = _generate_subject(important_posts, unimportant_posts)
 
     important_post_keys = [p.key for p in important_posts]
@@ -85,7 +84,7 @@ def _generate_subject(important_posts, unimportant_posts):
     return subject
 
 
-def _generate_body(important_posts, unimportant_posts):
+def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url):
     body = """
         <html>
           <body style="font-family: 'Century Gothic', sans-serif;">
@@ -124,14 +123,26 @@ def _generate_body(important_posts, unimportant_posts):
         body += _generate_unimportant_post_line(u_post)
         body += "\n"
 
-    body += """</div>
-            </td>
-          </tr>
-        </table>
-      </body>
-    </html>"""
+    body += "</div>"
+
+    body += _generate_footer_line(unsubscribe_url, settings_url)
+
+    body += """</td>
+              </tr>
+            </table>
+          </body>
+        </html>"""
 
     return body
+
+
+def _generate_footer_line(unsubscribe_url, settings_url):
+    footer_line = '<p style="text-align:center; font-size:10px"><a href="'
+    footer_line += unsubscribe_url
+    footer_line += '">Unsubscribe</a>  |  <a href="'
+    footer_line += settings_url
+    footer_line += '">Update Settings</a></p>'
+    return footer_line
 
 
 def _generate_important_post_tile(post):
