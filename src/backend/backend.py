@@ -194,21 +194,21 @@ def guest_required(handler):
 def handle_shop_change_for_admin(shops_to_add, shops_to_remove):
     for shop_key in shops_to_add:
         shop = shop_key.get()
-        if shop.likes == 0:
+        shop.likes += 1
+        shop.put()
+        if shop.likes == 1:
             admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
             admin.liked_shops.append(shop.key)
             admin.put()
-        shop.likes += 1
-        shop.put()
 
     for shop_key in shops_to_remove:
         shop = shop_key.get()
         shop.likes -= 1
+        shop.put()
         if shop.likes == 0:
             admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
             admin.liked_shops.remove(shop.key)
             admin.put()
-        shop.put()
 
 
 class BaseHandler(webapp2.RequestHandler):
