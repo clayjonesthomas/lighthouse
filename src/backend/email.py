@@ -156,19 +156,39 @@ def _generate_unimportant_post_line(post):
 def send_verification_email(email, verification_url):
     body = """
     <html>
-      <body style="font-family: 'Century Gothic', sans-serif;">
+      <body style="font-family: 'Century-Gothic', sans-serif;">
         <table style="width: 100%;">
           <tr>
-            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;background-color: #F0F0F0;padding: 10px;">
-              <p>Welcome to <a class="no-link-text" style="font-weight: normal;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
-              <div class="verify-button" style="text-align: center;">
-                <a href="
-                """
+            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
+              <div class="header-tile" style="background-color: #003091;text-align: center;padding: 15px;">
+                <table style="width: 35%;margin: 0 auto;">
+                  <tr>
+                    <th>
+                      <a href="lightho.us">
+                      <img class="header-logo-name" style="max-width: 300px;"></a>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
+              <div class="body-tile" style="background-color: #f0f0f0;padding: 15px;font-size: 20px;">
+                <p>
+                  Welcome to 
+                  <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a>
+                  ! To complete the sign up process, please confirm your email here:
+                </p>
+                <div class="verify-button" style="text-align: center;margin: 40px 0px;">
+                  <a href="
+                    """
     body += verification_url
     body += """
-                " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">VERIFY EMAIL</a>
+                    " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 10px 30px;">VERIFY EMAIL</a>
+                </div>
+                <p><3 <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
-              <p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
             </td>
           </tr>
         </table>
