@@ -156,16 +156,19 @@ def _generate_unimportant_post_line(post):
 def send_verification_email(email, verification_url):
     body = """
     <html>
-      <body style="font-family: 'Century-Gothic', sans-serif;">
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+      </head>
+      <body style="font-family: 'Roboto', sans-serif;">
         <table style="width: 100%;">
           <tr>
-            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
-              <div class="header-tile" style="background-color: #003091;text-align: center;padding: 15px;">
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #003091;text-align: center;padding: 15px;">
                 <table style="width: 35%;margin: 0 auto;">
                   <tr>
                     <th>
                       <a href="lightho.us">
-                      <img class="header-logo-name" style="max-width: 300px;"></a>
+                      <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png"></a>
                     </th>
                   </tr>
                 </table>
@@ -173,19 +176,18 @@ def send_verification_email(email, verification_url):
             </td>
           </tr>
           <tr>
-            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
-              <div class="body-tile" style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
-                <p style="margin-top: 0;margin-bottom: 80px;">Welcome to <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:
-                </p>
-                <div class="verify-button" style="text-align: center;margin: 40px 0px;">
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
+                <p style="margin-top: 0;margin-bottom: 80px;">Welcome to <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
+                <div style="text-align: center;margin: 40px 0px;">
                   <a href="
                     """
     body += verification_url
     body += """
-                    " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;">VERIFY EMAIL</a>
+                    " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;letter-spacing: 2px;">VERIFY EMAIL</a>
                 </div>
                 <p style="margin-bottom: 0;margin-top: 80px;"><3,</p>
-                <p style="margin-top: 0;margin-bottom: 0;">The <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a> team</p>
+                <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
             </td>
           </tr>
