@@ -261,12 +261,6 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(BaseHandler):
 
     def get(self, *args):
-        if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
-            # development, otherwise prod
-            if not User.query().fetch(1):
-                populate_dummy_datastore()
-                time.sleep(2)  # hack to prevent this from running more than once
-
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -283,6 +277,12 @@ class GuestsOnlyPage(BaseHandler):
     
     @guest_required
     def get(self):
+        if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
+            # development, otherwise prod
+            if not User.query().fetch(1):
+                populate_dummy_datastore()
+                time.sleep(2)  # hack to prevent this from running more than once
+
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
