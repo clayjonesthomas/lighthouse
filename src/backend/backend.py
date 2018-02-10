@@ -718,9 +718,9 @@ class VerificationHandler(BaseHandler):
         elif verification_type == 'u':
             user.email_frequency = EmailFrequency.UNSUBSCRIBE_EMAIL
             user.put()
-            self.redirect('/settings')
+            self.redirect_to('settings')
         elif verification_type == 's':
-            self.self.redirect('/settings')
+            self.redirect_to('settings')
         else:
             logging.info('verification type not supported')
             self.abort(404)
