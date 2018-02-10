@@ -174,20 +174,18 @@ def send_verification_email(email, verification_url):
           </tr>
           <tr>
             <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
-              <div class="body-tile" style="background-color: #f0f0f0;padding: 15px;font-size: 20px;">
-                <p>
-                  Welcome to 
-                  <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a>
-                  ! To complete the sign up process, please confirm your email here:
+              <div class="body-tile" style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
+                <p style="margin-top: 0;margin-bottom: 80px;">Welcome to <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:
                 </p>
                 <div class="verify-button" style="text-align: center;margin: 40px 0px;">
                   <a href="
                     """
     body += verification_url
     body += """
-                    " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 10px 30px;">VERIFY EMAIL</a>
+                    " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;">VERIFY EMAIL</a>
                 </div>
-                <p><3 <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a> team</p>
+                <p style="margin-bottom: 0;margin-top: 80px;"><3,</p>
+                <p style="margin-top: 0;margin-bottom: 0;">The <a class="no-link-text" style="font-weight: normal;font-family: 'Century-Gothic', sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
             </td>
           </tr>
