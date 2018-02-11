@@ -113,17 +113,19 @@ def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings
         body += _generate_important_post_tile(i_post)
         body += "\n"
 
-    body += """      
-      <tr>
-        <td style="display: block;max-width: 500px;margin: 3px auto;">
-          <div style="background-color: #F0F0F0;padding: 10px;">
-            <div style="text-align: center;font-size: 18px;">Other Sales</div>"""
+    if unimportant_posts:
+        body += """      
+          <tr>
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #F0F0F0;padding: 10px;">"""
+        if important_posts:
+            """<div style="text-align: center;font-size: 18px;">Other Sales</div>"""
 
-    for u_post in unimportant_posts:
-        body += _generate_unimportant_post_line(u_post)
-        body += "\n"
+        for u_post in unimportant_posts:
+            body += _generate_unimportant_post_line(u_post)
+            body += "\n"
 
-    body += "</div>"
+        body += "</div>"
 
     body += _generate_footer_line(unsubscribe_url, settings_url)
 
