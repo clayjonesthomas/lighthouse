@@ -41,7 +41,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 def populate_dummy_datastore():
     shop_keys = _spawn_dummy_shops()
     _spawn_dummy_posts(shop_keys)
-    _spawn_admin()
+    # _spawn_admin()
 
 
 def _spawn_admin():
@@ -58,51 +58,51 @@ def _spawn_admin():
 
 def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
-                  temp_shop_key=shop_keys[0],
+                  shop_key=shop_keys[0],
                   likes=25074,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  temp_shop_key=shop_keys[1],
+                  shop_key=shop_keys[1],
                   likes=14543,
                   timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  temp_shop_key=shop_keys[1],
+                  shop_key=shop_keys[1],
                   likes=30210,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  temp_shop_key=shop_keys[1],
+                  shop_key=shop_keys[1],
                   likes=12532,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  temp_shop_key=shop_keys[2],
+                  shop_key=shop_keys[2],
                   likes=2664,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1))
              ]
