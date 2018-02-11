@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {TRACKED_SHOPS_LIST} from '../../../urls'
+import {TRACKED_SHOPS_URL} from '../../../urls'
+
+import AdminPageComponent from './AdminPageComponent'
 
 class AdminPage extends Component {
 
@@ -10,28 +12,39 @@ class AdminPage extends Component {
     const {
       goToNewShop,
       goToTesting,
-      goToTrackedShopsList,
+      goToTrackedShops,
+      postTitleValue,
+      selectedShops,
+      onTitleChange,
+      onPickedShopsChange,
       submitNewPost
     } = this.props
     return <AdminPageComponent
         goToNewShop={goToNewShop}
         goToTesting={goToTesting}
-        goToTrackedShops={goToTrackedShopsList}
+        goToTrackedShops={goToTrackedShops}
+        postTitleValue={postTitleValue}
+        selectedShops={selectedShops}
+        onTitleChange={onTitleChange}
+        onPickedShopsChange={onPickedShopsChange}
         submitNewPost={submitNewPost}
       />
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = (state) => {
+  return {
+    postTitleValue: state.admin.postTitleValue,
+    selectedShops: state.admin.selectedShops
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     goToNewShop: () => {},
     goToTesting: () => {},
-    goToTrackedShopSList: () => {
-      dispatch(push(TRACKED_SHOPS_LIST))
+    goToTrackedShops: () => {
+      dispatch(push(TRACKED_SHOPS_URL))
     },
     submitNewPost: () => {}
   }

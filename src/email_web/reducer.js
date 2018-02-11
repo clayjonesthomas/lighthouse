@@ -8,7 +8,7 @@ import {user} from './services/userReducer'
 import {newPass} from './components/NewPassword/newPasswordReducer'
 import {forgotPassword} from './components/ForgotPassword/forgotPasswordReducer'
 import {settings} from './components/SettingsPage/settingsReducer'
-
+import {admin} from './components/admin/adminReducer'
 
 export default combineReducers({
   allShops,
@@ -19,5 +19,6 @@ export default combineReducers({
   newPass,
   forgotPassword,
   settings,
+  admin,
   routing: routerReducer
 })
