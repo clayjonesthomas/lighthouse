@@ -48,7 +48,6 @@ def _spawn_admin():
     _contents = {
         'email': u'ctjones@mit.edu',
         'password': auth_config.admin_pass,
-        'is_moderator': True,
         'selectedShops': []
     }
     request_signup = webapp2.Request.blank('/rest/signup')
@@ -662,8 +661,10 @@ class SignupHandler(BaseHandler):
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in shops]
         unique_properties = ['email_address']
         is_moderator = False
+        should_send_verification_email = True
         if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
+            should_send_verification_email = False
         user_data = self.user_model.create_user(email,
                                                 unique_properties,
                                                 email_address=email,
@@ -684,7 +685,8 @@ class SignupHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        send_verification_email(email, verification_url)
+        if should_send_verification_email:
+            send_verification_email(email, verification_url)
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
