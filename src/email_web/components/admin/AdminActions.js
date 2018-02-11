@@ -23,10 +23,9 @@ export const pickedShopsChange = (shops) => {
   }
 }
 
-export const isImportantChange = (value) => {
+export const isImportantChange = () => {
   return {
-    type: ADMIN_IS_IMPORTANT_CHANGE,
-    data: value
+    type: ADMIN_IS_IMPORTANT_CHANGE
   }
 }
 
@@ -59,6 +58,7 @@ export function submitNewPost() {
         isImportant: isImportant
       })
     }
+    debugger
     dispatch(newPostRequest())
     return fetch(NEW_POST_BACKEND_URL, args)
       .then(response => response.json())

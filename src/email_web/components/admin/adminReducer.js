@@ -5,7 +5,7 @@ ADMIN_IS_IMPORTANT_CHANGE, NEW_POST_RESPONSE}
 const defaultAdminState = {
   postTitleValue: '',
   selectedShops: [],
-  isImportant: "False"
+  isImportant: false
 }
 
 export function admin(state = defaultAdminState, action) {
@@ -20,7 +20,7 @@ export function admin(state = defaultAdminState, action) {
       })
     case ADMIN_IS_IMPORTANT_CHANGE:
       return Object.assign({}, state, {
-        isImportant: action.data
+        isImportant: !state.isImportant
       })
     case NEW_POST_RESPONSE:
       return defaultAdminState

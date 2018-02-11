@@ -423,6 +423,27 @@ class SinglePost(BaseHandler):
         self.response.write(json.dumps({'great': 'success'}))
 
 
+class Posts(BaseHandler):
+    def post(self):
+        user = self.user
+        if not user or not user.is_moderator:
+            return
+
+        body = json.loads(self.request.body)
+        title = body['title']
+        selected_shops = body['selectedShops']
+        is_important = body['isImportant']
+
+        for shop in selected_shops:
+            shop_key = ndb.Key(urlsafe=shop['key'])
+            post = Post(title=title,
+                        shop_key=shop_key,
+                        author=user.key,
+                        is_important=is_important)
+            post.put()
+        self.response.write(json.dumps({'success': 'true'}))
+
+
 class ArchivePost(BaseHandler):
     def post(self):
         user = self.user
@@ -923,7 +944,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/settings', SettingsHandler, name='settings'),
 
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
-    webapp2.Route('/rest/posts', Feed, name='feed'),
+    webapp2.Route('/rest/posts', Posts, name='posts'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post/archive', ArchivePost, name='archive_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),

@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => {
     onPickedShopsChange: (shops) =>
       dispatch(pickedShopsChange(shops)),
     onChangeIsImportant: (e) =>
-      dispatch(isImportantChange(e.target.value)),
+      dispatch(isImportantChange()),
     submitNewPost: (e) => {
       e.preventDefault()
       dispatch(submitNewPost())
