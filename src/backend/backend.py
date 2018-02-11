@@ -196,6 +196,19 @@ def guest_required(handler):
     return check_guest
 
 
+def moderator_required(handler):
+
+    def check_moderator(self, *args, **kwargs):
+        auth = self.auth
+        user = auth.get_user_by_session()
+        if user:
+            if user.is_moderator:
+                return handler(self, *args, **kwargs)
+        self.redirect_to('/')
+
+    return check_moderator
+
+
 def handle_shop_change_for_admin(shops_to_add, shops_to_remove):
     for shop_key in shops_to_add:
         shop = shop_key.get()
@@ -306,6 +319,14 @@ class GuestsOnlyPage(BaseHandler):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
+class ModeratorsOnlyPage(BaseHandler):
+
+    @moderator_required
+    def get(self):
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render())
 
@@ -937,5 +958,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
+    webapp2.Route('/admin', ModeratorsOnlyPage, name='single_shop_view'),
     webapp2.Route('/<:.*>', MainPage, name='home'),
 ], debug=True, config=config)
