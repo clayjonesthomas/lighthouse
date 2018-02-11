@@ -21,7 +21,7 @@ const WelcomePageComponent = ({
       stores in the settings page below.
 
     </p>
-    <a onClick={goToSettings}>Settings</a>
+    <a onClick={goToSettings} tabIndex="-1">Settings</a>
   </div>
 )
 

@@ -18,6 +18,13 @@ html {
     overflow: hidden;
 }
 
+/*TODO remove relatively unnecessary relatively-hack once
+settings becomes its own page*/
+.container-settings {
+    overflow: auto !important;
+    min-height: 100%;
+}
+
 @media (max-width: 700px) {
     #container {
         background-position: left;

@@ -2,6 +2,10 @@
     .nav-bar-link {
         color: #ffffff !important;
     }
+
+    .nav-bar-span {
+        width: calc(100% - 450px);
+    }
 }
 
 @media screen and (max-width: 575px) {
@@ -27,6 +31,10 @@
     .navbar-nav li:hover {
         background-color: #d8d8d8;
     }
+
+    .nav-bar-span {
+        width: calc(100% - 200px);
+    }
 }
 
 #nav-bar {
@@ -37,7 +45,7 @@
     color: #ececec;
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
-    z-index: 2;
+    z-index: 4;
 }
 
 #nav-bar-link-container {
@@ -92,6 +100,10 @@
     top: 13px;
     left: 70px;
     letter-spacing: 1px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
 }
 
 .navbar-nav li:hover {

@@ -89,22 +89,20 @@ def _generate_subject(important_posts, unimportant_posts):
 def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url):
     body = """
         <html>
-          <body style="font-family: 'Century Gothic', sans-serif;">
+          <head>
+            <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+          </head>
+          <body style="font-family: 'Roboto', sans-serif;">
             <table style="width: 100%;">
               <tr>
-                <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
-                  <div class="header-tile" style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
+                <td style="display: block;max-width: 500px;margin: 3px auto;">
+                  <div style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
                     <table style="width: 35%;margin: 0 auto;">
                       <tr>
                         <th>
-                          <svg classname="logo-circle-svg" width="32px" height="32px" viewbox="0 0 69 68" version="1.1" onclick="{()">> onClick()}
-                          >
-                            <g id="Page-1" stroke="none" strokewidth="1" fill="#fcfcfc" fillrule="oddeven">
-                              </g><g id="Artboard-Copy-15" transform="translate(-207.000000, -79.000000)" fill="#fcfcfc">
-                                <path d="M240.801612,89.3821513 C235.217988,89.8840945 230.791793,94.3993668 230.424645,100.02126 L227,100.02126 L227,102.008906 L230,102.008906 L230,109.808503 L227,109.808503 L227,117.866996 C227,118.41928 227.447715,118.866996 228,118.866996 L255.538564,118.866996 C256.090849,118.866996 256.538564,118.41928 256.538564,117.866996 L256.538564,109.808503 L254,109.808503 L254,102.008906 L256.538564,102.008906 L256.538564,100.02126 L253.25285,100.02126 C252.884075,94.374463 248.420213,89.8441129 242.801612,89.3757173 L242.801612,86.9505814 L240.801612,86.9505814 L240.801612,89.3821513 Z M241,102.208691 L241,109.808503 L232,109.808503 L232,102.208691 L241,102.208691 Z M243,102.208691 L252,102.208691 L252,109.808503 L243,109.808503 L243,102.208691 Z M235.181342,147 C219.145154,144.050178 207,130.078095 207,113.286882 C207,94.3507601 222.446176,79 241.5,79 C260.553824,79 276,94.3507601 276,113.286882 C276,126.111954 268.914695,137.292388 258.422021,143.172967 L257.476785,139.451577 L235.181342,147 Z M253.573974,124.086229 L227.318607,132.975338 L225,142.103682 L255.52538,131.768903 L253.573974,124.086229 Z M241.879716,121.734375 L229.921017,121.734375 L228.795866,126.164089 L241.879716,121.734375 Z" id="Combined-Shape-Copy"></path>
-                              </g>
-                          </svg></th>
-                        <th><a class="no-link-title" style="color: #ffffff;font-weight: normal;font-size: 25px;">lightho.us</a></th>
+                          <a href="lightho.us">
+                          <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png" alt="lightho.us logo"></a>
+                        </th>
                       </tr>
                     </table>
                   </div>
@@ -117,9 +115,9 @@ def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings
 
     body += """      
       <tr>
-        <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
-          <div class="sale-tile" style="background-color: #F0F0F0;padding: 10px;">
-            <div class="other-sales-title" style="text-align: center;font-size: 18px;">Other Sales</div>"""
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+          <div style="background-color: #F0F0F0;padding: 10px;">
+            <div style="text-align: center;font-size: 18px;">Other Sales</div>"""
 
     for u_post in unimportant_posts:
         body += _generate_unimportant_post_line(u_post)
@@ -150,38 +148,63 @@ def _generate_footer_line(unsubscribe_url, settings_url):
 def _generate_important_post_tile(post):
     shop = post.shop_key.get()
 
-    return("""
+    return """
       <tr>
-        <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;">
-          <div class="sale-tile important-sale" style="background-color: #F0F0F0;padding: 10px;">
-            <a href='""" + shop.website + "'>" + shop.name + "</a><div>" + post.title  + """</div>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+          <div style="background-color: #F0F0F0;padding: 10px;">
+            <a href='""" + shop.website + "'style='text-decoration: none;'>" + shop.name + """</a>
+            <div>""" + post.title + """</div>
           </div>
         </td>
       </tr>
-      """)
+      """
 
 
 def _generate_unimportant_post_line(post):
     shop = post.shop_key.get()
-    return("<div class='other-sale'><a href='" + shop.website + "'>" + shop.name + "</a> - " + post.title + "</div>")
+    return """
+    <div>
+      <a href='""" + shop.website + """'style='text-decoration: none;'>
+      """ + shop.name + """</a> - """ + post.title + """
+    </div>"""
 
 
 def send_verification_email(email, verification_url):
     body = """
     <html>
-      <body style="font-family: 'Century Gothic', sans-serif;">
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+      </head>
+      <body style="font-family: 'Roboto', sans-serif;">
         <table style="width: 100%;">
           <tr>
-            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;background-color: #F0F0F0;padding: 10px;">
-              <p>Welcome to <a class="no-link-text" style="font-weight: normal;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
-              <div class="verify-button" style="text-align: center;">
-                <a href="
-                """
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #003091;text-align: center;padding: 15px;">
+                <table style="width: 35%;margin: 0 auto;">
+                  <tr>
+                    <th>
+                      <a href="lightho.us">
+                      <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png" alt="lightho.us logo"></a>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
+                <p style="margin-top: 0;margin-bottom: 80px;">Welcome to <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
+                <div style="text-align: center;margin: 40px 0px;">
+                  <a href="
+                    """
     body += verification_url
     body += """
-                " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">VERIFY EMAIL</a>
+                    " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;letter-spacing: 2px;">VERIFY EMAIL</a>
+                </div>
+                <p style="margin-bottom: 0;margin-top: 80px;"><3,</p>
+                <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
-              <p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
             </td>
           </tr>
         </table>
@@ -198,19 +221,39 @@ def send_forgot_password_email(email, forgot_password_url):
 
     body = """
     <html>
-      <body style="font-family: 'Century Gothic', sans-serif;">
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+      </head>
+      <body style="font-family: 'Roboto', sans-serif;">
         <table style="width: 100%;">
           <tr>
-            <td class="tile" style="display: block;max-width: 500px;margin: 3px auto;background-color: #F0F0F0;padding: 10px;">
-              <p>Hey there! Click the button below to change your password. If you think you got this email by mistake, just ignore it.</p>
-                <div class="verify-button" style="text-align: center;">
-                  <a href="
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #003091;text-align: center;padding: 15px;">
+                <table style="width: 35%;margin: 0 auto;">
+                  <tr>
+                    <th>
+                      <a href="lightho.us">
+                      <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png" alt="lightho.us logo"></a>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
+                <p style="margin-top: 0;margin-bottom: 80px;">Hey there! Click the button below to change your password. If you think you got this email by mistake, just ignore it.</p>
+                <div style="text-align: center;margin: 40px 0px;">
+                  <a href= "
                   """
     body += forgot_password_url
     body += """
-                  " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 8px 10px;">CHANGE PASSWORD</a>
+                  " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;letter-spacing: 2px;">CHANGE PASSWORD</a>
                 </div>
-              <p><3 <a class="no-link-text" style="font-weight: normal;">lightho.us</a> team</p>
+                <p style="margin-bottom: 0;margin-top: 80px;"><3,</p>
+                <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
+              </div>
             </td>
           </tr>
         </table>

@@ -37,8 +37,7 @@ class PostNoShopException(Exception):
 
 class Post(ndb.Model):
     title = ndb.StringProperty(indexed=True)
-    shop_key = ndb.KeyProperty(indexed=True, kind='Store')
-    temp_shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
+    shop_key = ndb.KeyProperty(indexed=True, kind='Shop')
     likes = ndb.IntegerProperty(indexed=True, default=1)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     top_comments = ndb.KeyProperty(indexed=True, kind='Comment', repeated=True)
@@ -115,34 +114,11 @@ class Post(ndb.Model):
             return "just now"
 
 
-class Store(ndb.Model):
-    name = ndb.StringProperty(indexed=True)
-    alternate_names = ndb.StringProperty(indexed=False, repeated=True)
-    website = ndb.StringProperty(indexed=False)
-    likes = ndb.IntegerProperty(indexed=True, default=1)
-    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-    icon_url = ndb.StringProperty(indexed=False)
-
-    def prepare_shop(self, user):
-        shop_dict = self.to_dict()
-        shop_dict['key'] = self.key.urlsafe()
-        shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
-
-        if user:
-            shop_dict['isLiked'] = self.key in user.liked_shops
-            shop_dict['canDelete'] = user.is_moderator
-        else:
-            shop_dict['isLiked'] = False
-            shop_dict['canDelete'] = False
-
-        return shop_dict
-
-
 class Shop(ndb.Model):
     name = ndb.StringProperty(indexed=True)
     alternate_names = ndb.StringProperty(indexed=False, repeated=True)
     website = ndb.StringProperty(indexed=False)
-    likes = ndb.IntegerProperty(indexed=True, default=1)
+    likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
 

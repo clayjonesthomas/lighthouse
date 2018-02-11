@@ -6,7 +6,7 @@
 
 .landing-page-contents {
     position: absolute;
-    top:50px;
+    top:0px;
     bottom: 0;
     transition: bottom .5s ease;
     height: calc(100% - 50px);
