@@ -46,7 +46,7 @@ def populate_dummy_datastore():
 
 def _spawn_admin():
     _contents = {
-        'email': u'ctjones@mit.edu',
+        'email': u'clay@lightho.us',
         'password': auth_config.admin_pass,
         'selectedShops': []
     }
@@ -199,11 +199,12 @@ def moderator_required(handler):
 
     def check_moderator(self, *args, **kwargs):
         auth = self.auth
-        user = auth.get_user_by_session()
+        u = auth.get_user_by_session()
+        user = auth.store.user_model.get_by_id(u['user_id'])
         if user:
             if user.is_moderator:
                 return handler(self, *args, **kwargs)
-        self.redirect_to('/')
+        self.redirect_to('home')
 
     return check_moderator
 
@@ -961,5 +962,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='single_shop_view'),
-    webapp2.Route('/<:.*>', MainPage, name='home'),
+    webapp2.Route('/', MainPage, name='home'),
+    webapp2.Route('/<:.*>', MainPage, name='home_redirect'),
 ], debug=True, config=config)
