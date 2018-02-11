@@ -18,3 +18,5 @@ export const UPDATE_SETTINGS_URL = '/rest/settings'
 export const LOG_OUT_URL = '/rest/logout'
 export const ADMIN_PAGE_URL = '/admin'
 export const TRACKED_SHOPS_URL = '/admin/tracked_shops'
+export const NEW_POST_BACKEND_URL = '/rest/new_post'
+

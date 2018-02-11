@@ -6,6 +6,9 @@ import {TRACKED_SHOPS_URL} from '../../../urls'
 
 import AdminPageComponent from './AdminPageComponent'
 
+import {postTitleChange, pickedShopsChange, isImportantChange,
+  submitNewPost} from '../AdminActions'
+
 class AdminPage extends Component {
 
   render() {
@@ -53,11 +56,13 @@ const mapDispatchToProps = (dispatch) => {
     },
     onTitleChange: (e) =>
       dispatch(postTitleChange(e.target.value)),
-    onPickedShopsChange: () => {},
-    onChangeIsImportant: () => {},
+    onPickedShopsChange: (shops) =>
+      dispatch(pickedShopsChange(shops)),
+    onChangeIsImportant: (e) =>
+      dispatch(isImportantChange(e.target.value)),
     submitNewPost: (e) => {
       e.preventDefault()
-      dispatch(submitNewPost)
+      dispatch(submitNewPost())
     }
   }
 }

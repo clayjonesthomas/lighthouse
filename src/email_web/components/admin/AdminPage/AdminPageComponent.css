@@ -2,6 +2,11 @@
     float: inherit;
 }
 
-#admin-submit-button, .admin-shop-picker, #admin-post-title {
+#admin-submit-button, .admin-shop-picker,
+#admin-post-title, #admin-is-important-checkbox {
     margin: 10px;
+}
+
+#admin-submit-button {
+    display: block;
 }
