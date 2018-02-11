@@ -7,9 +7,11 @@ from models import Shop, Post, User, PostsEmail
 
 import enums.EmailFrequency as EmailFrequency
 
+
 def send_email_to_user(user, unsubscribe_url, settings_url):
     important_posts, unimportant_posts = get_active_posts_for_user(user)
-    if important_posts or user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL:
+    send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
+    if important_posts or send_just_unimportant:
         email = _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url)
         email.put()
         email.send()
