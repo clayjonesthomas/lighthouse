@@ -15,8 +15,10 @@ class AdminPage extends Component {
       goToTrackedShops,
       postTitleValue,
       selectedShops,
+      isImportantValue,
       onTitleChange,
       onPickedShopsChange,
+      onChangeIsImportant,
       submitNewPost
     } = this.props
     return <AdminPageComponent
@@ -24,9 +26,11 @@ class AdminPage extends Component {
         goToTesting={goToTesting}
         goToTrackedShops={goToTrackedShops}
         postTitleValue={postTitleValue}
+        isImportantValue={isImportantValue}
         selectedShops={selectedShops}
         onTitleChange={onTitleChange}
         onPickedShopsChange={onPickedShopsChange}
+        onChangeIsImportant={onChangeIsImportant}
         submitNewPost={submitNewPost}
       />
   }
@@ -35,7 +39,8 @@ class AdminPage extends Component {
 const mapStateToProps = (state) => {
   return {
     postTitleValue: state.admin.postTitleValue,
-    selectedShops: state.admin.selectedShops
+    selectedShops: state.admin.selectedShops,
+    isImportantValue: state.admin.isImportant
   }
 }
 
@@ -46,7 +51,14 @@ const mapDispatchToProps = (dispatch) => {
     goToTrackedShops: () => {
       dispatch(push(TRACKED_SHOPS_URL))
     },
-    submitNewPost: () => {}
+    onTitleChange: (e) =>
+      dispatch(postTitleChange(e.target.value)),
+    onPickedShopsChange: () => {},
+    onChangeIsImportant: () => {},
+    submitNewPost: (e) => {
+      e.preventDefault()
+      dispatch(submitNewPost)
+    }
   }
 }
 

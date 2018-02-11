@@ -8,8 +8,10 @@ const AdminPageComponent =
      goToTrackedShops,
      postTitleValue,
      selectedShops,
+     isImportantValue,
      onTitleChange,
      onPickedShopsChange,
+     onChangeIsImportant,
      submitNewPost
    }) => (
     <form onSubmit={submitNewPost}>
@@ -28,12 +30,21 @@ const AdminPageComponent =
         selectedShops={selectedShops}
         className="admin-shop-picker"
       />
+      <span>
+        is post important?
+      </span>
+      <input
+        id="admin-is-important-checkbox"
+        type="checkbox"
+        value={isImportantValue}
+        onChange={onChangeIsImportant}
+      />
       <input
         id="admin-submit-button"
         type="submit"
         value="submit post"
       />
     </form>
-  )
+)
 
 export default AdminPageComponent

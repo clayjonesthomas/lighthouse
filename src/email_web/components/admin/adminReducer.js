@@ -1,7 +1,8 @@
 
 const defaultAdminState = {
   postTitleValue: '',
-  selectedShops: []
+  selectedShops: [],
+  isImportant: "False"
 }
 
 export function admin(state = defaultAdminState, action) {
