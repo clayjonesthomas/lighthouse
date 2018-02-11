@@ -196,7 +196,7 @@ def send_verification_email(email, verification_url):
           <tr>
             <td style="display: block;max-width: 500px;margin: 3px auto;">
               <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
-                <p style="margin-top: 0;margin-bottom: 80px;">Welcome to <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
+                <p style="margin-top: 0;margin-bottom: 80px;color: #000000 !important;">Welcome to <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
                 <div style="text-align: center;margin: 40px 0px;">
                   <a href="
                     """
@@ -204,8 +204,8 @@ def send_verification_email(email, verification_url):
     body += """
                     " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;letter-spacing: 2px;">VERIFY EMAIL</a>
                 </div>
-                <p style="margin-bottom: 0;margin-top: 80px;"><3,</p>
-                <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
+                <p style="margin-bottom: 0;margin-top: 80px;color: #000000 !important;"><3,</p>
+                <p style="margin-top: 0;margin-bottom: 0;color: #000000 !important;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
             </td>
           </tr>

@@ -41,7 +41,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 def populate_dummy_datastore():
     shop_keys = _spawn_dummy_shops()
     _spawn_dummy_posts(shop_keys)
-    # _spawn_admin()
+    _spawn_admin()
 
 
 def _spawn_admin():
@@ -61,10 +61,12 @@ def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
                   shop_key=shop_keys[0],
                   likes=25074,
+                  is_important=True,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
                   shop_key=shop_keys[1],
                   likes=14543,
+                  is_important=True,
                   timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
                   shop_key=shop_keys[1],
@@ -73,13 +75,16 @@ def _spawn_dummy_posts(shop_keys):
              Post(title='Free shipping on any order of $10 or more',
                   shop_key=shop_keys[1],
                   likes=12532,
+                  is_important=False,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
                   shop_key=shop_keys[2],
+                  is_important=True,
                   likes=2664,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
                   shop_key=shop_keys[3],
+                  is_important=True,
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
