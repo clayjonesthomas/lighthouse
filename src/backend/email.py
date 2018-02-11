@@ -168,7 +168,7 @@ def send_verification_email(email, verification_url):
                   <tr>
                     <th>
                       <a href="lightho.us">
-                      <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png"></a>
+                      <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png" alt="lightho.us logo"></a>
                     </th>
                   </tr>
                 </table>
