@@ -719,8 +719,10 @@ class VerificationHandler(BaseHandler):
             user.email_frequency = EmailFrequency.UNSUBSCRIBE_EMAIL
             user.put()
             self.redirect_to('settings')
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
         elif verification_type == 's':
             self.redirect_to('settings')
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
         else:
             logging.info('verification type not supported')
             self.abort(404)
