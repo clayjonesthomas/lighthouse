@@ -8,24 +8,26 @@ handlers:
 - url: /(.*\.(gif|png|jpg))$
   static_files: static/\1
   upload: static/.*\.(gif|png|jpg)$
+  secure: always
+
 
 - url: /bundle\.js
   static_files: bundle.js
   upload: bundle\.js
-#  secure: always
+  secure: always
 
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon.ico
-#  secure: always
+  secure: always
 
 - url: /rest/posts
   script: backend.backend.app
-#  secure: always
+  secure: always
 
 - url: /.*
   script: backend.backend.app
-#  secure: always
+  secure: always
 
 - url: /*
   script: backend.backend.app

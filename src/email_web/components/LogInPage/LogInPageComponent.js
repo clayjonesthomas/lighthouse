@@ -47,7 +47,7 @@ const LogInPageComponent = ({
       <p
         className="helper-text"
         id="log-in-helper-text">
-        Don't have an account? <a onClick={onGoToSignUp}>Sign Up</a>
+        Don't have an account? <a onClick={onGoToSignUp} tabIndex="-1">Sign Up</a>
       </p>
       <FormGroup
         validationState={
@@ -83,7 +83,7 @@ const LogInPageComponent = ({
         {
           <p className="password-error">
             The email-password combination you gave isn't right.
-            &nbsp;<a>Recover your password?</a>
+            &nbsp;<a tabIndex="-1">Recover your password?</a>
           </p>
         }
       </FormGroup>
@@ -92,7 +92,7 @@ const LogInPageComponent = ({
         value="LOG IN"
         className="submit-button form-button"
       />
-      <a onClick={goToForgotPassword}>Forgot Password</a>
+      <a onClick={goToForgotPassword} tabIndex="-1">Forgot Password</a>
     </div>
   </form>
 )

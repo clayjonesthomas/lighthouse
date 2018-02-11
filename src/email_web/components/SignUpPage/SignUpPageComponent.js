@@ -51,7 +51,7 @@ const SignUpPageComponent = ({
         Sign Up
       </h1>
       <p className="helper-text">
-        Already have an account? <a onClick={goToLogIn}>Log in</a>
+        Already have an account? <a onClick={goToLogIn} tabIndex="-1">Log in</a>
       </p>
       <ShopPicker
         className="shop-picker-box"
@@ -90,7 +90,7 @@ const SignUpPageComponent = ({
           invalidEmailFromServer === emailValue &&
           <p className="email-error">
             The email address you have chosen is already in use.
-            Please <a>log in</a> or use a different email.
+            Please <a tabIndex="-1" onClick={goToLogIn}>log in</a> or use a different email.
           </p>
         }
       </FormGroup>

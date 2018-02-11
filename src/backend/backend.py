@@ -48,6 +48,7 @@ def _spawn_admin():
     _contents = {
         'email': u'ctjones@mit.edu',
         'password': auth_config.admin_pass,
+        'is_moderator': True,
         'selectedShops': []
     }
     request_signup = webapp2.Request.blank('/rest/signup')
@@ -116,17 +117,17 @@ def _spawn_dummy_shops():
                   likes=0),
              Shop(name='JCrew',
                   website='www.jcrew.com',
-                  likes=493218),
+                  likes=0),
              Shop(name="Levi's Jeans",
                   website='www.levis.com',
-                  likes=124341),
+                  likes=0),
              Shop(name='Lulu Lemon',
                   website='www.lululemon.com',
-                  likes=295831,
+                  likes=0,
                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Shop(name='Old Navy',
                   website='www.oldnavy.com',
-                  likes=324319)]
+                  likes=0)]
     return ndb.put_multi(shops)
 
 
@@ -148,17 +149,14 @@ def _spawn_dummy_email_user(shop_keys):
 def _spawn_dummy_posts_for_email(shop_keys):
     email_posts = [Post(title='50% off all items on clearance',
                         shop_key=shop_keys[0],
-                        likes=25074,
                         timestamp=datetime.datetime.now() - datetime.timedelta(1),
                         is_important=True),
                    Post(title='Buy any oxford on the site, get one free',
                         shop_key=shop_keys[1],
-                        likes=14543,
                         timestamp=datetime.datetime.now() - datetime.timedelta(2),
                         is_important=True),
                    Post(title='$5 off the entire summer selection',
                         shop_key=shop_keys[1],
-                        likes=30210,
                         timestamp=datetime.datetime.now() - datetime.timedelta(1.5),
                         is_important=False)]
     return ndb.put_multi(email_posts)
@@ -191,6 +189,26 @@ def guest_required(handler):
             self.redirect_to('settings')
 
     return check_guest
+
+
+def handle_shop_change_for_admin(shops_to_add, shops_to_remove):
+    for shop_key in shops_to_add:
+        shop = shop_key.get()
+        shop.likes += 1
+        shop.put()
+        if shop.likes == 1:
+            admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+            admin.liked_shops.append(shop.key)
+            admin.put()
+
+    for shop_key in shops_to_remove:
+        shop = shop_key.get()
+        shop.likes -= 1
+        shop.put()
+        if shop.likes == 0:
+            admin = User.query(User.email_address == "ctjones@mit.edu").fetch(1)[0]
+            admin.liked_shops.remove(shop.key)
+            admin.put()
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -644,7 +662,7 @@ class SignupHandler(BaseHandler):
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-
+        handle_shop_change_for_admin(shop_keys, [])
         self.response.write(json.dumps({
             'email': self.user.email_address,
             'isVerified': True,
@@ -811,16 +829,22 @@ class SettingsHandler(BaseHandler):
 
     def post(self):
         body = json.loads(self.request.body)
-        selectedShops = body['selectedShops']
-        emailFrequency = body['emailFrequency']
+        selected_shops = body['selectedShops']
+        email_frequency = body['emailFrequency']
 
         user = self.user
         if not user:
             return
 
-        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selectedShops]
+        shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in selected_shops]
+
+        shops_to_remain = set(shop_keys).intersection(user.liked_shops)
+        shops_to_remove = set(user.liked_shops) - shops_to_remain
+        shops_to_add = set(shop_keys) - shops_to_remain
+        handle_shop_change_for_admin(shops_to_add, shops_to_remove)
+
         user.liked_shops = shop_keys
-        user.email_frequency = emailFrequency
+        user.email_frequency = email_frequency
         user.put()
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
 
