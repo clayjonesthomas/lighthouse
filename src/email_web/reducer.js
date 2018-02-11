@@ -9,6 +9,7 @@ import {newPass} from './components/NewPassword/newPasswordReducer'
 import {forgotPassword} from './components/ForgotPassword/forgotPasswordReducer'
 import {settings} from './components/SettingsPage/settingsReducer'
 import {admin} from './components/admin/AdminPage/adminReducer'
+import {trackedShops} from './components/admin/TrackedShopPage/trackedShopReducer'
 
 export default combineReducers({
   allShops,
@@ -20,5 +21,6 @@ export default combineReducers({
   forgotPassword,
   settings,
   admin,
+  trackedShops,
   routing: routerReducer
 })
