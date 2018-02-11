@@ -7,7 +7,7 @@ import {TRACKED_SHOPS_URL} from '../../../urls'
 import AdminPageComponent from './AdminPageComponent'
 
 import {postTitleChange, pickedShopsChange, isImportantChange,
-  submitNewPost} from '../AdminActions'
+  submitNewPost} from './AdminActions'
 
 class AdminPage extends Component {
 

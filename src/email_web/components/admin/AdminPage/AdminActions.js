@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
 import {NEW_POST_BACKEND_URL}
-  from '../../urls'
+  from '../../../urls'
 
 export const ADMIN_POST_TITLE_CHANGE = "ADMIN_POST_TITLE_CHANGE"
 export const ADMIN_PICKED_SHOPS_CHANGE = "ADMIN_PICKED_SHOPS_CHANGE"
@@ -58,7 +58,7 @@ export function submitNewPost() {
         isImportant: isImportant
       })
     }
-    debugger
+
     dispatch(newPostRequest())
     return fetch(NEW_POST_BACKEND_URL, args)
       .then(response => response.json())
