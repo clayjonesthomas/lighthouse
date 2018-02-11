@@ -2,6 +2,7 @@ import React from 'react'
 
 import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
 
+import './AdminPageComponent.css'
 const AdminPageComponent =
   ({
      goToTrackedShops,
@@ -25,6 +26,7 @@ const AdminPageComponent =
       <ShopPicker
         onPickedShopsChange={onPickedShopsChange}
         selectedShops={selectedShops}
+        className="admin-shop-picker"
       />
       <input
         id="admin-submit-button"

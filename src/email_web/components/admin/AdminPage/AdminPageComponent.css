@@ -1,0 +1,7 @@
+.admin-shop-picker {
+    float: inherit;
+}
+
+#admin-submit-button, .admin-shop-picker, #admin-post-title {
+    margin: 10px;
+}
