@@ -7,14 +7,15 @@ from models import Shop, Post, User, PostsEmail
 
 import enums.EmailFrequency as EmailFrequency
 
-def send_emails():
-    for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
-        important_posts, unimportant_posts = get_active_posts_for_user(user)
-        if important_posts or user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL:
-            email = _compose_email_for_user(user, important_posts, unimportant_posts)
-            email.put()
-            email.send()
-            email.put()
+
+def send_email_to_user(user, unsubscribe_url, settings_url):
+    important_posts, unimportant_posts = get_active_posts_for_user(user)
+    send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
+    if important_posts or send_just_unimportant:
+        email = _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url)
+        email.put()
+        email.send()
+        email.put()
 
 
 def get_active_posts_for_user(user, new_only=True):
@@ -47,8 +48,8 @@ def get_active_posts_for_user(user, new_only=True):
     return important_posts, unimportant_posts
 
 
-def _compose_email_for_user(user, important_posts, unimportant_posts):
-    body = _generate_body(important_posts, unimportant_posts)
+def _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url):
+    body = _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url)
     subject = _generate_subject(important_posts, unimportant_posts)
 
     important_post_keys = [p.key for p in important_posts]
@@ -85,7 +86,7 @@ def _generate_subject(important_posts, unimportant_posts):
     return subject
 
 
-def _generate_body(important_posts, unimportant_posts):
+def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url):
     body = """
         <html>
           <head>
@@ -112,24 +113,38 @@ def _generate_body(important_posts, unimportant_posts):
         body += _generate_important_post_tile(i_post)
         body += "\n"
 
-    body += """      
-      <tr>
-        <td style="display: block;max-width: 500px;margin: 3px auto;">
-          <div style="background-color: #F0F0F0;padding: 10px;">
-            <div style="text-align: center;font-size: 18px;">Other Sales</div>"""
+    if unimportant_posts:
+        body += """      
+          <tr>
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #F0F0F0;padding: 10px;">"""
+        if important_posts:
+            """<div style="text-align: center;font-size: 18px;">Other Sales</div>"""
 
-    for u_post in unimportant_posts:
-        body += _generate_unimportant_post_line(u_post)
-        body += "\n"
+        for u_post in unimportant_posts:
+            body += _generate_unimportant_post_line(u_post)
+            body += "\n"
 
-    body += """</div>
-            </td>
-          </tr>
-        </table>
-      </body>
-    </html>"""
+        body += "</div>"
+
+    body += _generate_footer_line(unsubscribe_url, settings_url)
+
+    body += """</td>
+              </tr>
+            </table>
+          </body>
+        </html>"""
 
     return body
+
+
+def _generate_footer_line(unsubscribe_url, settings_url):
+    footer_line = '<p style="text-align:center; font-size:10px"><a href="'
+    footer_line += unsubscribe_url
+    footer_line += '">Unsubscribe</a>  |  <a href="'
+    footer_line += settings_url
+    footer_line += '">Update Settings</a></p>'
+    return footer_line
 
 
 def _generate_important_post_tile(post):
@@ -181,7 +196,7 @@ def send_verification_email(email, verification_url):
           <tr>
             <td style="display: block;max-width: 500px;margin: 3px auto;">
               <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
-                <p style="margin-top: 0;margin-bottom: 80px;">Welcome to <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
+                <p style="margin-top: 0;margin-bottom: 80px;color: #000000 !important;">Welcome to <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a>! To complete the sign up process, please confirm your email here:</p>
                 <div style="text-align: center;margin: 40px 0px;">
                   <a href="
                     """
@@ -189,8 +204,8 @@ def send_verification_email(email, verification_url):
     body += """
                     " style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;letter-spacing: 2px;">VERIFY EMAIL</a>
                 </div>
-                <p style="margin-bottom: 0;margin-top: 80px;"><3,</p>
-                <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
+                <p style="margin-bottom: 0;margin-top: 80px;color: #000000 !important;"><3,</p>
+                <p style="margin-top: 0;margin-bottom: 0;color: #000000 !important;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
             </td>
           </tr>

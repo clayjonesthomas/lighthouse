@@ -23,7 +23,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Shop, User, get_entity_from_url_key
-from email import send_emails, send_verification_email, send_forgot_password_email
+from email import send_email_to_user, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
 from google.appengine.api import app_identity, mail
@@ -59,51 +59,56 @@ def _spawn_admin():
 
 def _spawn_dummy_posts(shop_keys):
     posts = [Post(title='50% off all items on clearance',
-                  temp_shop_key=shop_keys[0],
+                  shop_key=shop_keys[0],
                   likes=25074,
+                  is_important=True,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1)),
              Post(title='Buy any oxford on the site, get one free',
-                  temp_shop_key=shop_keys[1],
+                  shop_key=shop_keys[1],
                   likes=14543,
+                  is_important=True,
                   timestamp=datetime.datetime.now() - datetime.timedelta(2)),
              Post(title='$5 off the entire summer selection',
-                  temp_shop_key=shop_keys[1],
+                  shop_key=shop_keys[1],
                   likes=30210,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.5)),
              Post(title='Free shipping on any order of $10 or more',
-                  temp_shop_key=shop_keys[1],
+                  shop_key=shop_keys[1],
                   likes=12532,
+                  is_important=False,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.4)),
              Post(title="Summer jeans moved to clearance, everything 20% off or more",
-                  temp_shop_key=shop_keys[2],
+                  shop_key=shop_keys[2],
+                  is_important=True,
                   likes=2664,
                   timestamp=datetime.datetime.now() - datetime.timedelta(1.9)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
+                  is_important=True,
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1)),
              Post(title='$10 off a purchase of $100 or more',
-                  temp_shop_key=shop_keys[3],
+                  shop_key=shop_keys[3],
                   likes=352,
                   timestamp=datetime.datetime.now() - datetime.timedelta(.1))
              ]
@@ -733,6 +738,14 @@ class VerificationHandler(BaseHandler):
             self.redirect_to('verification_success')
         elif verification_type == 'p':
             self.redirect('/new_password/' + user.email_address + '/' + signup_token)
+        elif verification_type == 'u':
+            user.email_frequency = EmailFrequency.UNSUBSCRIBE_EMAIL
+            user.put()
+            self.redirect_to('settings')
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
+        elif verification_type == 's':
+            self.redirect_to('settings')
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -821,7 +834,15 @@ class EmailHandler(BaseHandler):
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
             _spawn_dummy_email_user(dummy_shops)
 
-        send_emails()
+        for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
+            user_id = user.get_id()
+            token = self.user_model.create_signup_token(user_id)
+            unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
+                                                signup_token=token, _full=True)
+            settings_url = self.uri_for('verification', type='s', user_id=user_id,
+                                                signup_token=token, _full=True)
+            send_email_to_user(user, unsubscribe_url, settings_url)
+
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
 
@@ -871,7 +892,7 @@ config = {
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
     webapp2.Route('/rest/p', VerificationHandler, name='verification_pass'),
-    webapp2.Route('/rest/<type:v|p>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
+    webapp2.Route('/rest/<type:v|p|u|s>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
