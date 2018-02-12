@@ -18,6 +18,52 @@ def send_email_to_user(user, unsubscribe_url, settings_url):
         email.put()
 
 
+def send_update_email_to_user(user, settings_url):
+    subject = "An Update From lightho.us"
+    body = """<html>
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+      </head>
+      <body style="font-family: 'Roboto', sans-serif;">
+        <table style="width: 100%;">
+          <tr>
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #003091;text-align: center;padding: 15px;">
+                <table style="width: 35%;margin: 0 auto;">
+                  <tr>
+                    <th>
+                      <a href="lightho.us">
+                      <img style="max-width: 300px;" src="https://lightho.us/blue_logo.png"></a>
+                    </th>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="display: block;max-width: 500px;margin: 3px auto;">
+              <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
+                <p style="margin-top: 0px;">Email updates have been released! Now, instead of visiting us for sale updates, we'll email you if any of your stores run sales we think you'll like. As an original user, we unsubscribed you from this feature, so if you would like to enable it, <a href='"""
+    body += settings_url
+    body += """'>you can do that here</a>. </p>
+                <p style="margin-bottom: 0;margin-top: 40px;"><3,</p>
+                <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>"""
+
+    message = mail.EmailMessage(sender="no-reply@lightho.us",
+                                subject=subject,
+                                html=body,
+                                to=user.email_address,
+                                )
+
+    message.send()
+
+
 def get_active_posts_for_user(user, new_only=True):
     """
     Returns currently active posts from a user's liked_shops in a tuple,
