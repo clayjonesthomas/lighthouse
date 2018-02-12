@@ -72,8 +72,8 @@
     background-color: #f1f1f1;
 }
 
-.shop-picker-box > span > div > .dropdown-menu > li > a:hover {
-    background-color: #e5dbff;
+.shop-picker-box .dropdown-item:hover {
+    background-color: #E8E8E8;
 }
 
 .shop-picker-box .rbt-token {
