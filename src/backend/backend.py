@@ -23,7 +23,12 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Shop, User, get_entity_from_url_key
-from email import send_email_to_user, send_verification_email, send_forgot_password_email
+from email import (
+    send_email_to_user,
+    send_verification_email,
+    send_forgot_password_email,
+    send_update_email_to_user
+)
 import enums.EmailFrequency as EmailFrequency
 
 from google.appengine.api import app_identity, mail
@@ -939,6 +944,16 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
+class SendEmailToOriginalUsers(BaseHandler):
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        settings_url = self.uri_for('verification', type='s', user_id=user_id,
+                                    signup_token=token, _full=True)
+        send_update_email_to_user(user, settings_url)
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -1011,6 +1026,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
+    webapp2.Route('/admin/send_email', SendEmailToOriginalUsers, name='admin_send_email_page'),
     webapp2.Route('/', MainPage, name='home'),
     webapp2.Route('/<:.*>', MainPage, name='home_redirect'),
 ], debug=True, config=config)
