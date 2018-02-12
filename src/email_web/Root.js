@@ -8,7 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import reducers from './reducer'
 import Container from './Container'
 import WelcomePage from './components/WelcomePage/WelcomePage'
-
+import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -50,6 +50,7 @@ const Root = () => (
         <Route path={SETTINGS_PAGE_URL} component={SettingsPage}/>
         <Route path={WELCOME_PAGE_URL} component={WelcomePage}/>
         <Route path="/how_it_works" component={ContainerAtHowItWorksPage}/>
+        <Route path="*" component={NotFoundPage}/>
       </Route>
     </Router>
   </Provider>
