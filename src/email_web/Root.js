@@ -9,6 +9,7 @@ import reducers from './reducer'
 import Container from './Container'
 import WelcomePage from './components/WelcomePage/WelcomePage'
 import AdminPage from './components/admin/AdminPage/AdminPage'
+import TrackedShopPage from './components/admin/TrackedShopPage/TrackedShopPage'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -23,8 +24,8 @@ import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
   FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL, WELCOME_PAGE_URL,
-  SETTINGS_PAGE_URL, VERIFIED_PAGE_URL, HOW_IT_WORKS_PAGE_URL, ADMIN_PAGE_URL}
-  from './urls'
+  SETTINGS_PAGE_URL, VERIFIED_PAGE_URL, HOW_IT_WORKS_PAGE_URL, ADMIN_PAGE_URL,
+  TRACKED_SHOPS_URL} from './urls'
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -52,6 +53,7 @@ const Root = () => (
         <Route path={WELCOME_PAGE_URL} component={WelcomePage}/>
         <Route path={HOW_IT_WORKS_PAGE_URL} component={ContainerAtHowItWorksPage}/>
         <Route path={ADMIN_PAGE_URL} component={AdminPage}/>
+        <Route path={TRACKED_SHOPS_URL} component={TrackedShopPage}/>
       </Route>
     </Router>
   </Provider>

@@ -10,9 +10,10 @@ export const pullLikedShopsRequest = () => {
   }
 }
 
-export const pullLikedShopsReturn = () => {
+export const pullLikedShopsReturn = (shops) => {
   return {
-    type: PULL_LIKED_SHOPS_RETURN
+    type: PULL_LIKED_SHOPS_RETURN,
+    data: shops
   }
 }
 

@@ -36,7 +36,7 @@ class TrackedShopPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    shopData: state.shopData
+    shopData: state.trackedShops
   }
 }
 

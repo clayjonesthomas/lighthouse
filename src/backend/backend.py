@@ -46,7 +46,7 @@ def populate_dummy_datastore():
 
 def _spawn_admin():
     _contents = {
-        'email': u'clay@lightho.us',
+        'email': u'ctjones@mit.edu',
         'password': auth_config.admin_pass,
         'selectedShops': []
     }
@@ -684,7 +684,7 @@ class SignupHandler(BaseHandler):
         unique_properties = ['email_address']
         is_moderator = False
         should_send_verification_email = True
-        if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
+        if email == 'clay@lightho.us' or email == "ctjones@mit.edu" or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
             should_send_verification_email = False
         user_data = self.user_model.create_user(email,
@@ -928,7 +928,10 @@ class TrackedShopsHandler(BaseHandler):
             active_posts = Post.query(ndb.AND(Post.is_archived == False,
                                               Post.shop_key == shop_key))
             for active_post in active_posts:
-                shop_dict['active_posts'].append(active_post.key.urlsafe())
+                shop_dict['active_posts'].append({
+                    'title': active_post.title,
+                    'key': active_post.key.urlsafe()
+                })
 
             shops.append(shop_dict)
 
