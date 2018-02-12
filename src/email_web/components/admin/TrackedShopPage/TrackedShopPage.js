@@ -4,7 +4,7 @@ import {push} from 'react-router-redux'
 
 import {ADMIN_PAGE_URL} from '../../../urls'
 
-import {pullLikedShops} from './TrackedShopActions'
+import {pullLikedShops, sendEmail} from './TrackedShopActions'
 
 import ShopListComponent from './ShopListComponent'
 
@@ -19,7 +19,8 @@ class TrackedShopPage extends Component {
       goToNewShop,
       goToTesting,
       goToNewPost,
-      shopData
+      shopData,
+      sendEmail
     } = this.props
     return <div>
       <a onClick={goToNewPost}/>
@@ -33,6 +34,7 @@ class TrackedShopPage extends Component {
           />
         )
       }
+      <input type="button" onClick={sendEmail}/>
     </div>
   }
 }
@@ -53,6 +55,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(push(ADMIN_PAGE_URL)),
     pullLikedShops: () =>
       dispatch(pullLikedShops()),
+    sendEmail: () =>
+      dispatch(sendEmail())
   }
 }
 

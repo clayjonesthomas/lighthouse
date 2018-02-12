@@ -883,9 +883,9 @@ class EmailHandler(BaseHandler):
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
             unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
-                                                signup_token=token, _full=True)
+                                           signup_token=token, _full=True)
             settings_url = self.uri_for('verification', type='s', user_id=user_id,
-                                                signup_token=token, _full=True)
+                                        signup_token=token, _full=True)
             send_email_to_user(user, unsubscribe_url, settings_url)
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
