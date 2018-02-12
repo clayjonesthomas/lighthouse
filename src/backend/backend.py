@@ -195,18 +195,9 @@ def guest_required(handler):
     return check_guest
 
 
-has_script_run = False
-
 def moderator_required(handler):
 
     def check_moderator(self, *args, **kwargs):
-        global has_script_run
-        if not has_script_run:
-            for post in Post.query(Post.is_archived == False):
-                post.is_archived = True
-                post.put()
-            has_script_run = True
-
         auth = self.auth
         u = auth.get_user_by_session()
         if u:
