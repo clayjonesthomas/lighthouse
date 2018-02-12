@@ -6,6 +6,8 @@ import {ADMIN_PAGE_URL} from '../../../urls'
 
 import {pullLikedShops} from './TrackedShopActions'
 
+import ShopListComponent from './ShopListComponent'
+
 class TrackedShopPage extends Component {
 
   componentDidMount () {
@@ -26,7 +28,7 @@ class TrackedShopPage extends Component {
           <ShopListComponent
             shopName={shop.name}
             shopLink={shop.website}
-            shopPosts={shop.posts}
+            shopPosts={shop.active_posts}
           />
         )
       }

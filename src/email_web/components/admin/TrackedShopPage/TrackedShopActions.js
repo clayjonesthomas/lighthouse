@@ -1,8 +1,45 @@
 import fetch from 'isomorphic-fetch'
-import {TRACKED_SHOPS_BACKEND_URL} from '../../../urls'
+import {TRACKED_SHOPS_BACKEND_URL, ARCHIVE_POST_BACKEND_URL}
+  from '../../../urls'
 
 export const PULL_LIKED_SHOPS_REQUEST = "PULL_LIKED_SHOPS_REQUEST"
 export const PULL_LIKED_SHOPS_RETURN = "PULL_LIKED_SHOPS_RETURN"
+export const ARCHIVE_POST_REQUEST = "ARCHIVE_POST_REQUEST"
+export const ARCHIVE_POST_RETURN = "ARCHIVE_POST_RETURN"
+
+export const archivePostRequest = () => {
+  return {
+    type: ARCHIVE_POST_REQUEST
+  }
+}
+
+export const archivePostReturn = () => {
+  return {
+    type: ARCHIVE_POST_RETURN
+  }
+}
+
+export function archivePost(key) {
+  return (dispatch) => {
+    const args = {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        key: key
+      })
+    }
+
+    dispatch(archivePostRequest())
+    return fetch(ARCHIVE_POST_BACKEND_URL, args)
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          dispatch(archivePostReturn(key))
+        }
+      })
+  }
+  }
+}
 
 export const pullLikedShopsRequest = () => {
   return {

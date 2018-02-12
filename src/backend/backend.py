@@ -454,7 +454,7 @@ class ArchivePost(BaseHandler):
         post = ndb.Key(urlsafe=post_key).get()
         post.is_archived = not post.is_archived
         post.put()
-        self.response.write(json.dumps({'isArchived': True}))
+        self.response.write(json.dumps({'success': True}))
 
 
 class LikePost(BaseHandler):
