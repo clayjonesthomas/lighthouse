@@ -2,6 +2,7 @@ import React from 'react'
 import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
+import Spinner from '../../ui-kit/Spinner'
 
 import "./SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
@@ -40,7 +41,8 @@ const SignUpPageComponent = ({
                                selectedShops,
                                hasAttemptedSubmission,
                                invalidEmailFromServer,
-                               goToLogIn
+                               goToLogIn,
+                               displaySpinner
                              }) => (
   <form
     id="sign-up-form"
@@ -118,6 +120,8 @@ const SignUpPageComponent = ({
         className="submit-button form-button"
         id="form-button"
       />
+      {displaySpinner && 
+        <div id="signup-form-spinner"><Spinner/></div>}
     </div>
   </form>
 )
