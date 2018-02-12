@@ -1,23 +1,26 @@
 import React from 'react'
 
+import PostListComponent from './PostListComponent'
+
 import './ShopListComponent.css'
 const ShopListComponent =
   ({
-     name,
-     website,
-     posts
+     shopName,
+     shopLink,
+     shopPosts
    }) => (
     <div>
-      <a href={website}>
+      <a href={shopLink}>
         {
-          name
+          shopName
         }
       </a>
       {
-        posts.map(post =>
+        shopPosts.map(post =>
           <PostListComponent
             title={post.title}
             key={post.key}
+            postKey={post.key}
           />
         )
       }

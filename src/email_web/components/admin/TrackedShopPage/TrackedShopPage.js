@@ -26,6 +26,7 @@ class TrackedShopPage extends Component {
       {
         shopData.map(shop =>
           <ShopListComponent
+            key={shop.name}
             shopName={shop.name}
             shopLink={shop.website}
             shopPosts={shop.active_posts}

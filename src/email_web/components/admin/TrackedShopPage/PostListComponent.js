@@ -3,18 +3,17 @@ import {connect} from 'react-redux'
 
 import {archivePost} from './TrackedShopActions'
 
-import './PostListComponent.css'
 const PostListComponent =
   ({
      title,
-     key,
+     postKey,
      archivePost
    }) => (
     <div>
       {
-        name
+        title
       }
-      <a onClick={() => archivePost(key)} tabIndex="0"/>
+      <a onClick={() => archivePost(postKey)} tabIndex="0">Archive</a>
     </div>
   )
 

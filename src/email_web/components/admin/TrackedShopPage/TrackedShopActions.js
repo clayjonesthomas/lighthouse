@@ -13,9 +13,10 @@ export const archivePostRequest = () => {
   }
 }
 
-export const archivePostReturn = () => {
+export const archivePostReturn = (key) => {
   return {
-    type: ARCHIVE_POST_RETURN
+    type: ARCHIVE_POST_RETURN,
+    data: key
   }
 }
 
@@ -37,7 +38,6 @@ export function archivePost(key) {
           dispatch(archivePostReturn(key))
         }
       })
-  }
   }
 }
 

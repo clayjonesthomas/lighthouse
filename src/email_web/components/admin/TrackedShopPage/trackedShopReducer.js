@@ -1,5 +1,6 @@
 import {PULL_LIKED_SHOPS_RETURN, ARCHIVE_POST_RETURN}
   from './TrackedShopActions'
+import _ from 'underscore'
 
 
 export function trackedShops(state = [], action) {
@@ -7,11 +8,15 @@ export function trackedShops(state = [], action) {
     case PULL_LIKED_SHOPS_RETURN:
       return action.data
     case ARCHIVE_POST_RETURN:
-      let newState = Object.assign({}, state)
+      let newState = _.clone(state)
       newState.forEach((shop) => {
         shop.active_posts.forEach((post) => {
           if(post.key === action.data){
-            post.title = "archived"
+            if(post.title === "archived"){
+              post.title = "unarchived"
+            } else {
+              post.title = "archived"
+            }
           }
         })
       })
