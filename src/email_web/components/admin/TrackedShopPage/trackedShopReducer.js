@@ -8,6 +8,7 @@ const defaultAdminState = {
 export function trackedShops(state = defaultAdminState, action) {
   switch (action.type) {
     case PULL_LIKED_SHOPS_RETURN:
+      debugger
       return Object.assign({}, state, {
         shops: action.data
       })

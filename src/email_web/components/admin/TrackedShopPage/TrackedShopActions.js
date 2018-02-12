@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import {LIKED_STORES_BACKEND_URL} from '../../../urls'
-
+import {TRACKED_SHOPS_BACKEND_URL} from '../../../urls'
 
 export const PULL_LIKED_SHOPS_REQUEST = "PULL_LIKED_SHOPS_REQUEST"
 export const PULL_LIKED_SHOPS_RETURN = "PULL_LIKED_SHOPS_RETURN"
@@ -25,7 +24,7 @@ export function pullLikedShops() {
     }
 
     dispatch(pullLikedShopsRequest())
-    return fetch(LIKED_STORES_BACKEND_URL, args)
+    return fetch(TRACKED_SHOPS_BACKEND_URL, args)
       .then(response => response.json())
       .then(json => {
         if (json.shops) {

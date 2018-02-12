@@ -915,6 +915,26 @@ class SettingsHandler(BaseHandler):
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
 
 
+class TrackedShopsHandler(BaseHandler):
+
+    def get(self):
+        user = self.user
+        if not user:
+            return
+        shops = []
+        for shop_key in user.liked_shops:
+            shop_dict = shop_key.get().prepare_shop(user)
+            shop_dict['active_posts'] = []
+            active_posts = Post.query(ndb.AND(Post.is_archived == False,
+                                              Post.shop_key == shop_key))
+            for active_post in active_posts:
+                shop_dict['active_posts'].append(active_post.key.urlsafe())
+
+            shops.append(shop_dict)
+
+        self.response.write(json.dumps({'shops': shops}))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -964,6 +984,7 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
+    webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
 
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),

@@ -19,4 +19,4 @@ export const LOG_OUT_URL = '/rest/logout'
 export const ADMIN_PAGE_URL = '/admin'
 export const TRACKED_SHOPS_URL = '/admin/tracked_shops'
 export const NEW_POST_BACKEND_URL = '/rest/posts'
-
+export const TRACKED_SHOPS_BACKEND_URL = '/rest/tracked_shops'
