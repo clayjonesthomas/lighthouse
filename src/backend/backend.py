@@ -930,7 +930,8 @@ class TrackedShopsHandler(BaseHandler):
             for active_post in active_posts:
                 shop_dict['active_posts'].append({
                     'title': active_post.title,
-                    'key': active_post.key.urlsafe()
+                    'key': active_post.key.urlsafe(),
+                    'isImportant': active_post.is_important
                 })
 
             shops.append(shop_dict)

@@ -21,6 +21,7 @@ const ShopListComponent =
             title={post.title}
             key={post.key}
             postKey={post.key}
+            isImportant={post.isImportant}
           />
         )
       }

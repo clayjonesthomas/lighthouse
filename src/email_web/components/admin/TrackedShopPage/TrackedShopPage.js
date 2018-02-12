@@ -34,7 +34,7 @@ class TrackedShopPage extends Component {
           />
         )
       }
-      <input type="button" onClick={sendEmail}/>
+      <input type="button" onClick={sendEmail} value="send email"/>
     </div>
   }
 }

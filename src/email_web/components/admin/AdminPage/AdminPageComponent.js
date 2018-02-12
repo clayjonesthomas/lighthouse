@@ -19,7 +19,7 @@ const AdminPageComponent =
         <a onClick={goToTrackedShops} tabIndex="-1">Tracked Shops</a>
       </div>
       <p>Post Title</p>
-      <input
+      <textarea
         id="admin-post-title"
         type="text"
         onChange={onTitleChange}

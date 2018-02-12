@@ -10,3 +10,7 @@
 #admin-submit-button {
     display: block;
 }
+
+#admin-post-title {
+    width: 400px;
+}

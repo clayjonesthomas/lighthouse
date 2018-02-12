@@ -7,13 +7,22 @@ const PostListComponent =
   ({
      title,
      postKey,
-     archivePost
+     archivePost,
+     isImportant
    }) => (
     <div>
       {
-        title
+        <span className={isImportant && "red-post"}>
+          {
+            title
+          }
+        </span>
       }
-      <a onClick={() => archivePost(postKey)} tabIndex="0">Archive</a>
+      <a
+        onClick={() => archivePost(postKey)}
+        tabIndex="0">
+        Archive
+      </a>
     </div>
   )
 
