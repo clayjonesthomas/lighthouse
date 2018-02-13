@@ -43,9 +43,9 @@ def send_update_email_to_user(user, settings_url):
           <tr>
             <td style="display: block;max-width: 500px;margin: 3px auto;">
               <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
-                <p style="margin-top: 0px;">Email updates have been released! Now, instead of visiting us for sale updates, we'll email you if any of your stores run sales we think you'll like. As an original user, we unsubscribed you from this feature, so if you would like to enable it, <a href='"""
+                <p style="margin-top: 0px;">Email updates have been released! Now, instead of visiting us for sale updates, we'll email you if any of your stores run sales we think you'll like. As an original user, you are <i>not</i> automatically subscribed to this feature, but you can enable it <a href='"""
     body += settings_url
-    body += """'>you can do that here</a>. </p>
+    body += """'>here</a>. </p>
                 <p style="margin-bottom: 0;margin-top: 40px;"><3,</p>
                 <p style="margin-top: 0;margin-bottom: 0;">The <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">lightho.us</a> team</p>
               </div>
