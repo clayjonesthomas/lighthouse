@@ -203,7 +203,7 @@ def moderator_required(handler):
         if u:
             user = auth.store.user_model.get_by_id(u['user_id'])
             if user and user.is_moderator:
-                    return handler(self, *args, **kwargs)
+                return handler(self, *args, **kwargs)
         self.redirect_to('home')
 
     return check_moderator
@@ -683,10 +683,8 @@ class SignupHandler(BaseHandler):
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in shops]
         unique_properties = ['email_address']
         is_moderator = False
-        should_send_verification_email = True
         if email == 'clay@lightho.us' or email == "ctjones@mit.edu" or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
-            should_send_verification_email = False
         user_data = self.user_model.create_user(email,
                                                 unique_properties,
                                                 email_address=email,
@@ -707,7 +705,7 @@ class SignupHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        if should_send_verification_email:
+        if not is_moderator:
             send_verification_email(email, verification_url)
         logging.info('Email verification link: %s', verification_url)
 
@@ -1007,8 +1005,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/testing', ModeratorsOnlyPage, name='testing_page'),
-    webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
     webapp2.Route('/', MainPage, name='home'),
