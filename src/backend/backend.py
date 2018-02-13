@@ -783,6 +783,17 @@ class VerificationHandler(BaseHandler):
         self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
         
 
+class ResendVerificationHandler(BaseHandler):
+    def post(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        verification_url = self.uri_for('verification', type='v', user_id=user_id,
+                                        signup_token=token, _full=True)
+        send_verification_email(user.email_address, verification_url)
+        self.response.write(json.dumps({'success': 'RESENT_VERIFICATION'}))
+
+
 class LoginHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
@@ -897,6 +908,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/settings', SettingsHandler, name='settings'),
+    webapp2.Route('/rest/resend_verification', ResendVerificationHandler, name='resend_verification'),
 
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
     webapp2.Route('/rest/posts', Feed, name='feed'),

@@ -19,13 +19,36 @@ const SettingsPageComponent = ({
   showSavedMessage,
   onPickedShopsChange,
   handleEmailFrequencyChange,
-  onSubmitSettings
+  onSubmitSettings,
+  isVerified,
+  onClickResendVerification,
+  displayResentMessage
 }) => (
   <form id="update-settings-form"
     onSubmit={onSubmitSettings}>
     <h1 id="settings-form-title" className="settings-section">
       Settings
     </h1>
+    {!isVerified &&
+      <div 
+        id="need-verification-container"
+        className="settings-section"
+      >
+        <p>Your account is not verified. Please verify your account by 
+        clicking the link in your welcome email. </p>
+        <p 
+          id="resend-verification-link"
+          onClick={onClickResendVerification}>Resend verification
+        </p>
+      </div>
+    }
+    {displayResentMessage &&
+      <p 
+        id="resent-message"
+        className="settings-section">
+        Sent! Check your inbox for your verification link.
+      </p>
+    }
     <FormGroup>
       <div className="settings-section">
         <h2 className="section-title">Update Your Shops</h2>
