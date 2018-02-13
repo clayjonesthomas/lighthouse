@@ -1,4 +1,4 @@
-import {UPDATE_SETTINGS_URL} from '../../urls'
+import {UPDATE_SETTINGS_URL, RESEND_VERIFICATION_URL} from '../../urls'
 import {pullUserData} from '../../services/UserActions'
 
 export const EMAIL_FREQUENCY_CHANGE = 'EMAIL_FREQUENCY_CHANGE'
@@ -6,6 +6,8 @@ export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
 export const UPDATE_SETTINGS_REQUEST = 'UPDATE_SETTINGS_REQUEST'
 export const UPDATE_SETTINGS_RETURN = 'UPDATE_SETTINGS_RETURN'
 export const SETTINGS_SPINNER_TIMEOUT = 'SETTINGS_SPINNER_TIMEOUT'
+export const SENT_RESEND_VERIFICATION = 'SENT_RESEND_VERIFICATION'
+export const RESENT_MESSAGE_TIMEOUT = 'RESENT_MESSAGE_TIMEOUT'
 
 export const emailFrequencyChange = (value) => {
   return {
@@ -74,3 +76,37 @@ const settingsSpinnerTimeout = () => {
     type: SETTINGS_SPINNER_TIMEOUT
   }
 }
+
+export function resendVerificationEmail() {
+  return (dispatch) => {
+    const args = {
+      method: 'POST',
+      credentials: 'same-origin'
+    }
+
+    return fetch(RESEND_VERIFICATION_URL, args)
+      .then(response => response.json())
+      .then(() => {
+        dispatch(sentResendVerification())
+      })
+      .then(() => {
+        const DISPLAY_RESENT_MESSAGE_TIME = 3000;
+        setTimeout(() => {
+          dispatch(resentMessageTimeout());
+        }, DISPLAY_RESENT_MESSAGE_TIME)
+      })
+  }
+}
+
+const sentResendVerification = () => {
+  return {
+    type: SENT_RESEND_VERIFICATION
+  }
+}
+
+const resentMessageTimeout = () => {
+  return {
+    type: RESENT_MESSAGE_TIMEOUT
+  }
+}
+

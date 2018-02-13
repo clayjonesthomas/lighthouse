@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 import _ from 'underscore'
 
-import {emailFrequencyChange, pickedShopsChange, submitSettingsForm}
+import {emailFrequencyChange, pickedShopsChange, 
+  resendVerificationEmail, submitSettingsForm}
   from './SettingsPageActions'
 import {pullUserData} from '../../services/UserActions'
 import SettingsPageComponent from './SettingsPageComponent'
@@ -24,7 +26,10 @@ class SettingsPage extends Component {
       showSavedMessage,
       onPickedShopsChange,
       handleEmailFrequencyChange,
-      onSubmitSettings
+      onSubmitSettings,
+      isVerified,
+      onClickResendVerification,
+      displayResentMessage
     } = this.props
     return (
       <div id="main-page-container">
@@ -37,6 +42,9 @@ class SettingsPage extends Component {
           onPickedShopsChange={onPickedShopsChange}
           handleEmailFrequencyChange={handleEmailFrequencyChange}
           onSubmitSettings={onSubmitSettings}
+          isVerified={isVerified}
+          onClickResendVerification={onClickResendVerification}
+          displayResentMessage={displayResentMessage}
         />
       </div>
     )
@@ -51,7 +59,9 @@ const mapStateToProps = (state) => {
       state.user.myEmailFrequency === state.settings.emailFrequency &&
         _.isEqual(state.user.myShops, state.settings.selectedShops),
     displaySpinner: state.settings.submitSpinner || !state.settings.spinnerComplete,
-    showSavedMessage: state.settings.showSavedMessage && state.settings.spinnerComplete
+    showSavedMessage: state.settings.showSavedMessage && state.settings.spinnerComplete,
+    isVerified: state.user.isVerified,
+    displayResentMessage: state.settings.showResentMessage
   }
 }
 
@@ -64,6 +74,7 @@ const mapDispatchToProps = (dispatch) => {
       e.preventDefault()
       dispatch(submitSettingsForm())
     },
+    onClickResendVerification: () => {dispatch(resendVerificationEmail())}
   }
 }
 
