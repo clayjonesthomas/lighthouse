@@ -42,12 +42,10 @@ const NewPasswordComponent = ({
     className="auth-form"
     onSubmit={onSubmitNewPass}>
     <div
+      id="update-password-form"
       className="form-wrapper">
-      <h1 className="form-title">
-        {
-          "Update password for " + email
-        }
-      </h1>
+      <h1 className="form-title">Update password for</h1>
+      <p id="email-title">{email}</p>
       <p
         className="helper-text">
         If this is not your email address, please mail&nbsp;
