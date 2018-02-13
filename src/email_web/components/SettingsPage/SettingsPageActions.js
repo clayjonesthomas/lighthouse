@@ -90,10 +90,10 @@ export function resendVerificationEmail() {
         dispatch(sentResendVerification())
       })
       .then(() => {
-        const displayResentMessageTime = 3000;
+        const DISPLAY_RESENT_MESSAGE_TIME = 3000;
         setTimeout(() => {
           dispatch(resentMessageTimeout());
-        }, displayResentMessageTime)
+        }, DISPLAY_RESENT_MESSAGE_TIME)
       })
   }
 }
