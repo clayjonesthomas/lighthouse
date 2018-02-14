@@ -5,7 +5,6 @@ import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
 import './AdminPageComponent.css'
 const AdminPageComponent =
   ({
-     goToTrackedShops,
      postTitleValue,
      selectedShops,
      isImportantValue,
@@ -16,7 +15,7 @@ const AdminPageComponent =
    }) => (
     <form onSubmit={submitNewPost}>
       <div>
-        <a onClick={goToTrackedShops} tabIndex="-1">Tracked Shops</a>
+        <a href="/admin/tracked_shops">Tracked Shops</a>
       </div>
       <p>Post Title</p>
       <textarea
