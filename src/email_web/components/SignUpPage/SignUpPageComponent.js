@@ -42,7 +42,8 @@ const SignUpPageComponent = ({
                                hasAttemptedSubmission,
                                invalidEmailFromServer,
                                goToLogIn,
-                               displaySpinner
+                               displaySpinner,
+                               requestInProgress
                              }) => (
   <form
     id="sign-up-form"
@@ -115,13 +116,14 @@ const SignUpPageComponent = ({
       </FormGroup>
       <input
         tabIndex={shouldDisplay ? 0 : -1}
+        disabled={requestInProgress}
         type="submit"
         value="TRY IT OUT"
         className="submit-button form-button"
-        id="form-button"
+        id="signup-form-button"
       />
       {displaySpinner && 
-        <div id="signup-form-spinner"><Spinner/></div>}
+        <div id="signup-form-spinner"><Spinner colorHex={"#f1f1f1"}/></div>}
     </div>
   </form>
 )

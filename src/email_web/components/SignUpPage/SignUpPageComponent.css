@@ -54,6 +54,11 @@
     width: 100%;
 }
 
+#signup-form-button:disabled {
+    opacity: .4;
+    cursor: auto;
+}
+
 .shop-picker-box {
     width: 100%;
     border-radius: 4px;
@@ -99,4 +104,10 @@
 
 .has-error > .email-error, .has-error > .password-error {
     display: inherit;
+}
+
+#signup-form-spinner {
+    text-align: right;
+    margin-top: -67px;
+    margin-right: 10px;
 }

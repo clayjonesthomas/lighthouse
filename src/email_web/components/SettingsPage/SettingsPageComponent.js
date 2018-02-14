@@ -70,7 +70,7 @@ const SettingsPageComponent = ({
         id="settings-form-button"
       />
       {displaySpinner && 
-        <div id="settings-form-spinner"><Spinner/></div>}
+        <div id="settings-form-spinner"><Spinner colorHex={"#aec7ea"}/></div>}
       {showSavedMessage && 
         <div id="settings-form-saved-message">Changes saved!</div>}
     </div>
