@@ -51,8 +51,8 @@ class Container extends Component {
     return (
       <div
         id="container"
-        className={(page !== LANDING_PAGE && page !== SIGN_UP_PAGE)
-        && "container-settings"}>
+        className={(page !== LANDING_PAGE && page !== SIGN_UP_PAGE) &&
+        "container-settings"}>
         <NavBar
           isDisplayLogo={isDisplayLogo}
           onClickLogo={email ? goToSettings : goToHome}
