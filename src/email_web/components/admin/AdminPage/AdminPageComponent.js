@@ -36,6 +36,7 @@ const AdminPageComponent =
       <input
         id="admin-is-important-checkbox"
         type="checkbox"
+        checked={isImportantValue}
         value={isImportantValue}
         onChange={onChangeIsImportant}
       />
