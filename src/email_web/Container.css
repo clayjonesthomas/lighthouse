@@ -18,6 +18,12 @@ html {
     overflow: hidden;
 }
 
+@media screen and (max-width: 460px) {
+    #container {
+        background: none;
+    }
+}
+
 /*TODO remove relatively unnecessary relatively-hack once
 settings becomes its own page*/
 .container-settings {
@@ -25,7 +31,7 @@ settings becomes its own page*/
     min-height: 100%;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 700px) and (min-width: 461px) {
     #container {
         background-position: left;
         background-image: url("../static/original_small_scale_compressed.png");
