@@ -946,13 +946,19 @@ class TrackedShopsHandler(BaseHandler):
 
 class SendEmailToOriginalUsers(BaseHandler):
     def get(self):
-        user = self.user
-        user_id = user.get_id()
-        token = self.user_model.create_signup_token(user_id)
-        settings_url = self.uri_for('verification', type='s', user_id=user_id,
+        _user = self.user
+        _user_id = _user.get_id()
+        token = self.user_model.create_signup_token(_user_id)
+        settings_url = self.uri_for('verification', type='s', user_id=_user_id,
                                     signup_token=token, _full=True)
-        send_update_email_to_user(user, settings_url)
+        send_update_email_to_user(_user, settings_url)
 
+        for user in User.query(User.email_frequency == EmailFrequency.UNSUBSCRIBE_EMAIL):
+            user_id = user.get_id()
+            token = self.user_model.create_signup_token(user_id)
+            settings_url = self.uri_for('verification', type='s', user_id=user_id,
+                                        signup_token=token, _full=True)
+            send_update_email_to_user(user, settings_url)
 
 config = {
     'webapp2_extras.auth': {
