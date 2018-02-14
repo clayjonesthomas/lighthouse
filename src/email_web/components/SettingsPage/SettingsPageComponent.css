@@ -56,6 +56,31 @@
     width: 100%;
 }
 
+#need-verification-container {
+    max-width: 400px;
+    background-color: #ffcccc;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+#need-verification-container > p {
+    margin-bottom: 0px;
+    display: inline;
+}
+
+#resend-verification-link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #003091;
+}
+
+#resent-message {
+    font-size: 14px;
+    margin-top: -30px;
+    margin-bottom: -21px;
+}
+
 .radio > label > input {
     margin-left: 5px;
     margin-right: 10px;
