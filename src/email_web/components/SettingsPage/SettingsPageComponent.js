@@ -35,14 +35,13 @@ const SettingsPageComponent = ({
     </h1>
     {!isVerified && !displayResentMessage &&
     <div
-      id="need-verification-container"
-      className="settings-section"
+      className="verification-container settings-section"
       style={showNotification ? {} : {"display": "none"}}
     >
       <XButton
         color={cornflowerLilac}
         size={.3}
-        className="need-verification-x-button"
+        className="verification-x-button"
         onClick={closeNotification}
       />
       <p>Your account is not verified. Please verify your account by
@@ -56,18 +55,18 @@ const SettingsPageComponent = ({
     }
     {!isVerified && displayResentMessage &&
     <div
-      id="need-verification-container"
-      className="settings-section"
+      id="sent-verification-container"
+      className="verification-container settings-section"
       style={showNotification ? {} : {"display": "none"}}
     >
       <XButton
-        color={cornflowerLilac}
+        color={"#40a53a"}
         size={.3}
-        className="need-verification-x-button"
+        className="verification-x-button"
         onClick={closeNotification}
       />
       <p>
-        Sent! Check your inbox for your verification link.
+        Sent! Check your inbox for the verification link.
       </p>
     </div>
     }

@@ -57,7 +57,12 @@
     width: 100%;
 }
 
-#need-verification-container {
+#sent-verification-container {
+    background-color: #96ff8f;
+}
+
+
+.verification-container {
     max-width: 400px;
     background-color: #ffcccc;
     padding: 5px;
@@ -65,15 +70,15 @@
     border-radius: 3px;
 }
 
-.need-verification-x-button {
+.verification-x-button {
     float: right;
 }
 
-.need-verification-x-button:hover {
+.verification-x-button:hover {
     cursor: pointer;
 }
 
-#need-verification-container > p {
+.verification-container > p {
     margin-bottom: 0;
     display: inline;
 }
