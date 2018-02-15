@@ -1,6 +1,6 @@
 import {ADMIN_POST_TITLE_CHANGE, ADMIN_PICKED_SHOPS_CHANGE,
 ADMIN_IS_IMPORTANT_CHANGE, NEW_POST_RESPONSE}
-  from './AdminActions'
+  from './NewShopActions'
 
 const defaultAdminState = {
   postTitleValue: '',

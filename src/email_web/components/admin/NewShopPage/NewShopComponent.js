@@ -2,7 +2,7 @@ import React from 'react'
 
 import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
 
-import './AdminPageComponent.css'
+import './NewShopComponent.css'
 const AdminPageComponent =
   ({
      postTitleValue,
