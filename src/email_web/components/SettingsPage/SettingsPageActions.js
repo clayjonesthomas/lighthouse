@@ -96,12 +96,6 @@ export function resendVerificationEmail() {
       .then(() => {
         dispatch(sentResendVerification())
       })
-      .then(() => {
-        const DISPLAY_RESENT_MESSAGE_TIME = 3000;
-        setTimeout(() => {
-          dispatch(resentMessageTimeout());
-        }, DISPLAY_RESENT_MESSAGE_TIME)
-      })
   }
 }
 
@@ -111,9 +105,4 @@ const sentResendVerification = () => {
   }
 }
 
-const resentMessageTimeout = () => {
-  return {
-    type: RESENT_MESSAGE_TIMEOUT
-  }
-}
 

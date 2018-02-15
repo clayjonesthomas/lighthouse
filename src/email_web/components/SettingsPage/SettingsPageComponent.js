@@ -33,11 +33,11 @@ const SettingsPageComponent = ({
     <h1 id="settings-form-title" className="settings-section">
       Settings
     </h1>
-    {!isVerified &&
+    {!isVerified && !displayResentMessage &&
     <div
       id="need-verification-container"
       className="settings-section"
-      style={showNotification ? {} : {"display":"none"}}
+      style={showNotification ? {} : {"display": "none"}}
     >
       <XButton
         color={cornflowerLilac}
@@ -54,12 +54,22 @@ const SettingsPageComponent = ({
       </p>
     </div>
     }
-    {displayResentMessage &&
-    <p
-      id="resent-message"
-      className="settings-section">
-      Sent! Check your inbox for your verification link.
-    </p>
+    {!isVerified && displayResentMessage &&
+    <div
+      id="need-verification-container"
+      className="settings-section"
+      style={showNotification ? {} : {"display": "none"}}
+    >
+      <XButton
+        color={cornflowerLilac}
+        size={.3}
+        className="need-verification-x-button"
+        onClick={closeNotification}
+      />
+      <p>
+        Sent! Check your inbox for your verification link.
+      </p>
+    </div>
     }
     <FormGroup>
       <div className="settings-section">
