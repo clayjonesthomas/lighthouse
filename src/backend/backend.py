@@ -625,8 +625,8 @@ class SingleShop(BaseHandler):
         if user and user.is_moderator:
             shop = Shop(
                 name=body['name'],
-                website=body['website'],
-                icon_url=body['icon_url']
+                website=body['site']
+                # icon_url=body['icon_url']
             )
             shop_key = shop.put()
             self.response.write(json.dumps({'key': shop_key.urlsafe()}))
