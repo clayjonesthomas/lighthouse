@@ -1,52 +1,44 @@
 import fetch from 'isomorphic-fetch'
 
-import {NEW_POST_BACKEND_URL}
+import {NEW_SITE_BACKEND_URL}
   from '../../../urls'
 
-export const ADMIN_POST_TITLE_CHANGE = "ADMIN_POST_TITLE_CHANGE"
-export const ADMIN_PICKED_SHOPS_CHANGE = "ADMIN_PICKED_SHOPS_CHANGE"
-export const ADMIN_IS_IMPORTANT_CHANGE = "ADMIN_IS_IMPORTANT_CHANGE"
-export const NEW_POST_REQUEST = "NEW_POST_REQUEST"
-export const NEW_POST_RESPONSE = "NEW_POST_RESPONSE"
+export const ADMIN_SHOP_TITLE_CHANGE = "ADMIN_SHOP_TITLE_CHANGE"
+export const ADMIN_SHOP_SITE_CHANGE = "ADMIN_SHOP_SITE_CHANGE"
+export const NEW_SHOP_REQUEST = "NEW_SHOP_REQUEST"
+export const NEW_SHOP_RESPONSE = "NEW_SHOP_RESPONSE"
 
-export const postTitleChange = (value) => {
+export const shopTitleChange = (value) => {
   return {
-    type: ADMIN_POST_TITLE_CHANGE,
+    type: ADMIN_SHOP_TITLE_CHANGE,
     data: value
   }
 }
 
-export const pickedShopsChange = (shops) => {
+export const shopSiteChange = (value) => {
   return {
-    type: ADMIN_PICKED_SHOPS_CHANGE,
-    data: shops
+    type: ADMIN_SHOP_SITE_CHANGE,
+    data: value
   }
 }
 
-export const isImportantChange = () => {
+export const newShopRequest = () => {
   return {
-    type: ADMIN_IS_IMPORTANT_CHANGE
+    type: NEW_SHOP_REQUEST
   }
 }
 
-export const newPostRequest = () => {
+export const newShopResponse = () => {
   return {
-    type: NEW_POST_REQUEST
+    type: NEW_SHOP_RESPONSE
   }
 }
 
-export const newPostResponse = () => {
-  return {
-    type: NEW_POST_RESPONSE
-  }
-}
-
-export function submitNewPost() {
+export function submitNewShop() {
   return (dispatch, getState) => {
     const state = getState()
-    const title = state.admin.postTitleValue
-    const selectedShops = state.admin.selectedShops
-    const isImportant = state.admin.isImportant
+    const title = state.newShop.shopTitleValue
+    const site = state.newShop.shopSiteValue
 
 
     const args = {
@@ -54,17 +46,16 @@ export function submitNewPost() {
       credentials: 'same-origin',
       body: JSON.stringify({
         title: title,
-        selectedShops: selectedShops,
-        isImportant: isImportant
+        site: site
       })
     }
 
-    dispatch(newPostRequest())
-    return fetch(NEW_POST_BACKEND_URL, args)
+    dispatch(newShopRequest())
+    return fetch(NEW_SHOP_BACKEND_URL, args)
       .then(response => response.json())
       .then(json => {
         if (json.success) {
-          dispatch(newPostResponse())
+          dispatch(newShopResponse())
         }
       })
   }
