@@ -22,7 +22,9 @@ class LogInPage extends Component {
       hasAttemptedSubmission,
       invalidEmailPass,
       onGoToSignUp,
-      goToForgotPassword
+      goToForgotPassword,
+      displaySpinner,
+      requestInProgress
     } = this.props
     return (
       <LogInPageComponent
@@ -35,6 +37,8 @@ class LogInPage extends Component {
         invalidEmailPass={invalidEmailPass}
         onGoToSignUp={onGoToSignUp}
         goToForgotPassword={goToForgotPassword}
+        displaySpinner={displaySpinner}
+        requestInProgress={requestInProgress}
       />
     )
   }
@@ -45,7 +49,9 @@ const mapStateToProps = (state) => {
     emailValue: state.login.email,
     passwordValue: state.login.password,
     hasAttemptedSubmission: state.login.hasAttemptedSubmission,
-    invalidEmailPass: state.login.invalidEmailPass
+    invalidEmailPass: state.login.invalidEmailPass,
+    displaySpinner: state.login.submitSpinner,
+    requestInProgress: state.login.requestInProgress
   }
 }
 

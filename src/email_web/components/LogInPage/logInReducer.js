@@ -1,6 +1,6 @@
 import {LOG_IN_EMAIL_CHANGE, LOG_IN_PASSWORD_CHANGE,
   LOG_IN_REQUEST, LOG_IN_RESPONSE, LOG_IN_RESPONSE_FAILED,
-  ATTEMPT_LOG_IN} from './LogInPageActions'
+  ATTEMPT_LOG_IN, TRIGGER_LOGIN_SPINNER_TIMEOUT} from './LogInPageActions'
 
 import {AUTHENTICATION_ERROR}
   from './LogInPageActions'
@@ -12,7 +12,8 @@ const defaultLogInState = {
   password: '',
   submitSpinner: false,
   hasAttemptedSubmission: false,
-  invalidEmailPass: false
+  invalidEmailPass: false,
+  requestInProgress: false
 }
 
 export function login(state = defaultLogInState, action) {
@@ -31,21 +32,28 @@ export function login(state = defaultLogInState, action) {
       })
     case LOG_IN_REQUEST:
       return Object.assign({}, state, {
-        submitSpinner: true
+        submitSpinner: false,
+        requestInProgress: true
       })
     case LOG_IN_RESPONSE:
       return Object.assign({}, state, {
         submitSpinner: false,
-        hasAttemptedSubmission: false
+        hasAttemptedSubmission: false,
+        requestInProgress: false
       })
     case LOG_IN_RESPONSE_FAILED:
       if (action.data === AUTHENTICATION_ERROR) {
         return Object.assign({}, state, {
           submitSpinner: false,
-          invalidEmailPass: true
+          invalidEmailPass: true,
+          requestInProgress: false
         })
       }
       return state
+    case TRIGGER_LOGIN_SPINNER_TIMEOUT:
+      return Object.assign({}, state, {
+        submitSpinner: state.requestInProgress
+      })
     case LOCATION_CHANGE:
       return defaultLogInState
     default:
