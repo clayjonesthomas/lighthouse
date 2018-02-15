@@ -8,6 +8,13 @@ export const UPDATE_SETTINGS_RETURN = 'UPDATE_SETTINGS_RETURN'
 export const SETTINGS_SPINNER_TIMEOUT = 'SETTINGS_SPINNER_TIMEOUT'
 export const SENT_RESEND_VERIFICATION = 'SENT_RESEND_VERIFICATION'
 export const RESENT_MESSAGE_TIMEOUT = 'RESENT_MESSAGE_TIMEOUT'
+export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION'
+
+export const closeNotification = () => {
+  return {
+    type: CLOSE_NOTIFICATION
+  }
+}
 
 export const emailFrequencyChange = (value) => {
   return {

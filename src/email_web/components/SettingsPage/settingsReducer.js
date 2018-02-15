@@ -1,7 +1,7 @@
 import {EMAIL_FREQUENCY_CHANGE, PICKED_SHOPS_CHANGE, 
   UPDATE_SETTINGS_REQUEST, UPDATE_SETTINGS_RETURN, 
   SETTINGS_SPINNER_TIMEOUT, SENT_RESEND_VERIFICATION,
-  RESENT_MESSAGE_TIMEOUT}
+  RESENT_MESSAGE_TIMEOUT, CLOSE_NOTIFICATION}
     from './SettingsPageActions'
 import {USER_DATA_RETURN} from '../../services/UserActions'
 import {MID_FREQUENCY_EMAIL} from './SettingsPageComponent'
@@ -12,7 +12,8 @@ const defaultSettingsState = {
   submitSpinner: false,
   spinnerComplete: true,
   showSavedMessage: false,
-  showResentMessage: false
+  showResentMessage: false,
+  showNotification: true
 } 
 
 export function settings(state = defaultSettingsState, action) {
@@ -56,6 +57,10 @@ export function settings(state = defaultSettingsState, action) {
     case RESENT_MESSAGE_TIMEOUT:
       return Object.assign({}, state, {
         showResentMessage: false
+      })
+    case CLOSE_NOTIFICATION:
+      return Object.assign({}, state, {
+        showNotification: false
       })
     default:
       return state

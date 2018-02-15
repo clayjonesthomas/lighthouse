@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {push} from 'react-router-redux'
 import _ from 'underscore'
 
 import {emailFrequencyChange, pickedShopsChange, 
-  resendVerificationEmail, submitSettingsForm}
-  from './SettingsPageActions'
+  resendVerificationEmail, submitSettingsForm,
+  closeNotification} from './SettingsPageActions'
 import {pullUserData} from '../../services/UserActions'
 import SettingsPageComponent from './SettingsPageComponent'
 
@@ -19,6 +18,8 @@ class SettingsPage extends Component {
 
   render() {
     const {
+      showNotification,
+      closeNotification,
       selectedShops,
       emailFrequency,
       isSettingsUnchanged,
@@ -34,6 +35,8 @@ class SettingsPage extends Component {
     return (
       <div id="main-page-container">
         <SettingsPageComponent
+          showNotification={showNotification}
+          closeNotification={closeNotification}
           selectedShops={selectedShops}
           emailFrequency={emailFrequency}
           isSettingsUnchanged={isSettingsUnchanged}
@@ -53,6 +56,7 @@ class SettingsPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    showNotification: state.settings.showNotification,
     selectedShops: state.settings.selectedShops,
     emailFrequency: state.settings.emailFrequency,
     isSettingsUnchanged: 
@@ -67,6 +71,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    closeNotification: () => dispatch(closeNotification()),
     getUserData: () => dispatch(pullUserData()),
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
     handleEmailFrequencyChange: (e) => dispatch(emailFrequencyChange(e.target.value)),

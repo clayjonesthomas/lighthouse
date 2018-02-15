@@ -29,6 +29,7 @@
 
 #update-settings-form {
     margin-top: 80px;
+    min-width: 400px;
 }
 
 #settings-form-title {
@@ -64,8 +65,16 @@
     border-radius: 3px;
 }
 
+.need-verification-x-button {
+    float: right;
+}
+
+.need-verification-x-button:hover {
+    cursor: pointer;
+}
+
 #need-verification-container > p {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     display: inline;
 }
 
