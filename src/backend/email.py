@@ -93,7 +93,7 @@ def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings
             <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
           </head>
           <body style="font-family: 'Roboto', sans-serif;">
-            <table style="width: 100%;">
+            <table style="width: 100%;min-width: 400px;">
               <tr>
                 <td style="display: block;max-width: 500px;margin: 3px auto;">
                   <div style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
@@ -178,7 +178,7 @@ def send_verification_email(email, verification_url):
         <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
       </head>
       <body style="font-family: 'Roboto', sans-serif;">
-        <table style="width: 100%;">
+        <table style="width: 100%;min-width: 400px;">
           <tr>
             <td style="display: block;max-width: 500px;margin: 3px auto;">
               <div style="background-color: #003091;text-align: center;padding: 15px;">
@@ -227,7 +227,7 @@ def send_forgot_password_email(email, forgot_password_url):
         <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
       </head>
       <body style="font-family: 'Roboto', sans-serif;">
-        <table style="width: 100%;">
+        <table style="width: 100%; min-width: 400px;">
           <tr>
             <td style="display: block;max-width: 500px;margin: 3px auto;">
               <div style="background-color: #003091;text-align: center;padding: 15px;">
