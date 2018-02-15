@@ -621,11 +621,13 @@ class SingleShop(BaseHandler):
         if not user or not user.is_moderator:
             return
         body = json.loads(self.request.body)
-
+        alternate_name_string = body['alternateNames']
+        alt_names = [name for name in alternate_name_string.split(",")]
         if user and user.is_moderator:
             shop = Shop(
                 name=body['name'],
-                website=body['site']
+                website=body['site'],
+                alternate_names=alt_names
                 # icon_url=body['icon_url']
             )
             shop_key = shop.put()

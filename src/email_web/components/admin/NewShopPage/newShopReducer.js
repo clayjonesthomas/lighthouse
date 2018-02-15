@@ -4,6 +4,7 @@ import {ADMIN_SHOP_TITLE_CHANGE, ADMIN_SHOP_SITE_CHANGE,
 
 const defaultNewShopState = {
   shopTitleValue: '',
+  shopAltNamesValue: '',
   shopSiteValue: ''
 }
 

@@ -1,16 +1,24 @@
 import fetch from 'isomorphic-fetch'
 
-import {NEW_SITE_BACKEND_URL}
+import {NEW_SHOP_BACKEND_URL}
   from '../../../urls'
 
 export const ADMIN_SHOP_TITLE_CHANGE = "ADMIN_SHOP_TITLE_CHANGE"
 export const ADMIN_SHOP_SITE_CHANGE = "ADMIN_SHOP_SITE_CHANGE"
+export const ADMIN_SHOP_ALT_NAMES_CHANGE = "ADMIN_SHOP_ALT_NAMES_CHANGE"
 export const NEW_SHOP_REQUEST = "NEW_SHOP_REQUEST"
 export const NEW_SHOP_RESPONSE = "NEW_SHOP_RESPONSE"
 
 export const shopTitleChange = (value) => {
   return {
     type: ADMIN_SHOP_TITLE_CHANGE,
+    data: value
+  }
+}
+
+export const shopAltNamesChange = (value) => {
+  return {
+    type: ADMIN_SHOP_ALT_NAMES_CHANGE,
     data: value
   }
 }
@@ -39,14 +47,15 @@ export function submitNewShop() {
     const state = getState()
     const title = state.newShop.shopTitleValue
     const site = state.newShop.shopSiteValue
-
+    const altNames = state.newShop.shopAltNamesValue
 
     const args = {
       method: 'POST',
       credentials: 'same-origin',
       body: JSON.stringify({
         title: title,
-        site: site
+        site: site,
+        alternateNames: altNames
       })
     }
 
