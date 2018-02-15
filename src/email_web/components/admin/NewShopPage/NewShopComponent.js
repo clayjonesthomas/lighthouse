@@ -1,50 +1,46 @@
 import React from 'react'
 
-import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
-
-import './NewShopComponent.css'
-const AdminPageComponent =
+import '../AdminPage/AdminPageComponent.css'
+const NewShopComponent =
   ({
-     postTitleValue,
-     selectedShops,
-     isImportantValue,
-     onTitleChange,
-     onPickedShopsChange,
-     onChangeIsImportant,
-     submitNewPost
+     shopTitleValue,
+     onShopTitleChange,
+     shopSiteValue,
+     onShopSiteChange,
+     submitNewShop
    }) => (
-    <form onSubmit={submitNewPost}>
+    <form onSubmit={submitNewShop}>
       <div>
         <a href="/admin/tracked_shops">Tracked Shops</a>
       </div>
-      <p>Post Title</p>
+      <p>Shop Name</p>
+      <input
+        id="admin-post-title"
+        type="text"
+        onChange={onShopTitleChange}
+        value={shopTitleValue}
+      />
+      <p>Shop Alt names (just comma separated please, no spaces)
+      </p>
       <textarea
         id="admin-post-title"
         type="text"
-        onChange={onTitleChange}
-        value={postTitleValue}
+        onChange={onShopTitleChange}
+        value={shopTitleValue}
       />
-      <ShopPicker
-        onPickedShopsChange={onPickedShopsChange}
-        selectedShops={selectedShops}
-        className="admin-shop-picker"
-      />
-      <span>
-        is post important?
-      </span>
+      <p>Shop full website</p>
       <input
-        id="admin-is-important-checkbox"
-        type="checkbox"
-        checked={isImportantValue}
-        value={isImportantValue}
-        onChange={onChangeIsImportant}
+        id="admin-post-title"
+        type="text"
+        onChange={onShopTitleChange}
+        value={shopTitleValue}
       />
       <input
         id="admin-submit-button"
         type="submit"
-        value="submit post"
+        value="submit shop"
       />
     </form>
 )
 
-export default AdminPageComponent
+export default NewShopComponent
