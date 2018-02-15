@@ -3,8 +3,10 @@ import React from 'react'
 import '../AdminPage/AdminPageComponent.css'
 const NewShopComponent =
   ({
-     shopTitleValue,
-     onShopTitleChange,
+     shopNameValue,
+     onShopNameChange,
+     shopAltNamesValue,
+     onShopAltNamesChange,
      shopSiteValue,
      onShopSiteChange,
      submitNewShop
@@ -17,23 +19,23 @@ const NewShopComponent =
       <input
         id="admin-post-title"
         type="text"
-        onChange={onShopTitleChange}
-        value={shopTitleValue}
+        onChange={onShopNameChange}
+        value={shopNameValue}
       />
       <p>Shop Alt names (just comma separated please, no spaces)
       </p>
       <textarea
         id="admin-post-title"
         type="text"
-        onChange={onShopTitleChange}
-        value={shopTitleValue}
+        onChange={onShopAltNamesChange}
+        value={shopAltNamesValue}
       />
       <p>Shop full website</p>
       <input
         id="admin-post-title"
         type="text"
-        onChange={onShopTitleChange}
-        value={shopTitleValue}
+        onChange={onShopSiteChange}
+        value={shopSiteValue}
       />
       <input
         id="admin-submit-button"

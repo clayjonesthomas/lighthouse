@@ -3,15 +3,15 @@ import fetch from 'isomorphic-fetch'
 import {NEW_SHOP_BACKEND_URL}
   from '../../../urls'
 
-export const ADMIN_SHOP_TITLE_CHANGE = "ADMIN_SHOP_TITLE_CHANGE"
+export const ADMIN_SHOP_NAME_CHANGE = "ADMIN_SHOP_NAME_CHANGE"
 export const ADMIN_SHOP_SITE_CHANGE = "ADMIN_SHOP_SITE_CHANGE"
 export const ADMIN_SHOP_ALT_NAMES_CHANGE = "ADMIN_SHOP_ALT_NAMES_CHANGE"
 export const NEW_SHOP_REQUEST = "NEW_SHOP_REQUEST"
 export const NEW_SHOP_RESPONSE = "NEW_SHOP_RESPONSE"
 
-export const shopTitleChange = (value) => {
+export const shopNameChange = (value) => {
   return {
-    type: ADMIN_SHOP_TITLE_CHANGE,
+    type: ADMIN_SHOP_NAME_CHANGE,
     data: value
   }
 }
@@ -45,7 +45,7 @@ export const newShopResponse = () => {
 export function submitNewShop() {
   return (dispatch, getState) => {
     const state = getState()
-    const title = state.newShop.shopTitleValue
+    const name = state.newShop.shopNameValue
     const site = state.newShop.shopSiteValue
     const altNames = state.newShop.shopAltNamesValue
 
@@ -53,7 +53,7 @@ export function submitNewShop() {
       method: 'POST',
       credentials: 'same-origin',
       body: JSON.stringify({
-        title: title,
+        name: name,
         site: site,
         alternateNames: altNames
       })

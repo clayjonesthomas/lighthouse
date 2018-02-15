@@ -630,8 +630,8 @@ class SingleShop(BaseHandler):
                 alternate_names=alt_names
                 # icon_url=body['icon_url']
             )
-            shop_key = shop.put()
-            self.response.write(json.dumps({'key': shop_key.urlsafe()}))
+            shop.put()
+            self.response.write(json.dumps({'success': True}))
 
     def delete(self, url_key):
         user = self.user

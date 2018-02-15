@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import NewShopComponent from './NewShopComponent'
 
 import {
-  shopTitleChange, shopSiteChange, submitNewShop,
+  shopNameChange, shopSiteChange, submitNewShop,
   shopAltNamesChange
 }from './NewShopActions'
 
@@ -12,8 +12,8 @@ class NewShopPage extends Component {
 
   render() {
     const {
-      shopTitleValue,
-      onShopTitleChange,
+      shopNameValue,
+      onShopNameChange,
       shopAltNamesValue,
       onShopAltNamesChange,
       shopSiteValue,
@@ -21,8 +21,8 @@ class NewShopPage extends Component {
       submitNewShop
     } = this.props
     return <NewShopComponent
-      shopTitleValue={shopTitleValue}
-      onShopTitleChange={onShopTitleChange}
+      shopNameValue={shopNameValue}
+      onShopNameChange={onShopNameChange}
       shopAltNamesValue={shopAltNamesValue}
       onShopAltNamesChange={onShopAltNamesChange}
       shopSiteValue={shopSiteValue}
@@ -34,7 +34,7 @@ class NewShopPage extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    shopTitleValue: state.newShop.shopTitleValue,
+    shopNameValue: state.newShop.shopNameValue,
     shopSiteValue: state.newShop.shopSiteValue,
     shopAltNamesValue: state.newShop.shopAltNamesValue
   }
@@ -42,8 +42,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTitleChange: (e) =>
-      dispatch(shopTitleChange(e.target.value)),
+    onShopNameChange: (e) =>
+      dispatch(shopNameChange(e.target.value)),
     onShopAltNamesChange: (e) =>
       dispatch(shopAltNamesChange(e.target.value)),
     onShopSiteChange: (e) =>

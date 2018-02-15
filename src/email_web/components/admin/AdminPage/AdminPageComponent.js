@@ -16,6 +16,7 @@ const AdminPageComponent =
     <form onSubmit={submitNewPost}>
       <div>
         <a href="/admin/tracked_shops">Tracked Shops</a>
+        <a href="/admin/new_shop">New Shop</a>
       </div>
       <p>Post Title</p>
       <textarea
