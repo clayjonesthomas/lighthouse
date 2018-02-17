@@ -4,7 +4,7 @@ import "./WelcomePage.css"
 const WelcomePageComponent = ({
                                 goToSettings
                               }) => (
-  <div id="welcome-page">
+  <div className="welcome-page">
     <h1>
       Welcome to&nbsp;
       <span>

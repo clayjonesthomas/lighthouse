@@ -11,6 +11,7 @@ export const ATTEMPT_LOG_IN = 'ATTEMPT_LOG_IN'
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST'
 export const LOG_IN_RESPONSE = 'LOG_IN_RESPONSE'
 export const LOG_IN_RESPONSE_FAILED = 'LOG_IN_RESPONSE_FAILED'
+export const TRIGGER_LOGIN_SPINNER_TIMEOUT = 'TRIGGER_LOGIN_SPINNER_TIMEOUT'
 
 export const UNVERIFIED_ERROR = 'UNVERIFIED_ERROR' //TODO
 export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR' //TODO
@@ -90,6 +91,7 @@ function _submitLogInForm(dispatch, getState) {
     })
   }
   dispatch(logInRequest())
+  dispatch(shouldShowLoginSpinnerTimer())
   return fetch(LOG_IN_URL, args)
     .then(response => response.json())
     .then(json => {
@@ -116,3 +118,18 @@ export function sendForgotPasswordEmail() {
     return fetch(FORGOT_PASSWORD_BACKEND_URL, args)
   }
 }
+
+export function shouldShowLoginSpinnerTimer() {
+   const SPINNER_MIN_DURATION = 1000 //ms
+   return dispatch => {
+     return setTimeout(function() {
+       dispatch(triggerLoginSpinnerTimeout());
+     }, SPINNER_MIN_DURATION);
+   }
+ }
+ 
+ const triggerLoginSpinnerTimeout = () => {
+   return {
+     type: TRIGGER_LOGIN_SPINNER_TIMEOUT
+   }
+ }

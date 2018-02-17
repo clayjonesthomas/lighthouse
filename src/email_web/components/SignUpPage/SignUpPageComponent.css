@@ -54,6 +54,11 @@
     width: 100%;
 }
 
+#signup-form-button:disabled {
+    opacity: .4;
+    cursor: auto;
+}
+
 .shop-picker-box {
     width: 100%;
     border-radius: 4px;
@@ -72,8 +77,8 @@
     background-color: #f1f1f1;
 }
 
-.shop-picker-box > span > div > .dropdown-menu > li > a:hover {
-    background-color: #e5dbff;
+.shop-picker-box .dropdown-item:hover {
+    background-color: #E8E8E8;
 }
 
 .shop-picker-box .rbt-token {
@@ -99,4 +104,11 @@
 
 .has-error > .email-error, .has-error > .password-error {
     display: inherit;
+}
+
+#signup-form-spinner {
+    text-align: right;
+    margin-right: 10px;
+    position: relative;
+    top: -67px;
 }

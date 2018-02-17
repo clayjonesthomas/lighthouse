@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import reducers from './reducer'
 import Container from './Container'
 import WelcomePage from './components/WelcomePage/WelcomePage'
+import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 import AdminPage from './components/admin/AdminPage/AdminPage'
 import TrackedShopPage from './components/admin/TrackedShopPage/TrackedShopPage'
 
@@ -54,6 +55,7 @@ const Root = () => (
         <Route path={HOW_IT_WORKS_PAGE_URL} component={ContainerAtHowItWorksPage}/>
         <Route path={ADMIN_PAGE_URL} component={AdminPage}/>
         <Route path={TRACKED_SHOPS_URL} component={TrackedShopPage}/>
+        <Route path="*" component={NotFoundPage}/>
       </Route>
     </Router>
   </Provider>
