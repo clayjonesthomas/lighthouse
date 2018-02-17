@@ -58,10 +58,11 @@ const ShopPickerComponent = (
             return 1
           return 0
         })}
-        placeholder={placeholder || "Pick your shops"}
+        placeholder={placeholder || "Search for your shops"}
         selected={pickedShops}
         onChange={onPickNewShop}
         maxHeight={200} // in pixels
+        minLength={1}
       />
     </InputGroup>
   </div>
