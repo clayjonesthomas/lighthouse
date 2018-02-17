@@ -1,4 +1,5 @@
 import csv
+import re
 from models import Shop
 
 
@@ -7,10 +8,9 @@ def update_stores():
     with open("stores.csv") as f:
         csv_file = csv.reader(f)
         for row in csv_file:
-            if len(Shop.query(Shop.name == row[1]).fetch(1)):
-                pass
-            alternate_names = csv.reader(row[1])
-            import pdb; pdb.set_trace()
+            if len(Shop.query(Shop.name == row[0]).fetch(1)):
+                continue
+            alternate_names = re.split(",\s*", row[1])
             shop = Shop(
                 name=row[0],
                 alternate_names=alternate_names,

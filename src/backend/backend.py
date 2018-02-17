@@ -949,7 +949,7 @@ class TrackedShopsHandler(BaseHandler):
 class UpdateStoresScript(BaseHandler):
 
     @moderator_required
-    def post(self):
+    def get(self):
         update_count = update_stores()
         self.response.write(json.dumps({
             "storesUpdated": update_count
@@ -1025,7 +1025,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/scripts', ModeratorsOnlyPage, name='scripts_page'),
+    webapp2.Route('/admin/script', UpdateStoresScript, name='script_runner'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
     webapp2.Route('/', MainPage, name='home'),
