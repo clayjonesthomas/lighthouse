@@ -48,7 +48,6 @@ def _spawn_admin():
     _contents = {
         'email': u'ctjones@mit.edu',
         'password': auth_config.admin_pass,
-        'is_moderator': True,
         'selectedShops': []
     }
     request_signup = webapp2.Request.blank('/rest/signup')
@@ -196,6 +195,20 @@ def guest_required(handler):
     return check_guest
 
 
+def moderator_required(handler):
+
+    def check_moderator(self, *args, **kwargs):
+        auth = self.auth
+        u = auth.get_user_by_session()
+        if u:
+            user = auth.store.user_model.get_by_id(u['user_id'])
+            if user and user.is_moderator:
+                return handler(self, *args, **kwargs)
+        self.redirect_to('home')
+
+    return check_moderator
+
+
 def handle_shop_change_for_admin(shops_to_add, shops_to_remove):
     for shop_key in shops_to_add:
         shop = shop_key.get()
@@ -310,6 +323,14 @@ class GuestsOnlyPage(BaseHandler):
         self.response.write(template.render())
 
 
+class ModeratorsOnlyPage(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('index.html')
+        self.response.write(template.render())
+
+
 class Feed(BaseHandler):
     def get(self, offset, _should_get_all_posts):
         user = self.user
@@ -402,6 +423,27 @@ class SinglePost(BaseHandler):
         self.response.write(json.dumps({'great': 'success'}))
 
 
+class Posts(BaseHandler):
+    def post(self):
+        user = self.user
+        if not user or not user.is_moderator:
+            return
+
+        body = json.loads(self.request.body)
+        title = body['title']
+        selected_shops = body['selectedShops']
+        is_important = body['isImportant']
+
+        for shop in selected_shops:
+            shop_key = ndb.Key(urlsafe=shop['key'])
+            post = Post(title=title,
+                        shop_key=shop_key,
+                        author=user.key,
+                        is_important=is_important)
+            post.put()
+        self.response.write(json.dumps({'success': 'true'}))
+
+
 class ArchivePost(BaseHandler):
     def post(self):
         user = self.user
@@ -412,7 +454,7 @@ class ArchivePost(BaseHandler):
         post = ndb.Key(urlsafe=post_key).get()
         post.is_archived = not post.is_archived
         post.put()
-        self.response.write(json.dumps({'isArchived': True}))
+        self.response.write(json.dumps({'success': True}))
 
 
 class LikePost(BaseHandler):
@@ -641,7 +683,7 @@ class SignupHandler(BaseHandler):
         shop_keys = [ndb.Key(urlsafe=shop['key']) for shop in shops]
         unique_properties = ['email_address']
         is_moderator = False
-        if email == 'clay@lightho.us' or email == 'michelle@lightho.us':  # even worse
+        if email == 'clay@lightho.us' or email == "ctjones@mit.edu" or email == 'michelle@lightho.us':  # even worse
             is_moderator = True
         user_data = self.user_model.create_user(email,
                                                 unique_properties,
@@ -663,7 +705,8 @@ class SignupHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        send_verification_email(email, verification_url)
+        if not is_moderator:
+            send_verification_email(email, verification_url)
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
@@ -783,6 +826,17 @@ class VerificationHandler(BaseHandler):
         self.response.write(json.dumps({'success': 'PASSWORD_UPDATED'}))
         
 
+class ResendVerificationHandler(BaseHandler):
+    def post(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        verification_url = self.uri_for('verification', type='v', user_id=user_id,
+                                        signup_token=token, _full=True)
+        send_verification_email(user.email_address, verification_url)
+        self.response.write(json.dumps({'success': 'RESENT_VERIFICATION'}))
+
+
 class LoginHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
@@ -838,9 +892,9 @@ class EmailHandler(BaseHandler):
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
             unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
-                                                signup_token=token, _full=True)
+                                           signup_token=token, _full=True)
             settings_url = self.uri_for('verification', type='s', user_id=user_id,
-                                                signup_token=token, _full=True)
+                                        signup_token=token, _full=True)
             send_email_to_user(user, unsubscribe_url, settings_url)
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
@@ -870,6 +924,30 @@ class SettingsHandler(BaseHandler):
         self.response.write(json.dumps({'success': 'SETTINGS_UPDATED'}))
 
 
+class TrackedShopsHandler(BaseHandler):
+
+    def get(self):
+        user = self.user
+        if not user:
+            return
+        shops = []
+        for shop_key in user.liked_shops:
+            shop_dict = shop_key.get().prepare_shop(user)
+            shop_dict['active_posts'] = []
+            active_posts = Post.query(ndb.AND(Post.is_archived == False,
+                                              Post.shop_key == shop_key))
+            for active_post in active_posts:
+                shop_dict['active_posts'].append({
+                    'title': active_post.title,
+                    'key': active_post.key.urlsafe(),
+                    'isImportant': active_post.is_important
+                })
+
+            shops.append(shop_dict)
+
+        self.response.write(json.dumps({'shops': shops}))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -897,9 +975,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
     webapp2.Route('/rest/settings', SettingsHandler, name='settings'),
+    webapp2.Route('/rest/resend_verification', ResendVerificationHandler, name='resend_verification'),
 
     webapp2.Route('/rest/posts/<offset:[0-9]*>-<_should_get_all_posts:[0-1]>', Feed, name='feed'),
-    webapp2.Route('/rest/posts', Feed, name='feed'),
+    webapp2.Route('/rest/posts', Posts, name='posts'),
     webapp2.Route('/rest/post/like', LikePost, name='like_post'),
     webapp2.Route('/rest/post/archive', ArchivePost, name='archive_post'),
     webapp2.Route('/rest/post', SinglePost, name='single_post_post'),
@@ -919,6 +998,7 @@ app = webapp2.WSGIApplication([
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
+    webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
 
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
@@ -937,5 +1017,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/<:.*>', MainPage, name='home'),
+    webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
+    webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
+    webapp2.Route('/', MainPage, name='home'),
+    webapp2.Route('/<:.*>', MainPage, name='home_redirect'),
 ], debug=True, config=config)

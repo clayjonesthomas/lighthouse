@@ -90,7 +90,7 @@ const SignUpPageComponent = ({
           </p>
         }
         {
-          invalidEmailFromServer === emailValue &&
+          (invalidEmailFromServer && invalidEmailFromServer === emailValue) &&
           <p className="email-error">
             The email address you have chosen is already in use.
             Please <a tabIndex="-1" onClick={goToLogIn}>log in</a> or use a different email.
