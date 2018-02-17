@@ -17,6 +17,7 @@ a:hover {
 
 #login-form-spinner {
     text-align: right;
-    margin-top: -67px;
     margin-right: 10px;
+    position: relative;
+    top: -67px;
  }
