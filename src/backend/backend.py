@@ -956,7 +956,6 @@ class UpdateStoresScript(BaseHandler):
         }))
 
 
-
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
