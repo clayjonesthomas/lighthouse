@@ -950,10 +950,7 @@ class UpdateStoresScript(BaseHandler):
 
     @moderator_required
     def get(self):
-        update_count = update_stores()
-        self.response.write(json.dumps({
-            "storesUpdated": update_count
-        }))
+        pass
 
 
 config = {
