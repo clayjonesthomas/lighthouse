@@ -3,6 +3,7 @@ import {Typeahead} from 'react-bootstrap-typeahead'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
 import {InputGroup} from 'react-bootstrap'
 import ShopRecommenderBox from 'ui-kit/ShopRecommenderBox'
+import Spinner from '../../ui-kit/Spinner'
 
 import "./ShopPickerComponent.css"
 
@@ -13,7 +14,8 @@ const ShopPickerComponent = (
     pickedShops,
     onPickNewShop,
     tabIndex,
-    placeholder
+    placeholder,
+    areShopsLoading
   }) => (
   <div className={className + " shop-picker-search"}>
     <InputGroup>
@@ -22,7 +24,7 @@ const ShopPickerComponent = (
         // TODO hide the (incorrect) warning this produces
         // issue caused from line 490 of typeaheadContainer.js
         // see https://github.com/ericgio/react-bootstrap-typeahead/issues/292
-        emptyLabel={<ShopRecommenderBox/>}
+        emptyLabel={areShopsLoading ? <Spinner colorHex={"#aec7ea"}/> : <ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {
           const selectedShops = pickedShops || []
