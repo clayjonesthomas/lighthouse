@@ -531,6 +531,22 @@ class UserData(BaseHandler):
         }))
 
 
+class UserEmail(BaseHandler):
+
+    def get(self):
+        user = self.user
+
+        if not user:
+            self.response.write(json.dumps({
+                'error': 'NO_USER_ERROR'
+            }))
+            return
+
+        self.response.write(json.dumps({
+            'email': user.email_address,
+        }))
+
+
 class ShopPosts(BaseHandler):
     def get(self, url_key, offset):
         user = self.user
@@ -985,6 +1001,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
     webapp2.Route('/rest/user_data', UserData, name='user_data'),
+    webapp2.Route('/rest/user_email', UserEmail, name='user_email'),
     webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shops/like', LikeShops, name='like_shops'),

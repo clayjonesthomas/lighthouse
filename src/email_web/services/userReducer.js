@@ -1,6 +1,7 @@
 import {LOG_IN_RESPONSE} from '../components/LogInPage/LogInPageActions'
 import {SIGN_UP_RESPONSE} from '../components/SignUpPage/SignUpPageActions'
-import {LOG_OUT_RESPONSE, USER_DATA_RETURN, USER_DATA_RETURN_FAILED}
+import {LOG_OUT_RESPONSE, USER_DATA_RETURN, 
+  USER_DATA_RETURN_FAILED, USER_EMAIL_RETURN}
   from '../services/UserActions'
 
 import {MID_FREQUENCY_EMAIL} from '../components/SettingsPage/SettingsPageComponent'
@@ -43,6 +44,21 @@ export function user(state = defaultUserState, action) {
       return defaultUserState
     case LOG_OUT_RESPONSE:
       return defaultUserState
+    default:
+      return state
+  }
+}
+
+export function userEmail(state = '', action) {
+  switch (action.type) {
+    case LOG_IN_RESPONSE:
+      return action.data.email
+    case SIGN_UP_RESPONSE:
+      return action.data.email
+    case USER_EMAIL_RETURN:
+      return action.data.email
+    case LOG_OUT_RESPONSE:
+      return ''
     default:
       return state
   }

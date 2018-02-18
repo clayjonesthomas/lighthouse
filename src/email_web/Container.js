@@ -13,7 +13,7 @@ import VerificationSuccessPage from './components/VerificationSuccessPage/Verifi
 import SettingsPage from './components/SettingsPage/SettingsPage'
 import HowItWorksPage from './components/HowItWorksPage/HowItWorksPage'
 
-import {logOut, pullUserData} from './services/UserActions'
+import {logOut, pullUserEmail} from './services/UserActions'
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
   LANDING_PAGE_URL, HOW_IT_WORKS_PAGE_URL} from './urls'
@@ -33,7 +33,7 @@ import "./Container.css"
 class Container extends Component {
 
   componentDidMount () {
-    this.props.pullUserData()
+    this.props.pullUserEmail()
   }
 
   render() {
@@ -105,7 +105,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     page: ownProps.page,
     isDisplayLogo: ownProps.page !== LANDING_PAGE,
-    email: state.user.email
+    email: state.userEmail
   }
 }
 
@@ -119,7 +119,7 @@ const mapDispatchToProps = (dispatch) => {
     logOut: () => {
       dispatch(logOut())
     },
-    pullUserData: () => dispatch(pullUserData())
+    pullUserEmail: () => dispatch(pullUserEmail())
   }
 }
 

@@ -1,6 +1,7 @@
 import {push} from 'react-router-redux'
 
-import {LOG_OUT_URL, USER_DATA_URL, LANDING_PAGE_URL}
+import {LOG_OUT_URL, USER_DATA_URL, 
+  USER_EMAIL_URL, LANDING_PAGE_URL}
   from '../urls'
 import fetch from 'isomorphic-fetch'
 
@@ -9,6 +10,9 @@ export const LOG_OUT_RESPONSE = 'LOG_OUT_RESPONSE'
 export const USER_DATA_REQUEST = 'USER_DATA_REQUEST'
 export const USER_DATA_RETURN = 'USER_DATA_RETURN'
 export const USER_DATA_RETURN_FAILED = 'USER_DATA_RETURN_FAILED'
+export const USER_EMAIL_REQUEST = 'USER_EMAIL_REQUEST'
+export const USER_EMAIL_RETURN = 'USER_EMAIL_RETURN'
+export const USER_EMAIL_RETURN_FAILED = 'USER_EMAIL_RETURN_FAILED'
 
 const logOutRequest = () => {
   return {
@@ -73,6 +77,43 @@ export function pullUserData() {
           dispatch(userDataReturn(json))
         else
           dispatch(userDataReturnFailed())
+      })
+  }
+}
+
+export const userEmailRequest = () => {
+  return {
+    type: USER_EMAIL_REQUEST
+  }
+}
+
+export const userEmailReturn = (userEmail) => {
+  return {
+    type: USER_EMAIL_RETURN,
+    data: userEmail
+  }
+}
+
+export const userEmailReturnFailed = () => {
+  return {
+    type: USER_EMAIL_RETURN_FAILED
+  }
+}
+
+export function pullUserEmail() {
+  const args = {
+    method: 'GET',
+    credentials: 'same-origin',
+  }
+  return dispatch => {
+    dispatch(userEmailRequest())
+    return fetch(USER_EMAIL_URL, args)
+      .then(response => response.json())
+      .then(json => {
+        if(json.email)
+          dispatch(userEmailReturn(json))
+        else
+          dispatch(userEmailReturnFailed())
       })
   }
 }
