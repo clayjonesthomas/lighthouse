@@ -10,7 +10,8 @@ const defaultUserState = {
   isVerified: false,
   isModerator: false,
   myShops: [],
-  myEmailFrequency: MID_FREQUENCY_EMAIL
+  myEmailFrequency: MID_FREQUENCY_EMAIL,
+  isLoadingUserData: true
 }
 
 export function user(state = defaultUserState, action) {
@@ -35,7 +36,8 @@ export function user(state = defaultUserState, action) {
         myShops: action.data.myShops,
         email: action.data.email,
         isVerified: action.data.isVerified,
-        isModerator: action.data.isModerator
+        isModerator: action.data.isModerator,
+        isLoadingUserData: false
       })
     case USER_DATA_RETURN_FAILED:
       return defaultUserState
