@@ -24,7 +24,7 @@ const ShopPickerComponent = (
         // TODO hide the (incorrect) warning this produces
         // issue caused from line 490 of typeaheadContainer.js
         // see https://github.com/ericgio/react-bootstrap-typeahead/issues/292
-        emptyLabel={areShopsLoading ? <Spinner colorHex={"#aec7ea"}/> : <ShopRecommenderBox/>}
+        emptyLabel={areShopsLoading ? <div id="shop-picker-spinner"><Spinner colorHex={"#aec7ea"}/></div> : <ShopRecommenderBox/>}
         labelKey="name"
         filterBy={(option, text) => {
           const selectedShops = pickedShops || []

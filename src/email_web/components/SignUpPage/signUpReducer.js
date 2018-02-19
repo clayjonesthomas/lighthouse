@@ -15,10 +15,10 @@ const defaultAllShopsState = {
 export function allShops(state = defaultAllShopsState, action) {
   switch (action.type) {
     case ALL_SHOPS_RESPONSE:
-      return Object.assign({}, state, {
+      return {
         isLoading: false,
         shopList: action.data
-      })
+      }
     default:
       return state
   }
