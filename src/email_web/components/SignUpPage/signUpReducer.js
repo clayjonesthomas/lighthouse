@@ -1,6 +1,7 @@
 import {SIGN_UP_EMAIL_CHANGE, SIGN_UP_PASSWORD_CHANGE,
   PICKED_SHOPS_CHANGE, SIGN_UP_REQUEST, SIGN_UP_RESPONSE,
-  SIGN_UP_RESPONSE_FAILED, ATTEMPT_SIGN_UP} from './SignUpPageActions'
+  SIGN_UP_RESPONSE_FAILED, ATTEMPT_SIGN_UP, TRIGGER_SIGNUP_SPINNER_TIMEOUT} 
+  from './SignUpPageActions'
 
 import {ALL_SHOPS_RESPONSE}
   from '../../services/ShopDataActions'
@@ -22,7 +23,8 @@ const defaultSignUpState = {
   selectedShops: [],
   submitSpinner: false,
   hasAttemptedSubmission: false,
-  invalidEmailFromServer: ''
+  invalidEmailFromServer: '',
+  requestInProgress: false
 }
 
 export function signup(state = defaultSignUpState, action) {
@@ -45,17 +47,24 @@ export function signup(state = defaultSignUpState, action) {
       })
     case SIGN_UP_REQUEST:
       return Object.assign({}, state, {
-        submitSpinner: true
+        submitSpinner: false,
+        requestInProgress: true
       })
     case SIGN_UP_RESPONSE:
       return Object.assign({}, state, {
         submitSpinner: false,
-        hasAttemptedSubmission: false
+        hasAttemptedSubmission: false,
+        requestInProgress: false
       })
     case SIGN_UP_RESPONSE_FAILED:
       return Object.assign({}, state, {
         submitSpinner: false,
-        invalidEmailFromServer: action.data
+        invalidEmailFromServer: action.data,
+        requestInProgress: false
+      })
+    case TRIGGER_SIGNUP_SPINNER_TIMEOUT:
+      return Object.assign({}, state, {
+        submitSpinner: state.requestInProgress,
       })
     case LOCATION_CHANGE:
       return defaultSignUpState
