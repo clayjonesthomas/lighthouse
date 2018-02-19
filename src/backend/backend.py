@@ -626,15 +626,17 @@ class SingleShop(BaseHandler):
         if not user or not user.is_moderator:
             return
         body = json.loads(self.request.body)
-
+        alternate_name_string = body['alternateNames']
+        alt_names = [name for name in alternate_name_string.split(",")]
         if user and user.is_moderator:
             shop = Shop(
                 name=body['name'],
-                website=body['website'],
-                icon_url=body['icon_url']
+                website=body['site'],
+                alternate_names=alt_names
+                # icon_url=body['icon_url']
             )
-            shop_key = shop.put()
-            self.response.write(json.dumps({'key': shop_key.urlsafe()}))
+            shop.put()
+            self.response.write(json.dumps({'success': True}))
 
     def delete(self, url_key):
         user = self.user
@@ -1039,6 +1041,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
+    webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
     webapp2.Route('/', MainPage, name='home'),
