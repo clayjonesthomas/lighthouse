@@ -4,6 +4,7 @@ import {FormGroup, FormControl} from 'react-bootstrap'
 import "./LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
+import Spinner from '../../ui-kit/Spinner'
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -33,7 +34,9 @@ const LogInPageComponent = ({
                               hasAttemptedSubmission,
                               invalidEmailPass,
                               onGoToSignUp,
-                              goToForgotPassword
+                              goToForgotPassword,
+                              displaySpinner,
+                              requestInProgress
                             }) => (
   <form
     className="auth-form"
@@ -89,9 +92,13 @@ const LogInPageComponent = ({
       </FormGroup>
       <input
         type="submit"
+        disabled={requestInProgress}
         value="LOG IN"
         className="submit-button form-button"
+        id="login-form-button"
       />
+      {displaySpinner && 
+         <div id="login-form-spinner"><Spinner colorHex={"#f1f1f1"}/></div>}
       <a onClick={goToForgotPassword} tabIndex="-1">Forgot Password</a>
     </div>
   </form>

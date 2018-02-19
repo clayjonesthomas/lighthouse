@@ -9,3 +9,15 @@
 a:hover {
     cursor: pointer;
 }
+
+#login-form-button:disabled {
+    opacity: .4;
+    cursor: auto;
+}
+
+#login-form-spinner {
+    text-align: right;
+    margin-right: 10px;
+    position: relative;
+    top: -67px;
+ }
