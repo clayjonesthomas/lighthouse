@@ -8,10 +8,17 @@ import {ALL_SHOPS_RESPONSE}
 
 import {LOCATION_CHANGE} from 'react-router-redux'
 
-export function allShops(state = [], action) {
+const defaultAllShopsState = {
+  isLoading: true,
+  shopList: []
+}
+export function allShops(state = defaultAllShopsState, action) {
   switch (action.type) {
     case ALL_SHOPS_RESPONSE:
-      return action.data
+      return {
+        isLoading: false,
+        shopList: action.data
+      }
     default:
       return state
   }

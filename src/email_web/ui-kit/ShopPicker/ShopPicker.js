@@ -17,7 +17,8 @@ class ShopPicker extends Component {
       pickedShops,
       onPickedShopsChange,
       placeholder,
-      tabIndex
+      tabIndex,
+      areShopsLoading
     } = this.props
 
     return (
@@ -29,6 +30,7 @@ class ShopPicker extends Component {
           onPickedShopsChange(shop)}}
         pickedShops={pickedShops}
         placeholder={placeholder}
+        areShopsLoading={areShopsLoading}
       />
     )
   }
@@ -36,7 +38,8 @@ class ShopPicker extends Component {
 
 function mapStateToProps(state, ownProps) {
   return Object.assign({}, ownProps, {
-    shops:  state.allShops,
+    shops:  state.allShops.shopList,
+    areShopsLoading: state.allShops.isLoading,
     pickedShops: ownProps.selectedShops,
     placeholder: ownProps.placeholder
   })
