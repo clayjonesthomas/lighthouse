@@ -73,9 +73,9 @@ export function pullUserData() {
     return fetch(USER_DATA_URL, args)
       .then(response => response.json())
       .then(json => {
-        if(json.email)
-          dispatch(userDataReturn(json))
-        else
+        if(json.email) {
+          dispatch(userDataReturn(json));
+        } else
           dispatch(userDataReturnFailed())
       })
   }
@@ -101,19 +101,28 @@ export const userEmailReturnFailed = () => {
 }
 
 export function pullUserEmail() {
-  const args = {
-    method: 'GET',
-    credentials: 'same-origin',
-  }
+  var tempEmailCookie = document.cookie.match(new RegExp("temp_email_cookie" + '=([^;]+)'));
+
   return dispatch => {
+    if (tempEmailCookie) {
+      dispatch(userEmailReturn({'email' : tempEmailCookie[1]}))
+      return
+    } 
+
+    const args = {
+      method: 'GET',
+      credentials: 'same-origin',
+    }
+
     dispatch(userEmailRequest())
     return fetch(USER_EMAIL_URL, args)
       .then(response => response.json())
       .then(json => {
-        if(json.email)
+        if(json.email) {
           dispatch(userEmailReturn(json))
-        else
+        } else
           dispatch(userEmailReturnFailed())
       })
   }
 }
+
