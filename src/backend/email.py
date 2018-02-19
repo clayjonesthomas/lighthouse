@@ -8,13 +8,29 @@ from models import Shop, Post, User, PostsEmail
 import enums.EmailFrequency as EmailFrequency
 
 
-def send_email_to_user(user, unsubscribe_url, settings_url):
+def send_update_email(user, unsubscribe_url, settings_url):
     important_posts, unimportant_posts = get_active_posts_for_user(user)
     send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
     if important_posts or send_just_unimportant:
-        email = _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url)
+        email = _compose_email_for_user(user,
+                                        important_posts,
+                                        unimportant_posts,
+                                        unsubscribe_url,
+                                        settings_url)
         email.send()
         email.put()
+
+
+def send_random_email(user, unsubscribe_url, settings_url):
+    important_posts = Post.query().fetch(2)
+    unimportant_posts = Post.query().fetch(3)
+    email = _compose_email_for_user(user,
+                                    important_posts,
+                                    unimportant_posts,
+                                    unsubscribe_url,
+                                    settings_url)
+    email.send()
+    email.put()
 
 
 def get_active_posts_for_user(user, new_only=True):

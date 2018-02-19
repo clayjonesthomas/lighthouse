@@ -23,7 +23,12 @@ from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import deferred
 
 from models import Post, Shop, User, get_entity_from_url_key
-from email import send_email_to_user, send_verification_email, send_forgot_password_email
+from email import (
+    send_update_email,
+    send_verification_email,
+    send_forgot_password_email,
+    send_random_email
+)
 import enums.EmailFrequency as EmailFrequency
 
 from google.appengine.api import app_identity, mail
@@ -902,7 +907,7 @@ class EmailHandler(BaseHandler):
                                            signup_token=token, _full=True)
             settings_url = self.uri_for('verification', type='s', user_id=user_id,
                                         signup_token=token, _full=True)
-            send_email_to_user(user, unsubscribe_url, settings_url)
+            send_update_email(user, unsubscribe_url, settings_url)
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
@@ -969,6 +974,24 @@ class RedirectToShop(BaseHandler):
             user_id=user_id,
             url=redirect_url
         ))
+
+
+class SendRandomUpdateEmail(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
+                                       signup_token=token, _full=True)
+        settings_url = self.uri_for('verification', type='s', user_id=user_id,
+                                    signup_token=token, _full=True)
+        send_random_email(user,
+                          unsubscribe_url,
+                          settings_url)
+
+        self.response.write(json.dumps({"success": True}))
 
 
 config = {
