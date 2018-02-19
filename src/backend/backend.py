@@ -331,8 +331,9 @@ class ModeratorsOnlyPage(BaseHandler):
 
     @moderator_required
     def get(self):
+        user_id = self.user.key.urlsafe()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_id=user_id))
 
 
 class Feed(BaseHandler):
