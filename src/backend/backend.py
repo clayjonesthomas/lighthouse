@@ -297,16 +297,20 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(BaseHandler):
 
     def get(self, *args):
+        user_id = None
+        if self.user:
+            user_id = self.user.key.urlsafe()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_id=user_id))
 
 
 class UsersOnlyMainPage(BaseHandler):
 
     @user_required
     def get(self):
+        user_id = self.user.key.urlsafe()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_id=user_id))
 
 
 class GuestsOnlyPage(BaseHandler):
