@@ -43,6 +43,11 @@
     width: 100%;
 }
 
+
+#shop-picker-spinner {
+    margin-left: calc(50% - 24px);
+}
+
 ul::-webkit-scrollbar {
     width:12px;
 }
