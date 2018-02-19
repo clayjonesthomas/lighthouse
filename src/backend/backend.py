@@ -16,9 +16,6 @@ from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
-from google.appengine.ext import blobstore
-from google.appengine.ext.webapp import blobstore_handlers
-
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 from google.appengine.ext import deferred
 
@@ -26,8 +23,9 @@ from models import Post, Shop, User, get_entity_from_url_key
 from email import send_email_to_user, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
+from scripts import update_stores
+
 from google.appengine.api import app_identity, mail
-import lib.cloudstorage as gcs
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -955,6 +953,13 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
+class UpdateStoresScript(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        pass
+
+      
 class RedirectToShop(BaseHandler):
 
     def get(self, *args, **kwargs):
@@ -1041,6 +1046,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
+    webapp2.Route('/admin/script', UpdateStoresScript, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
