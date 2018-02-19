@@ -117,20 +117,20 @@ def _spawn_dummy_posts(shop_keys):
 def _spawn_dummy_shops():
     shops = [Shop(name='American Eagle',
                   alternate_names=['ae'],
-                  website='www.ae.com',
+                  website='http://www.ae.com',
                   likes=0),
              Shop(name='JCrew',
-                  website='www.jcrew.com',
+                  website='http://www.jcrew.com',
                   likes=0),
              Shop(name="Levi's Jeans",
-                  website='www.levis.com',
+                  website='http://www.levis.com',
                   likes=0),
              Shop(name='Lulu Lemon',
-                  website='www.lululemon.com',
+                  website='http://www.lululemon.com',
                   likes=0,
                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Shop(name='Old Navy',
-                  website='www.oldnavy.com',
+                  website='http://www.oldnavy.com',
                   likes=0)]
     return ndb.put_multi(shops)
 
@@ -1020,7 +1020,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
 
-    webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*/<shop_id:[a-zA-Z0-9-_]*>)', RedirectToShop, name='redirect_shop'),
+    webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
