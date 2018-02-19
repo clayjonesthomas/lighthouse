@@ -152,7 +152,7 @@ def _generate_important_post_tile(user_id, post):
     shop = post.shop_key.get()
     shop_id = shop.key.urlsafe()
 
-    url = '/shop_link/{}/{}'.format(user_id, shop_id)
+    url = 'lightho.us/shop_link/{}/{}'.format(user_id, shop_id)
     return """
       <tr>
         <td style="display: block;max-width: 500px;margin: 3px auto;">
@@ -169,7 +169,7 @@ def _generate_unimportant_post_line(user_id, post):
     shop = post.shop_key.get()
     shop_id = shop.key.urlsafe()
 
-    url = '/shop_link/{}/{}'.format(user_id, shop_id)
+    url = 'lightho.us/shop_link/{}/{}'.format(user_id, shop_id)
 
     return """
     <div>
