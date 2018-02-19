@@ -24,7 +24,7 @@ class WelcomePage extends Component {
       email
     } = this.props
     return (
-      <div id="welcome-container">
+      <div className="welcome-container">
         <NavBar
           isDisplayLogo={true}
           onClickHowItWorks={goToHowItWorks}
