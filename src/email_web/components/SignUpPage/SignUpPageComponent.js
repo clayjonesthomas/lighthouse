@@ -2,6 +2,7 @@ import React from 'react'
 import {FormGroup, FormControl, HelpBlock} from 'react-bootstrap'
 
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
+import Spinner from '../../ui-kit/Spinner'
 
 import "./SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
@@ -40,7 +41,9 @@ const SignUpPageComponent = ({
                                selectedShops,
                                hasAttemptedSubmission,
                                invalidEmailFromServer,
-                               goToLogIn
+                               goToLogIn,
+                               displaySpinner,
+                               requestInProgress
                              }) => (
   <form
     id="sign-up-form"
@@ -113,11 +116,14 @@ const SignUpPageComponent = ({
       </FormGroup>
       <input
         tabIndex={shouldDisplay ? 0 : -1}
+        disabled={requestInProgress}
         type="submit"
         value="TRY IT OUT"
         className="submit-button form-button"
-        id="form-button"
+        id="signup-form-button"
       />
+      {displaySpinner && 
+        <div id="signup-form-spinner"><Spinner colorHex={"#f1f1f1"}/></div>}
     </div>
   </form>
 )

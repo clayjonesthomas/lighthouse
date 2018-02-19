@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
+import {TRACKED_SHOPS_URL, NEW_SHOP_URL} from '../../../urls'
 
 import './AdminPageComponent.css'
 const AdminPageComponent =
@@ -15,7 +16,8 @@ const AdminPageComponent =
    }) => (
     <form onSubmit={submitNewPost}>
       <div>
-        <a href="/admin/tracked_shops">Tracked Shops</a>
+        <a href={TRACKED_SHOPS_URL}>Tracked Shops</a>
+        <a href={NEW_SHOP_URL}>New Shop</a>
       </div>
       <p>Post Title</p>
       <textarea
@@ -35,6 +37,7 @@ const AdminPageComponent =
       <input
         id="admin-is-important-checkbox"
         type="checkbox"
+        checked={isImportantValue}
         value={isImportantValue}
         onChange={onChangeIsImportant}
       />

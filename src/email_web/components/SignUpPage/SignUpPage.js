@@ -23,7 +23,9 @@ class SignUpPage extends Component {
       selectedShops,
       hasAttemptedSubmission,
       invalidEmailFromServer,
-      goToLogIn
+      goToLogIn,
+      displaySpinner,
+      requestInProgress
     } = this.props
     return (
       <SignUpPageComponent
@@ -38,6 +40,8 @@ class SignUpPage extends Component {
         hasAttemptedSubmission={hasAttemptedSubmission}
         invalidEmailFromServer={invalidEmailFromServer}
         goToLogIn={goToLogIn}
+        displaySpinner={displaySpinner}
+        requestInProgress={requestInProgress}
       />
     )
   }
@@ -50,7 +54,9 @@ const mapStateToProps = (state, ownProps) => {
     passwordValue: state.signup.password,
     selectedShops: state.signup.selectedShops,
     hasAttemptedSubmission: state.signup.hasAttemptedSubmission,
-    invalidEmailFromServer: state.signup.invalidEmailFromServer
+    invalidEmailFromServer: state.signup.invalidEmailFromServer,
+    displaySpinner: state.signup.submitSpinner,
+    requestInProgress: state.signup.requestInProgress
   }
 }
 

@@ -7,7 +7,7 @@ import {MID_FREQUENCY_EMAIL} from '../components/SettingsPage/SettingsPageCompon
 
 const defaultUserState = {
   email: '',
-  isVerified: false,
+  isVerified: true,
   isModerator: false,
   myShops: [],
   myEmailFrequency: MID_FREQUENCY_EMAIL

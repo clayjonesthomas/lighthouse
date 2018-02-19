@@ -11,6 +11,7 @@ export const ATTEMPT_SIGN_UP = 'ATTEMPT_SIGN_UP'
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST'
 export const SIGN_UP_RESPONSE = 'SIGN_UP_RESPONSE'
 export const SIGN_UP_RESPONSE_FAILED = 'SIGN_UP_RESPONSE_FAILED'
+export const TRIGGER_SIGNUP_SPINNER_TIMEOUT = 'TRIGGER_SIGNUP_SPINNER_TIMEOUT'
 
 export const emailChange = (value) => {
   return {
@@ -96,6 +97,7 @@ function _submitSignUpForm(dispatch, getState) {
     })
   }
   dispatch(signUpRequest())
+  dispatch(shouldShowSignupSpinnerTimer())
   return fetch(SIGN_UP_URL, args)
     .then(response => response.json())
     .then(json => {
@@ -105,4 +107,20 @@ function _submitSignUpForm(dispatch, getState) {
       } else
         dispatch(signUpResponseFailed(json.invalidEmail))
     })
+}
+
+export function shouldShowSignupSpinnerTimer() {
+  const SPINNER_MIN_DURATION = 1000 //ms
+  return dispatch => {
+    return setTimeout(function() {
+      dispatch(triggerSignupSpinnerTimeout());
+    }, SPINNER_MIN_DURATION);
+
+  }
+}
+
+const triggerSignupSpinnerTimeout = () => {
+  return {
+    type: TRIGGER_SIGNUP_SPINNER_TIMEOUT
+  }
 }
