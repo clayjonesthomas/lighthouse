@@ -8,7 +8,7 @@ def update_stores():
     with open("stores.csv") as f:
         csv_file = csv.reader(f)
         for row in csv_file:
-            if len(Shop.query(Shop.name == row[0]).fetch(1)):
+            if len(Shop.query(Shop.name.lower() == row[0].lower()).fetch(1)):
                 continue
             alternate_names = re.split(",\s*", row[1])
             shop = Shop(
