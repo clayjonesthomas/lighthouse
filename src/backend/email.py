@@ -49,7 +49,8 @@ def get_active_posts_for_user(user, new_only=True):
 
 
 def _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url):
-    body = _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url)
+    user_id = user.key.urlsafe()
+    body = _generate_body(user_id, important_posts, unimportant_posts, unsubscribe_url, settings_url)
     subject = _generate_subject(important_posts, unimportant_posts)
 
     important_post_keys = [p.key for p in important_posts]
@@ -86,7 +87,7 @@ def _generate_subject(important_posts, unimportant_posts):
     return subject
 
 
-def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings_url):
+def _generate_body(user_id, important_posts, unimportant_posts, unsubscribe_url, settings_url):
     body = """
         <html>
           <head>
@@ -110,7 +111,7 @@ def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings
               </tr>"""
 
     for i_post in important_posts:
-        body += _generate_important_post_tile(i_post)
+        body += _generate_important_post_tile(user_id, i_post)
         body += "\n"
 
     if unimportant_posts:
@@ -122,7 +123,7 @@ def _generate_body(important_posts, unimportant_posts, unsubscribe_url, settings
             """<div style="text-align: center;font-size: 18px;">Other Sales</div>"""
 
         for u_post in unimportant_posts:
-            body += _generate_unimportant_post_line(u_post)
+            body += _generate_unimportant_post_line(user_id, u_post)
             body += "\n"
 
         body += "</div>"
@@ -147,14 +148,16 @@ def _generate_footer_line(unsubscribe_url, settings_url):
     return footer_line
 
 
-def _generate_important_post_tile(post):
+def _generate_important_post_tile(user_id, post):
     shop = post.shop_key.get()
+    shop_id = shop.key.urlsafe()
 
+    url = 'lightho.us/shop_link/{}/{}'.format(user_id, shop_id)
     return """
       <tr>
         <td style="display: block;max-width: 500px;margin: 3px auto;">
           <div style="background-color: #F0F0F0;padding: 10px;">
-            <a href='""" + shop.website + "'style='text-decoration: none;'>" + shop.name + """</a>
+            <a href='""" + url + "'style='text-decoration: none;'>" + shop.name + """</a>
             <div>""" + post.title + """</div>
           </div>
         </td>
@@ -162,11 +165,15 @@ def _generate_important_post_tile(post):
       """
 
 
-def _generate_unimportant_post_line(post):
+def _generate_unimportant_post_line(user_id, post):
     shop = post.shop_key.get()
+    shop_id = shop.key.urlsafe()
+
+    url = 'lightho.us/shop_link/{}/{}'.format(user_id, shop_id)
+
     return """
     <div>
-      <a href='""" + shop.website + """'style='text-decoration: none;'>
+      <a href='""" + url + """'style='text-decoration: none;'>
       """ + shop.name + """</a> - """ + post.title + """
     </div>"""
 

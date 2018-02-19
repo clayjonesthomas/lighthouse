@@ -117,20 +117,20 @@ def _spawn_dummy_posts(shop_keys):
 def _spawn_dummy_shops():
     shops = [Shop(name='American Eagle',
                   alternate_names=['ae'],
-                  website='www.ae.com',
+                  website='http://www.ae.com',
                   likes=0),
              Shop(name='JCrew',
-                  website='www.jcrew.com',
+                  website='http://www.jcrew.com',
                   likes=0),
              Shop(name="Levi's Jeans",
-                  website='www.levis.com',
+                  website='http://www.levis.com',
                   likes=0),
              Shop(name='Lulu Lemon',
-                  website='www.lululemon.com',
+                  website='http://www.lululemon.com',
                   likes=0,
                   icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
              Shop(name='Old Navy',
-                  website='www.oldnavy.com',
+                  website='http://www.oldnavy.com',
                   likes=0)]
     return ndb.put_multi(shops)
 
@@ -297,16 +297,20 @@ class BaseHandler(webapp2.RequestHandler):
 class MainPage(BaseHandler):
 
     def get(self, *args):
+        user_id = None
+        if self.user:
+            user_id = self.user.key.urlsafe()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_id=user_id))
 
 
 class UsersOnlyMainPage(BaseHandler):
 
     @user_required
     def get(self):
+        user_id = self.user.key.urlsafe()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_id=user_id))
 
 
 class GuestsOnlyPage(BaseHandler):
@@ -327,8 +331,9 @@ class ModeratorsOnlyPage(BaseHandler):
 
     @moderator_required
     def get(self):
+        user_id = self.user.key.urlsafe()
         template = JINJA_ENVIRONMENT.get_template('index.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_id=user_id))
 
 
 class Feed(BaseHandler):
@@ -948,6 +953,22 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
+class RedirectToShop(BaseHandler):
+
+    def get(self, *args, **kwargs):
+        user = None
+        user_id = kwargs['user_id']  # urlsafe key
+        shop_id = kwargs['shop_id']
+
+        redirect_url = ndb.Key(urlsafe=shop_id).get().website
+
+        template = JINJA_ENVIRONMENT.get_template('redirect.html')
+        self.response.write(template.render(
+            user_id=user_id,
+            url=redirect_url
+        ))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.User',
@@ -970,7 +991,7 @@ config = {
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
     webapp2.Route('/rest/p', VerificationHandler, name='verification_pass'),
-    webapp2.Route('/rest/<type:v|p|u|s>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
+    webapp2.Route('/rest/<type:v|p|u|s|l>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),
@@ -1000,6 +1021,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
 
+    webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
