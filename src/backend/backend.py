@@ -23,7 +23,7 @@ from models import Post, Shop, User, get_entity_from_url_key
 from email import send_email_to_user, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
-from scripts import update_stores, make_emails_lower, make_auth_ids_lower
+from scripts import update_stores
 
 from google.appengine.api import app_identity, mail
 
