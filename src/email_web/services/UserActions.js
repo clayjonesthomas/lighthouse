@@ -101,11 +101,12 @@ export const userEmailReturnFailed = () => {
 }
 
 export function pullUserEmail() {
-  var tempEmailCookie = document.cookie.match(new RegExp("temp_email_cookie" + '=([^;]+)'));
+  var emailCookie = document.cookie.match(new RegExp("email_cookie" + '=([^;]+)'));
 
   return dispatch => {
-    if (tempEmailCookie) {
-      dispatch(userEmailReturn({'email' : tempEmailCookie[1]}))
+    if (emailCookie) {
+      var displayEmail = emailCookie[1].replace("~", "@")
+      dispatch(userEmailReturn({'email' : displayEmail}))
       return
     } 
 

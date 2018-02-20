@@ -543,8 +543,9 @@ class UserEmail(BaseHandler):
             return
 
         email = user.email_address
+        email_for_cookie = email.replace('@', '~')
 
-        self.response.set_cookie('temp_email_cookie', email, max_age=3600, path='/', domain='localhost')
+        self.response.set_cookie('email_cookie', email_for_cookie, max_age=3600, path='/', domain='localhost')
         self.response.write(json.dumps({
             'email': email,
         }))
@@ -896,7 +897,7 @@ class LoginHandler(BaseHandler):
 class LogoutHandler(BaseHandler):
     def get(self):
         self.auth.unset_session()
-        self.response.delete_cookie('temp_email_cookie', path='/', domain='localhost')
+        self.response.delete_cookie('email_cookie', path='/', domain='localhost')
         self.response.write(json.dumps('Logout successful'))
 
 
