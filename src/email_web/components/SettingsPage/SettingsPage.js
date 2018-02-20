@@ -57,7 +57,6 @@ class SettingsPage extends Component {
             isVerified={isVerified}
             onClickResendVerification={onClickResendVerification}
             displayResentMessage={displayResentMessage}
-            isLoadingUserData={isLoadingUserData}
           />
         }   
       </div>

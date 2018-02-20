@@ -22,8 +22,7 @@ const SettingsPageComponent = ({
   onSubmitSettings,
   isVerified,
   onClickResendVerification,
-  displayResentMessage,
-  isLoadingUserData
+  displayResentMessage
 }) => (
   <form id="update-settings-form"
     onSubmit={onSubmitSettings}>

@@ -74,7 +74,7 @@ export function pullUserData() {
       .then(response => response.json())
       .then(json => {
         if(json.email) {
-          dispatch(userDataReturn(json));
+          dispatch(userDataReturn(json))
         } else
           dispatch(userDataReturnFailed())
       })
