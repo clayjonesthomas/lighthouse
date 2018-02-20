@@ -7,6 +7,8 @@ import 'rc-tooltip/assets/bootstrap_white.css'
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
 import Spinner from '../../ui-kit/Spinner'
 import XButton from '../../ui-kit/XButton'
+import InfoBox from '../../ui-kit/InfoBox'
+
 import {cornflowerLilac} from '../../ui-kit/colors'
 
 import "./SettingsPageComponent.css"
@@ -103,7 +105,7 @@ const SettingsPageComponent = ({
             trigger={['hover', 'click']}
             overlay={
               <span>
-                Important sales are unusually good for the store.
+                Important sales are unusually good sales for the store.
                 If a store almost never runs sales, we'll tell you
                 every time they have one, but if a store always
                 seems to have 20% off something, we'll only tell
@@ -111,7 +113,9 @@ const SettingsPageComponent = ({
                 every couple months.
               </span>
             }>
-            <a>?</a>
+            <span className="info-box">
+              <InfoBox/>
+            </span>
           </Tooltip>
         </Radio>
         <Radio
