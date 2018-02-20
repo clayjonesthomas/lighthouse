@@ -957,13 +957,6 @@ class TrackedShopsHandler(BaseHandler):
 
         self.response.write(json.dumps({'shops': shops}))
 
-
-class UpdateStoresScript(BaseHandler):
-
-    @moderator_required
-    def get(self):
-        pass
-
       
 class RedirectToShop(BaseHandler):
 
@@ -979,6 +972,13 @@ class RedirectToShop(BaseHandler):
             user_id=user_id,
             url=redirect_url
         ))
+
+
+class UpdateStoresScript(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        update_stores()
 
 
 class SendRandomUpdateEmail(BaseHandler):
@@ -1069,7 +1069,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', UpdateStoresScript, name='script_runner'),
+    webapp2.Route('/admin/script', SendRandomUpdateEmail, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),

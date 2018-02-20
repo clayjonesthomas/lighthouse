@@ -166,7 +166,7 @@ def _generate_ga_tracker(user_id, email):
     src="http://www.google-analytics.com/collect?
     v=1&tid=UA-105738208-2&uid="""+user_id+"""
     &t=event&ec=email&ea=open&dp=/email/"""+email.key.urlsafe()+"""
-    &dt="""+email.subject+"""/>"""
+    &dt="""+email.subject+"""">"""
 
 
 def _generate_footer_line(unsubscribe_url, settings_url):
