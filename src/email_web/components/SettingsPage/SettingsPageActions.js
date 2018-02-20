@@ -8,6 +8,13 @@ export const UPDATE_SETTINGS_RETURN = 'UPDATE_SETTINGS_RETURN'
 export const SETTINGS_SPINNER_TIMEOUT = 'SETTINGS_SPINNER_TIMEOUT'
 export const SENT_RESEND_VERIFICATION = 'SENT_RESEND_VERIFICATION'
 export const RESENT_MESSAGE_TIMEOUT = 'RESENT_MESSAGE_TIMEOUT'
+export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION'
+
+export const closeNotification = () => {
+  return {
+    type: CLOSE_NOTIFICATION
+  }
+}
 
 export const emailFrequencyChange = (value) => {
   return {
@@ -89,12 +96,6 @@ export function resendVerificationEmail() {
       .then(() => {
         dispatch(sentResendVerification())
       })
-      .then(() => {
-        const DISPLAY_RESENT_MESSAGE_TIME = 3000;
-        setTimeout(() => {
-          dispatch(resentMessageTimeout());
-        }, DISPLAY_RESENT_MESSAGE_TIME)
-      })
   }
 }
 
@@ -104,9 +105,4 @@ const sentResendVerification = () => {
   }
 }
 
-const resentMessageTimeout = () => {
-  return {
-    type: RESENT_MESSAGE_TIMEOUT
-  }
-}
 

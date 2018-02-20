@@ -29,6 +29,7 @@
 
 #update-settings-form {
     margin-top: 80px;
+    min-width: 400px;
 }
 
 #settings-form-title {
@@ -56,7 +57,12 @@
     width: 100%;
 }
 
-#need-verification-container {
+#sent-verification-container {
+    background-color: #96ff8f;
+}
+
+
+.verification-container {
     max-width: 400px;
     background-color: #ffcccc;
     padding: 5px;
@@ -64,8 +70,16 @@
     border-radius: 3px;
 }
 
-#need-verification-container > p {
-    margin-bottom: 0px;
+.verification-x-button {
+    float: right;
+}
+
+.verification-x-button:hover {
+    cursor: pointer;
+}
+
+.verification-container > p {
+    margin-bottom: 0;
     display: inline;
 }
 
