@@ -27,7 +27,6 @@ def make_emails_lower():
 
 def make_auth_ids_lower():
 	for user in User.query():
-		print(user)
 		lowered_auth_ids = []
 		for auth_id in user.auth_ids:
 			lowered_auth_ids.append(auth_id.lower())
