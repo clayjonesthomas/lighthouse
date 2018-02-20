@@ -19,4 +19,3 @@ def update_stores():
             shop.put()
             count += 1
     return count
-
