@@ -8,14 +8,29 @@ from models import Shop, Post, User, PostsEmail
 import enums.EmailFrequency as EmailFrequency
 
 
-def send_email_to_user(user, unsubscribe_url, settings_url):
+def send_update_email(user, unsubscribe_url, settings_url):
     important_posts, unimportant_posts = get_active_posts_for_user(user)
     send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
     if important_posts or send_just_unimportant:
-        email = _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url)
-        email.put()
+        email = _compose_email_for_user(user,
+                                        important_posts,
+                                        unimportant_posts,
+                                        unsubscribe_url,
+                                        settings_url)
         email.send()
         email.put()
+
+
+def send_random_email(user, unsubscribe_url, settings_url):
+    important_posts = Post.query().fetch(2)
+    unimportant_posts = Post.query().fetch(3)
+    email = _compose_email_for_user(user,
+                                    important_posts,
+                                    unimportant_posts,
+                                    unsubscribe_url,
+                                    settings_url)
+    email.send()
+    email.put()
 
 
 def get_active_posts_for_user(user, new_only=True):
@@ -50,16 +65,22 @@ def get_active_posts_for_user(user, new_only=True):
 
 def _compose_email_for_user(user, important_posts, unimportant_posts, unsubscribe_url, settings_url):
     user_id = user.key.urlsafe()
-    body = _generate_body(user_id, important_posts, unimportant_posts, unsubscribe_url, settings_url)
     subject = _generate_subject(important_posts, unimportant_posts)
 
     important_post_keys = [p.key for p in important_posts]
     unimportant_post_keys = [p.key for p in unimportant_posts]
-    email = PostsEmail(body=body,
-                       to=user.key,
+    email = PostsEmail(to=user.key,
                        subject=subject,
                        important_posts=important_post_keys,
                        unimportant_posts=unimportant_post_keys)
+    email.put()
+    email.body = _generate_body(user_id,
+                                email,
+                                important_posts,
+                                unimportant_posts,
+                                unsubscribe_url,
+                                settings_url)
+    email.put()
     return email
 
 
@@ -87,7 +108,7 @@ def _generate_subject(important_posts, unimportant_posts):
     return subject
 
 
-def _generate_body(user_id, important_posts, unimportant_posts, unsubscribe_url, settings_url):
+def _generate_body(user_id, email, important_posts, unimportant_posts, unsubscribe_url, settings_url):
     body = """
         <html>
           <head>
@@ -132,11 +153,20 @@ def _generate_body(user_id, important_posts, unimportant_posts, unsubscribe_url,
 
     body += """</td>
               </tr>
-            </table>
-          </body>
+            </table>"""
+    body += _generate_ga_tracker(user_id, email)
+    body += """</body>
         </html>"""
 
     return body
+
+
+def _generate_ga_tracker(user_id, email):
+    return """<img 
+    src="http://www.google-analytics.com/collect?
+    v=1&tid=UA-105738208-2&uid="""+user_id+"""
+    &t=event&ec=email&ea=open&dp=/email/"""+email.key.urlsafe()+"""
+    &dt="""+email.subject+"""">"""
 
 
 def _generate_footer_line(unsubscribe_url, settings_url):

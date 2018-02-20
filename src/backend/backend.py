@@ -20,7 +20,12 @@ from webapp2_extras.auth import InvalidPasswordError
 from google.appengine.ext import deferred
 
 from models import Post, Shop, User, get_entity_from_url_key
-from email import send_email_to_user, send_verification_email, send_forgot_password_email
+from email import (
+    send_update_email,
+    send_verification_email,
+    send_forgot_password_email,
+    send_random_email
+)
 import enums.EmailFrequency as EmailFrequency
 
 from scripts import update_stores
@@ -900,7 +905,7 @@ class EmailHandler(BaseHandler):
                                            signup_token=token, _full=True)
             settings_url = self.uri_for('verification', type='s', user_id=user_id,
                                         signup_token=token, _full=True)
-            send_email_to_user(user, unsubscribe_url, settings_url)
+            send_update_email(user, unsubscribe_url, settings_url)
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
@@ -952,13 +957,6 @@ class TrackedShopsHandler(BaseHandler):
 
         self.response.write(json.dumps({'shops': shops}))
 
-
-class UpdateStoresScript(BaseHandler):
-
-    @moderator_required
-    def get(self):
-        pass
-
       
 class RedirectToShop(BaseHandler):
 
@@ -974,6 +972,31 @@ class RedirectToShop(BaseHandler):
             user_id=user_id,
             url=redirect_url
         ))
+
+
+class UpdateStoresScript(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        update_stores()
+
+
+class SendRandomUpdateEmail(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
+                                       signup_token=token, _full=True)
+        settings_url = self.uri_for('verification', type='s', user_id=user_id,
+                                    signup_token=token, _full=True)
+        send_random_email(user,
+                          unsubscribe_url,
+                          settings_url)
+
+        self.response.write(json.dumps({"success": True}))
 
 
 config = {
@@ -1046,7 +1069,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', UpdateStoresScript, name='script_runner'),
+    webapp2.Route('/admin/script', SendRandomUpdateEmail, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
