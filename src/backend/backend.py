@@ -957,7 +957,7 @@ class UpdateStoresScript(BaseHandler):
 
     @moderator_required
     def get(self):
-        make_auth_ids_lower()
+        pass
 
       
 class RedirectToShop(BaseHandler):
