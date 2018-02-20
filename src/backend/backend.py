@@ -23,7 +23,7 @@ from models import Post, Shop, User, get_entity_from_url_key
 from email import send_email_to_user, send_verification_email, send_forgot_password_email
 import enums.EmailFrequency as EmailFrequency
 
-from scripts import update_stores
+from scripts import update_stores, make_emails_lower
 
 from google.appengine.api import app_identity, mail
 
@@ -661,7 +661,7 @@ class EditShop(BaseHandler):
 class SignupHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
         password = body['password']
         shops = body['selectedShops']
         is_password_valid = len(password) >= 6
@@ -728,7 +728,7 @@ class SignupHandler(BaseHandler):
 class ForgotPasswordHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
 
         user = self.user_model.get_by_auth_id(email)
         if not user:
@@ -803,7 +803,7 @@ class VerificationHandler(BaseHandler):
 
         user = None
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
         signup_token = body['signupToken']
         new_password = body['password']
 
@@ -845,7 +845,7 @@ class ResendVerificationHandler(BaseHandler):
 class LoginHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
         password = body['password']
 
         try:
@@ -957,7 +957,7 @@ class UpdateStoresScript(BaseHandler):
 
     @moderator_required
     def get(self):
-        pass
+        make_emails_lower()
 
       
 class RedirectToShop(BaseHandler):

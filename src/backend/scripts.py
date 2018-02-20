@@ -1,6 +1,6 @@
 import csv
 import re
-from models import Shop
+from models import Shop, User
 
 
 def update_stores():
@@ -19,3 +19,8 @@ def update_stores():
             shop.put()
             count += 1
     return count
+
+def make_emails_lower():
+	for user in User.query():
+		user.email_address = user.email_address.lower()
+		user.put()
