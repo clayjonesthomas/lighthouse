@@ -5,7 +5,7 @@ import {push} from 'react-router-redux'
 import NavBar from '../NavBar/NavBar'
 import WelcomePageComponent from './WelcomePageComponent'
 
-import {logOut, pullUserData} from '../../services/UserActions'
+import {logOut, pullUserEmail} from '../../services/UserActions'
 
 import {HOW_IT_WORKS_PAGE_URL, SETTINGS_PAGE_URL} from '../../urls'
 
@@ -13,7 +13,7 @@ import "./WelcomePage.css"
 class WelcomePage extends Component {
 
   componentDidMount() {
-    this.props.pullUserData()
+    this.props.pullUserEmail()
   }
 
   render() {
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => {
     logOut: () => {
       dispatch(logOut())
     },
-    pullUserData: () => dispatch(pullUserData())
+    pullUserEmail: () => dispatch(pullUserEmail())
   }
 }
 

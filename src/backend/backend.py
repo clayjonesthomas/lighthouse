@@ -534,6 +534,26 @@ class UserData(BaseHandler):
         }))
 
 
+class UserEmail(BaseHandler):
+
+    def get(self):
+        user = self.user
+
+        if not user:
+            self.response.write(json.dumps({
+                'error': 'NO_USER_ERROR'
+            }))
+            return
+
+        email = user.email_address
+        email_for_cookie = email.replace('@', '~')
+
+        self.response.set_cookie('email_cookie', email_for_cookie, max_age=3600*24*7, path='/')
+        self.response.write(json.dumps({
+            'email': email,
+        }))
+
+
 class ShopPosts(BaseHandler):
     def get(self, url_key, offset):
         user = self.user
@@ -882,6 +902,7 @@ class LoginHandler(BaseHandler):
 class LogoutHandler(BaseHandler):
     def get(self):
         self.auth.unset_session()
+        self.response.delete_cookie('email_cookie', path='/')
         self.response.write(json.dumps('Logout successful'))
 
 
@@ -1013,6 +1034,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/post/<url_key:.*>', SinglePost, name='single_post'),
     webapp2.Route('/rest/my_shops', MyShops, name='my_shops'),
     webapp2.Route('/rest/user_data', UserData, name='user_data'),
+    webapp2.Route('/rest/user_email', UserEmail, name='user_email'),
     webapp2.Route('/rest/not_my_shops', NotMyShops, name='not_my_shops'),
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shops/like', LikeShops, name='like_shops'),
