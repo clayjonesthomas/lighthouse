@@ -121,3 +121,7 @@
     float: left;
     margin-top: 24px;
 }
+
+.rc-tooltip-content {
+    max-width: 200px;
+}
