@@ -681,7 +681,7 @@ class EditShop(BaseHandler):
 class SignupHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
         password = body['password']
         shops = body['selectedShops']
         is_password_valid = len(password) >= 6
@@ -748,7 +748,7 @@ class SignupHandler(BaseHandler):
 class ForgotPasswordHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
 
         user = self.user_model.get_by_auth_id(email)
         if not user:
@@ -823,7 +823,7 @@ class VerificationHandler(BaseHandler):
 
         user = None
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
         signup_token = body['signupToken']
         new_password = body['password']
 
@@ -865,7 +865,7 @@ class ResendVerificationHandler(BaseHandler):
 class LoginHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
-        email = body['email']
+        email = body['email'].lower()
         password = body['password']
 
         try:
