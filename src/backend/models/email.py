@@ -26,17 +26,17 @@ class PostsEmail(ndb.Model):
 
     def _generate_subject(self):
         subject = "lightho.us \\\\"
-        for i_post in self.important_posts[:SUBJECT_shop_LIMIT]:
-            subject += " " + i_post.get().shop_key.get().name + ","
-
-        shop_count = len(self.important_posts)
-        if shop_count < SUBJECT_shop_LIMIT:
-            for u_post in self.unimportant_posts:
-                if shop_count >= SUBJECT_shop_LIMIT:
-                    subject += " +"
-                    break
-                subject += " " + u_post.get().shop_key.get().name + ","
-                shop_count += 1
+        included_shop_keys = []
+        posts = [].extend(self.important_posts)
+        posts.extend(self.unimportant_posts)
+        for post in posts:
+            if post.get.shop_key in included_shop_keys:
+                continue
+            if len(included_shop_keys) >= SUBJECT_shop_LIMIT:
+                subject += " +"
+                break
+            subject += " " + post.get().shop_key.get().name + ","
+            included_shop_keys.append(post.get().shop_key)
 
         if subject[-1] == ",":
             subject = subject[:-1]
