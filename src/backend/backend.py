@@ -17,7 +17,7 @@ import auth_config
 import enums.EmailFrequency as EmailFrequency
 from email import send_verification_email, send_forgot_password_email
 from models.email import PostsEmail, get_active_posts_for_user
-from src.backend.models.models import Post, Shop, User, get_entity_from_url_key
+from models.models import Post, Shop, User, get_entity_from_url_key
 
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 
@@ -902,7 +902,7 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
-        # admin has emil service enabled
+        # admin has email service enabled
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             dummy_shops = _spawn_dummy_shops()
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
@@ -985,13 +985,6 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
-class UpdateStoresScript(BaseHandler):
-
-    @moderator_required
-    def get(self):
-        pass
-
-      
 class RedirectToShop(BaseHandler):
 
     def get(self, *args, **kwargs):
@@ -1008,9 +1001,45 @@ class RedirectToShop(BaseHandler):
         ))
 
 
+class SendTestPostsEmailToMod(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        unsubscribe_url = self.uri_for('verification',
+                                       type='u',
+                                       user_id=user_id,
+                                       signup_token=token,
+                                       _full=True)
+        settings_url = self.uri_for('verification',
+                                    type='s',
+                                    user_id=user_id,
+                                    signup_token=token,
+                                    _full=True)
+
+        important_posts, unimportant_posts = self._get_random_posts()
+        email = PostsEmail(to=user.key,
+                           important_posts=important_posts,
+                           unimportant_posts=unimportant_posts,
+                           unsubscribe_url=unsubscribe_url,
+                           settings_url=settings_url)
+        email.compose_email_for_user()
+        email.send()
+
+    @staticmethod
+    def _get_random_posts():
+        important_posts = Post.query().fetch(2)
+        important_post_keys = [i.key for i in important_posts]
+        unimportant_posts = Post.query().fetch(4)
+        unimportant_post_keys = [u.key for u in unimportant_posts]
+        return important_post_keys, unimportant_post_keys
+
+
 config = {
     'webapp2_extras.auth': {
-        'user_model': 'backend.models.User',
+        'user_model': 'backend.models.models.User',
         'user_attributes': [],  # used for caching properties
         # default is 1814400, 86400, 3600
         'token_max_age': 86400 * 365,  # amount of seconds in a day * 1 year of days
@@ -1079,7 +1108,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', UpdateStoresScript, name='script_runner'),
+    webapp2.Route('/admin/script', SendTestPostsEmailToMod, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),

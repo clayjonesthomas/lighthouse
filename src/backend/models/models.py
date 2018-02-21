@@ -5,7 +5,7 @@ import webapp2_extras.appengine.auth.models
 from google.appengine.ext import ndb
 from webapp2_extras import security
 
-import src.backend.enums.EmailFrequency as EmailFrequency
+import backend.enums.EmailFrequency as EmailFrequency
 
 
 def get_entity_from_url_key(url_key):

@@ -1,6 +1,6 @@
 from google.appengine.api import mail
 from google.appengine.ext import ndb
-from src.backend.models.models import Post
+from models import Post
 
 SUBJECT_shop_LIMIT = 3  # TODO: decide on the number for this
 
@@ -27,7 +27,7 @@ class PostsEmail(ndb.Model):
     def _generate_subject(self):
         subject = "lightho.us \\\\"
         for i_post in self.important_posts[:SUBJECT_shop_LIMIT]:
-            subject += " " + i_post.shop_key.get().name + ","
+            subject += " " + i_post.get().shop_key.get().name + ","
 
         shop_count = len(self.important_posts)
         if shop_count < SUBJECT_shop_LIMIT:
@@ -35,13 +35,13 @@ class PostsEmail(ndb.Model):
                 if shop_count >= SUBJECT_shop_LIMIT:
                     subject += " +"
                     break
-                subject += " " + u_post.shop_key.get().name + ","
+                subject += " " + u_post.get().shop_key.get().name + ","
                 shop_count += 1
 
         if subject[-1] == ",":
             subject = subject[:-1]
 
-        return subject
+        self.subject = subject
 
     def _generate_body(self):
         body = """
@@ -67,7 +67,7 @@ class PostsEmail(ndb.Model):
                   </tr>"""
 
         for i_post in self.important_posts:
-            body += self._generate_important_post_tile(i_post)
+            body += self._generate_important_post_tile(i_post.get())
             body += "\n"
 
         if self.unimportant_posts:
@@ -79,7 +79,7 @@ class PostsEmail(ndb.Model):
                 body += """<div style="text-align: center;font-size: 18px;">Other Sales</div>"""
 
             for u_post in self.unimportant_posts:
-                body += self._generate_unimportant_post_line(u_post)
+                body += self._generate_unimportant_post_line(u_post.get())
                 body += "\n"
 
             body += "</div>"
@@ -92,7 +92,7 @@ class PostsEmail(ndb.Model):
               </body>
             </html>"""
 
-        return body
+        self.body = body
 
     def _generate_footer_line(self):
         footer_line = '<p style="text-align:center; font-size:10px"><a href="'
