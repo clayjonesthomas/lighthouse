@@ -1,16 +1,11 @@
-from webapp2_extras import auth
-import time
 import datetime
-import logging
+import time
+
 import webapp2_extras.appengine.auth.models
-
 from google.appengine.ext import ndb
-from google.appengine.api import mail
-
 from webapp2_extras import security
-from webapp2_extras import auth
 
-import enums.EmailFrequency as EmailFrequency
+import src.backend.enums.EmailFrequency as EmailFrequency
 
 
 def get_entity_from_url_key(url_key):
@@ -222,22 +217,3 @@ class User(webapp2_extras.appengine.auth.models.User):
     @property
     def jsonable_liked_shops(self):
         return [shop.get().prepare_shop(self) for shop in self.liked_shops]
-
-
-class PostsEmail(ndb.Model):
-
-    body = ndb.StringProperty(indexed=False)
-    to = ndb.KeyProperty(indexed=True, kind='User')
-    subject = ndb.StringProperty(indexed=False)
-    important_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
-    unimportant_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
-    timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-
-    def send(self):
-        receiving_user = self.to.get()
-        message = mail.EmailMessage(sender="beacon@lightho.us", subject=self.subject)
-        message.to = receiving_user.email_address
-        message.html = self.body
-        message.send()
-        receiving_user.emails.append(self.key)
-        receiving_user.put()

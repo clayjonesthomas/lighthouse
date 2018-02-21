@@ -1,31 +1,25 @@
-from google.appengine.ext import ndb
-from google.appengine.api import images
-import jinja2
+import datetime
 import json
 import logging
 import os
-import datetime
-import time
 import re
-import auth_config
+import time
 
+import jinja2
 import webapp2
-
+from google.appengine.ext import ndb
 from webapp2_extras import auth
 from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
-# https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
-from google.appengine.ext import deferred
-
-from models import Post, Shop, User, get_entity_from_url_key
-from email import send_email_to_user, send_verification_email, send_forgot_password_email
+import auth_config
 import enums.EmailFrequency as EmailFrequency
+from email import send_verification_email, send_forgot_password_email
+from models.email import PostsEmail, get_active_posts_for_user
+from src.backend.models.models import Post, Shop, User, get_entity_from_url_key
 
-from scripts import update_stores
-
-from google.appengine.api import app_identity, mail
+# https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -917,11 +911,28 @@ class EmailHandler(BaseHandler):
         for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
-            unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
-                                           signup_token=token, _full=True)
-            settings_url = self.uri_for('verification', type='s', user_id=user_id,
-                                        signup_token=token, _full=True)
-            send_email_to_user(user, unsubscribe_url, settings_url)
+            unsubscribe_url = self.uri_for('verification',
+                                           type='u',
+                                           user_id=user_id,
+                                           signup_token=token,
+                                           _full=True)
+            settings_url = self.uri_for('verification',
+                                        type='s',
+                                        user_id=user_id,
+                                        signup_token=token,
+                                        _full=True)
+
+            important_posts, unimportant_posts = get_active_posts_for_user(user)
+            send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
+
+            if important_posts or send_just_unimportant:
+                email = PostsEmail(to=user.key,
+                                   important_posts=important_posts,
+                                   unimportant_posts=unimportant_posts,
+                                   unsubscribe_url=unsubscribe_url,
+                                   settings_url=settings_url)
+                email.compose_email_for_user()
+                email.send()
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 

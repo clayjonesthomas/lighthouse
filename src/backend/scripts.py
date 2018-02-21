@@ -1,6 +1,7 @@
 import csv
 import re
-from models import Shop
+
+from src.backend.models.models import Shop
 
 
 def update_stores():
