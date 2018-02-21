@@ -27,10 +27,11 @@ class PostsEmail(ndb.Model):
     def _generate_subject(self):
         subject = "lightho.us \\\\"
         included_shop_keys = []
-        posts = [].extend(self.important_posts)
+        posts = []
+        posts.extend(self.important_posts)
         posts.extend(self.unimportant_posts)
         for post in posts:
-            if post.get.shop_key in included_shop_keys:
+            if post.get().shop_key in included_shop_keys:
                 continue
             if len(included_shop_keys) >= SUBJECT_shop_LIMIT:
                 subject += " +"
