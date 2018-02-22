@@ -725,7 +725,7 @@ class SignupHandler(BaseHandler):
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
         if not is_moderator:
-            send_verification_email(email, verification_url)
+            send_verification_email(email, verification_url, JINJA_ENVIRONMENT)
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
@@ -852,7 +852,7 @@ class ResendVerificationHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        send_verification_email(user.email_address, verification_url)
+        send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
         self.response.write(json.dumps({'success': 'RESENT_VERIFICATION'}))
 
 
@@ -1001,6 +1001,19 @@ class RedirectToShop(BaseHandler):
         ))
 
 
+class SendTestVerificationEmailToMod(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        verification_url = self.uri_for('verification', type='v', user_id=user_id,
+                                        signup_token=token, _full=True)
+        send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
+        self.response.write(json.dumps({"success": True}))
+
+
 class SendTestPostsEmailToMod(BaseHandler):
 
     @moderator_required
@@ -1108,7 +1121,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', SendTestPostsEmailToMod, name='script_runner'),
+    webapp2.Route('/admin/script', SendTestVerificationEmailToMod, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
