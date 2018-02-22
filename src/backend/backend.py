@@ -16,7 +16,7 @@ from webapp2_extras.auth import InvalidPasswordError
 import auth_config
 import enums.EmailFrequency as EmailFrequency
 from email import send_verification_email, send_forgot_password_email
-from models.email import PostsEmail, get_active_posts_for_user
+from models.PostsEmail import PostsEmail, get_active_posts_for_user
 from models.models import Post, Shop, User, get_entity_from_url_key
 
 # https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
@@ -763,7 +763,7 @@ class ForgotPasswordHandler(BaseHandler):
 
         logging.info("forgot password url: " + forgot_password_url)
         self.response.write(json.dumps({'email': email}))
-        send_forgot_password_email(email, forgot_password_url)
+        send_forgot_password_email(email, forgot_password_url, JINJA_ENVIRONMENT)
 
 
 class VerificationHandler(BaseHandler):
@@ -1014,6 +1014,19 @@ class SendTestVerificationEmailToMod(BaseHandler):
         self.response.write(json.dumps({"success": True}))
 
 
+class SendTestForgotPassEmailToMod(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        forgot_password_url = self.uri_for('verification', type='p', user_id=user_id,
+                                            signup_token=token, _full=True)
+        send_forgot_password_email(user.email_address, forgot_password_url, JINJA_ENVIRONMENT)
+        self.response.write(json.dumps({"success": True}))
+
+
 class SendTestPostsEmailToMod(BaseHandler):
 
     @moderator_required
@@ -1121,7 +1134,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', SendTestVerificationEmailToMod, name='script_runner'),
+    webapp2.Route('/admin/script', SendTestForgotPassEmailToMod, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
