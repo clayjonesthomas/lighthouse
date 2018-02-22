@@ -16,12 +16,12 @@ class PostsEmail(ndb.Model):
     unsubscribe_url = ndb.StringProperty(indexed=False)
     settings_url = ndb.StringProperty(indexed=False)
 
-    def compose_email_for_user(self):
+    def compose_email_for_user(self, jinja_env):
         """
         Requires but does not check that to, important_posts,
         unimportant_posts, unsubscribe_url, and settings_url are set
         """
-        self._generate_body()
+        self._generate_body(jinja_env)
         self._generate_subject()
 
     def _generate_subject(self):
@@ -44,7 +44,18 @@ class PostsEmail(ndb.Model):
 
         self.subject = subject
 
-    def _generate_body(self):
+    def _generate_body(self, jinja_env):
+        template = jinja_env.get_template('templates/update_email.html')
+        rendered_template = template.render(
+            to_id=self.to.urlsafe(),
+            important_posts=self.important_posts,
+            unimportant_posts=self.unimportant_posts,
+            unsubscribe_url=self.unsubscribe_url,
+            settings_url=self.settings_url
+        )
+        self.body = rendered_template
+
+    def generate_body(self):
         body = """
             <html>
               <head>

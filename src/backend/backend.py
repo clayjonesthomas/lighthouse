@@ -292,7 +292,7 @@ class MainPage(BaseHandler):
         user_id = None
         if self.user:
             user_id = self.user.key.urlsafe()
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render(user_id=user_id))
 
 
@@ -301,7 +301,7 @@ class UsersOnlyMainPage(BaseHandler):
     @user_required
     def get(self):
         user_id = self.user.key.urlsafe()
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render(user_id=user_id))
 
 
@@ -315,7 +315,7 @@ class GuestsOnlyPage(BaseHandler):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render())
 
 
@@ -324,7 +324,7 @@ class ModeratorsOnlyPage(BaseHandler):
     @moderator_required
     def get(self):
         user_id = self.user.key.urlsafe()
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render(user_id=user_id))
 
 
@@ -931,7 +931,7 @@ class EmailHandler(BaseHandler):
                                    unimportant_posts=unimportant_posts,
                                    unsubscribe_url=unsubscribe_url,
                                    settings_url=settings_url)
-                email.compose_email_for_user()
+                email.compose_email_for_user(JINJA_ENVIRONMENT)
                 email.send()
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
@@ -994,7 +994,7 @@ class RedirectToShop(BaseHandler):
 
         redirect_url = ndb.Key(urlsafe=shop_id).get().website
 
-        template = JINJA_ENVIRONMENT.get_template('redirect.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/redirect.html')
         self.response.write(template.render(
             user_id=user_id,
             url=redirect_url
@@ -1025,7 +1025,7 @@ class SendTestPostsEmailToMod(BaseHandler):
                            unimportant_posts=unimportant_posts,
                            unsubscribe_url=unsubscribe_url,
                            settings_url=settings_url)
-        email.compose_email_for_user()
+        email.compose_email_for_user(JINJA_ENVIRONMENT)
         email.send()
 
     @staticmethod
