@@ -60,8 +60,7 @@ class PostsEmail(ndb.Model):
         message = mail.EmailMessage(
             sender="beacon@lightho.us",
             subject=self.subject,
-            to="clayjonesthomas@gmail.com",
-            # to=receiving_user.email_address,
+            to=receiving_user.email_address,
             html=self.body,
             headers={
                 "List-Unsubscribe": "<" + self.unsubscribe_url + ">"
