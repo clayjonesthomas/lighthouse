@@ -1010,7 +1010,8 @@ class SendTestVerificationEmailToMod(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
+        send_verification_email("clayjonesthomas@gmail.com", verification_url, JINJA_ENVIRONMENT)
+        # send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
         self.response.write(json.dumps({"success": True}))
 
 
@@ -1135,7 +1136,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', SendTestPostsEmailToMod, name='script_runner'),
+    webapp2.Route('/admin/script', SendTestVerificationEmailToMod, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
