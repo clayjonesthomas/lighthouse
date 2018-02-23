@@ -2,17 +2,80 @@
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+    <style type="text/css">
+        .welcome-email {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+
+        .welcome-email-table {
+            width: 100%;
+            min-width: 400px;
+            max-width: 500px;
+        }
+
+        .welcome-email-component {
+            display: block;
+            margin: 3px auto;
+        }
+
+        .logo-container {
+            background-color: #003091;
+            text-align: center;
+            padding: 10px;
+            font-size: 24px;
+        }
+
+        .logo-container table {
+            width: 35%;
+            margin: 0 auto;
+        }
+
+        .logo-image {
+            max-width: 300px;
+        }
+
+        .welcome-email-content-component {
+            background-color: #F0F0F0;
+            padding: 10px;
+        }
+
+        .welcome-email-content-component p {
+            margin-top: 0;
+            margin-bottom: 80px;
+            color: #333 !important;
+        }
+
+        .lighthous-link {
+            font-weight: normal;
+            font-family: 'Montserrat','Roboto',sans-serif;
+            color: #003091;
+        }
+
+        .email-button {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .email-button a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #003091;
+            padding: 15px 30px;
+            letter-spacing: 2px;
+        }
+    </style>
 </head>
-<body style="font-family: 'Roboto', sans-serif;">
-<table style="width: 100%;min-width: 400px;">
+<body class="welcome-email">
+<table class="welcome-email-table">
     <tr>
-        <td style="display: block;max-width: 500px;margin: 3px auto;">
-            <div style="background-color: #003091;text-align: center;padding: 15px;">
-                <table style="width: 35%;margin: 0 auto;">
+        <td class="welcome-email-component">
+            <div class="logo-container">
+                <table>
                     <tr>
                         <th>
                             <a href="https://lightho.us">
-                                <img style="max-width: 300px;"
+                                <img class="logo-image"
                                      src="https://lightho.us/blue_logo.png"
                                      alt="lightho.us logo">
                             </a>
@@ -23,26 +86,25 @@
         </td>
     </tr>
     <tr>
-        <td style="display: block;max-width: 500px;margin: 3px auto;">
-            <div style="background-color: #f0f0f0;padding: 40px;font-size: 20px;">
-                <p style="margin-top: 0;margin-bottom: 80px;color: #000000 !important;">
+        <td class="welcome-email-component">
+            <div class="welcome-email-content-component">
+                <p>
                     Welcome to
-                    <a style="font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">
+                    <a class="lighthous-link">
                         lightho.us
                     </a>! To complete the sign up process, please confirm your email here:
                 </p>
-                <div style="text-align: center;margin: 40px 0;">
-                    <a href="{{verification_url}}"
-                       style="text-decoration: none;color: #ffffff;background-color: #003091;padding: 15px 30px;letter-spacing: 2px;">
+                <div class="email-button">
+                    <a href="{{verification_url}}">
                         VERIFY EMAIL
                     </a>
                 </div>
-                <p style="margin-bottom: 0;margin-top: 80px;color: #000000 !important;">
+                <p>
                     <3,
                 </p>
-                <p style="margin-top: 0;margin-bottom: 0;color: #000000 !important;">
+                <p style="margin-bottom: 0;">
                     The
-                    <a style="font-weight: normal;font-family: 'Montserrat','Roboto',sans-serif;color: #003091;">
+                    <a class="lighthous-link">
                         lightho.us
                     </a> team
                 </p>

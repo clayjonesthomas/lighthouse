@@ -2,64 +2,17 @@
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
-    <style type="text/css">
-        .update-email {
-            font-family: 'Roboto', sans-serif;
-            color: #333;
-        }
-
-        .update-email-table {
-            width: 100%;
-            min-width: 400px;
-            max-width: 500px;
-        }
-
-        .update-email-component {
-            display: block;
-            margin: 3px auto;
-        }
-
-        .logo-container {
-            background-color: #003091;
-            text-align: center;
-            padding: 10px;
-            font-size: 24px;
-        }
-
-        .logo-container table {
-            width: 35%;
-            margin: 0 auto;
-        }
-
-        .logo-image {
-            max-width: 300px;
-        }
-
-        .update-email-content-component {
-            background-color: #F0F0F0;
-            padding: 10px;
-        }
-
-        .update-email-content-component a {
-            text-decoration: none;
-        }
-
-        .update-email-unsubscribe {
-            text-align: center;
-            font-size: 10px;
-        }
-    </style>
 </head>
-<body class="update-email">
-<table class="update-email-table">
+<body style="font-family: 'Roboto', sans-serif;">
+<table style="width: 100%;min-width: 400px;">
     <tr>
-        <td class="update-email-component">
-            <div class="logo-container">
-                <table>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
+                <table style="width: 35%;margin: 0 auto;">
                     <tr>
                         <th>
                             <a href="https://lightho.us">
-                                <img class="logo-image"
+                                <img style="max-width: 300px;"
                                      src="https://lightho.us/blue_logo.png"
                                      alt="lightho.us logo">
                             </a>
@@ -71,9 +24,10 @@
     </tr>
     {% for i_post in important_posts %}
     <tr>
-        <td class="update-email-component">
-            <div class="update-email-content-component">
-                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, i_post.get().shop_key.urlsafe())}}">
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #F0F0F0;padding: 10px;">
+                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, i_post.get().shop_key.urlsafe())}}"
+                   style='text-decoration: none;'>
                     {{i_post.get().shop_key.get().name}}
                 </a>
                 <div>
@@ -85,12 +39,13 @@
     {% endfor %}
     {% if unimportant_posts %}
     <tr>
-        <td class="update-email-component">
-            <div class="update-email-content-component">
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #F0F0F0;padding: 10px;">
                 {% for u_post in unimportant_posts %}
                 <div>
-                    <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, u_post.get().shop_key.urlsafe())}}">
-                        {{u_post.get().shop_key.get().name}}
+                    <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, u_post.get().shop_key.urlsafe())}}"
+                       style='text-decoration: none;'>
+                        {{shop_name}}
                     </a> - {{u_post.get().title}}
                 </div>
                 {% endfor %}
@@ -98,9 +53,9 @@
         </td>
     </tr>
     {% endif %}
-    <tr>
+    <tr class="original-only">
         <td>
-            <p class="update-email-unsubscribe">
+            <p style="text-align:center; font-size:10px">
                 <a href="{{unsubscribe_url}}">
                     Unsubscribe
                 </a>
