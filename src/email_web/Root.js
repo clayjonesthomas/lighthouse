@@ -7,7 +7,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import reducers from './reducer'
 import Container from './Container'
-import WelcomePage from './components/WelcomePage/WelcomePage'
+import TextContainer from './TextContainer'
 import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 import AdminPage from './components/admin/AdminPage/AdminPage'
 import TrackedShopPage from './components/admin/TrackedShopPage/TrackedShopPage'
@@ -23,6 +23,7 @@ import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPa
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
+import {WELCOME_PAGE} from './components/WelcomePage/WelcomePage'
 
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
@@ -54,7 +55,7 @@ const Root = () => (
         <Route path={VERIFIED_PAGE_URL} component={VerificationSuccessPage}/>
         <Route path={SETTINGS_PAGE_URL} component={SettingsPage}/>
         <Route path={WELCOME_PAGE_URL} component={WelcomePage}/>
-        <Route path={HOW_IT_WORKS_PAGE_URL} component={ContainerAtHowItWorksPage}/>
+        <Route path={HOW_IT_WORKS_PAGE_URL} component={HowItWorksPage}/>
         <Route path={ADMIN_PAGE_URL} component={AdminPage}/>
         <Route path={TRACKED_SHOPS_URL} component={TrackedShopPage}/>
         <Route path={NEW_SHOP_URL} component={NewShopPage}/>
@@ -127,14 +128,6 @@ const SettingsPage = (props) => {
   )
 }
 
-const ContainerAtHowItWorksPage = (props) => {
-  return (
-    <Container
-      page={HOW_IT_WORKS_PAGE}
-      {...props}
-    />
-  )
-}
 
 const ForgotPasswordPage = (props) => {
   return (
@@ -149,6 +142,24 @@ const ForgotPasswordSuccessPage = (props) => {
   return (
     <Container
       page={FORGOT_PASSWORD_SUCCESS_PAGE}
+      {...props}
+    />
+  )
+}
+
+const WelcomePage = (props) => {
+  return (
+    <TextContainer
+      page={WELCOME_PAGE}
+      {...props}
+    />
+  )
+}
+
+const HowItWorksPage = (props) => {
+  return (
+    <TextContainer
+      page={HOW_IT_WORKS_PAGE}
       {...props}
     />
   )

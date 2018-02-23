@@ -6,11 +6,11 @@ export const HOW_IT_WORKS_PAGE = 'HOW_IT_WORKS_PAGE'
 
 const HowItWorksPage =
   ({}) => (
-    <div id="how-it-works-container">
-      <h1 
-        id="how-it-works-title"
-        className="form-title"
-      >
+    <div 
+      id="how-it-works-page"
+      className="text-heavy-page"
+    >
+      <h1 className="form-title">
         How It Works
       </h1>
       <p className="how-it-works-section">

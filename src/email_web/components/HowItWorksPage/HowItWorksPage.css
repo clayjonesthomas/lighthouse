@@ -1,16 +1,5 @@
-@media screen and (min-width: 450px) {
-	#how-it-works-container {
-		width: 46%;
-	}
-}
-
-#how-it-works-container {
-    margin-left: 30px;
-    margin-right: 30px;
-}
-
-#how-it-works-title {
-    margin-top: 100px;
+#how-it-works-page > h1 {
+	text-align: center;
 }
 
 .how-it-works-section {

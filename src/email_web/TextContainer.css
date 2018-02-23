@@ -1,0 +1,19 @@
+.text-heavy-container {
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #b6ccec;
+}
+
+.text-heavy-page {
+    max-width: 600px;
+    margin: auto;
+    margin-top: 130px;
+    background: #f0f0f0;
+    padding: 30px 65px;
+    border-radius: 3px;
+    font-size: 17px;
+}
