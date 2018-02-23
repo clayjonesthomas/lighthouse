@@ -2,6 +2,11 @@
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+    <style type="text/css">
+        blockquote .original-only {
+            display: none !important;
+        }
+    </style>
 </head>
 <body style="font-family: 'Roboto', sans-serif;">
 <table style="width: 100%;min-width: 400px;">
@@ -53,7 +58,7 @@
             </td>
         </tr>
     {% endif %}
-    <tr>
+    <tr class="original-only">
         <td>
             <p style="text-align:center; font-size:10px">
                 <a href="{{unsubscribe_url}}">

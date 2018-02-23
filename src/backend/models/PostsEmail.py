@@ -57,10 +57,16 @@ class PostsEmail(ndb.Model):
 
     def send(self):
         receiving_user = self.to.get()
-        message = mail.EmailMessage(sender="beacon@lightho.us",
-                                    subject=self.subject)
-        message.to = receiving_user.email_address
-        message.html = self.body
+        message = mail.EmailMessage(
+            sender="beacon@lightho.us",
+            subject=self.subject,
+            to="clayjonesthomas@gmail.com",
+            # to=receiving_user.email_address,
+            html=self.body,
+            headers={
+                "List-Unsubscribe": "<" + self.unsubscribe_url + ">"
+            }
+        )
         message.send()
         self.put()
         receiving_user.emails.append(self.key)
