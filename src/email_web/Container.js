@@ -12,6 +12,7 @@ import ForgotPasswordSuccessPage from './components/ForgotPassword/ForgotPasswor
 import VerificationSuccessPage from './components/VerificationSuccessPage/VerificationSuccessPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
 import HowItWorksPage from './components/HowItWorksPage/HowItWorksPage'
+import UserFeedPage from './components/UserFeedPage/UserFeedPage'
 
 import {logOut, pullUserEmail} from './services/UserActions'
 
@@ -28,6 +29,7 @@ import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPa
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
+import {USER_FEED_PAGE} from './components/UserFeedPage/UserFeedPage'
 
 import "./Container.css"
 class Container extends Component {
@@ -96,6 +98,9 @@ class Container extends Component {
         }
         {page === HOW_IT_WORKS_PAGE &&
           <HowItWorksPage/>
+        }
+        {page === USER_FEED_PAGE &&
+          <UserFeedPage/>
         }
       </div>
     )
