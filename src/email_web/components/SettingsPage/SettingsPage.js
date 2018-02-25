@@ -7,6 +7,7 @@ import {emailFrequencyChange, pickedShopsChange,
   closeNotification} from './SettingsPageActions'
 import {pullUserData} from '../../services/UserActions'
 import SettingsPageComponent from './SettingsPageComponent'
+import Spinner from '../../ui-kit/Spinner'
 
 export const SETTINGS_PAGE = 'SETTINGS_PAGE'
 
@@ -30,25 +31,37 @@ class SettingsPage extends Component {
       onSubmitSettings,
       isVerified,
       onClickResendVerification,
-      displayResentMessage
+      displayResentMessage,
+      isLoadingUserData
     } = this.props
     return (
       <div id="main-page-container">
-        <SettingsPageComponent
-          showNotification={showNotification}
-          closeNotification={closeNotification}
-          selectedShops={selectedShops}
-          emailFrequency={emailFrequency}
-          isSettingsUnchanged={isSettingsUnchanged}
-          displaySpinner={displaySpinner}
-          showSavedMessage={showSavedMessage}
-          onPickedShopsChange={onPickedShopsChange}
-          handleEmailFrequencyChange={handleEmailFrequencyChange}
-          onSubmitSettings={onSubmitSettings}
-          isVerified={isVerified}
-          onClickResendVerification={onClickResendVerification}
-          displayResentMessage={displayResentMessage}
-        />
+        {isLoadingUserData ? 
+            <form id="update-settings-form">
+              <h1 id="settings-form-title" className="settings-section">
+                Settings
+              </h1>
+              <div id="settings-loading-spinner">
+                <Spinner colorHex={"#aec7ea"}/>
+              </div>
+            </form>
+          :
+          <SettingsPageComponent
+            showNotification={showNotification}
+            closeNotification={closeNotification}
+            selectedShops={selectedShops}
+            emailFrequency={emailFrequency}
+            isSettingsUnchanged={isSettingsUnchanged}
+            displaySpinner={displaySpinner}
+            showSavedMessage={showSavedMessage}
+            onPickedShopsChange={onPickedShopsChange}
+            handleEmailFrequencyChange={handleEmailFrequencyChange}
+            onSubmitSettings={onSubmitSettings}
+            isVerified={isVerified}
+            onClickResendVerification={onClickResendVerification}
+            displayResentMessage={displayResentMessage}
+          />
+        }   
       </div>
     )
   }
@@ -65,6 +78,7 @@ const mapStateToProps = (state) => {
     displaySpinner: state.settings.submitSpinner || !state.settings.spinnerComplete,
     showSavedMessage: state.settings.showSavedMessage && state.settings.spinnerComplete,
     isVerified: state.user.isVerified,
+    isLoadingUserData: state.user.isLoadingUserData,
     displayResentMessage: state.settings.showResentMessage
   }
 }

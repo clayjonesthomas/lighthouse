@@ -120,7 +120,7 @@ def _generate_body(user_id, important_posts, unimportant_posts, unsubscribe_url,
             <td style="display: block;max-width: 500px;margin: 3px auto;">
               <div style="background-color: #F0F0F0;padding: 10px;">"""
         if important_posts:
-            """<div style="text-align: center;font-size: 18px;">Other Sales</div>"""
+            body += """<div style="text-align: center;font-size: 18px;">Other Sales</div>"""
 
         for u_post in unimportant_posts:
             body += _generate_unimportant_post_line(user_id, u_post)

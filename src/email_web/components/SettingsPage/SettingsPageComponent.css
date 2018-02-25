@@ -131,3 +131,7 @@
     position: relative;
     top: 1px;
 }
+
+#settings-loading-spinner {
+    margin-left: 50px;
+}
