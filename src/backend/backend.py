@@ -974,6 +974,32 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
+class FlattenedTrackedShopPostsHandler(BaseHandler):
+
+    def get(self):
+        user = self.user
+        if not user:
+            return
+        
+        flattened_posts = []
+        for shop_key in user.liked_shops:
+            shop = shop_key.get()
+            active_posts = Post.query(ndb.AND(Post.is_archived == False,
+                                              Post.shop_key == shop_key))
+            for active_post in active_posts:
+                flattened_posts.append({
+                	'key': active_post.key.urlsafe(),
+                    'title': active_post.title,
+                    'isImportant': active_post.is_important,
+                    'timestamp': active_post.timestamp.isoformat(' '),
+                    'shopName' : shop.name,
+                    'shopWebsite' : shop.website
+                })
+
+        sorted_flattened_posts = sorted(flattened_posts, key=lambda post: post['timestamp'], reverse=True)
+        self.response.write(json.dumps({'flattened_posts': sorted_flattened_posts}))       
+
+
 class UpdateStoresScript(BaseHandler):
 
     @moderator_required
@@ -1049,6 +1075,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
+    webapp2.Route('/rest/flattened_tracked_posts', FlattenedTrackedShopPostsHandler, name='flattened_tracked_posts'),
 
     webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),

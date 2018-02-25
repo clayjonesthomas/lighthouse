@@ -4,7 +4,7 @@ import {routerReducer} from 'react-router-redux'
 import {switchToPage} from './components/FrontPage/frontPageReducer'
 import {allShops, signup} from './components/SignUpPage/signUpReducer'
 import {login} from './components/LogInPage/logInReducer'
-import {user, userEmail} from './services/userReducer'
+import {user, userEmail, userTrackedShops} from './services/userReducer'
 import {newPass} from './components/NewPassword/newPasswordReducer'
 import {forgotPassword} from './components/ForgotPassword/forgotPasswordReducer'
 import {settings} from './components/SettingsPage/settingsReducer'
@@ -19,6 +19,7 @@ export default combineReducers({
   login,
   user,
   userEmail,
+  userTrackedShops,
   newPass,
   forgotPassword,
   settings,

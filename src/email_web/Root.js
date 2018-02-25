@@ -12,6 +12,7 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 import AdminPage from './components/admin/AdminPage/AdminPage'
 import TrackedShopPage from './components/admin/TrackedShopPage/TrackedShopPage'
 import NewShopPage from './components/admin/NewShopPage/NewShopPage'
+import UserFeedPage from './components/UserFeedPage/UserFeedPage'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -23,7 +24,6 @@ import {FORGOT_PASSWORD_SUCCESS_PAGE} from './components/ForgotPassword/ForgotPa
 import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/VerificationSuccessPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
-import {USER_FEED_PAGE} from './components/UserFeedPage/UserFeedPage'
 
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
@@ -151,15 +151,6 @@ const ForgotPasswordSuccessPage = (props) => {
   return (
     <Container
       page={FORGOT_PASSWORD_SUCCESS_PAGE}
-      {...props}
-    />
-  )
-}
-
-const UserFeedPage = (props) => {
-  return (
-    <Container
-      page={USER_FEED_PAGE}
       {...props}
     />
   )

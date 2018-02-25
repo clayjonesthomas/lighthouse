@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 
-import {pullUserData} from '../../services/UserActions'
+import {pullUserData, pullUserTrackedShops} from '../../services/UserActions'
 
 import UserFeedPageComponent from './UserFeedPageComponent'
 
@@ -10,16 +10,16 @@ export const USER_FEED_PAGE = 'USER_FEED_PAGE'
 
 class UserFeedPage extends Component {
 	componentDidMount() {
-    this.props.getUserData()
+    this.props.getUserPosts()
 	}
 
   render() {
     const {
-
+      flattenedPosts
     } = this.props
     return (
       <UserFeedPageComponent
-
+        flattenedPosts={flattenedPosts}
       />
     )
   }
@@ -27,12 +27,13 @@ class UserFeedPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    flattenedPosts: state.userTrackedShops.posts ? state.userTrackedShops.posts.flattened_posts : []
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserData: () => dispatch(pullUserData()),
+    getUserPosts: () => dispatch(pullUserTrackedShops()),
   }
 }
 
