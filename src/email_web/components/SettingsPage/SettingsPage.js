@@ -35,7 +35,7 @@ class SettingsPage extends Component {
       isLoadingUserData
     } = this.props
     return (
-      <div id="main-page-container">
+      <div className="text-page text-page-tall">
         {isLoadingUserData ? 
             <form id="update-settings-form">
               <h1 id="settings-form-title" className="settings-section">

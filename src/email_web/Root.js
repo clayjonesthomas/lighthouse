@@ -121,7 +121,7 @@ const NewPasswordSuccessPage = (props) => {
 
 const SettingsPage = (props) => {
   return (
-    <Container
+    <TextContainer
       page={SETTINGS_PAGE}
       {...props}
     />

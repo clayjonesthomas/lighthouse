@@ -8,7 +8,7 @@ const HowItWorksPage =
   ({}) => (
     <div 
       id="how-it-works-page"
-      className="text-heavy-page"
+      className="text-page text-page-tall"
     >
       <h1 className="form-title">
         How It Works

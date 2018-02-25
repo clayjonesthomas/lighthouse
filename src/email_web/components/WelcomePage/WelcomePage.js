@@ -24,7 +24,7 @@ class WelcomePage extends Component {
       goToSettings,
     } = this.props
     return (
-      <div className="text-heavy-container">
+      <div className="text-page-container">
         <WelcomePageComponent
           goToSettings={goToSettings}
         />

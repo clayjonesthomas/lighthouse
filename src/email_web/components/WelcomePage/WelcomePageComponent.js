@@ -6,7 +6,7 @@ const WelcomePageComponent = ({
                               }) => (
   <div 
     id="welcome-page"
-    className="text-heavy-page">
+    className="text-page">
     <h1>
       Welcome to&nbsp;
       <span>

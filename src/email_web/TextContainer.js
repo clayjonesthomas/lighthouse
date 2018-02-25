@@ -5,6 +5,7 @@ import {push} from 'react-router-redux'
 import NavBar from './components/NavBar/NavBar'
 import WelcomePage from './components/WelcomePage/WelcomePage'
 import HowItWorksPage from './components/HowItWorksPage/HowItWorksPage'
+import SettingsPage from './components/SettingsPage/SettingsPage'
 
 import {logOut, pullUserEmail} from './services/UserActions'
 
@@ -14,6 +15,7 @@ import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
 
 import {WELCOME_PAGE} from './components/WelcomePage/WelcomePage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
+import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 
 import "./TextContainer.css"
 class TextContainer extends Component {
@@ -35,7 +37,7 @@ class TextContainer extends Component {
     } = this.props
     return (
       <div
-        className={"container-settings text-heavy-container"}>
+        className={"container-settings text-page-container"}>
         <NavBar
           isDisplayLogo={true}
           onClickLogo={email ? goToSettings : goToHome}
@@ -51,6 +53,9 @@ class TextContainer extends Component {
         }
         {page === HOW_IT_WORKS_PAGE &&
         <HowItWorksPage/>
+        }
+        {page === SETTINGS_PAGE &&
+        <SettingsPage/>
         }
       </div>
     )

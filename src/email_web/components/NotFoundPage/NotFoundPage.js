@@ -6,8 +6,8 @@ import "./NotFoundPage.css"
 
 const NotFoundPage = 
   ({}) => (
-    <div id="not-found-container" className="text-heavy-container">
-      <div className="text-heavy-page">
+    <div id="not-found-container" className="text-page-container">
+      <div className="text-page">
         <LogoCircle
           scale={1}
           color={smalt}
