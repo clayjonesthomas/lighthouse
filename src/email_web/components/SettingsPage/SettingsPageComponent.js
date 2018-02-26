@@ -126,7 +126,7 @@ const SettingsPageComponent = ({
         </Radio>
       </div>
     </FormGroup>
-    <div>
+    <div id="settings-submit-button-container">
       <input
         type="submit"
         disabled={isSettingsUnchanged && !displaySpinner}
