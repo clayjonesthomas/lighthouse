@@ -41,6 +41,9 @@
     <tr>
         <td style="display: block;max-width: 500px;margin: 3px auto;">
             <div style="background-color: #F0F0F0;padding: 10px;">
+                {% if unimportant_posts and important_posts%}
+                <div style="text-align: center;font-size: 18px;">Other Sales</div>
+                {% endif %}
                 {% for u_post in unimportant_posts %}
                 <div>
                     <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, u_post.get().shop_key.urlsafe())}}"
