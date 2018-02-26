@@ -1,10 +1,14 @@
 import React from 'react'
 import {FormGroup} from 'react-bootstrap'
 import {Radio} from 'react-bootstrap'
+import Tooltip from 'rc-tooltip'
+import 'rc-tooltip/assets/bootstrap_white.css'
 
 import ShopPicker from '../../ui-kit/ShopPicker/ShopPicker'
 import Spinner from '../../ui-kit/Spinner'
 import XButton from '../../ui-kit/XButton'
+import InfoBox from '../../ui-kit/InfoBox'
+
 import {cornflowerLilac} from '../../ui-kit/colors'
 
 import "./SettingsPageComponent.css"
@@ -96,6 +100,23 @@ const SettingsPageComponent = ({
           value="MID_FREQUENCY_EMAIL"
           checked={emailFrequency === MID_FREQUENCY_EMAIL}>
           Standard frequency - important sales only
+          <Tooltip
+            placement="right"
+            trigger={['hover', 'click']}
+            overlay={
+              <span>
+                Important sales are unusually good sales for the store.
+                If a store almost never runs sales, we'll tell you
+                every time they have one, but if a store always
+                seems to have 20% off something, we'll only tell
+                you about that 50% off sale that happens once
+                every couple months.
+              </span>
+            }>
+            <span className="info-box">
+              <InfoBox/>
+            </span>
+          </Tooltip>
         </Radio>
         <Radio
           name="emailOptions"
@@ -113,10 +134,10 @@ const SettingsPageComponent = ({
         className="submit-button"
         id="settings-form-button"
       />
-      {displaySpinner && 
-        <div id="settings-form-spinner"><Spinner colorHex={"#aec7ea"}/></div>}
-      {showSavedMessage && 
-        <div id="settings-form-saved-message">Changes saved!</div>}
+      {displaySpinner &&
+      <div id="settings-form-spinner"><Spinner colorHex={"#aec7ea"}/></div>}
+      {showSavedMessage &&
+      <div id="settings-form-saved-message">Changes saved!</div>}
     </div>
   </form>
 )
