@@ -14,7 +14,7 @@ class PostsEmail(ndb.Model):
     unimportant_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     unsubscribe_url = ndb.StringProperty(indexed=False)
-    settings_url = ndb.StringProperty(indexed=False)
+    settings_url = ndb.StringProperty(indexed=Fal   se)
 
     def compose_email_for_user(self, jinja_env):
         """
@@ -33,7 +33,7 @@ class PostsEmail(ndb.Model):
         for post in posts:
             if post.get().shop_key in included_shop_keys:
                 continue
-            if len(included_shop_keys) >= SUBJECT_shop_LIMIT:
+            if len(included_shop_keys) >= SUBJECT_SHOP_LIMIT:
                 subject += " +"
                 break
             subject += " " + post.get().shop_key.get().name + ","
