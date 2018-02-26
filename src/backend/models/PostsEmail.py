@@ -1,8 +1,7 @@
 from google.appengine.api import mail
 from google.appengine.ext import ndb
 from models import Post
-
-SUBJECT_SHOP_LIMIT = 3  # TODO: decide on the number for this
+from backend.enums import EmailFrequency
 
 
 class PostsEmail(ndb.Model):
@@ -25,31 +24,26 @@ class PostsEmail(ndb.Model):
         self._generate_subject()
 
     def _generate_subject(self):
-        subject = "lightho.us \\\\"
-        included_shop_keys = []
-        posts = []
-        posts.extend(self.important_posts)
-        posts.extend(self.unimportant_posts)
-        for post in posts:
-            if post.get().shop_key in included_shop_keys:
-                continue
-            if len(included_shop_keys) >= SUBJECT_shop_LIMIT:
-                subject += " +"
-                break
-            subject += " " + post.get().shop_key.get().name + ","
-            included_shop_keys.append(post.get().shop_key)
-
-        if subject[-1] == ",":
-            subject = subject[:-1]
+        subject = u"[lightho.\u200bus] "
+        if self.important_posts:
+            subject += self.important_posts[0].get().shop_key.get().name
+            subject += ": "
+            subject += self.important_posts[0].get().title
+        else:
+            subject += self.unimportant_posts[0].get().shop_key.get().name
+            subject += ": "
+            subject += self.unimportant_posts[0].get().title
 
         self.subject = subject
 
     def _generate_body(self, jinja_env):
         template = jinja_env.get_template('templates/update_email.html')
+        posts = self.important_posts
+        if self.to.get().email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL:
+            posts.extend(self.unimportant_posts)
         rendered_template = template.render(
             to_id=self.to.urlsafe(),
-            important_posts=self.important_posts,
-            unimportant_posts=self.unimportant_posts,
+            posts=posts,
             unsubscribe_url=self.unsubscribe_url,
             settings_url=self.settings_url
         )
