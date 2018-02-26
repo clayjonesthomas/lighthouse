@@ -25,8 +25,7 @@
 }
 
 .text-page-tall {
-    height: 100%;
+    min-height: 100%;
     margin-top: 0px;
     padding-top: 80px;
-    overflow: auto;
 }
