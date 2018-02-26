@@ -14,7 +14,7 @@ class PostsEmail(ndb.Model):
     unimportant_posts = ndb.KeyProperty(indexed=True, kind='Post', repeated=True)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     unsubscribe_url = ndb.StringProperty(indexed=False)
-    settings_url = ndb.StringProperty(indexed=Fal   se)
+    settings_url = ndb.StringProperty(indexed=False)
 
     def compose_email_for_user(self, jinja_env):
         """
