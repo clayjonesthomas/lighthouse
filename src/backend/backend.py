@@ -1010,8 +1010,7 @@ class SendTestVerificationEmailToMod(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        send_verification_email("clayjonesthomas@gmail.com", verification_url, JINJA_ENVIRONMENT)
-        # send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
+        send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
         self.response.write(json.dumps({"success": True}))
 
 

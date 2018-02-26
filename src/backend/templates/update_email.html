@@ -45,7 +45,7 @@
                 <div>
                     <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, u_post.get().shop_key.urlsafe())}}"
                        style='text-decoration: none;'>
-                        {{shop_name}}
+                        {{i_post.get().shop_key.get().name}}
                     </a> - {{u_post.get().title}}
                 </div>
                 {% endfor %}

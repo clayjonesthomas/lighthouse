@@ -2,7 +2,7 @@ from google.appengine.api import mail
 from google.appengine.ext import ndb
 from models import Post
 
-SUBJECT_shop_LIMIT = 3  # TODO: decide on the number for this
+SUBJECT_SHOP_LIMIT = 3  # TODO: decide on the number for this
 
 
 class PostsEmail(ndb.Model):
