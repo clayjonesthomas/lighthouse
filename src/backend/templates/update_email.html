@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+</head>
+<body style="font-family: 'Roboto', sans-serif;">
+<table style="width: 100%;min-width: 400px;">
+    <tr>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
+                <table style="width: 35%;margin: 0 auto;">
+                    <tr>
+                        <th>
+                            <a href="https://lightho.us">
+                                <img style="max-width: 300px;"
+                                     src="https://lightho.us/blue_logo.png"
+                                     alt="lightho.us logo">
+                            </a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    {% for i_post in important_posts %}
+    <tr>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #F0F0F0;padding: 10px;">
+                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, i_post.get().shop_key.urlsafe())}}"
+                   style='text-decoration: none;'>
+                    {{i_post.get().shop_key.get().name}}
+                </a>
+                <div>
+                    {{i_post.get().title}}
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    {% if unimportant_posts %}
+    <tr>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #F0F0F0;padding: 10px;">
+                {% if unimportant_posts and important_posts%}
+                <div style="text-align: center;font-size: 18px;">Other Sales</div>
+                {% endif %}
+                {% for u_post in unimportant_posts %}
+                <div>
+                    <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, u_post.get().shop_key.urlsafe())}}"
+                       style='text-decoration: none;'>
+                        {{u_post.get().shop_key.get().name}}
+                    </a> - {{u_post.get().title}}
+                </div>
+                {% endfor %}
+            </div>
+        </td>
+    </tr>
+    {% endif %}
+    <tr class="original-only">
+        <td>
+            <p style="text-align:center; font-size:10px">
+                <a href="{{unsubscribe_url}}">
+                    Unsubscribe
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{settings_url}}">
+                    Update Settings
+                </a>
+            </p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

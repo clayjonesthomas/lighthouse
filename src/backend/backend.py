@@ -1,31 +1,25 @@
-from google.appengine.ext import ndb
-from google.appengine.api import images
-import jinja2
+import datetime
 import json
 import logging
 import os
-import datetime
-import time
 import re
-import auth_config
+import time
 
+import jinja2
 import webapp2
-
+from google.appengine.ext import ndb
 from webapp2_extras import auth
 from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
-# https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
-from google.appengine.ext import deferred
-
-from models import Post, Shop, User, get_entity_from_url_key
-from email import send_email_to_user, send_verification_email, send_forgot_password_email
+import auth_config
 import enums.EmailFrequency as EmailFrequency
+from email import send_verification_email, send_forgot_password_email
+from models.PostsEmail import PostsEmail, get_active_posts_for_user
+from models.models import Post, Shop, User, get_entity_from_url_key
 
-from scripts import update_stores
-
-from google.appengine.api import app_identity, mail
+# https://groups.google.com/forum/?fromgroups=#!topic/webapp2/sHb2RYxGDLc
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -298,7 +292,7 @@ class MainPage(BaseHandler):
         user_id = None
         if self.user:
             user_id = self.user.key.urlsafe()
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render(user_id=user_id))
 
 
@@ -307,7 +301,7 @@ class UsersOnlyMainPage(BaseHandler):
     @user_required
     def get(self):
         user_id = self.user.key.urlsafe()
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render(user_id=user_id))
 
 
@@ -321,7 +315,7 @@ class GuestsOnlyPage(BaseHandler):
                 populate_dummy_datastore()
                 time.sleep(2)  # hack to prevent this from running more than once
 
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render())
 
 
@@ -330,7 +324,7 @@ class ModeratorsOnlyPage(BaseHandler):
     @moderator_required
     def get(self):
         user_id = self.user.key.urlsafe()
-        template = JINJA_ENVIRONMENT.get_template('index.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/index.html')
         self.response.write(template.render(user_id=user_id))
 
 
@@ -731,7 +725,7 @@ class SignupHandler(BaseHandler):
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
         if not is_moderator:
-            send_verification_email(email, verification_url)
+            send_verification_email(email, verification_url, JINJA_ENVIRONMENT)
         logging.info('Email verification link: %s', verification_url)
 
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
@@ -769,7 +763,7 @@ class ForgotPasswordHandler(BaseHandler):
 
         logging.info("forgot password url: " + forgot_password_url)
         self.response.write(json.dumps({'email': email}))
-        send_forgot_password_email(email, forgot_password_url)
+        send_forgot_password_email(email, forgot_password_url, JINJA_ENVIRONMENT)
 
 
 class VerificationHandler(BaseHandler):
@@ -858,7 +852,7 @@ class ResendVerificationHandler(BaseHandler):
         token = self.user_model.create_signup_token(user_id)
         verification_url = self.uri_for('verification', type='v', user_id=user_id,
                                         signup_token=token, _full=True)
-        send_verification_email(user.email_address, verification_url)
+        send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
         self.response.write(json.dumps({'success': 'RESENT_VERIFICATION'}))
 
 
@@ -908,7 +902,7 @@ class LogoutHandler(BaseHandler):
 
 class EmailHandler(BaseHandler):
     def post(self):
-        # admin has emil service enabled
+        # admin has email service enabled
         if not os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
             dummy_shops = _spawn_dummy_shops()
             dummy_posts = _spawn_dummy_posts_for_email(dummy_shops)
@@ -917,11 +911,28 @@ class EmailHandler(BaseHandler):
         for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
-            unsubscribe_url = self.uri_for('verification', type='u', user_id=user_id,
-                                           signup_token=token, _full=True)
-            settings_url = self.uri_for('verification', type='s', user_id=user_id,
-                                        signup_token=token, _full=True)
-            send_email_to_user(user, unsubscribe_url, settings_url)
+            unsubscribe_url = self.uri_for('verification',
+                                           type='u',
+                                           user_id=user_id,
+                                           signup_token=token,
+                                           _full=True)
+            settings_url = self.uri_for('verification',
+                                        type='s',
+                                        user_id=user_id,
+                                        signup_token=token,
+                                        _full=True)
+
+            important_posts, unimportant_posts = get_active_posts_for_user(user)
+            send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
+
+            if important_posts or send_just_unimportant:
+                email = PostsEmail(to=user.key,
+                                   important_posts=important_posts,
+                                   unimportant_posts=unimportant_posts,
+                                   unsubscribe_url=unsubscribe_url,
+                                   settings_url=settings_url)
+                email.compose_email_for_user(JINJA_ENVIRONMENT)
+                email.send()
 
         self.response.write(json.dumps({'success': 'EMAIL_SENT'}))
 
@@ -974,13 +985,6 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
-class UpdateStoresScript(BaseHandler):
-
-    @moderator_required
-    def get(self):
-        pass
-
-      
 class RedirectToShop(BaseHandler):
 
     def get(self, *args, **kwargs):
@@ -990,16 +994,79 @@ class RedirectToShop(BaseHandler):
 
         redirect_url = ndb.Key(urlsafe=shop_id).get().website
 
-        template = JINJA_ENVIRONMENT.get_template('redirect.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/redirect.html')
         self.response.write(template.render(
             user_id=user_id,
             url=redirect_url
         ))
 
 
+class SendTestVerificationEmailToMod(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        verification_url = self.uri_for('verification', type='v', user_id=user_id,
+                                        signup_token=token, _full=True)
+        send_verification_email(user.email_address, verification_url, JINJA_ENVIRONMENT)
+        self.response.write(json.dumps({"success": True}))
+
+
+class SendTestForgotPassEmailToMod(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        forgot_password_url = self.uri_for('verification', type='p', user_id=user_id,
+                                            signup_token=token, _full=True)
+        send_forgot_password_email(user.email_address, forgot_password_url, JINJA_ENVIRONMENT)
+        self.response.write(json.dumps({"success": True}))
+
+
+class SendTestPostsEmailToMod(BaseHandler):
+
+    @moderator_required
+    def get(self):
+        user = self.user
+        user_id = user.get_id()
+        token = self.user_model.create_signup_token(user_id)
+        unsubscribe_url = self.uri_for('verification',
+                                       type='u',
+                                       user_id=user_id,
+                                       signup_token=token,
+                                       _full=True)
+        settings_url = self.uri_for('verification',
+                                    type='s',
+                                    user_id=user_id,
+                                    signup_token=token,
+                                    _full=True)
+
+        important_posts, unimportant_posts = self._get_random_posts()
+        email = PostsEmail(to=user.key,
+                           important_posts=important_posts,
+                           unimportant_posts=unimportant_posts,
+                           unsubscribe_url=unsubscribe_url,
+                           settings_url=settings_url)
+        email.compose_email_for_user(JINJA_ENVIRONMENT)
+        email.send()
+        self.response.write(json.dumps({"success": True}))
+
+    @staticmethod
+    def _get_random_posts():
+        important_posts = Post.query().fetch(2)
+        important_post_keys = [i.key for i in important_posts]
+        unimportant_posts = Post.query().fetch(4)
+        unimportant_post_keys = [u.key for u in unimportant_posts]
+        return important_post_keys, unimportant_post_keys
+
+
 config = {
     'webapp2_extras.auth': {
-        'user_model': 'backend.models.User',
+        'user_model': 'backend.models.models.User',
         'user_attributes': [],  # used for caching properties
         # default is 1814400, 86400, 3600
         'token_max_age': 86400 * 365,  # amount of seconds in a day * 1 year of days
@@ -1068,7 +1135,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', UpdateStoresScript, name='script_runner'),
+    webapp2.Route('/admin/script', SendTestPostsEmailToMod, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
