@@ -91,9 +91,6 @@ class Container extends Component {
         {page === VERIFICATION_SUCCESS_PAGE &&
         <VerificationSuccessPage/>
         }
-        {page === SETTINGS_PAGE &&
-        <SettingsPage/>
-        }
         {page === HOW_IT_WORKS_PAGE &&
           <HowItWorksPage/>
         }

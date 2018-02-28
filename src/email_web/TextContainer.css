@@ -1,0 +1,31 @@
+.text-page-container {
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #b6ccec;
+}
+
+.text-page {
+    max-width: 600px;
+    margin: auto;
+    background: #f0f0f0;
+    padding: 30px 65px;
+    border-radius: 3px;
+    font-size: 17px;
+}
+
+@media screen and (max-width: 450px) {
+    .text-page {
+        padding: 30px 15px;
+        padding-top: 80px;
+    }
+}
+
+.text-page-tall {
+    min-height: 100%;
+    margin-top: 0px;
+    padding-top: 80px;
+}
