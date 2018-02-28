@@ -1053,13 +1053,19 @@ class SendTestPostsEmailToMod(BaseHandler):
                                     user_id=user_id,
                                     signup_token=token,
                                     _full=True)
+        feed_page_url = self.uri_for('verification',
+                                     type='f',
+                                     user_id=user_id,
+                                     signup_token=token,
+                                     _full=True)
 
         important_posts, unimportant_posts = self._get_random_posts()
         email = PostsEmail(to=user.key,
                            important_posts=important_posts,
                            unimportant_posts=unimportant_posts,
                            unsubscribe_url=unsubscribe_url,
-                           settings_url=settings_url)
+                           settings_url=settings_url,
+                           feed_page_url=feed_page_url)
         email.compose_email_for_user(JINJA_ENVIRONMENT)
         email.send()
         self.response.write(json.dumps({"success": True}))
