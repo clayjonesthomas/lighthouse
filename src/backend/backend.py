@@ -808,6 +808,9 @@ class VerificationHandler(BaseHandler):
         elif verification_type == 's':
             self.redirect_to('settings')
             self.user_model.delete_signup_token(user.get_id(), signup_token)
+        elif verification_type == 'f':
+            self.redirect_to('/')  # TODO: fill in with eventual feed url
+            self.user_model.delete_signup_token(user.get_id(), signup_token)
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -921,6 +924,11 @@ class EmailHandler(BaseHandler):
                                         user_id=user_id,
                                         signup_token=token,
                                         _full=True)
+            feed_page_url = self.uri_for('verification',
+                                         type='f',
+                                         user_id=user_id,
+                                         signup_token=token,
+                                         _full=True)
 
             important_posts, unimportant_posts = get_active_posts_for_user(user)
             send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
@@ -930,7 +938,8 @@ class EmailHandler(BaseHandler):
                                    important_posts=important_posts,
                                    unimportant_posts=unimportant_posts,
                                    unsubscribe_url=unsubscribe_url,
-                                   settings_url=settings_url)
+                                   settings_url=settings_url,
+                                   feed_page_url=feed_page_url)
                 email.compose_email_for_user(JINJA_ENVIRONMENT)
                 email.send()
 
@@ -1022,7 +1031,7 @@ class SendTestForgotPassEmailToMod(BaseHandler):
         user_id = user.get_id()
         token = self.user_model.create_signup_token(user_id)
         forgot_password_url = self.uri_for('verification', type='p', user_id=user_id,
-                                            signup_token=token, _full=True)
+                                           signup_token=token, _full=True)
         send_forgot_password_email(user.email_address, forgot_password_url, JINJA_ENVIRONMENT)
         self.response.write(json.dumps({"success": True}))
 
@@ -1086,7 +1095,7 @@ config = {
 app = webapp2.WSGIApplication([
     webapp2.Route('/rest/reset_password', ForgotPasswordHandler, name='forgot'),
     webapp2.Route('/rest/p', VerificationHandler, name='verification_pass'),
-    webapp2.Route('/rest/<type:v|p|u|s|l>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
+    webapp2.Route('/rest/<type:v|p|u|s|l|f>/<user_id:\d+>-<signup_token:.+>', VerificationHandler, name='verification'),
     webapp2.Route('/rest/signup', SignupHandler, name='signup'),
     webapp2.Route('/rest/login', LoginHandler, name='login'),
     webapp2.Route('/rest/logout', LogoutHandler, name='logout'),

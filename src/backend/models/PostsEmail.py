@@ -14,6 +14,7 @@ class PostsEmail(ndb.Model):
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     unsubscribe_url = ndb.StringProperty(indexed=False)
     settings_url = ndb.StringProperty(indexed=False)
+    feed_page_url = ndb.StringProperty(indexed=False)
 
     def compose_email_for_user(self, jinja_env):
         """
@@ -45,7 +46,8 @@ class PostsEmail(ndb.Model):
             to_id=self.to.urlsafe(),
             posts=posts,
             unsubscribe_url=self.unsubscribe_url,
-            settings_url=self.settings_url
+            settings_url=self.settings_url,
+            feed_page_url=self.feed_page_url
         )
         self.body = rendered_template
 
