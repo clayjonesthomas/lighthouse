@@ -18,9 +18,11 @@ class UserFeedPage extends Component {
       flattenedPosts
     } = this.props
     return (
-      <UserFeedPageComponent
-        flattenedPosts={flattenedPosts}
-      />
+      <div className="text-page text-page-tall">
+        <UserFeedPageComponent
+          flattenedPosts={flattenedPosts}
+        />
+      </div>
     )
   }
 }

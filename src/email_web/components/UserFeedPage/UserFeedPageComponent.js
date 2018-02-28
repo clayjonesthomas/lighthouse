@@ -7,7 +7,7 @@ const UserFeedPageComponent = ({
                                 flattenedPosts
                               }) => (
   <div>
-    <h1>User Feed Page</h1>
+    <h1 id="user-feed-page-title">All Active Sales</h1>
     {
       flattenedPosts.map(post => 
         <UserFeedPagePostBlock

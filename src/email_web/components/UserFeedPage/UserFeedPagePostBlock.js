@@ -7,7 +7,7 @@ const UserFeedPagePostBlock =
      shopName,
      shopWebsite
    }) => (
-    <div>
+    <div className="user-feed-post-block">
       <a
         href={shopWebsite}
         tabIndex="0">

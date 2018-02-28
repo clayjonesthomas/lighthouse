@@ -12,7 +12,6 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 import AdminPage from './components/admin/AdminPage/AdminPage'
 import TrackedShopPage from './components/admin/TrackedShopPage/TrackedShopPage'
 import NewShopPage from './components/admin/NewShopPage/NewShopPage'
-import UserFeedPage from './components/UserFeedPage/UserFeedPage'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -25,6 +24,7 @@ import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/Ve
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 import {WELCOME_PAGE} from './components/WelcomePage/WelcomePage'
+import {USER_FEED_PAGE} from './components/UserFeedPage/UserFeedPage'
 
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
@@ -162,6 +162,15 @@ const HowItWorksPage = (props) => {
   return (
     <TextContainer
       page={HOW_IT_WORKS_PAGE}
+      {...props}
+    />
+  )
+}
+
+const UserFeedPage = (props) => {
+  return (
+    <TextContainer
+      page={USER_FEED_PAGE}
       {...props}
     />
   )

@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar'
 import WelcomePage from './components/WelcomePage/WelcomePage'
 import HowItWorksPage from './components/HowItWorksPage/HowItWorksPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
+import UserFeedPage from './components/UserFeedPage/UserFeedPage'
 
 import {logOut, pullUserEmail} from './services/UserActions'
 
@@ -16,6 +17,7 @@ import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
 import {WELCOME_PAGE} from './components/WelcomePage/WelcomePage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
+import {USER_FEED_PAGE} from './components/UserFeedPage/UserFeedPage'
 
 import "./TextContainer.css"
 class TextContainer extends Component {
@@ -56,6 +58,9 @@ class TextContainer extends Component {
         }
         {page === SETTINGS_PAGE &&
         <SettingsPage/>
+        }
+        {page === USER_FEED_PAGE &&
+        <UserFeedPage/>
         }
       </div>
     )
