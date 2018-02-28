@@ -17,15 +17,4 @@ const UserFeedPagePostBlock =
     </div>
   )
 
-function mapStateToProps() {
-  return {}
-}
-
-function mapDispatchToProps(dispatch) {
-  return {}
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserFeedPagePostBlock)
+export default connect()(UserFeedPagePostBlock)

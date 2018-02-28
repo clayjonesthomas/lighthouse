@@ -4,16 +4,16 @@ import UserFeedPagePostBlock from './UserFeedPagePostBlock'
 
 import "./UserFeedPageComponent.css"
 const UserFeedPageComponent = ({
-                                flattenedPosts
+                                activePosts
                               }) => (
   <div>
     <h1 id="user-feed-page-title">All Active Sales</h1>
     {
-      flattenedPosts.map(post => 
+      activePosts.map(post => 
         <UserFeedPagePostBlock
           key={post.key}
-          shopName={post.shopName}
-          shopWebsite={post.shopWebsite}
+          shopName={post.shop.name}
+          shopWebsite={post.shop.website}
           title={post.title}
         />
       )

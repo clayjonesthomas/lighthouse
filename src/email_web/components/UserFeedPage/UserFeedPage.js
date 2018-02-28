@@ -9,18 +9,18 @@ import UserFeedPageComponent from './UserFeedPageComponent'
 export const USER_FEED_PAGE = 'USER_FEED_PAGE'
 
 class UserFeedPage extends Component {
-	componentDidMount() {
+  componentDidMount() {
     this.props.getUserPosts()
-	}
+  }
 
   render() {
     const {
-      flattenedPosts
+      activePosts
     } = this.props
     return (
       <div className="text-page text-page-tall">
         <UserFeedPageComponent
-          flattenedPosts={flattenedPosts}
+          activePosts={activePosts}
         />
       </div>
     )
@@ -29,7 +29,9 @@ class UserFeedPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    flattenedPosts: state.userTrackedShops.posts ? state.userTrackedShops.posts.flattened_posts : []
+    activePosts: state.userTrackedShopPosts 
+      ? state.userTrackedShopPosts.active_posts 
+      : []
   }
 }
 

@@ -992,23 +992,16 @@ class FlattenedTrackedShopPostsHandler(BaseHandler):
         if not user:
             return
         
-        flattened_posts = []
+        all_active_posts = []
         for shop_key in user.liked_shops:
             shop = shop_key.get()
-            active_posts = Post.query(ndb.AND(Post.is_archived == False,
+            active_raw_shop_posts = Post.query(ndb.AND(Post.is_archived == False,
                                               Post.shop_key == shop_key))
-            for active_post in active_posts:
-                flattened_posts.append({
-                	'key': active_post.key.urlsafe(),
-                    'title': active_post.title,
-                    'isImportant': active_post.is_important,
-                    'timestamp': active_post.timestamp.isoformat(' '),
-                    'shopName' : shop.name,
-                    'shopWebsite' : shop.website
-                })
 
-        sorted_flattened_posts = sorted(flattened_posts, key=lambda post: post['timestamp'], reverse=True)
-        self.response.write(json.dumps({'flattened_posts': sorted_flattened_posts}))       
+            all_active_posts += [active_shop_post.prepare_post(user) for active_shop_post in active_raw_shop_posts]
+
+        sorted_active_posts = sorted(all_active_posts, key=lambda post: post['timestamp'], reverse=True)
+        self.response.write(json.dumps({'active_posts': sorted_active_posts}))       
 
       
 class RedirectToShop(BaseHandler):
@@ -1149,7 +1142,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
-    webapp2.Route('/user_feed', UsersOnlyMainPage, name='user_feed'),
+    webapp2.Route('/home', UsersOnlyMainPage, name='home'),
     webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
     webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),

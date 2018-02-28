@@ -65,10 +65,10 @@ export function userEmail(state = '', action) {
   }
 }
 
-export function userTrackedShops(state = [], action) {
+export function userTrackedShopPosts(state = [], action) {
   switch (action.type) {
     case USER_TRACKED_POSTS_RETURN:
-      return action.data
+      return action.data.posts
     default:
       return state
   }
