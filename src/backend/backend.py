@@ -779,7 +779,6 @@ class VerificationHandler(BaseHandler):
         # signup tokens concisely
         user, timestamp = self.user_model.get_by_auth_token(int(user_id), signup_token,
                                                             'signup')
-
         if not user:
             logging.info('Could not find any user with id "%s" signup token "%s"',
                          user_id, signup_token)
@@ -804,13 +803,10 @@ class VerificationHandler(BaseHandler):
             user.email_frequency = EmailFrequency.UNSUBSCRIBE_EMAIL
             user.put()
             self.redirect_to('settings')
-            self.user_model.delete_signup_token(user.get_id(), signup_token)
         elif verification_type == 's':
             self.redirect_to('settings')
-            self.user_model.delete_signup_token(user.get_id(), signup_token)
         elif verification_type == 'f':
             self.redirect_to('/')  # TODO: fill in with eventual feed url
-            self.user_model.delete_signup_token(user.get_id(), signup_token)
         else:
             logging.info('verification type not supported')
             self.abort(404)
