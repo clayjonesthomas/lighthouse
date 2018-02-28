@@ -1149,6 +1149,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
+    webapp2.Route('/user_feed', UsersOnlyMainPage, name='user_feed'),
     webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
     webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
