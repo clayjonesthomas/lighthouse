@@ -923,12 +923,14 @@ class EmailHandler(BaseHandler):
                                         _full=True)
 
             important_posts, unimportant_posts = get_active_posts_for_user(user)
+            important_post_keys = [p.key for p in important_posts]
+            unimportant_post_keys = [p.key for p in unimportant_posts]
             send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
 
             if important_posts or send_just_unimportant:
                 email = PostsEmail(to=user.key,
-                                   important_posts=important_posts,
-                                   unimportant_posts=unimportant_posts,
+                                   important_posts=important_post_keys,
+                                   unimportant_posts=unimportant_post_keys,
                                    unsubscribe_url=unsubscribe_url,
                                    settings_url=settings_url)
                 email.compose_email_for_user(JINJA_ENVIRONMENT)
