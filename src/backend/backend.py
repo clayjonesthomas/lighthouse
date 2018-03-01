@@ -355,18 +355,6 @@ class Feed(BaseHandler):
         return result
 
 
-class MyPosts(BaseHandler):
-    def get(self, offset):
-        user = self.user
-        if not user:
-            return
-        _offset = int(offset)
-        fetched_posts = [post_key.get().prepare_post(user)
-                         for post_key in user.liked_posts[_offset:_offset + 10]]
-        logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
-        self.response.write(json.dumps(fetched_posts))
-
-
 class SinglePost(BaseHandler):
     def post(self):
         user = self.user
@@ -1132,7 +1120,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
-    webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
     webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
