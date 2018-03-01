@@ -68,7 +68,7 @@ export function userEmail(state = '', action) {
 export function userTrackedShopPosts(state = [], action) {
   switch (action.type) {
     case USER_TRACKED_POSTS_RETURN:
-      return action.data.posts
+      return action.data.posts.active_posts
     default:
       return state
   }

@@ -985,7 +985,7 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
-class FlattenedTrackedShopPostsHandler(BaseHandler):
+class MyActivePostsHandler(BaseHandler):
 
     def get(self):
         user = self.user
@@ -1135,7 +1135,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
-    webapp2.Route('/rest/flattened_tracked_posts', FlattenedTrackedShopPostsHandler, name='flattened_tracked_posts'),
+    webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
 
     webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),

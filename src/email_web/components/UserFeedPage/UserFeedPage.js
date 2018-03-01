@@ -29,9 +29,7 @@ class UserFeedPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    activePosts: state.userTrackedShopPosts 
-      ? state.userTrackedShopPosts.active_posts 
-      : []
+    activePosts: state.userTrackedShopPosts
   }
 }
 
