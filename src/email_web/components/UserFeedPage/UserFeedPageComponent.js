@@ -7,7 +7,9 @@ const UserFeedPageComponent = ({
                                 activePosts
                               }) => (
   <div>
-    <h1 id="user-feed-page-title">All Active Sales</h1>
+    <h1 id="user-feed-page-title">
+      All Active Sales
+    </h1>
     {
       activePosts.map(post => 
         <UserFeedPagePostBlock
