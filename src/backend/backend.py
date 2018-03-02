@@ -794,7 +794,7 @@ class VerificationHandler(BaseHandler):
         elif verification_type == 's':
             self.redirect_to('settings')
         elif verification_type == 'f':
-            self.redirect_to('/')  # TODO: fill in with eventual feed url
+            self.redirect_to('home')
         else:
             logging.info('verification type not supported')
             self.abort(404)
@@ -1150,7 +1150,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
-    webapp2.Route('/my_feed', MainPage, name='my_feed'),
     webapp2.Route('/new', MainPage, name='new'),
     webapp2.Route('/shops', MainPage, name='shops'),
     webapp2.Route('/posts', MainPage, name='posts'),
