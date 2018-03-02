@@ -1,6 +1,8 @@
 #user-feed-page-title {
     text-align: center;
     margin-bottom: 30px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
 }
 
 .user-feed-post-block {

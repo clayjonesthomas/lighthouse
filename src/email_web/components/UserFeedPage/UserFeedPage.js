@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {push} from 'react-router-redux'
+import Spinner from '../../ui-kit/Spinner'
 
-import {pullUserData, pullUserTrackedShops} from '../../services/UserActions'
+import {pullUserTrackedShops} from '../../services/UserActions'
 
 import UserFeedPageComponent from './UserFeedPageComponent'
 
@@ -15,21 +15,34 @@ class UserFeedPage extends Component {
 
   render() {
     const {
-      activePosts
+      activePosts,
+      isLoadingPosts
     } = this.props
     return (
       <div className="text-page text-page-tall">
-        <UserFeedPageComponent
-          activePosts={activePosts}
-        />
+        {isLoadingPosts ?
+          <div>
+            <h1 id="user-feed-page-title">
+              All Active Sales
+            </h1>
+            <div>
+              <Spinner colorHex={"#aec7ea"}/>
+            </div>
+          </div>
+          :
+          <UserFeedPageComponent
+            activePosts={activePosts}
+          />
+        }
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    activePosts: state.userTrackedShopPosts
+    activePosts: state.userTrackedShopPosts,
+    isLoadingPosts: state.isLoadingPosts
   }
 }
 
