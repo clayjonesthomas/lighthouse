@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+</head>
+<body style="font-family: 'Roboto', sans-serif;">
+<table style="width: 100%;min-width: 400px;">
+    <tr>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #003091;text-align: center;padding: 10px;font-size: 24px;">
+                <table style="width: 35%;margin: 0 auto;">
+                    <tr>
+                        <th>
+                            <a href="https://lightho.us">
+                                <img style="max-width: 300px;"
+                                     src="https://lightho.us/blue_logo.png"
+                                     alt="lightho.us logo">
+                            </a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    {% for post in posts %}
+    <tr>
+        <td style="display: block;max-width: 500px;margin: 3px auto;">
+            <div style="background-color: #F0F0F0;padding: 10px;">
+                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
+                   style='text-decoration: none;'>
+                    {{post.get().shop_key.get().name}}
+                </a>
+                <div>
+                    {{post.get().title}}
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td>
+            <a href="{{feed_page_url}}"
+               style="display: block;text-align: center;margin: 3px auto;text-decoration: none;background-color: #f1f1f1;padding: 15px 0px;letter-spacing: 2px;max-width: 500px;font-weight: 600;">
+                See all active sales >>>
+            </a>
+        </td>
+    </tr>
+    <tr class="original-only">
+        <td>
+            <p style="text-align:center; font-size:10px">
+                <a href="{{settings_url}}">Settings</a>
+                &nbsp;|&nbsp;
+                <a href="{{unsubscribe_url}}">Unsubscribe</a>
+            </p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

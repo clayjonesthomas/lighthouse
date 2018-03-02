@@ -2,18 +2,17 @@
 
 @media screen and (min-width: 450px) {
     #settings-form-button {
-        margin-left: 50px;
+        margin-left: 0px;
     }
 
     .settings-section {
-        margin: 30px;
-        margin-left: 50px;
+        margin: 30px 0px;
     }
 }
 
 @media screen and (max-width: 450px) {
     .settings-section {
-        margin: 30px;
+        margin: 30px 0px;
     }
 
     #settings-form-spinner {
@@ -28,13 +27,13 @@
 }
 
 #update-settings-form {
-    margin-top: 80px;
-    min-width: 400px;
+    min-width: 300px;
 }
 
 #settings-form-title {
     font-family: 'Roboto', sans-serif;
-    margin-top: 100px;
+    text-align: center;
+    margin-top: 0px;
 }
 
 .section-title {
@@ -50,7 +49,6 @@
 
 .shop-picker-search > span {
     width: 100%;
-    max-width: 400px;
 }
 
 .shop-picker-search > span > div > div{
@@ -63,7 +61,6 @@
 
 
 .verification-container {
-    max-width: 400px;
     background-color: #ffcccc;
     padding: 5px;
     font-size: 14px;
@@ -120,4 +117,22 @@
 #settings-form-saved-message {
     float: left;
     margin-top: 24px;
+}
+
+.rc-tooltip-content {
+    max-width: 200px;
+}
+
+.info-box {
+    margin-left: 7px;
+    position: relative;
+    top: 1px;
+}
+
+#settings-loading-spinner {
+    margin-left: 50px;
+}
+
+#settings-submit-button-container {
+    overflow: auto;
 }
