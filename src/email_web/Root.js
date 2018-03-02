@@ -24,12 +24,13 @@ import {VERIFICATION_SUCCESS_PAGE} from './components/VerificationSuccessPage/Ve
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 import {WELCOME_PAGE} from './components/WelcomePage/WelcomePage'
+import {USER_FEED_PAGE} from './components/UserFeedPage/UserFeedPage'
 
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
   FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL, WELCOME_PAGE_URL,
   SETTINGS_PAGE_URL, VERIFIED_PAGE_URL, HOW_IT_WORKS_PAGE_URL, ADMIN_PAGE_URL,
-  TRACKED_SHOPS_URL, NEW_SHOP_URL} from './urls'
+  TRACKED_SHOPS_URL, NEW_SHOP_URL, USER_FEED_PAGE_URL} from './urls'
 
 const router = routerMiddleware(browserHistory)
 const store = createStore(
@@ -59,6 +60,7 @@ const Root = () => (
         <Route path={ADMIN_PAGE_URL} component={AdminPage}/>
         <Route path={TRACKED_SHOPS_URL} component={TrackedShopPage}/>
         <Route path={NEW_SHOP_URL} component={NewShopPage}/>
+        <Route path={USER_FEED_PAGE_URL} component={UserFeedPage}/>
         <Route path="*" component={NotFoundPage}/>
       </Route>
     </Router>
@@ -160,6 +162,15 @@ const HowItWorksPage = (props) => {
   return (
     <TextContainer
       page={HOW_IT_WORKS_PAGE}
+      {...props}
+    />
+  )
+}
+
+const UserFeedPage = (props) => {
+  return (
+    <TextContainer
+      page={USER_FEED_PAGE}
       {...props}
     />
   )

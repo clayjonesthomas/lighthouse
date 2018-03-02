@@ -1,7 +1,8 @@
 import {push} from 'react-router-redux'
 
 import {LOG_OUT_URL, USER_DATA_URL, 
-  USER_EMAIL_URL, LANDING_PAGE_URL}
+  USER_EMAIL_URL, LANDING_PAGE_URL, 
+  FLATTENED_TRACKED_POSTS_URL}
   from '../urls'
 import fetch from 'isomorphic-fetch'
 
@@ -13,6 +14,8 @@ export const USER_DATA_RETURN_FAILED = 'USER_DATA_RETURN_FAILED'
 export const USER_EMAIL_REQUEST = 'USER_EMAIL_REQUEST'
 export const USER_EMAIL_RETURN = 'USER_EMAIL_RETURN'
 export const USER_EMAIL_RETURN_FAILED = 'USER_EMAIL_RETURN_FAILED'
+export const USER_TRACKED_POSTS_REQUEST = 'USER_TRACKED_POSTS_REQUEST'
+export const USER_TRACKED_POSTS_RETURN = 'USER_TRACKED_POSTS_RETURN'
 
 const logOutRequest = () => {
   return {
@@ -125,5 +128,34 @@ export function pullUserEmail() {
           dispatch(userEmailReturnFailed())
       })
   }
+}
+
+const userPostsRequest = () => {
+  return {
+    type: USER_TRACKED_POSTS_REQUEST
+  }
+}
+
+const userPostsReturn = (posts) => {
+  return {
+    type: USER_TRACKED_POSTS_RETURN,
+    data: {
+      posts: posts
+    }
+  }
+}
+
+export function pullUserTrackedShops() {
+  const args = {
+    method: 'GET',
+    credentials: 'same-origin'
+  }
+  return dispatch => {
+    dispatch(userPostsRequest())
+    return fetch(FLATTENED_TRACKED_POSTS_URL, args)
+      .then(response => response.json())
+      .then(json => dispatch(userPostsReturn(json)))
+  }
+    
 }
 

@@ -1,7 +1,8 @@
 import {LOG_IN_RESPONSE} from '../components/LogInPage/LogInPageActions'
 import {SIGN_UP_RESPONSE} from '../components/SignUpPage/SignUpPageActions'
 import {LOG_OUT_RESPONSE, USER_DATA_RETURN, 
-  USER_DATA_RETURN_FAILED, USER_EMAIL_RETURN}
+  USER_DATA_RETURN_FAILED, USER_EMAIL_RETURN,
+  USER_TRACKED_POSTS_RETURN}
   from '../services/UserActions'
 
 import {MID_FREQUENCY_EMAIL} from '../components/SettingsPage/SettingsPageComponent'
@@ -59,6 +60,15 @@ export function userEmail(state = '', action) {
       return action.data.email
     case LOG_OUT_RESPONSE:
       return ''
+    default:
+      return state
+  }
+}
+
+export function userTrackedShopPosts(state = [], action) {
+  switch (action.type) {
+    case USER_TRACKED_POSTS_RETURN:
+      return action.data.posts.active_posts
     default:
       return state
   }

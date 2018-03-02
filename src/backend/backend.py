@@ -355,18 +355,6 @@ class Feed(BaseHandler):
         return result
 
 
-class MyPosts(BaseHandler):
-    def get(self, offset):
-        user = self.user
-        if not user:
-            return
-        _offset = int(offset)
-        fetched_posts = [post_key.get().prepare_post(user)
-                         for post_key in user.liked_posts[_offset:_offset + 10]]
-        logging.info("pulling liked posts from the datastore, {}".format(str(len(fetched_posts))))
-        self.response.write(json.dumps(fetched_posts))
-
-
 class SinglePost(BaseHandler):
     def post(self):
         user = self.user
@@ -927,12 +915,14 @@ class EmailHandler(BaseHandler):
                                          _full=True)
 
             important_posts, unimportant_posts = get_active_posts_for_user(user)
+            important_post_keys = [p.key for p in important_posts]
+            unimportant_post_keys = [p.key for p in unimportant_posts]
             send_just_unimportant = user.email_frequency == EmailFrequency.HIGH_FREQUENCY_EMAIL and unimportant_posts
 
             if important_posts or send_just_unimportant:
                 email = PostsEmail(to=user.key,
-                                   important_posts=important_posts,
-                                   unimportant_posts=unimportant_posts,
+                                   important_posts=important_post_keys,
+                                   unimportant_posts=unimportant_post_keys,
                                    unsubscribe_url=unsubscribe_url,
                                    settings_url=settings_url,
                                    feed_page_url=feed_page_url)
@@ -990,6 +980,25 @@ class TrackedShopsHandler(BaseHandler):
         self.response.write(json.dumps({'shops': shops}))
 
 
+class MyActivePostsHandler(BaseHandler):
+
+    def get(self):
+        user = self.user
+        if not user:
+            return
+        
+        all_active_posts = []
+        for shop_key in user.liked_shops:
+            shop = shop_key.get()
+            active_raw_shop_posts = Post.query(ndb.AND(Post.is_archived == False,
+                                              Post.shop_key == shop_key))
+
+            all_active_posts += [active_shop_post.prepare_post(user) for active_shop_post in active_raw_shop_posts]
+
+        sorted_active_posts = sorted(all_active_posts, key=lambda post: post['timestamp'], reverse=True)
+        self.response.write(json.dumps({'active_posts': sorted_active_posts}))       
+
+      
 class RedirectToShop(BaseHandler):
 
     def get(self, *args, **kwargs):
@@ -1124,15 +1133,16 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
-    webapp2.Route('/rest/my_posts/<offset:[0-9]*>', MyPosts, name='my_posts'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
+    webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
 
     webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),
     webapp2.Route('/new_password_success', MainPage, name='new_password_success'),
+    webapp2.Route('/home', UsersOnlyMainPage, name='home'),
     webapp2.Route('/settings', UsersOnlyMainPage, name='settings'),
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
     webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
