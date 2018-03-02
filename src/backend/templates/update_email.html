@@ -22,50 +22,35 @@
             </div>
         </td>
     </tr>
-    {% for i_post in important_posts %}
+    {% for post in posts %}
     <tr>
         <td style="display: block;max-width: 500px;margin: 3px auto;">
             <div style="background-color: #F0F0F0;padding: 10px;">
-                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, i_post.get().shop_key.urlsafe())}}"
+                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
                    style='text-decoration: none;'>
-                    {{i_post.get().shop_key.get().name}}
+                    {{post.get().shop_key.get().name}}
                 </a>
                 <div>
-                    {{i_post.get().title}}
+                    {{post.get().title}}
                 </div>
             </div>
         </td>
     </tr>
     {% endfor %}
-    {% if unimportant_posts %}
     <tr>
-        <td style="display: block;max-width: 500px;margin: 3px auto;">
-            <div style="background-color: #F0F0F0;padding: 10px;">
-                {% if unimportant_posts and important_posts%}
-                <div style="text-align: center;font-size: 18px;">Other Sales</div>
-                {% endif %}
-                {% for u_post in unimportant_posts %}
-                <div>
-                    <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, u_post.get().shop_key.urlsafe())}}"
-                       style='text-decoration: none;'>
-                        {{u_post.get().shop_key.get().name}}
-                    </a> - {{u_post.get().title}}
-                </div>
-                {% endfor %}
-            </div>
+        <td>
+            <a href="{{feed_page_url}}"
+               style="display: block;text-align: center;margin: 3px auto;text-decoration: none;background-color: #f1f1f1;padding: 15px 0px;letter-spacing: 2px;max-width: 500px;font-weight: 600;">
+                See all active sales >>>
+            </a>
         </td>
     </tr>
-    {% endif %}
     <tr class="original-only">
         <td>
             <p style="text-align:center; font-size:10px">
-                <a href="{{unsubscribe_url}}">
-                    Unsubscribe
-                </a>
+                <a href="{{settings_url}}">Settings</a>
                 &nbsp;|&nbsp;
-                <a href="{{settings_url}}">
-                    Update Settings
-                </a>
+                <a href="{{unsubscribe_url}}">Unsubscribe</a>
             </p>
         </td>
     </tr>
