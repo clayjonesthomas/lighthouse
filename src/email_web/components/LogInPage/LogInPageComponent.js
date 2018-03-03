@@ -86,7 +86,8 @@ const LogInPageComponent = ({
         {
           <p className="password-error">
             The email-password combination you gave isn't right.
-            &nbsp;<a tabIndex="-1">Recover your password?</a>
+            &nbsp;
+            <a onClick={goToForgotPassword} tabIndex="-1">Recover your password?</a>
           </p>
         }
       </FormGroup>
