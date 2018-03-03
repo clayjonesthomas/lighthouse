@@ -1147,7 +1147,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
     webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
     webapp2.Route('/login', GuestsOnlyPage, name='login_page'),
-    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/new', MainPage, name='new'),
@@ -1159,6 +1158,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
-    webapp2.Route('/', MainPage, name='home'),
+    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/<:.*>', MainPage, name='home_redirect'),
 ], debug=True, config=config)
