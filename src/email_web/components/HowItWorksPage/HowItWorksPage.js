@@ -1,5 +1,6 @@
 import React from 'react'
 
+import {PRIVACY_POLICY_PAGE_URL} from '../../urls'
 import "./HowItWorksPage.css"
 
 export const HOW_IT_WORKS_PAGE = 'HOW_IT_WORKS_PAGE'
@@ -34,6 +35,9 @@ const HowItWorksPage =
       </p>
       <p className="how-it-works-section">
         Still have questions? <a href="mailto:info@lightho.us" target="_top">Email our team!</a>
+      </p>
+      <p className="how-it-works-section">
+        <a href={PRIVACY_POLICY_PAGE_URL} tabIndex="-1">Privacy Policy</a>
       </p>
     </div>
   )

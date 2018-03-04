@@ -1,0 +1,15 @@
+#privacy-policy-page > .form-title {
+    text-align: center;
+}
+
+#privacy-policy-page {
+    font-family: 'Roboto', sans-serif;
+}
+
+.privacy-policy-section {
+    margin: 30px 0px;
+}
+
+.privacy-policy-sub-section {
+    margin: 10px 0px 30px 0px;
+}
