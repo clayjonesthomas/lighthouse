@@ -7,12 +7,12 @@ import Spinner from '../../ui-kit/Spinner'
 
 import "./ShopPickerComponent.css"
 
-const ShopPickerComponent = (
+const AddOnlyShopPickerComponent = (
   {
     className,
     shops,
     pickedShops,
-    onPickNewShop,
+    addOnlyOnPickNewShop,
     tabIndex,
     placeholder,
     areShopsLoading,
@@ -49,7 +49,6 @@ const ShopPickerComponent = (
           }
           return false
         }}
-        multiple
         selectHintOnEnter
         options={shops.sort((a, b) => {
           let aName = a.name.toUpperCase()
@@ -60,9 +59,8 @@ const ShopPickerComponent = (
             return 1
           return 0
         })}
-        placeholder={placeholder || "Search for your shops"}
-        selected={pickedShops}
-        onChange={onPickNewShop}
+        placeholder={placeholder || "Search for a shop to add"}
+        onChange = {addOnlyOnPickNewShop}
         maxHeight={200} // in pixels
         minLength={1}
       />
@@ -70,8 +68,4 @@ const ShopPickerComponent = (
   </div>
 )
 
-ShopPickerComponent.propTypes = {
-  onAddNewShop: PropTypes.func
-}
-
-export default ShopPickerComponent
+export default AddOnlyShopPickerComponent

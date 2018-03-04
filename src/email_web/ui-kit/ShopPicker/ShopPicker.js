@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import ShopPickerComponent from './ShopPickerComponent'
+import AddOnlyShopPickerComponent from './AddOnlyShopPickerComponent'
 
 import {pullAllShops} from '../../services/ShopDataActions'
 
@@ -16,22 +17,39 @@ class ShopPicker extends Component {
       shops,
       pickedShops,
       onPickedShopsChange,
+      addOnlyOnPickedShopsChange,
       placeholder,
       tabIndex,
-      areShopsLoading
+      areShopsLoading,
+      isAddOnly
     } = this.props
 
     return (
-      <ShopPickerComponent
-        tabIndex={tabIndex}
-        className={className}
-        shops={shops || []}
-        onPickNewShop={shop => {
-          onPickedShopsChange(shop)}}
-        pickedShops={pickedShops}
-        placeholder={placeholder}
-        areShopsLoading={areShopsLoading}
-      />
+      <div>
+        {!isAddOnly ?
+          <ShopPickerComponent
+            tabIndex={tabIndex}
+            className={className}
+            shops={shops || []}
+            onPickNewShop={shop => {
+              onPickedShopsChange(shop)}}
+            pickedShops={pickedShops}
+            placeholder={placeholder}
+            areShopsLoading={areShopsLoading}
+          />
+          :
+          <AddOnlyShopPickerComponent
+            tabIndex={tabIndex}
+            className={className}
+            shops={shops || []}
+            addOnlyOnPickNewShop={shop => {
+              addOnlyOnPickedShopsChange(shop)}}
+            pickedShops={pickedShops}
+            placeholder={placeholder}
+            areShopsLoading={areShopsLoading}
+          />
+        }
+      </div>
     )
   }
 }
@@ -41,14 +59,16 @@ function mapStateToProps(state, ownProps) {
     shops:  state.allShops.shopList,
     areShopsLoading: state.allShops.isLoading,
     pickedShops: ownProps.selectedShops,
-    placeholder: ownProps.placeholder
+    placeholder: ownProps.placeholder,
+    isAddOnly: ownProps.isAddOnly
   })
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
     getAllShops: () => dispatch(pullAllShops()),
-    onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops))
+    onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops)),
+    addOnlyOnPickedShopsChange: (shop) => dispatch(ownProps.addOnlyOnPickedShopsChange(shop))
   }
 }
 
