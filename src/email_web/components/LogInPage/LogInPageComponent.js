@@ -1,6 +1,8 @@
 import React from 'react'
 import {FormGroup, FormControl} from 'react-bootstrap'
 
+import {FORGOT_PASSWORD_URL} from '../../urls'
+
 import "./LogInPageComponent.css"
 import "../SignUpPage/SignUpPageComponent.css"
 import "../LandingPage/LandingPageComponent.css"
@@ -34,7 +36,6 @@ const LogInPageComponent = ({
                               hasAttemptedSubmission,
                               invalidEmailPass,
                               onGoToSignUp,
-                              goToForgotPassword,
                               displaySpinner,
                               requestInProgress
                             }) => (
@@ -87,7 +88,7 @@ const LogInPageComponent = ({
           <p className="password-error">
             The email-password combination you gave isn't right.
             &nbsp;
-            <a onClick={goToForgotPassword} tabIndex="-1">Recover your password?</a>
+            <a href={FORGOT_PASSWORD_URL} tabIndex="-1">Recover your password?</a>
           </p>
         }
       </FormGroup>
@@ -100,7 +101,7 @@ const LogInPageComponent = ({
       />
       {displaySpinner && 
          <div id="login-form-spinner"><Spinner colorHex={"#f1f1f1"}/></div>}
-      <a onClick={goToForgotPassword} tabIndex="-1">Forgot Password</a>
+      <a href={FORGOT_PASSWORD_URL} tabIndex="-1">Forgot Password</a>
     </div>
   </form>
 )
