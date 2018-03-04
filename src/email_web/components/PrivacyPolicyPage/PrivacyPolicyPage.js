@@ -5,9 +5,7 @@ import "./PrivacyPolicyPage.css"
 export const PRIVACY_POLICY_PAGE = 'PRIVACY_POLICY_PAGE'
 
 const PrivacyPolicyPage =
-  ({
-    goToPrivacyPolicy
-  }) => (
+  ({}) => (
     <div 
       id="privacy-policy-page"
       className="text-page text-page-tall"
@@ -28,7 +26,7 @@ const PrivacyPolicyPage =
       <p className="privacy-policy-sub-section">
         <span>
           {
-            "Like most web-based services, Lightho.us " +
+            "Like most web-based services, lightho.us " +
             "uses cookies to gather information about " +
             "how its users are using the service. " +
             "Cookies are little pieces of information " +
@@ -67,7 +65,7 @@ const PrivacyPolicyPage =
           "First-party cookies are the cookies a website serves " +
           "its users so it can function properly. We strongly " +
           "encourage you to leave these cookies enabled as you " +
-          "may encounter difficulty using Lightho.us if you " +
+          "may encounter difficulty using lightho.us if you " +
           "prevent them."
         }
       </p>
