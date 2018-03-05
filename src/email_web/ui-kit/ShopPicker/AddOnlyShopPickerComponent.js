@@ -19,7 +19,10 @@ const AddOnlyShopPickerComponent = (
     placeholder,
     areShopsLoading,
   }) => (
-  <div className={className + " shop-picker-search"}>
+  <div 
+    id="add-only-shop-picker"
+    className={className + " shop-picker-search"}
+  >
     <InputGroup>
       <Typeahead
         ref={onAddShopPickerRef}

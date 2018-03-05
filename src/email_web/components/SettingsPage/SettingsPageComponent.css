@@ -47,6 +47,14 @@
     margin-bottom: 40px;
 }
 
+.settings-shop-picker-box > span > div > div {
+    background-color: #fdfdfd;
+}
+
+.settings-shop-picker-box > span > div > ul {
+    background-color: #fdfdfd;
+}
+
 .shop-picker-search > span {
     width: 100%;
 }
