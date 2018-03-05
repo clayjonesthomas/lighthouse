@@ -4,6 +4,8 @@ import ShopPickerComponent from './ShopPickerComponent'
 import AddOnlyShopPickerComponent from './AddOnlyShopPickerComponent'
 
 import {pullAllShops} from '../../services/ShopDataActions'
+import {addShopPickerRef, clearAddOnlyShopPicker} 
+  from './ShopPickerActions'
 
 class ShopPicker extends Component {
 
@@ -18,6 +20,8 @@ class ShopPicker extends Component {
       pickedShops,
       onPickedShopsChange,
       addOnlyOnPickedShopsChange,
+      onAddShopPickerRef,
+      clearAddOnlyShopPicker,
       placeholder,
       tabIndex,
       areShopsLoading,
@@ -44,6 +48,9 @@ class ShopPicker extends Component {
             shops={shops || []}
             addOnlyOnPickNewShop={shop => {
               addOnlyOnPickedShopsChange(shop)}}
+            onAddShopPickerRef={ref => {
+              onAddShopPickerRef(ref)}}
+            clearAddOnlyShopPicker={clearAddOnlyShopPicker}
             pickedShops={pickedShops}
             placeholder={placeholder}
             areShopsLoading={areShopsLoading}
@@ -68,7 +75,9 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     getAllShops: () => dispatch(pullAllShops()),
     onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops)),
-    addOnlyOnPickedShopsChange: (shop) => dispatch(ownProps.addOnlyOnPickedShopsChange(shop))
+    addOnlyOnPickedShopsChange: (shop) => dispatch(ownProps.addOnlyOnPickedShopsChange(shop)),
+    onAddShopPickerRef: (ref) => dispatch(addShopPickerRef(ref)),
+    clearAddOnlyShopPicker: () => dispatch(clearAddOnlyShopPicker()),
   }
 }
 

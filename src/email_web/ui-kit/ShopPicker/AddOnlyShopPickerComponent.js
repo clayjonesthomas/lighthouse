@@ -13,6 +13,8 @@ const AddOnlyShopPickerComponent = (
     shops,
     pickedShops,
     addOnlyOnPickNewShop,
+    onAddShopPickerRef,
+    clearAddOnlyShopPicker,
     tabIndex,
     placeholder,
     areShopsLoading,
@@ -20,6 +22,7 @@ const AddOnlyShopPickerComponent = (
   <div className={className + " shop-picker-search"}>
     <InputGroup>
       <Typeahead
+        ref={onAddShopPickerRef}
         inputProps={{"tabIndex":tabIndex}}
         // TODO hide the (incorrect) warning this produces
         // issue caused from line 490 of typeaheadContainer.js
@@ -59,8 +62,13 @@ const AddOnlyShopPickerComponent = (
             return 1
           return 0
         })}
-        placeholder={placeholder || "Search for a shop to add"}
-        onChange = {addOnlyOnPickNewShop}
+        placeholder={placeholder || "Add a shop..."}
+        onChange = {shop => {
+          addOnlyOnPickNewShop(shop)
+          if (shop.length) {
+            clearAddOnlyShopPicker()
+          }
+        }}
         maxHeight={200} // in pixels
         minLength={1}
       />

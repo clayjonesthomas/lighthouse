@@ -11,6 +11,7 @@ import {settings} from './components/SettingsPage/settingsReducer'
 import {admin} from './components/admin/AdminPage/adminReducer'
 import {trackedShops} from './components/admin/TrackedShopPage/trackedShopReducer'
 import {newShop} from './components/admin/NewShopPage/newShopReducer'
+import {addOnlyShopPickerRef} from './ui-kit/ShopPicker/shopPickerReducer'
 
 export default combineReducers({
   allShops,
@@ -26,5 +27,6 @@ export default combineReducers({
   admin,
   trackedShops,
   newShop,
+  addOnlyShopPickerRef,
   routing: routerReducer
 })
