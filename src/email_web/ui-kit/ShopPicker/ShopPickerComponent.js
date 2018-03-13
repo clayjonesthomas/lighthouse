@@ -17,7 +17,10 @@ const ShopPickerComponent = (
     placeholder,
     areShopsLoading,
   }) => (
-  <div className={className + " shop-picker-search"}>
+  <div 
+    id="removeable-shop-picker"
+    className={className + " shop-picker-search"}
+  >
     <InputGroup>
       <Typeahead
         inputProps={{"tabIndex":tabIndex}}

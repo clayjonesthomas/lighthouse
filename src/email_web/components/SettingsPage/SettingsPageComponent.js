@@ -85,12 +85,14 @@ const SettingsPageComponent = ({
           onPickedShopsChange={onPickedShopsChange}
           addOnlyOnPickedShopsChange={addOnlyOnPickedShopsChange}
         />
-        <ShopPicker
-          className="settings-shop-picker-box shop-picker-box"
-          isAddOnly={false}
-          selectedShops={selectedShops}
-          onPickedShopsChange={onPickedShopsChange}
-        />
+        {selectedShops.length > 0 &&
+          <ShopPicker
+            className="settings-shop-picker-box shop-picker-box"
+            isAddOnly={false}
+            selectedShops={selectedShops}
+            onPickedShopsChange={onPickedShopsChange}
+          />
+        }
       </div>
     </FormGroup>
     <FormGroup
