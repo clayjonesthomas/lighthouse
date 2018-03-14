@@ -25,7 +25,8 @@ class ShopPicker extends Component {
       placeholder,
       tabIndex,
       areShopsLoading,
-      isAddOnly
+      isAddOnly,
+      isReadOnly
     } = this.props
 
     return (
@@ -33,13 +34,14 @@ class ShopPicker extends Component {
         {!isAddOnly ?
           <ShopPickerComponent
             tabIndex={tabIndex}
-            className={className}
+            className={className + " read-only-picker"}
             shops={shops || []}
             onPickNewShop={shop => {
               onPickedShopsChange(shop)}}
             pickedShops={pickedShops}
             placeholder={placeholder}
             areShopsLoading={areShopsLoading}
+            isReadOnly={isReadOnly}
           />
           :
           <AddOnlyShopPickerComponent
@@ -67,7 +69,8 @@ function mapStateToProps(state, ownProps) {
     areShopsLoading: state.allShops.isLoading,
     pickedShops: ownProps.selectedShops,
     placeholder: ownProps.placeholder,
-    isAddOnly: ownProps.isAddOnly
+    isAddOnly: ownProps.isAddOnly,
+    isReadOnly: ownProps.isReadOnly
   })
 }
 

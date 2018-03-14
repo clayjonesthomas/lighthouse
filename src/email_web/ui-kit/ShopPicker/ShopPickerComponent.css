@@ -61,8 +61,12 @@ ul::-webkit-scrollbar-thumb {
     border: 4px solid #f1f1f1;
 }
 
-#removeable-shop-picker {
+#removeable-shop-picker.settings-shop-picker-box {
     position: relative;
     top: -40px;
     margin-bottom: 0px;
+}
+
+.read-only-picker .form-control {
+    background-color: #f0f0f0;
 }

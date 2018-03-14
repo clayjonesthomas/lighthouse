@@ -17,7 +17,7 @@ const AddOnlyShopPickerComponent = (
     clearAddOnlyShopPicker,
     tabIndex,
     placeholder,
-    areShopsLoading,
+    areShopsLoading
   }) => (
   <div 
     id="add-only-shop-picker"

@@ -62,6 +62,7 @@ const SignUpPageComponent = ({
         isAddOnly={false}
         selectedShops={selectedShops || []}
         onPickedShopsChange={onPickedShopsChange}
+        isReadOnly={false}
       />
       <HelpBlock
         className="helper-text"

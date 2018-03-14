@@ -84,6 +84,7 @@ const SettingsPageComponent = ({
           selectedShops={selectedShops}
           onPickedShopsChange={onPickedShopsChange}
           addOnlyOnPickedShopsChange={addOnlyOnPickedShopsChange}
+          isReadOnly={false}
         />
         {selectedShops.length > 0 &&
           <ShopPicker
@@ -91,6 +92,7 @@ const SettingsPageComponent = ({
             isAddOnly={false}
             selectedShops={selectedShops}
             onPickedShopsChange={onPickedShopsChange}
+            isReadOnly={true}
           />
         }
       </div>

@@ -16,14 +16,18 @@ const ShopPickerComponent = (
     tabIndex,
     placeholder,
     areShopsLoading,
+    isReadOnly
   }) => (
   <div 
     id="removeable-shop-picker"
     className={className + " shop-picker-search"}
   >
-    <InputGroup>
+    <InputGroup readOnly>
       <Typeahead
-        inputProps={{"tabIndex":tabIndex}}
+        inputProps={{
+          "tabIndex":tabIndex,
+          readOnly: isReadOnly
+        }}
         // TODO hide the (incorrect) warning this produces
         // issue caused from line 490 of typeaheadContainer.js
         // see https://github.com/ericgio/react-bootstrap-typeahead/issues/292
