@@ -22,10 +22,10 @@ const ShopPickerComponent = (
     id="removeable-shop-picker"
     className={className + " shop-picker-search"}
   >
-    <InputGroup readOnly>
+    <InputGroup>
       <Typeahead
         inputProps={{
-          "tabIndex":tabIndex,
+          "tabIndex": tabIndex,
           readOnly: isReadOnly
         }}
         // TODO hide the (incorrect) warning this produces

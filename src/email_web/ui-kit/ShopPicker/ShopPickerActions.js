@@ -1,20 +1,20 @@
 import fetch from 'isomorphic-fetch'
 
-export const ADD_SHOP_PICKER_REF = 'ADD_SHOP_PICKER_REF'
+export const WRITE_SINGLE_SHOP_PICKER_REF = 'WRITE_SINGLE_SHOP_PICKER_REF'
 
-export const addShopPickerRef = (ref) => {
+export const writeSingleShopPickerRef = (ref) => {
   return {
-    type: ADD_SHOP_PICKER_REF,
+    type: WRITE_SINGLE_SHOP_PICKER_REF,
     data: {
       ref: ref
     }
   }
 }
 
-export function clearAddOnlyShopPicker() {
+export function clearWriteSingleShopOnlyShopPicker() {
   return (dispatch, getState) => {
     const state = getState()
-    const shopPicker = state.addOnlyShopPickerRef
+    const shopPicker = state.writeSingleShopOnlyShopPickerRef
     if(shopPicker){
       shopPicker.getInstance().clear()
     }

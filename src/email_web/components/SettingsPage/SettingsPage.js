@@ -4,7 +4,7 @@ import _ from 'underscore'
 
 import {emailFrequencyChange, pickedShopsChange, 
   resendVerificationEmail, submitSettingsForm,
-  closeNotification, addOnlyPickedShopsChange} 
+  closeNotification, writeSingleShopOnlyPickedShopsChange} 
   from './SettingsPageActions'
 import {pullUserData} from '../../services/UserActions'
 import SettingsPageComponent from './SettingsPageComponent'
@@ -28,7 +28,7 @@ class SettingsPage extends Component {
       displaySpinner,
       showSavedMessage,
       onPickedShopsChange,
-      addOnlyOnPickedShopsChange,
+      writeSingleShopOnlyOnPickedShopsChange,
       handleEmailFrequencyChange,
       onSubmitSettings,
       isVerified,
@@ -57,7 +57,7 @@ class SettingsPage extends Component {
             displaySpinner={displaySpinner}
             showSavedMessage={showSavedMessage}
             onPickedShopsChange={onPickedShopsChange}
-            addOnlyOnPickedShopsChange={addOnlyOnPickedShopsChange}
+            writeSingleShopOnlyOnPickedShopsChange={writeSingleShopOnlyOnPickedShopsChange}
             handleEmailFrequencyChange={handleEmailFrequencyChange}
             onSubmitSettings={onSubmitSettings}
             isVerified={isVerified}
@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch) => {
     closeNotification: () => dispatch(closeNotification()),
     getUserData: () => dispatch(pullUserData()),
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
-    addOnlyOnPickedShopsChange: (shop) => dispatch(addOnlyPickedShopsChange(shop)),
+    writeSingleShopOnlyOnPickedShopsChange: (shop) => dispatch(writeSingleShopOnlyPickedShopsChange(shop)),
     handleEmailFrequencyChange: (e) => dispatch(emailFrequencyChange(e.target.value)),
     onSubmitSettings: (e) => {
       e.preventDefault()

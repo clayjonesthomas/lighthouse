@@ -2,7 +2,7 @@ import _ from 'underscore'
 import {EMAIL_FREQUENCY_CHANGE, PICKED_SHOPS_CHANGE, 
   UPDATE_SETTINGS_REQUEST, UPDATE_SETTINGS_RETURN, 
   SETTINGS_SPINNER_TIMEOUT, SENT_RESEND_VERIFICATION,
-  CLOSE_NOTIFICATION, ADD_ONLY_PICKED_SHOPS_CHANGE} 
+  CLOSE_NOTIFICATION, WRITE_SINGLE_ONLY_PICKED_SHOPS_CHANGE} 
   from './SettingsPageActions'
 import {USER_DATA_RETURN, LOG_OUT_RESPONSE}
   from '../../services/UserActions'
@@ -35,7 +35,7 @@ export function settings(state = defaultSettingsState, action) {
         selectedShops: action.data,
         showSavedMessage: false
       })
-    case ADD_ONLY_PICKED_SHOPS_CHANGE:
+    case WRITE_SINGLE_ONLY_PICKED_SHOPS_CHANGE:
       return Object.assign({}, state, {
         selectedShops: _.contains(state.selectedShops, action.data[0]) ? 
           state.selectedShops

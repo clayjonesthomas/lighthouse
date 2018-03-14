@@ -4,7 +4,7 @@ import ShopPickerComponent from './ShopPickerComponent'
 import AddOnlyShopPickerComponent from './AddOnlyShopPickerComponent'
 
 import {pullAllShops} from '../../services/ShopDataActions'
-import {addShopPickerRef, clearAddOnlyShopPicker} 
+import {writeSingleShopPickerRef, clearWriteSingleShopOnlyShopPicker} 
   from './ShopPickerActions'
 
 class ShopPicker extends Component {
@@ -19,19 +19,19 @@ class ShopPicker extends Component {
       shops,
       pickedShops,
       onPickedShopsChange,
-      addOnlyOnPickedShopsChange,
-      onAddShopPickerRef,
-      clearAddOnlyShopPicker,
+      writeSingleShopOnlyOnPickedShopsChange,
+      writeSingleShopPickerRef,
+      clearWriteSingleShopOnlyShopPicker,
       placeholder,
       tabIndex,
       areShopsLoading,
-      isAddOnly,
+      isWriteSingleShopOnly,
       isReadOnly
     } = this.props
 
     return (
       <div>
-        {!isAddOnly ?
+        {!isWriteSingleShopOnly ?
           <ShopPickerComponent
             tabIndex={tabIndex}
             className={className + " read-only-picker"}
@@ -48,11 +48,11 @@ class ShopPicker extends Component {
             tabIndex={tabIndex}
             className={className}
             shops={shops || []}
-            addOnlyOnPickNewShop={shop => {
-              addOnlyOnPickedShopsChange(shop)}}
-            onAddShopPickerRef={ref => {
-              onAddShopPickerRef(ref)}}
-            clearAddOnlyShopPicker={clearAddOnlyShopPicker}
+            writeSingleShopOnlyOnPickNewShop={shop => {
+              writeSingleShopOnlyOnPickedShopsChange(shop)}}
+            writeSingleShopPickerRef={ref => {
+              writeSingleShopPickerRef(ref)}}
+            clearWriteSingleShopOnlyShopPicker={clearWriteSingleShopOnlyShopPicker}
             pickedShops={pickedShops}
             placeholder={placeholder}
             areShopsLoading={areShopsLoading}
@@ -69,7 +69,7 @@ function mapStateToProps(state, ownProps) {
     areShopsLoading: state.allShops.isLoading,
     pickedShops: ownProps.selectedShops,
     placeholder: ownProps.placeholder,
-    isAddOnly: ownProps.isAddOnly,
+    isWriteSingleShopOnly: ownProps.isWriteSingleShopOnly,
     isReadOnly: ownProps.isReadOnly
   })
 }
@@ -78,9 +78,9 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     getAllShops: () => dispatch(pullAllShops()),
     onPickedShopsChange: (shops) => dispatch(ownProps.onPickedShopsChange(shops)),
-    addOnlyOnPickedShopsChange: (shop) => dispatch(ownProps.addOnlyOnPickedShopsChange(shop)),
-    onAddShopPickerRef: (ref) => dispatch(addShopPickerRef(ref)),
-    clearAddOnlyShopPicker: () => dispatch(clearAddOnlyShopPicker()),
+    writeSingleShopOnlyOnPickedShopsChange: (shop) => dispatch(ownProps.writeSingleShopOnlyOnPickedShopsChange(shop)),
+    writeSingleShopPickerRef: (ref) => dispatch(writeSingleShopPickerRef(ref)),
+    clearWriteSingleShopOnlyShopPicker: () => dispatch(clearWriteSingleShopOnlyShopPicker()),
   }
 }
 

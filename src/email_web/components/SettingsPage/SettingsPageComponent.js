@@ -26,7 +26,7 @@ const SettingsPageComponent = ({
                                  displaySpinner,
                                  showSavedMessage,
                                  onPickedShopsChange,
-                                 addOnlyOnPickedShopsChange,
+                                 writeSingleShopOnlyOnPickedShopsChange,
                                  handleEmailFrequencyChange,
                                  onSubmitSettings,
                                  isVerified,
@@ -80,16 +80,16 @@ const SettingsPageComponent = ({
         <h2 className="section-title">Update Your Shops</h2>
         <ShopPicker
           className="settings-shop-picker-box shop-picker-box"
-          isAddOnly={true}
+          isWriteSingleShopOnly={true}
           selectedShops={selectedShops}
           onPickedShopsChange={onPickedShopsChange}
-          addOnlyOnPickedShopsChange={addOnlyOnPickedShopsChange}
+          writeSingleShopOnlyOnPickedShopsChange={writeSingleShopOnlyOnPickedShopsChange}
           isReadOnly={false}
         />
         {selectedShops.length > 0 &&
           <ShopPicker
             className="settings-shop-picker-box shop-picker-box"
-            isAddOnly={false}
+            isWriteSingleShopOnly={false}
             selectedShops={selectedShops}
             onPickedShopsChange={onPickedShopsChange}
             isReadOnly={true}
