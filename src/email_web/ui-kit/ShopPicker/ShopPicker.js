@@ -1,7 +1,6 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import ShopPickerComponent from './ShopPickerComponent'
-import AddOnlyShopPickerComponent from './AddOnlyShopPickerComponent'
 
 import {pullAllShops} from '../../services/ShopDataActions'
 import {writeSingleShopPickerRef, clearWriteSingleShopOnlyShopPicker} 
@@ -42,20 +41,24 @@ class ShopPicker extends Component {
             placeholder={placeholder}
             areShopsLoading={areShopsLoading}
             isReadOnly={isReadOnly}
+            isWriteSingleShopOnly={false}
           />
           :
-          <AddOnlyShopPickerComponent
+          <ShopPickerComponent
             tabIndex={tabIndex}
             className={className}
             shops={shops || []}
-            writeSingleShopOnlyOnPickNewShop={shop => {
-              writeSingleShopOnlyOnPickedShopsChange(shop)}}
+            onPickNewShop={shop => {
+              writeSingleShopOnlyOnPickedShopsChange(shop)
+            }}
             writeSingleShopPickerRef={ref => {
               writeSingleShopPickerRef(ref)}}
             clearWriteSingleShopOnlyShopPicker={clearWriteSingleShopOnlyShopPicker}
             pickedShops={pickedShops}
             placeholder={placeholder}
             areShopsLoading={areShopsLoading}
+            isReadOnly={false}
+            isWriteSingleShopOnly={true}
           />
         }
       </div>

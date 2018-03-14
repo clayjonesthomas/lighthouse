@@ -16,14 +16,18 @@ const ShopPickerComponent = (
     tabIndex,
     placeholder,
     areShopsLoading,
-    isReadOnly
+    isReadOnly,
+    isWriteSingleShopOnly,
+    writeSingleShopPickerRef,
+    clearWriteSingleShopOnlyShopPicker,
   }) => (
   <div 
-    id="removeable-shop-picker"
+    id={isWriteSingleShopOnly ? "" : "removeable-shop-picker"}
     className={className + " shop-picker-search"}
   >
     <InputGroup>
       <Typeahead
+        ref={writeSingleShopPickerRef}
         inputProps={{
           "tabIndex": tabIndex,
           readOnly: isReadOnly
@@ -56,7 +60,7 @@ const ShopPickerComponent = (
           }
           return false
         }}
-        multiple
+        multiple={!isWriteSingleShopOnly}
         selectHintOnEnter
         options={shops.sort((a, b) => {
           let aName = a.name.toUpperCase()
@@ -68,10 +72,16 @@ const ShopPickerComponent = (
           return 0
         })}
         placeholder={placeholder || "Search for your shops"}
-        selected={pickedShops}
-        onChange={onPickNewShop}
+        selected={isWriteSingleShopOnly ? [] : pickedShops}
+        onChange = {shop => {
+          onPickNewShop(shop)
+          if (isWriteSingleShopOnly && shop.length) {
+            clearWriteSingleShopOnlyShopPicker()
+          }
+        }}
         maxHeight={200} // in pixels
         minLength={1}
+
       />
     </InputGroup>
   </div>
