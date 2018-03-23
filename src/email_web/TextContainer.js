@@ -7,17 +7,20 @@ import WelcomePage from './components/WelcomePage/WelcomePage'
 import HowItWorksPage from './components/HowItWorksPage/HowItWorksPage'
 import SettingsPage from './components/SettingsPage/SettingsPage'
 import UserFeedPage from './components/UserFeedPage/UserFeedPage'
+import PrivacyPolicyPage from './components/PrivacyPolicyPage/PrivacyPolicyPage'
 
 import {logOut, pullUserEmail} from './services/UserActions'
 
 
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, SETTINGS_PAGE_URL,
-  LANDING_PAGE_URL, HOW_IT_WORKS_PAGE_URL, USER_FEED_PAGE_URL} from './urls'
+  LANDING_PAGE_URL, HOW_IT_WORKS_PAGE_URL, USER_FEED_PAGE_URL,
+  PRIVACY_POLICY_PAGE_URL} from './urls'
 
 import {WELCOME_PAGE} from './components/WelcomePage/WelcomePage'
 import {HOW_IT_WORKS_PAGE} from './components/HowItWorksPage/HowItWorksPage'
 import {SETTINGS_PAGE} from './components/SettingsPage/SettingsPage'
 import {USER_FEED_PAGE} from './components/UserFeedPage/UserFeedPage'
+import {PRIVACY_POLICY_PAGE} from './components/PrivacyPolicyPage/PrivacyPolicyPage'
 
 import "./TextContainer.css"
 class TextContainer extends Component {
@@ -62,6 +65,9 @@ class TextContainer extends Component {
         }
         {page === USER_FEED_PAGE &&
         <UserFeedPage/>
+        }
+        {page === PRIVACY_POLICY_PAGE &&
+        <PrivacyPolicyPage/>
         }
       </div>
     )

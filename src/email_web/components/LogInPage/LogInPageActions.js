@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import {push} from 'react-router-redux'
 
-import {LOG_IN_URL, FORGOT_PASSWORD_BACKEND_URL, USER_FEED_PAGE_URL}
+import {LOG_IN_URL, USER_FEED_PAGE_URL}
   from '../../urls'
 import {validateEmail} from './LogInPageComponent'
 
@@ -104,20 +104,6 @@ function _submitLogInForm(dispatch, getState) {
     })
 }
 
-export function sendForgotPasswordEmail() {
-  return (dispatch, getState) => {
-    const state = getState()
-    const email = state.login.email
-    const args = {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: JSON.stringify({
-        email: email
-      })
-    }
-    return fetch(FORGOT_PASSWORD_BACKEND_URL, args)
-  }
-}
 
 export function shouldShowLoginSpinnerTimer() {
    const SPINNER_MIN_DURATION = 1000 //ms
