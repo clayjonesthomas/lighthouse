@@ -16,6 +16,11 @@ handlers:
   upload: bundle\.js
   secure: always
 
+- url: /example_email
+  static_files: static/example_email.png
+  upload: static/example_email.png
+  secure: always
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon.ico
