@@ -5,7 +5,7 @@ import NewShopComponent from './NewShopComponent'
 
 import {
   shopNameChange, shopSiteChange, submitNewShop,
-  shopAltNamesChange
+  shopAltNamesChange, shopIconUrlChange
 }from './NewShopActions'
 
 class NewShopPage extends Component {
@@ -18,6 +18,8 @@ class NewShopPage extends Component {
       onShopAltNamesChange,
       shopSiteValue,
       onShopSiteChange,
+      shopIconUrlValue,
+      onShopIconUrlChange,
       submitNewShop
     } = this.props
     return <NewShopComponent
@@ -27,6 +29,8 @@ class NewShopPage extends Component {
       onShopAltNamesChange={onShopAltNamesChange}
       shopSiteValue={shopSiteValue}
       onShopSiteChange={onShopSiteChange}
+      shopIconUrlValue={shopIconUrlValue}
+      onShopIconUrlChange={onShopIconUrlChange}
       submitNewShop={submitNewShop}
     />
   }
@@ -36,7 +40,8 @@ const mapStateToProps = (state) => {
   return {
     shopNameValue: state.newShop.shopNameValue,
     shopSiteValue: state.newShop.shopSiteValue,
-    shopAltNamesValue: state.newShop.shopAltNamesValue
+    shopAltNamesValue: state.newShop.shopAltNamesValue,
+    shopIconUrlValue: state.newShop.shopIconUrlValue
   }
 }
 
@@ -48,6 +53,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(shopAltNamesChange(e.target.value)),
     onShopSiteChange: (e) =>
       dispatch(shopSiteChange(e.target.value)),
+    onShopIconUrlChange: (e) =>
+      dispatch(shopIconUrlChange(e.target.value)),
     submitNewShop: (e) => {
       e.preventDefault()
       dispatch(submitNewShop())

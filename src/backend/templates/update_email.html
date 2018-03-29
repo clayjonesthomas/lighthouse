@@ -26,15 +26,17 @@
     <tr>
         <td style="display: block;max-width: 500px;margin: 3px auto;">
             <div style="background-color: #F0F0F0;padding: 10px;">
+                {% if post.get().shop_key.get().icon_url is not none %}
                 <a 
                     href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
                     style="text-decoration: none;"
                 >
                     <img 
-                        src="{}"
-                        style="display: inline-block; height: 50px; margin-right: 5px"
+                        src="{{'https://lightho.us/' + post.get().shop_key.get().icon_url + '.png'}}"
+                        style="display: inline-block; height: 50px; width: 50px; object-fit: cover; margin-right: 5px"
                     >
                 </a>
+                {% endif %}
                 <div style='display: inline-block; vertical-align: top;'>
                     <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
                        style='text-decoration: none;'>

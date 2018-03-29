@@ -6,6 +6,7 @@ import {NEW_SHOP_BACKEND_URL}
 export const ADMIN_SHOP_NAME_CHANGE = "ADMIN_SHOP_NAME_CHANGE"
 export const ADMIN_SHOP_SITE_CHANGE = "ADMIN_SHOP_SITE_CHANGE"
 export const ADMIN_SHOP_ALT_NAMES_CHANGE = "ADMIN_SHOP_ALT_NAMES_CHANGE"
+export const ADMIN_SHOP_ICON_URL_CHANGE = "ADMIN_SHOP_ICON_URL_CHANGE"
 export const NEW_SHOP_REQUEST = "NEW_SHOP_REQUEST"
 export const NEW_SHOP_RESPONSE = "NEW_SHOP_RESPONSE"
 
@@ -30,6 +31,13 @@ export const shopSiteChange = (value) => {
   }
 }
 
+export const shopIconUrlChange = (value) => {
+  return {
+    type: ADMIN_SHOP_ICON_URL_CHANGE,
+    data: value
+  }
+}
+
 export const newShopRequest = () => {
   return {
     type: NEW_SHOP_REQUEST
@@ -48,6 +56,7 @@ export function submitNewShop() {
     const name = state.newShop.shopNameValue
     const site = state.newShop.shopSiteValue
     const altNames = state.newShop.shopAltNamesValue
+    const iconUrl = state.newShop.shopIconUrlValue
 
     const args = {
       method: 'POST',
@@ -55,7 +64,8 @@ export function submitNewShop() {
       body: JSON.stringify({
         name: name,
         site: site,
-        alternateNames: altNames
+        alternateNames: altNames,
+        iconUrl: iconUrl
       })
     }
 

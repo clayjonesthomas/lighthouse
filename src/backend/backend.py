@@ -632,8 +632,8 @@ class SingleShop(BaseHandler):
             shop = Shop(
                 name=body['name'],
                 website=body['site'],
-                alternate_names=alt_names
-                # icon_url=body['icon_url']
+                alternate_names=alt_names,
+                icon_url=body['iconUrl']
             )
             shop.put()
             self.response.write(json.dumps({'success': True}))

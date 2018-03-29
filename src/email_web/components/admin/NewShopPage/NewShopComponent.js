@@ -9,6 +9,8 @@ const NewShopComponent =
      onShopAltNamesChange,
      shopSiteValue,
      onShopSiteChange,
+     shopIconUrlValue,
+     onShopIconUrlChange,
      submitNewShop
    }) => (
     <form onSubmit={submitNewShop}>
@@ -36,6 +38,13 @@ const NewShopComponent =
         type="text"
         onChange={onShopSiteChange}
         value={shopSiteValue}
+      />
+      <p>Shop logo url</p>
+      <input
+        id="admin-post-title"
+        type="text"
+        onChange={onShopIconUrlChange}
+        value={shopIconUrlValue}
       />
       <input
         id="admin-submit-button"
