@@ -117,6 +117,7 @@ class Shop(ndb.Model):
     likes = ndb.IntegerProperty(indexed=True, default=0)
     timestamp = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
     icon_url = ndb.StringProperty(indexed=False)
+    icon_image_serving_url = ndb.StringProperty(indexed=False)
 
     def prepare_shop(self, user):
         shop_dict = self.to_dict()

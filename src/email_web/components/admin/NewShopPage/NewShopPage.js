@@ -5,10 +5,14 @@ import NewShopComponent from './NewShopComponent'
 
 import {
   shopNameChange, shopSiteChange, submitNewShop,
-  shopAltNamesChange, shopIconUrlChange
+  shopAltNamesChange, getUploadUrl
 }from './NewShopActions'
 
 class NewShopPage extends Component {
+
+  componentWillMount() {
+    this.props.getUploadUrl()
+  }
 
   render() {
     const {
@@ -18,8 +22,7 @@ class NewShopPage extends Component {
       onShopAltNamesChange,
       shopSiteValue,
       onShopSiteChange,
-      shopIconUrlValue,
-      onShopIconUrlChange,
+      uploadUrl,
       submitNewShop
     } = this.props
     return <NewShopComponent
@@ -29,8 +32,7 @@ class NewShopPage extends Component {
       onShopAltNamesChange={onShopAltNamesChange}
       shopSiteValue={shopSiteValue}
       onShopSiteChange={onShopSiteChange}
-      shopIconUrlValue={shopIconUrlValue}
-      onShopIconUrlChange={onShopIconUrlChange}
+      uploadUrl={uploadUrl}
       submitNewShop={submitNewShop}
     />
   }
@@ -41,7 +43,7 @@ const mapStateToProps = (state) => {
     shopNameValue: state.newShop.shopNameValue,
     shopSiteValue: state.newShop.shopSiteValue,
     shopAltNamesValue: state.newShop.shopAltNamesValue,
-    shopIconUrlValue: state.newShop.shopIconUrlValue
+    uploadUrl: state.newShop.uploadUrl
   }
 }
 
@@ -53,8 +55,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(shopAltNamesChange(e.target.value)),
     onShopSiteChange: (e) =>
       dispatch(shopSiteChange(e.target.value)),
-    onShopIconUrlChange: (e) =>
-      dispatch(shopIconUrlChange(e.target.value)),
+    getUploadUrl: () => dispatch(getUploadUrl()),
     submitNewShop: (e) => {
       e.preventDefault()
       dispatch(submitNewShop())
