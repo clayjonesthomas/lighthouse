@@ -616,11 +616,8 @@ class UploadIconUrl(BaseHandler):
 
 
 class IconUploadHandler(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
-    def post(self):
-        user = self.user
-        if not user or not user.is_moderator:
-            return
-        
+    @moderator_required
+    def post(self):        
         alternate_name_string = self.request.get('shop-alt-names')
         alt_names = [name for name in alternate_name_string.split(",")]
 
@@ -629,16 +626,15 @@ class IconUploadHandler(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
             upload = self.get_uploads()[0]
             image_url = images.get_serving_url(upload.key(), size=None, crop=False, secure_url=None)
         
-        if user and user.is_moderator:
-            shop = Shop(
-                name=self.request.get('shop-name'),
-                website=self.request.get('shop-site'),
-                alternate_names=alt_names,
-                icon_image_serving_url = image_url
-            )
+        shop = Shop(
+            name=self.request.get('shop-name'),
+            website=self.request.get('shop-site'),
+            alternate_names=alt_names,
+            icon_image_serving_url = image_url
+        )
 
-            shop.put()
-            self.response.write(json.dumps({'success': True}))
+        shop.put()
+        self.response.write(json.dumps({'success': True}))
 
 
 class SingleShop(BaseHandler):
