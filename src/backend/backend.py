@@ -620,7 +620,7 @@ class IconUploadHandler(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
     @moderator_required
     def post(self):        
         alternate_name_string = self.request.get('shop-alt-names')
-        alt_names = [name for name in alternate_name_string.split(",")]
+        alt_names = alternate_name_string.split(",")
 
         image_url = None
         if (len(self.get_uploads()) > 0):
