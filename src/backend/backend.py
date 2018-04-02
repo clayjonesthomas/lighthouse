@@ -122,8 +122,7 @@ def _spawn_dummy_shops():
                   likes=0),
              Shop(name='Lulu Lemon',
                   website='http://www.lululemon.com',
-                  likes=0,
-                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+                  likes=0),
              Shop(name='Old Navy',
                   website='http://www.oldnavy.com',
                   likes=0)]
@@ -690,7 +689,6 @@ class EditShop(BaseHandler):
             shop = ndb.Key(urlsafe=shop_key).get()
             shop.name = body['name']
             shop.website = body['website']
-            shop.icon_url = body['icon_url']
             shop.put()
             self.response.write(json.dumps({'key': shop_key}))
 
