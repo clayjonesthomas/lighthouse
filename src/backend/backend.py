@@ -610,8 +610,9 @@ class LikeShops(BaseHandler):
 
 
 class UploadIconUrl(BaseHandler):
+    @moderator_required
     def get(self):
-        upload_url = blobstore.create_upload_url('/upload_icon')
+        upload_url = blobstore.create_upload_url('/rest/upload_icon')
         self.response.write(json.dumps({'url': upload_url}))
 
 
@@ -1098,7 +1099,7 @@ class SendTestPostsEmailToMod(BaseHandler):
                                      signup_token=token,
                                      _full=True)
 
-        important_posts, unimportant_posts = self._get_random_posts(self)
+        important_posts, unimportant_posts = self._get_random_liked_posts(self)
         email = PostsEmail(to=user.key,
                            important_posts=important_posts,
                            unimportant_posts=unimportant_posts,
@@ -1110,9 +1111,9 @@ class SendTestPostsEmailToMod(BaseHandler):
         self.response.write(json.dumps({"success": True}))
 
     @staticmethod
-    def _get_random_posts(self):
+    def _get_random_liked_posts(self):
         important_posts = Post.query(ndb.AND(Post.shop_key.IN(self.user.liked_shops),
-                                           Post.is_archived == False)).fetch()
+                                           Post.is_archived == False)).fetch(4)
         important_post_keys = [i.key for i in important_posts]
         unimportant_posts = Post.query().fetch(4)
         unimportant_post_keys = [u.key for u in unimportant_posts]
@@ -1167,7 +1168,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shop/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', ShopPosts, name='single_shop'),
     webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),
     webapp2.Route('/rest/upload_icon_url', UploadIconUrl, name='upload_icon_url'),
-    webapp2.Route('/upload_icon', IconUploadHandler, name='test'),
+    webapp2.Route('/rest/upload_icon', IconUploadHandler, name='upload_icon'),
     # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
     # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
