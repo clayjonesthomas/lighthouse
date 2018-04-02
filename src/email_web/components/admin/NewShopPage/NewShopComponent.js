@@ -21,31 +21,34 @@ const NewShopComponent =
       </div>
       <p>Shop Name</p>
       <input
-        id="admin-post-title"
         name="shop-name"
+        className="admin-shop-input"
         type="text"
         onChange={onShopNameChange}
         value={shopNameValue}
       />
       <p>Shop Alt names (just comma separated please, no spaces)</p>
       <textarea
-        id="admin-post-title"
         name="shop-alt-names"
+        className="admin-shop-input"
         type="text"
         onChange={onShopAltNamesChange}
         value={shopAltNamesValue}
       />
       <p>Shop full website</p>
       <input
-        id="admin-post-title"
         name="shop-site"
+        className="admin-shop-input"
         type="text"
         onChange={onShopSiteChange}
         value={shopSiteValue}
       />
-      <div>
-        <input type="file" name="img"/>
-      </div>
+      <p>Add a shop image</p>
+      <input 
+        name="img" 
+        className="admin-shop-input" 
+        type="file" 
+      />
       <input
         id="admin-submit-button"
         type="submit"
