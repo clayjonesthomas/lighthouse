@@ -62,11 +62,15 @@ ul::-webkit-scrollbar-thumb {
 }
 
 #removeable-shop-picker.settings-shop-picker-box {
-    position: relative;
-    top: -40px;
     margin-bottom: 0px;
 }
 
 .read-only-picker .form-control {
     background-color: #f0f0f0;
+    cursor: default;
+}
+
+.read-only-picker .form-control.focus {
+    border-color: rgba(0, 0, 0, .15);
+    box-shadow: none;
 }

@@ -78,14 +78,6 @@ const SettingsPageComponent = ({
     <FormGroup>
       <div className="settings-section">
         <h2 className="section-title">Update Your Shops</h2>
-        <ShopPicker
-          className="settings-shop-picker-box shop-picker-box"
-          isWriteSingleShopOnly={true}
-          selectedShops={selectedShops}
-          onPickedShopsChange={onPickedShopsChange}
-          writeSingleShopOnlyOnPickedShopsChange={writeSingleShopOnlyOnPickedShopsChange}
-          isReadOnly={false}
-        />
         {selectedShops.length > 0 &&
           <ShopPicker
             className="settings-shop-picker-box shop-picker-box"
@@ -95,6 +87,14 @@ const SettingsPageComponent = ({
             isReadOnly={true}
           />
         }
+        <ShopPicker
+          className="settings-shop-picker-box shop-picker-box"
+          isWriteSingleShopOnly={true}
+          selectedShops={selectedShops}
+          onPickedShopsChange={onPickedShopsChange}
+          writeSingleShopOnlyOnPickedShopsChange={writeSingleShopOnlyOnPickedShopsChange}
+          isReadOnly={false}
+        />
       </div>
     </FormGroup>
     <FormGroup
