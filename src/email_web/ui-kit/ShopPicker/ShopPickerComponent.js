@@ -76,7 +76,8 @@ const ShopPickerComponent = (
         onChange = {shop => {
           onPickNewShop(shop)
           if (isWriteSingleShopOnly && shop.length) {
-            clearWriteSingleShopOnlyShopPicker()
+            // clearWriteSingleShopOnlyShopPicker()
+            setTimeout(() => clearWriteSingleShopOnlyShopPicker(), 20)
           }
         }}
         maxHeight={200} // in pixels
