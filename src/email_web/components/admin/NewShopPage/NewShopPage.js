@@ -3,9 +3,7 @@ import {connect} from 'react-redux'
 
 import NewShopComponent from './NewShopComponent'
 
-import {
-  submitNewShop, getUploadUrl
-}from './NewShopActions'
+import {getUploadUrl} from './NewShopActions'
 
 class NewShopPage extends Component {
 
@@ -16,11 +14,9 @@ class NewShopPage extends Component {
   render() {
     const {
       uploadUrl,
-      submitNewShop
     } = this.props
     return <NewShopComponent
       uploadUrl={uploadUrl}
-      submitNewShop={submitNewShop}
     />
   }
 }
@@ -34,10 +30,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getUploadUrl: () => dispatch(getUploadUrl()),
-    submitNewShop: (e) => {
-      e.preventDefault()
-      dispatch(submitNewShop())
-    }
   }
 }
 

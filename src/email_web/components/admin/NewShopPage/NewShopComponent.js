@@ -4,7 +4,6 @@ import '../AdminPage/AdminPageComponent.css'
 const NewShopComponent =
   ({
      uploadUrl,
-     submitNewShop
    }) => (
     <form action={uploadUrl}
       encType="multipart/form-data"

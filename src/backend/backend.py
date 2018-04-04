@@ -611,11 +611,25 @@ class LikeShops(BaseHandler):
 class UploadIconUrl(BaseHandler):
     @moderator_required
     def get(self):
-        upload_url = blobstore.create_upload_url('/rest/upload_icon')
+        upload_url = blobstore.create_upload_url('/rest/shop')
         self.response.write(json.dumps({'url': upload_url}))
 
 
-class IconUploadHandler(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
+class SingleShop(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
+    def get(self, url_key):
+        shop = get_entity_from_url_key(url_key)
+        shop_dict = shop.to_dict()
+        shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
+        # do a query to get posts associated with the shop
+
+        user = self.user
+        if user:
+            shop_dict['isLiked'] = shop.key in user.liked_shops
+        else:
+            shop_dict['isLiked'] = False
+
+        self.response.write(json.dumps({'shop': shop_dict}))
+
     @moderator_required
     def post(self):        
         alternate_name_string = self.request.get('shop-alt-names')
@@ -635,42 +649,6 @@ class IconUploadHandler(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
 
         shop.put()
         self.response.write(json.dumps({'success': True}))
-
-
-class SingleShop(BaseHandler):
-    def get(self, url_key):
-        shop = get_entity_from_url_key(url_key)
-        shop_dict = shop.to_dict()
-        shop_dict['timestamp'] = shop_dict['timestamp'].isoformat(' ')
-        # do a query to get posts associated with the shop
-
-        user = self.user
-        if user:
-            shop_dict['isLiked'] = shop.key in user.liked_shops
-        else:
-            shop_dict['isLiked'] = False
-
-        self.response.write(json.dumps({'shop': shop_dict}))
-
-    # def post(self):
-    #     print("single shop post")
-    #     user = self.user
-    #     if not user or not user.is_moderator:
-    #         return
-        
-    #     body = json.loads(self.request.body)
-    #     alternate_name_string = body['alternateNames']
-    #     alt_names = [name for name in alternate_name_string.split(",")]
-
-    #     if user and user.is_moderator:
-    #         shop = Shop(
-    #             name=body['name'],
-    #             website=body['site'],
-    #             alternate_names=alt_names #TODO add image here
-    #         )
-
-    #         shop.put()
-    #         self.response.write(json.dumps({'success': True}))
 
     def delete(self, url_key):
         user = self.user
@@ -1160,15 +1138,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shops/like', LikeShops, name='like_shops'),
     webapp2.Route('/rest/shop/like', LikeShop, name='like_shop'),
-    # webapp2.Route('/rest/shop/icon/<url_key:.*>', AddIconToShop, name='single_shop'),
     webapp2.Route('/rest/shop/edit', EditShop, name='edit_shop'),
     webapp2.Route('/rest/shop', SingleShop, name='single_shop'),
     webapp2.Route('/rest/shop/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', ShopPosts, name='single_shop'),
     webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),
     webapp2.Route('/rest/upload_icon_url', UploadIconUrl, name='upload_icon_url'),
-    webapp2.Route('/rest/upload_icon', IconUploadHandler, name='upload_icon'),
-    # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
-    # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
     webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
