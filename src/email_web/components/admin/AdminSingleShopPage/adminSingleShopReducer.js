@@ -1,6 +1,6 @@
 import {EDIT_SHOP_PICKER_CHANGE, GET_UPLOAD_URL_RESPONSE,
   ADMIN_SHOP_NAME_CHANGE, ADMIN_SHOP_SITE_CHANGE,
-  ADMIN_SHOP_ALT_NAMES_CHANGE} from './NewShopActions'
+  ADMIN_SHOP_ALT_NAMES_CHANGE} from './AdminSingleShopActions'
 
 const defaultNewShopState = {
   uploadUrl: '',

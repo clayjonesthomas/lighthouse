@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import NewShopComponent from './NewShopComponent'
+import AdminSingleShopComponent from './AdminSingleShopComponent'
 import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
 
 import {getUploadUrl, editShopPickerChange,
   shopNameChange, shopSiteChange, shopAltNamesChange} 
-  from './NewShopActions'
+  from './AdminSingleShopActions'
 
 class EditShopsPage extends Component {
 
@@ -29,12 +29,13 @@ class EditShopsPage extends Component {
     } = this.props
     return (
       <div>
+        <h1>Edit Shop</h1>
         <ShopPicker
           onPickedShopsChange={onPickedShopsChange}
           className="admin-shop-picker"
           selectedShops={[]}
         />
-        <NewShopComponent
+        <AdminSingleShopComponent
           uploadUrl={uploadUrl}
           shopKey={shopKey}
           onShopNameChange={onShopNameChange}

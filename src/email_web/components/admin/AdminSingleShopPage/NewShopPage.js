@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import NewShopComponent from './NewShopComponent'
+import AdminSingleShopComponent from './AdminSingleShopComponent'
 
-import {getUploadUrl} from './NewShopActions'
+import {getUploadUrl} from './AdminSingleShopActions'
 
 class NewShopPage extends Component {
 
@@ -15,9 +15,14 @@ class NewShopPage extends Component {
     const {
       uploadUrl,
     } = this.props
-    return <NewShopComponent
-      uploadUrl={uploadUrl}
-    />
+    return (
+      <div>
+        <h1>New Shop</h1>
+        <AdminSingleShopComponent
+          uploadUrl={uploadUrl}
+        />
+      </div>
+    )
   }
 }
 

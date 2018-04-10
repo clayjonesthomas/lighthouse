@@ -1,7 +1,7 @@
 import React from 'react'
 
 import '../AdminPage/AdminPageComponent.css'
-const NewShopComponent =
+const AdminSingleShopComponent =
   ({
     uploadUrl,
     shopKey,
@@ -65,4 +65,4 @@ const NewShopComponent =
   </form>
 )
 
-export default NewShopComponent
+export default AdminSingleShopComponent
