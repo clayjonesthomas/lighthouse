@@ -1,7 +1,7 @@
 import React from 'react'
 
 import ShopPicker from '../../../ui-kit/ShopPicker/ShopPicker'
-import {TRACKED_SHOPS_URL, NEW_SHOP_URL} from '../../../urls'
+import {TRACKED_SHOPS_URL, NEW_SHOP_URL, EDIT_SHOPS_URL} from '../../../urls'
 
 import './AdminPageComponent.css'
 const AdminPageComponent =
@@ -18,6 +18,7 @@ const AdminPageComponent =
       <div>
         <a href={TRACKED_SHOPS_URL}>Tracked Shops</a>
         <a href={NEW_SHOP_URL}>New Shop</a>
+        <a href={EDIT_SHOPS_URL}>Edit Shops</a>
       </div>
       <p>Post Title</p>
       <textarea

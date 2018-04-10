@@ -640,12 +640,21 @@ class SingleShop(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
             upload = self.get_uploads()[0]
             image_url = images.get_serving_url(upload.key(), size=None, crop=False, secure_url=None)
         
-        shop = Shop(
-            name=self.request.get('shop-name'),
-            website=self.request.get('shop-site'),
-            alternate_names=alt_names,
-            icon_image_serving_url = image_url
-        )
+        shop_key = self.request.get('shop-key')
+        if shop_key: # editing an existing shop
+            shop = ndb.Key(urlsafe=shop_key).get()
+            shop.name=self.request.get('shop-name'),
+            shop.website=self.request.get('shop-site'),
+            shop.alternate_names=alt_names,
+            shop.icon_image_serving_url = image_url
+
+        else: # new shop
+            shop = Shop(
+                name=self.request.get('shop-name'),
+                website=self.request.get('shop-site'),
+                alternate_names=alt_names,
+                icon_image_serving_url = image_url
+            )
 
         shop.put()
         self.response.write(json.dumps({'success': True}))

@@ -3,8 +3,12 @@ import fetch from 'isomorphic-fetch'
 import {UPLOAD_ICON_BACKEND_URL} from '../../../urls'
 
 export const GET_UPLOAD_URL_RESPONSE = "GET_UPLOAD_URL_RESPONSE"
-export const NEW_SHOP_REQUEST = "NEW_SHOP_REQUEST"
-export const NEW_SHOP_RESPONSE = "NEW_SHOP_RESPONSE"
+export const ADMIN_SHOP_NAME_CHANGE = "ADMIN_SHOP_NAME_CHANGE"
+export const ADMIN_SHOP_SITE_CHANGE = "ADMIN_SHOP_SITE_CHANGE"
+export const ADMIN_SHOP_ALT_NAMES_CHANGE = "ADMIN_SHOP_ALT_NAMES_CHANGE"
+export const EDIT_SHOP_REQUEST = "EDIT_SHOP_REQUEST"
+export const EDIT_SHOP_RESPONSE = "EDIT_SHOP_RESPONSE"
+export const EDIT_SHOP_PICKER_CHANGE = "EDIT_SHOP_PICKER_CHANGE"
 
 export const getUploadUrlResponse = (url) => {
   return {
@@ -28,14 +32,21 @@ export function getUploadUrl() {
   }
 }
 
-export const newShopRequest = () => {
+export function editShopPickerChange(shops) {
   return {
-    type: NEW_SHOP_REQUEST
+    type: EDIT_SHOP_PICKER_CHANGE,
+    data: shops[0]
   }
 }
 
-export const newShopResponse = () => {
+export const editShopRequest = () => {
   return {
-    type: NEW_SHOP_RESPONSE
+    type: EDIT_SHOP_REQUEST
+  }
+}
+
+export const editShopResponse = () => {
+  return {
+    type: EDIT_SHOP_RESPONSE
   }
 }
