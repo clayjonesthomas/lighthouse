@@ -6,8 +6,6 @@ export const GET_UPLOAD_URL_RESPONSE = "GET_UPLOAD_URL_RESPONSE"
 export const ADMIN_SHOP_NAME_CHANGE = "ADMIN_SHOP_NAME_CHANGE"
 export const ADMIN_SHOP_SITE_CHANGE = "ADMIN_SHOP_SITE_CHANGE"
 export const ADMIN_SHOP_ALT_NAMES_CHANGE = "ADMIN_SHOP_ALT_NAMES_CHANGE"
-export const EDIT_SHOP_REQUEST = "EDIT_SHOP_REQUEST"
-export const EDIT_SHOP_RESPONSE = "EDIT_SHOP_RESPONSE"
 export const EDIT_SHOP_PICKER_CHANGE = "EDIT_SHOP_PICKER_CHANGE"
 
 export const getUploadUrlResponse = (url) => {
@@ -39,14 +37,23 @@ export function editShopPickerChange(shops) {
   }
 }
 
-export const editShopRequest = () => {
+export const shopNameChange = (value) => {
   return {
-    type: EDIT_SHOP_REQUEST
+    type: ADMIN_SHOP_NAME_CHANGE,
+    data: value
   }
 }
 
-export const editShopResponse = () => {
+export const shopAltNamesChange = (value) => {
   return {
-    type: EDIT_SHOP_RESPONSE
+    type: ADMIN_SHOP_ALT_NAMES_CHANGE,
+    data: value
+  }
+}
+
+export const shopSiteChange = (value) => {
+  return {
+    type: ADMIN_SHOP_SITE_CHANGE,
+    data: value
   }
 }

@@ -643,11 +643,11 @@ class SingleShop(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
         shop_key = self.request.get('shop-key')
         if shop_key: # editing an existing shop
             shop = ndb.Key(urlsafe=shop_key).get()
-            shop.name=self.request.get('shop-name'),
-            shop.website=self.request.get('shop-site'),
-            shop.alternate_names=alt_names,
-            shop.icon_image_serving_url = image_url
-
+            shop.name = self.request.get('shop-name')
+            shop.website=self.request.get('shop-site')
+            shop.alternate_names=alt_names
+            if image_url:
+                shop.icon_image_serving_url = image_url
         else: # new shop
             shop = Shop(
                 name=self.request.get('shop-name'),

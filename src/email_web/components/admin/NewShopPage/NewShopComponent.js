@@ -18,10 +18,7 @@ const NewShopComponent =
       encType="multipart/form-data"
       method="post"
     >
-      <div>
-        <a href="/admin/tracked_shops">Tracked Shops</a>
-      </div>
-      <input type="hidden" value={shopKey || ''} name="shop-key" />
+      <input type="hidden" value={shopKey} name="shop-key" />
       <p className="edit-shop-header">Shop Name</p>
       <input
         name="shop-name"
@@ -51,7 +48,7 @@ const NewShopComponent =
       <p className="edit-shop-header">Add a shop image</p>
       {shopIconImageUrl && 
         <div>
-          <p>Current image:</p>
+          <p>Current image (this will be used unless you upload a new one):</p>
           <img src={shopIconImageUrl} /> 
         </div>
       }

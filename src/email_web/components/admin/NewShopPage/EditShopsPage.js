@@ -36,6 +36,7 @@ class EditShopsPage extends Component {
         />
         <NewShopComponent
           uploadUrl={uploadUrl}
+          shopKey={shopKey}
           onShopNameChange={onShopNameChange}
           shopNameValue={shopNameValue}
           onShopAltNamesChange={onShopAltNamesChange}
@@ -52,11 +53,11 @@ class EditShopsPage extends Component {
 const mapStateToProps = (state) => {
   return {
     uploadUrl: state.editShop.uploadUrl,
-    shopKey: state.editShop.selectedShop.key,
-    shopName: state.editShop.selectedShop.name,
-    shopAltNames: state.editShop.selectedShop.alternate_names,
-    shopSite: state.editShop.selectedShop.website,
-    shopIconImageUrl: state.editShop.selectedShop.icon_image_serving_url
+    shopKey: state.editShop.shopKey,
+    shopNameValue: state.editShop.shopNameValue,
+    shopAltNamesValue: state.editShop.shopAltNamesValue,
+    shopSiteValue: state.editShop.shopSiteValue,
+    shopIconImageUrl: state.editShop.shopIconImageUrl
   }
 }
 
