@@ -1097,8 +1097,10 @@ class SendTestPostsEmailToMod(BaseHandler):
 
     @staticmethod
     def _get_random_liked_posts(self):
-        important_posts = Post.query(ndb.AND(Post.shop_key.IN(self.user.liked_shops),
-                                           Post.is_archived == False)).fetch(4)
+        if (len(self.user.liked_shops)) > 0:
+            important_posts = Post.query(Post.shop_key.IN(self.user.liked_shops)).fetch(4)
+        else:
+            important_posts = Post.query().fetch(4)
         important_post_keys = [i.key for i in important_posts]
         unimportant_posts = Post.query().fetch(4)
         unimportant_post_keys = [u.key for u in unimportant_posts]
