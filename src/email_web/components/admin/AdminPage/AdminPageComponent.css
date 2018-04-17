@@ -14,3 +14,12 @@
 #admin-post-title {
     width: 400px;
 }
+
+.admin-shop-input {
+	width: 400px;
+	margin-bottom: 30px;
+}
+
+.edit-shop-header {
+	font-size: 25px;
+}

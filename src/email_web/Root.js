@@ -11,7 +11,8 @@ import TextContainer from './TextContainer'
 import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 import AdminPage from './components/admin/AdminPage/AdminPage'
 import TrackedShopPage from './components/admin/TrackedShopPage/TrackedShopPage'
-import NewShopPage from './components/admin/NewShopPage/NewShopPage'
+import NewShopPage from './components/admin/AdminSingleShopPage/NewShopPage'
+import EditShopsPage from './components/admin/AdminSingleShopPage/EditShopsPage'
 
 import {LANDING_PAGE} from './components/LandingPage/LandingPage'
 import {SIGN_UP_PAGE} from './components/SignUpPage/SignUpPage'
@@ -31,7 +32,7 @@ import {PRIVACY_POLICY_PAGE} from './components/PrivacyPolicyPage/PrivacyPolicyP
 import {SIGN_UP_PAGE_URL, LOG_IN_PAGE_URL, NEW_PASSWORD_SUCCESS_URL,
   FORGOT_PASSWORD_URL, FORGOT_PASSWORD_SUCCESS_URL, WELCOME_PAGE_URL,
   SETTINGS_PAGE_URL, VERIFIED_PAGE_URL, HOW_IT_WORKS_PAGE_URL, ADMIN_PAGE_URL,
-  TRACKED_SHOPS_URL, NEW_SHOP_URL, USER_FEED_PAGE_URL, 
+  TRACKED_SHOPS_URL, NEW_SHOP_URL, EDIT_SHOPS_URL, USER_FEED_PAGE_URL, 
   PRIVACY_POLICY_PAGE_URL} from './urls'
 
 const router = routerMiddleware(browserHistory)
@@ -62,6 +63,7 @@ const Root = () => (
         <Route path={ADMIN_PAGE_URL} component={AdminPage}/>
         <Route path={TRACKED_SHOPS_URL} component={TrackedShopPage}/>
         <Route path={NEW_SHOP_URL} component={NewShopPage}/>
+        <Route path={EDIT_SHOPS_URL} component={EditShopsPage}/>
         <Route path={USER_FEED_PAGE_URL} component={UserFeedPage}/>
         <Route path={PRIVACY_POLICY_PAGE_URL} component={PrivacyPolicyPage}/>
         <Route path="*" component={NotFoundPage}/>
