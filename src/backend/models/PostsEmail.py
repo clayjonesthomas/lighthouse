@@ -1,4 +1,4 @@
-from google.appengine.api import mail
+from backend.email import send_posts_update_email
 from google.appengine.ext import ndb
 from models import Post
 from backend.enums import EmailFrequency
@@ -53,16 +53,14 @@ class PostsEmail(ndb.Model):
 
     def send(self):
         receiving_user = self.to.get()
-        message = mail.EmailMessage(
-            sender="beacon@lightho.us",
-            subject=self.subject,
-            to=receiving_user.email_address,
-            html=self.body,
-            headers={
-                "List-Unsubscribe": "<" + self.unsubscribe_url + ">"
-            }
+
+        send_posts_update_email(
+            receiving_user.email_address,
+            self.subject,
+            self.body,
+            self.unsubscribe_url
         )
-        message.send()
+
         self.put()
         receiving_user.emails.append(self.key)
         receiving_user.put()
