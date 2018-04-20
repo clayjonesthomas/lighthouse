@@ -7,7 +7,10 @@ import time
 
 import jinja2
 import webapp2
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
+from google.appengine.api import images
 from webapp2_extras import auth
 from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
@@ -119,8 +122,7 @@ def _spawn_dummy_shops():
                   likes=0),
              Shop(name='Lulu Lemon',
                   website='http://www.lululemon.com',
-                  likes=0,
-                  icon_url="https://pbs.twimg.com/profile_images/552174878195859456/qaK-0pKK_400x400.jpeg"),
+                  likes=0),
              Shop(name='Old Navy',
                   website='http://www.oldnavy.com',
                   likes=0)]
@@ -606,7 +608,14 @@ class LikeShops(BaseHandler):
         self.response.write(json.dumps(shops))
 
 
-class SingleShop(BaseHandler):
+class UploadIconUrl(BaseHandler):
+    @moderator_required
+    def get(self):
+        upload_url = blobstore.create_upload_url('/rest/shop')
+        self.response.write(json.dumps({'url': upload_url}))
+
+
+class SingleShop(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
     def get(self, url_key):
         shop = get_entity_from_url_key(url_key)
         shop_dict = shop.to_dict()
@@ -621,22 +630,34 @@ class SingleShop(BaseHandler):
 
         self.response.write(json.dumps({'shop': shop_dict}))
 
-    def post(self):
-        user = self.user
-        if not user or not user.is_moderator:
-            return
-        body = json.loads(self.request.body)
-        alternate_name_string = body['alternateNames']
-        alt_names = [name for name in alternate_name_string.split(",")]
-        if user and user.is_moderator:
+    @moderator_required
+    def post(self):        
+        alternate_name_string = self.request.get('shop-alt-names')
+        alt_names = alternate_name_string.split(",")
+
+        image_url = None
+        if (len(self.get_uploads()) > 0):
+            upload = self.get_uploads()[0]
+            image_url = images.get_serving_url(upload.key(), size=None, crop=False, secure_url=None)
+        
+        shop_key = self.request.get('shop-key')
+        if shop_key: # editing an existing shop
+            shop = ndb.Key(urlsafe=shop_key).get()
+            shop.name = self.request.get('shop-name')
+            shop.website=self.request.get('shop-site')
+            shop.alternate_names=alt_names
+            if image_url:
+                shop.icon_image_serving_url = image_url
+        else: # new shop
             shop = Shop(
-                name=body['name'],
-                website=body['site'],
-                alternate_names=alt_names
-                # icon_url=body['icon_url']
+                name=self.request.get('shop-name'),
+                website=self.request.get('shop-site'),
+                alternate_names=alt_names,
+                icon_image_serving_url = image_url
             )
-            shop.put()
-            self.response.write(json.dumps({'success': True}))
+
+        shop.put()
+        self.response.write(json.dumps({'success': True}))
 
     def delete(self, url_key):
         user = self.user
@@ -655,7 +676,6 @@ class EditShop(BaseHandler):
             shop = ndb.Key(urlsafe=shop_key).get()
             shop.name = body['name']
             shop.website = body['website']
-            shop.icon_url = body['icon_url']
             shop.put()
             self.response.write(json.dumps({'key': shop_key}))
 
@@ -1064,7 +1084,7 @@ class SendTestPostsEmailToMod(BaseHandler):
                                      signup_token=token,
                                      _full=True)
 
-        important_posts, unimportant_posts = self._get_random_posts()
+        important_posts, unimportant_posts = self._get_random_liked_posts(self)
         email = PostsEmail(to=user.key,
                            important_posts=important_posts,
                            unimportant_posts=unimportant_posts,
@@ -1076,8 +1096,11 @@ class SendTestPostsEmailToMod(BaseHandler):
         self.response.write(json.dumps({"success": True}))
 
     @staticmethod
-    def _get_random_posts():
-        important_posts = Post.query().fetch(2)
+    def _get_random_liked_posts(self):
+        if (len(self.user.liked_shops)) > 0:
+            important_posts = Post.query(Post.shop_key.IN(self.user.liked_shops)).fetch(4)
+        else:
+            important_posts = Post.query().fetch(4)
         important_post_keys = [i.key for i in important_posts]
         unimportant_posts = Post.query().fetch(4)
         unimportant_post_keys = [u.key for u in unimportant_posts]
@@ -1126,13 +1149,11 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/shops', Shops, name='shops'),
     webapp2.Route('/rest/shops/like', LikeShops, name='like_shops'),
     webapp2.Route('/rest/shop/like', LikeShop, name='like_shop'),
-    # webapp2.Route('/rest/shop/icon/<url_key:.*>', AddIconToShop, name='single_shop'),
     webapp2.Route('/rest/shop/edit', EditShop, name='edit_shop'),
     webapp2.Route('/rest/shop', SingleShop, name='single_shop'),
     webapp2.Route('/rest/shop/posts/<url_key:[a-zA-Z0-9-_]*>/<offset:[0-9]*>', ShopPosts, name='single_shop'),
     webapp2.Route('/rest/shop/<url_key:.*>', SingleShop, name='single_shop'),
-    # webapp2.Route('/rest/shop_img/<url_key:.*>', ShopImage, name='shop_image'),
-    # webapp2.Route('/rest/shop_img', ShopImage, name='shop_image'),
+    webapp2.Route('/rest/upload_icon_url', UploadIconUrl, name='upload_icon_url'),
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
     webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
@@ -1147,7 +1168,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/welcome', UsersOnlyMainPage, name='welcome'),
     webapp2.Route('/signup', GuestsOnlyPage, name='signup_page'),
     webapp2.Route('/login', GuestsOnlyPage, name='login_page'),
-    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/verified', MainPage, name='verified'),
     webapp2.Route('/privacy_policy', MainPage, name='privacy_policy'),
     webapp2.Route('/new', MainPage, name='new'),
@@ -1159,6 +1179,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
-    webapp2.Route('/', MainPage, name='home'),
+    webapp2.Route('/', GuestsOnlyPage, name='landing_page'),
     webapp2.Route('/<:.*>', MainPage, name='home_redirect'),
 ], debug=True, config=config)

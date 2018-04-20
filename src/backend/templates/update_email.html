@@ -26,12 +26,25 @@
     <tr>
         <td style="display: block;max-width: 500px;margin: 3px auto;">
             <div style="background-color: #F0F0F0;padding: 10px;">
-                <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
-                   style='text-decoration: none;'>
-                    {{post.get().shop_key.get().name}}
+                {% if post.get().shop_key.get().icon_image_serving_url is not none %}
+                <a 
+                    href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
+                    style="text-decoration: none;"
+                >
+                    <img 
+                        src="{{post.get().shop_key.get().icon_image_serving_url}}"
+                        style="display: inline-block; height: 50px; width: 50px; object-fit: cover; margin-right: 5px"
+                    >
                 </a>
-                <div>
-                    {{post.get().title}}
+                {% endif %}
+                <div style='display: inline-block; vertical-align: top;'>
+                    <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
+                       style='text-decoration: none;'>
+                        {{post.get().shop_key.get().name}}
+                    </a>
+                    <div>
+                        {{post.get().title}}
+                    </div>
                 </div>
             </div>
         </td>
