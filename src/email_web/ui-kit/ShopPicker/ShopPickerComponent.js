@@ -76,7 +76,6 @@ const ShopPickerComponent = (
         onChange = {shop => {
           onPickNewShop(shop)
           if (isWriteSingleShopOnly && shop.length) {
-            // clearWriteSingleShopOnlyShopPicker()
             setTimeout(() => clearWriteSingleShopOnlyShopPicker(), 20)
           }
         }}
