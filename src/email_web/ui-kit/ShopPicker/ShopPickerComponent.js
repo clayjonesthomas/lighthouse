@@ -15,12 +15,23 @@ const ShopPickerComponent = (
     onPickNewShop,
     tabIndex,
     placeholder,
-    areShopsLoading
+    areShopsLoading,
+    isReadOnly,
+    isWriteSingleShopOnly,
+    writeSingleShopPickerRef,
+    clearWriteSingleShopOnlyShopPicker,
   }) => (
-  <div className={className + " shop-picker-search"}>
+  <div 
+    id={isWriteSingleShopOnly ? "" : "removeable-shop-picker"}
+    className={className + " shop-picker-search"}
+  >
     <InputGroup>
       <Typeahead
-        inputProps={{"tabIndex":tabIndex}}
+        ref={writeSingleShopPickerRef}
+        inputProps={{
+          "tabIndex": tabIndex,
+          readOnly: isReadOnly
+        }}
         // TODO hide the (incorrect) warning this produces
         // issue caused from line 490 of typeaheadContainer.js
         // see https://github.com/ericgio/react-bootstrap-typeahead/issues/292
@@ -49,7 +60,7 @@ const ShopPickerComponent = (
           }
           return false
         }}
-        multiple
+        multiple={!isWriteSingleShopOnly}
         selectHintOnEnter
         options={shops.sort((a, b) => {
           let aName = a.name.toUpperCase()
@@ -61,10 +72,16 @@ const ShopPickerComponent = (
           return 0
         })}
         placeholder={placeholder || "Search for your shops"}
-        selected={pickedShops}
-        onChange={onPickNewShop}
+        selected={isWriteSingleShopOnly ? [] : pickedShops}
+        onChange = {shop => {
+          onPickNewShop(shop)
+          if (isWriteSingleShopOnly && shop.length) {
+            setTimeout(() => clearWriteSingleShopOnlyShopPicker(), 20)
+          }
+        }}
         maxHeight={200} // in pixels
         minLength={1}
+
       />
     </InputGroup>
   </div>

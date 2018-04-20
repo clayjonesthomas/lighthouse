@@ -4,7 +4,8 @@ import _ from 'underscore'
 
 import {emailFrequencyChange, pickedShopsChange, 
   resendVerificationEmail, submitSettingsForm,
-  closeNotification} from './SettingsPageActions'
+  closeNotification, writeSingleShopOnlyPickedShopsChange} 
+  from './SettingsPageActions'
 import {pullUserData} from '../../services/UserActions'
 import SettingsPageComponent from './SettingsPageComponent'
 import Spinner from '../../ui-kit/Spinner'
@@ -27,6 +28,7 @@ class SettingsPage extends Component {
       displaySpinner,
       showSavedMessage,
       onPickedShopsChange,
+      writeSingleShopOnlyOnPickedShopsChange,
       handleEmailFrequencyChange,
       onSubmitSettings,
       isVerified,
@@ -55,6 +57,7 @@ class SettingsPage extends Component {
             displaySpinner={displaySpinner}
             showSavedMessage={showSavedMessage}
             onPickedShopsChange={onPickedShopsChange}
+            writeSingleShopOnlyOnPickedShopsChange={writeSingleShopOnlyOnPickedShopsChange}
             handleEmailFrequencyChange={handleEmailFrequencyChange}
             onSubmitSettings={onSubmitSettings}
             isVerified={isVerified}
@@ -88,6 +91,7 @@ const mapDispatchToProps = (dispatch) => {
     closeNotification: () => dispatch(closeNotification()),
     getUserData: () => dispatch(pullUserData()),
     onPickedShopsChange: (shops) => dispatch(pickedShopsChange(shops)),
+    writeSingleShopOnlyOnPickedShopsChange: (shop) => dispatch(writeSingleShopOnlyPickedShopsChange(shop)),
     handleEmailFrequencyChange: (e) => dispatch(emailFrequencyChange(e.target.value)),
     onSubmitSettings: (e) => {
       e.preventDefault()

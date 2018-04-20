@@ -59,9 +59,10 @@ const SignUpPageComponent = ({
       <ShopPicker
         className="shop-picker-box"
         tabIndex={shouldDisplay ? 0 : -1}
-        isSetupMode={true}
+        isWriteSingleShopOnly={false}
         selectedShops={selectedShops || []}
         onPickedShopsChange={onPickedShopsChange}
+        isReadOnly={false}
       />
       <HelpBlock
         className="helper-text"

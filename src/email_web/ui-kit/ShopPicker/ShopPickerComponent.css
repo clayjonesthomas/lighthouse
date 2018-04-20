@@ -60,3 +60,17 @@ ul::-webkit-scrollbar-thumb {
     border-radius: 10px;
     border: 4px solid #f1f1f1;
 }
+
+#removeable-shop-picker.settings-shop-picker-box {
+    margin-bottom: 0px;
+}
+
+.read-only-picker .form-control {
+    background-color: #f0f0f0;
+    cursor: default;
+}
+
+.read-only-picker .form-control.focus {
+    border-color: rgba(0, 0, 0, .15);
+    box-shadow: none;
+}

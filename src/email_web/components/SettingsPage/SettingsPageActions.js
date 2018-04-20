@@ -3,6 +3,7 @@ import {pullUserData} from '../../services/UserActions'
 
 export const EMAIL_FREQUENCY_CHANGE = 'EMAIL_FREQUENCY_CHANGE'
 export const PICKED_SHOPS_CHANGE = 'PICKED_SHOPS_CHANGE'
+export const WRITE_SINGLE_ONLY_PICKED_SHOPS_CHANGE = 'WRITE_SINGLE_ONLY_PICKED_SHOPS_CHANGE'
 export const UPDATE_SETTINGS_REQUEST = 'UPDATE_SETTINGS_REQUEST'
 export const UPDATE_SETTINGS_RETURN = 'UPDATE_SETTINGS_RETURN'
 export const SETTINGS_SPINNER_TIMEOUT = 'SETTINGS_SPINNER_TIMEOUT'
@@ -27,6 +28,13 @@ export const pickedShopsChange = (listOfShops) => {
   return {
     type: PICKED_SHOPS_CHANGE,
     data: listOfShops
+  }
+}
+
+export const writeSingleShopOnlyPickedShopsChange = (addedShop) => {
+  return {
+    type: WRITE_SINGLE_ONLY_PICKED_SHOPS_CHANGE,
+    data: addedShop
   }
 }
 
