@@ -28,6 +28,7 @@ class ShopPicker extends Component {
       isWriteSingleShopOnly,
       isReadOnly,
       onInputChange,
+      sentShopRequest,
       onClickRequestShop
     } = this.props
 
@@ -46,6 +47,7 @@ class ShopPicker extends Component {
             isReadOnly={isReadOnly}
             isWriteSingleShopOnly={false}
             onInputChange={onInputChange}
+            sentShopRequest={sentShopRequest}
             onClickRequestShop={onClickRequestShop}
           />
           :
@@ -65,6 +67,7 @@ class ShopPicker extends Component {
             isReadOnly={false}
             isWriteSingleShopOnly={true}
             onInputChange={onInputChange}
+            sentShopRequest={sentShopRequest}
             onClickRequestShop={onClickRequestShop}
           />
         }
@@ -80,7 +83,8 @@ function mapStateToProps(state, ownProps) {
     pickedShops: ownProps.selectedShops,
     placeholder: ownProps.placeholder,
     isWriteSingleShopOnly: ownProps.isWriteSingleShopOnly,
-    isReadOnly: ownProps.isReadOnly
+    isReadOnly: ownProps.isReadOnly,
+    sentShopRequest: state.sentShopRequest
   })
 }
 

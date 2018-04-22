@@ -21,6 +21,7 @@ const ShopPickerComponent = (
     writeSingleShopPickerRef,
     clearWriteSingleShopOnlyShopPicker,
     onInputChange,
+    sentShopRequest,
     onClickRequestShop
   }) => (
   <div 
@@ -40,7 +41,10 @@ const ShopPickerComponent = (
         emptyLabel={areShopsLoading ? 
           <div id="shop-picker-spinner"><Spinner colorHex={"#aec7ea"}/></div> 
           : 
-          <ShopRequestBox onClickRequestShop={onClickRequestShop}/>}
+          <ShopRequestBox 
+            sentShopRequest={sentShopRequest}
+            onClickRequestShop={onClickRequestShop}
+          />}
         labelKey="name"
         filterBy={(option, text) => {
           const selectedShops = pickedShops || []

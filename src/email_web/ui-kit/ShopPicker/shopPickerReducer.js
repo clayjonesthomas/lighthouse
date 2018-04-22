@@ -1,5 +1,5 @@
-import {WRITE_SINGLE_SHOP_PICKER_REF, SHOP_PICKER_TEXT_INPUT} 
-  from './ShopPickerActions'
+import {WRITE_SINGLE_SHOP_PICKER_REF, SHOP_PICKER_TEXT_INPUT,
+  SEND_REQUEST_EMAIL_RESPONSE} from './ShopPickerActions'
 
 export function writeSingleShopOnlyShopPickerRef(state = null, action) {
   switch (action.type) {
@@ -14,6 +14,17 @@ export function shopPickerInputText(state = '', action) {
   switch (action.type) {
     case SHOP_PICKER_TEXT_INPUT:
       return action.data
+    default:
+      return state
+  }
+}
+
+export function sentShopRequest(state = false, action) {
+  switch (action.type) {
+    case SHOP_PICKER_TEXT_INPUT:
+      return false
+    case SEND_REQUEST_EMAIL_RESPONSE:
+      return true
     default:
       return state
   }
