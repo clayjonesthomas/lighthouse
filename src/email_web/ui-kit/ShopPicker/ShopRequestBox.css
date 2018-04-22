@@ -1,0 +1,12 @@
+.request-link-div {
+     color: #006fff;
+}
+
+.request-link-div:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.request-box {
+    cursor: default;
+}

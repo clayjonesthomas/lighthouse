@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {Typeahead} from 'react-bootstrap-typeahead'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
 import {InputGroup} from 'react-bootstrap'
-import ShopRecommenderBox from 'ui-kit/ShopRecommenderBox'
+import ShopRequestBox from './ShopRequestBox'
 import Spinner from '../../ui-kit/Spinner'
 
 import "./ShopPickerComponent.css"
@@ -20,6 +20,8 @@ const ShopPickerComponent = (
     isWriteSingleShopOnly,
     writeSingleShopPickerRef,
     clearWriteSingleShopOnlyShopPicker,
+    onInputChange,
+    onClickRequestShop
   }) => (
   <div 
     id={isWriteSingleShopOnly ? "" : "removeable-shop-picker"}
@@ -35,7 +37,10 @@ const ShopPickerComponent = (
         // TODO hide the (incorrect) warning this produces
         // issue caused from line 490 of typeaheadContainer.js
         // see https://github.com/ericgio/react-bootstrap-typeahead/issues/292
-        emptyLabel={areShopsLoading ? <div id="shop-picker-spinner"><Spinner colorHex={"#aec7ea"}/></div> : <ShopRecommenderBox/>}
+        emptyLabel={areShopsLoading ? 
+          <div id="shop-picker-spinner"><Spinner colorHex={"#aec7ea"}/></div> 
+          : 
+          <ShopRequestBox onClickRequestShop={onClickRequestShop}/>}
         labelKey="name"
         filterBy={(option, text) => {
           const selectedShops = pickedShops || []
@@ -73,6 +78,7 @@ const ShopPickerComponent = (
         })}
         placeholder={placeholder || "Search for your shops"}
         selected={isWriteSingleShopOnly ? [] : pickedShops}
+        onInputChange={onInputChange}
         onChange = {shop => {
           onPickNewShop(shop)
           if (isWriteSingleShopOnly && shop.length) {
