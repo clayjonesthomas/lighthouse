@@ -45,6 +45,7 @@ class ShopPicker extends Component {
             areShopsLoading={areShopsLoading}
             isReadOnly={isReadOnly}
             isWriteSingleShopOnly={false}
+            onInputChange={onInputChange}
             onClickRequestShop={onClickRequestShop}
           />
           :
