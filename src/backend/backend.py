@@ -420,13 +420,15 @@ class Posts(BaseHandler):
         title = body['title']
         selected_shops = body['selectedShops']
         is_important = body['isImportant']
+        custom_sale_link = body['customSaleLink']
 
         for shop in selected_shops:
             shop_key = ndb.Key(urlsafe=shop['key'])
             post = Post(title=title,
                         shop_key=shop_key,
                         author=user.key,
-                        is_important=is_important)
+                        is_important=is_important,
+                        custom_sale_link=custom_sale_link)
             post.put()
         self.response.write(json.dumps({'success': 'true'}))
 

@@ -40,6 +40,7 @@ class Post(ndb.Model):
     author = ndb.KeyProperty(indexed=True, kind='User')
     is_archived = ndb.BooleanProperty(indexed=True, default=False)
     is_important = ndb.BooleanProperty(indexed=True, default=False)
+    custom_sale_link = ndb.StringProperty(indexed=False)
 
     def add_top_comment(self, comment):
         self.comment_amount += 1
