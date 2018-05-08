@@ -28,6 +28,6 @@ def send_request_shop_email(shop):
     message = mail.EmailMessage(
         sender="no-reply@lightho.us",
         subject="Shop Request - " + shop,
-        to="michelle@lightho.us", #TODO
+        to="info@lightho.us",
         )
     message.send()

@@ -12,7 +12,7 @@ import {settings} from './components/SettingsPage/settingsReducer'
 import {admin} from './components/admin/AdminPage/adminReducer'
 import {trackedShops} from './components/admin/TrackedShopPage/trackedShopReducer'
 import {newShop, editShop} from './components/admin/AdminSingleShopPage/adminSingleShopReducer'
-import {writeSingleShopOnlyShopPickerRef, shopPickerInputText, sentShopRequest} 
+import {writeSingleShopOnlyShopPickerRef, shopPickerInputText, hasSentShopRequest} 
   from './ui-kit/ShopPicker/shopPickerReducer'
 
 export default combineReducers({
@@ -33,6 +33,6 @@ export default combineReducers({
   editShop,
   writeSingleShopOnlyShopPickerRef,
   shopPickerInputText,
-  sentShopRequest,
+  hasSentShopRequest,
   routing: routerReducer
 })

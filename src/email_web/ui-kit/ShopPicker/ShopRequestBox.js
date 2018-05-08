@@ -2,11 +2,11 @@ import React from 'react'
 
 import "./ShopRequestBox.css"
 const ShopRequestBox = ({
-  sentShopRequest,
+  hasSentShopRequest,
   onClickRequestShop
 }) => (
   <div className="request-box">
-    {!sentShopRequest ?
+    {!hasSentShopRequest ?
       <div>
         <div>
           Your favorite store not here yet?

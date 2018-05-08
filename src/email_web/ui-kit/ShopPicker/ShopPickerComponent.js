@@ -21,7 +21,7 @@ const ShopPickerComponent = (
     writeSingleShopPickerRef,
     clearWriteSingleShopOnlyShopPicker,
     onInputChange,
-    sentShopRequest,
+    hasSentShopRequest,
     onClickRequestShop
   }) => (
   <div 
@@ -42,7 +42,7 @@ const ShopPickerComponent = (
           <div id="shop-picker-spinner"><Spinner colorHex={"#aec7ea"}/></div> 
           : 
           <ShopRequestBox 
-            sentShopRequest={sentShopRequest}
+            hasSentShopRequest={hasSentShopRequest}
             onClickRequestShop={onClickRequestShop}
           />}
         labelKey="name"

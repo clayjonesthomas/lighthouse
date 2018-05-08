@@ -19,7 +19,7 @@ export function shopPickerInputText(state = '', action) {
   }
 }
 
-export function sentShopRequest(state = false, action) {
+export function hasSentShopRequest(state = false, action) {
   switch (action.type) {
     case SHOP_PICKER_TEXT_INPUT:
       return false
