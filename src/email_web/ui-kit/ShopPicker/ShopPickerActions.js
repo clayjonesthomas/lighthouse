@@ -59,6 +59,11 @@ export function sendShopRequestEmail() {
     dispatch(sendShopRequestEmailRequest())
     return fetch(SEND_SHOP_REQUEST_URL, args)
       .then(response => response.json())
-      .then(() => dispatch(sendShopRequestEmailResponse()))
+      .then(function() {
+        dispatch(sendShopRequestEmailResponse())
+        setTimeout(function() {
+          dispatch(clearWriteSingleShopOnlyShopPicker())
+        }, 1000);
+      })
   } 
 }
