@@ -21,7 +21,7 @@ export function clearWriteSingleShopOnlyShopPicker() {
     const shopPicker = state.writeSingleShopOnlyShopPickerRef
     if(shopPicker){
       const shopPickerInstance = shopPicker.getInstance()
-      shopPickerInstance.clear().focus()
+      shopPickerInstance.clear()
       shopPickerInstance.focus()
     }
   }
