@@ -1025,14 +1025,26 @@ class RedirectToShop(BaseHandler):
 
     def get(self, *args, **kwargs):
         user = None
-        url_type = kwargs['type']
         user_id = kwargs['user_id']  # urlsafe key
         shop_id = kwargs['shop_id']
 
-        if url_type == 'c':
-            redirect_url = kwargs['custom_sale_link']
-        elif url_type == 'd':
-            redirect_url = ndb.Key(urlsafe=shop_id).get().website
+        redirect_url = ndb.Key(urlsafe=shop_id).get().website
+
+        template = JINJA_ENVIRONMENT.get_template('templates/redirect.html')
+        self.response.write(template.render(
+            user_id=user_id,
+            url=redirect_url
+        ))
+
+
+class RedirectToCustomSale(BaseHandler):
+
+    def get(self, *args, **kwargs):
+        user = None
+        user_id = kwargs['user_id']  # urlsafe key
+        shop_id = kwargs['shop_id']
+
+        redirect_url = kwargs['custom_sale_link']
 
         template = JINJA_ENVIRONMENT.get_template('templates/redirect.html')
         self.response.write(template.render(
@@ -1104,7 +1116,8 @@ class SendTestPostsEmailToMod(BaseHandler):
     @staticmethod
     def _get_random_liked_posts(self):
         if (len(self.user.liked_shops)) > 0:
-            important_posts = Post.query(Post.shop_key.IN(self.user.liked_shops)).fetch(4)
+            important_posts = Post.query(ndb.AND(Post.shop_key.IN(self.user.liked_shops),
+                                           Post.is_archived == False)).fetch(4)
         else:
             important_posts = Post.query().fetch(4)
         important_post_keys = [i.key for i in important_posts]
@@ -1164,7 +1177,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
     webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
 
-    webapp2.Route('/shop_link/<type:c|d>/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>/<custom_sale_link:.*>', RedirectToShop, name='redirect_shop'),
+    webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>/<custom_sale_link:.*>', RedirectToCustomSale, name='redirect_custom_sale'),
+    webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),
     webapp2.Route('/reset_password', MainPage, name='reset_password'),

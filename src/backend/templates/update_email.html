@@ -31,7 +31,7 @@
                     href="{{
                             'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), post.get().custom_sale_link) 
                             if post.get().custom_sale_link != None and post.get().custom_sale_link != '' 
-                            else 'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), '')
+                            else 'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())
                             }}"
                     style="text-decoration: none;"
                 >
@@ -45,7 +45,7 @@
                     <a href="{{
                             'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), post.get().custom_sale_link) 
                             if post.get().custom_sale_link != None and post.get().custom_sale_link != '' 
-                            else 'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), '')
+                            else 'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())
                             }}"
                        style='text-decoration: none;font-size: 18px;'
                     >
