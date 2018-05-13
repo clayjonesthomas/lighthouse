@@ -1111,7 +1111,6 @@ class RequestShopHandler(BaseHandler):
     def post(self):
         body = json.loads(self.request.body)
         input_text = body['inputText']
-        print(input_text)
         send_request_shop_email(input_text)
         self.response.write(json.dumps({"success": True}))
 
