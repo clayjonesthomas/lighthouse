@@ -29,9 +29,9 @@
                 {% if post.get().shop_key.get().icon_image_serving_url is not none %}
                 <a 
                     href="{{
-                            'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().custom_sale_link) 
+                            'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), post.get().custom_sale_link) 
                             if post.get().custom_sale_link != None and post.get().custom_sale_link != '' 
-                            else 'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())
+                            else 'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), '')
                             }}"
                     style="text-decoration: none;"
                 >
@@ -43,9 +43,9 @@
                 {% endif %}
                 <div style='display: inline-block; vertical-align: top;width: 70%;'>
                     <a href="{{
-                            'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().custom_sale_link) 
+                            'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), post.get().custom_sale_link) 
                             if post.get().custom_sale_link != None and post.get().custom_sale_link != '' 
-                            else 'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())
+                            else 'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), '')
                             }}"
                        style='text-decoration: none;font-size: 18px;'
                     >
