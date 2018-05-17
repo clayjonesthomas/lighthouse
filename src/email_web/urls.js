@@ -31,3 +31,4 @@ export const NEW_SHOP_BACKEND_URL = '/rest/shop' //REFACTOR SINGLE_SHOP
 export const UPLOAD_ICON_BACKEND_URL = '/rest/upload_icon_url'
 export const RESEND_VERIFICATION_URL = '/rest/resend_verification'
 export const FLATTENED_TRACKED_POSTS_URL = '/rest/my_active_posts'
+export const SEND_SHOP_REQUEST_URL = '/rest/request_shop'

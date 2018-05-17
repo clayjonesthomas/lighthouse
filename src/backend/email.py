@@ -23,3 +23,11 @@ def send_forgot_password_email(email, forgot_password_url, jinja_env):
         html=body
     )
     message.send()
+
+def send_request_shop_email(shop):
+    message = mail.EmailMessage(
+        sender="no-reply@lightho.us",
+        subject="Shop Request - " + shop,
+        to="info@lightho.us",
+        )
+    message.send()

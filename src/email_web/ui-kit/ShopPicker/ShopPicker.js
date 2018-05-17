@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import ShopPickerComponent from './ShopPickerComponent'
 
 import {pullAllShops} from '../../services/ShopDataActions'
-import {writeSingleShopPickerRef, clearWriteSingleShopOnlyShopPicker} 
+import {writeSingleShopPickerRef, clearWriteSingleShopOnlyShopPicker,
+  shopPickerInputChange, sendShopRequestEmail} 
   from './ShopPickerActions'
 
 class ShopPicker extends Component {
@@ -25,7 +26,10 @@ class ShopPicker extends Component {
       tabIndex,
       areShopsLoading,
       isWriteSingleShopOnly,
-      isReadOnly
+      isReadOnly,
+      onInputChange,
+      hasSentShopRequest,
+      onClickRequestShop
     } = this.props
 
     return (
@@ -42,6 +46,9 @@ class ShopPicker extends Component {
             areShopsLoading={areShopsLoading}
             isReadOnly={isReadOnly}
             isWriteSingleShopOnly={false}
+            onInputChange={onInputChange}
+            hasSentShopRequest={hasSentShopRequest}
+            onClickRequestShop={onClickRequestShop}
           />
           :
           <ShopPickerComponent
@@ -59,6 +66,9 @@ class ShopPicker extends Component {
             areShopsLoading={areShopsLoading}
             isReadOnly={false}
             isWriteSingleShopOnly={true}
+            onInputChange={onInputChange}
+            hasSentShopRequest={hasSentShopRequest}
+            onClickRequestShop={onClickRequestShop}
           />
         }
       </div>
@@ -73,7 +83,8 @@ function mapStateToProps(state, ownProps) {
     pickedShops: ownProps.selectedShops,
     placeholder: ownProps.placeholder,
     isWriteSingleShopOnly: ownProps.isWriteSingleShopOnly,
-    isReadOnly: ownProps.isReadOnly
+    isReadOnly: ownProps.isReadOnly,
+    hasSentShopRequest: state.hasSentShopRequest
   })
 }
 
@@ -84,6 +95,8 @@ function mapDispatchToProps(dispatch, ownProps) {
     writeSingleShopOnlyOnPickedShopsChange: (shop) => dispatch(ownProps.writeSingleShopOnlyOnPickedShopsChange(shop)),
     writeSingleShopPickerRef: (ref) => dispatch(writeSingleShopPickerRef(ref)),
     clearWriteSingleShopOnlyShopPicker: () => dispatch(clearWriteSingleShopOnlyShopPicker()),
+    onInputChange: (input) => dispatch(shopPickerInputChange(input)),
+    onClickRequestShop: () => dispatch(sendShopRequestEmail())
   }
 }
 

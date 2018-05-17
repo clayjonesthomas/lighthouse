@@ -18,7 +18,7 @@ from webapp2_extras.auth import InvalidPasswordError
 
 import auth_config
 import enums.EmailFrequency as EmailFrequency
-from email import send_verification_email, send_forgot_password_email
+from email import send_verification_email, send_forgot_password_email, send_request_shop_email
 from models.PostsEmail import PostsEmail, get_active_posts_for_user
 from models.models import Post, Shop, User, get_entity_from_url_key
 
@@ -1126,6 +1126,14 @@ class SendTestPostsEmailToMod(BaseHandler):
         return important_post_keys, unimportant_post_keys
 
 
+class RequestShopHandler(BaseHandler):
+    def post(self):
+        body = json.loads(self.request.body)
+        input_text = body['inputText']
+        send_request_shop_email(input_text)
+        self.response.write(json.dumps({"success": True}))
+
+
 config = {
     'webapp2_extras.auth': {
         'user_model': 'backend.models.models.User',
@@ -1176,6 +1184,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/email', EmailHandler, name='email'),
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
     webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
+    webapp2.Route('/rest/request_shop', RequestShopHandler, name='request_shop'),
 
     webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>/<custom_sale_link:.*>', RedirectToCustomSale, name='redirect_custom_sale'),
     webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
