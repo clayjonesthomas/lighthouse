@@ -9,9 +9,11 @@ const AdminPageComponent =
      postTitleValue,
      selectedShops,
      isImportantValue,
+     customSaleLinkValue,
      onTitleChange,
      onPickedShopsChange,
      onChangeIsImportant,
+     onCustomSaleLinkChange,
      submitNewPost
    }) => (
     <form onSubmit={submitNewPost}>
@@ -31,6 +33,13 @@ const AdminPageComponent =
         onPickedShopsChange={onPickedShopsChange}
         selectedShops={selectedShops}
         className="admin-shop-picker"
+      />
+      <p>Custom Sale Link (leave blank for default home page link)</p>
+      <textarea
+        id="admin-post-title"
+        type="text"
+        onChange={onCustomSaleLinkChange}
+        value={customSaleLinkValue}
       />
       <span>
         is post important?

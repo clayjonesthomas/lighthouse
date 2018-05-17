@@ -28,7 +28,11 @@
             <div style="background-color: #F0F0F0;padding: 10px;">
                 {% if post.get().shop_key.get().icon_image_serving_url is not none %}
                 <a 
-                    href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
+                    href="{{
+                            'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), post.get().custom_sale_link) 
+                            if post.get().custom_sale_link != None and post.get().custom_sale_link != '' 
+                            else 'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())
+                            }}"
                     style="text-decoration: none;"
                 >
                     <img 
@@ -38,8 +42,13 @@
                 </a>
                 {% endif %}
                 <div style='display: inline-block; vertical-align: top;width: 70%;'>
-                    <a href="{{'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())}}"
-                       style='text-decoration: none;font-size: 18px;'>
+                    <a href="{{
+                            'https://lightho.us/shop_link/{}/{}/{}'.format(to_id, post.get().shop_key.urlsafe(), post.get().custom_sale_link) 
+                            if post.get().custom_sale_link != None and post.get().custom_sale_link != '' 
+                            else 'https://lightho.us/shop_link/{}/{}'.format(to_id, post.get().shop_key.urlsafe())
+                            }}"
+                       style='text-decoration: none;font-size: 18px;'
+                    >
                         {{post.get().shop_key.get().name}}
                     </a>
                     <div style='font-size: 16px;margin-top: 10px;'>

@@ -420,13 +420,15 @@ class Posts(BaseHandler):
         title = body['title']
         selected_shops = body['selectedShops']
         is_important = body['isImportant']
+        custom_sale_link = body['customSaleLink']
 
         for shop in selected_shops:
             shop_key = ndb.Key(urlsafe=shop['key'])
             post = Post(title=title,
                         shop_key=shop_key,
                         author=user.key,
-                        is_important=is_important)
+                        is_important=is_important,
+                        custom_sale_link=custom_sale_link)
             post.put()
         self.response.write(json.dumps({'success': 'true'}))
 
@@ -1035,6 +1037,22 @@ class RedirectToShop(BaseHandler):
         ))
 
 
+class RedirectToCustomSale(BaseHandler):
+
+    def get(self, *args, **kwargs):
+        user = None
+        user_id = kwargs['user_id']  # urlsafe key
+        shop_id = kwargs['shop_id']
+
+        redirect_url = kwargs['custom_sale_link']
+
+        template = JINJA_ENVIRONMENT.get_template('templates/redirect.html')
+        self.response.write(template.render(
+            user_id=user_id,
+            url=redirect_url
+        ))
+
+
 class SendTestVerificationEmailToMod(BaseHandler):
 
     @moderator_required
@@ -1098,7 +1116,8 @@ class SendTestPostsEmailToMod(BaseHandler):
     @staticmethod
     def _get_random_liked_posts(self):
         if (len(self.user.liked_shops)) > 0:
-            important_posts = Post.query(Post.shop_key.IN(self.user.liked_shops)).fetch(4)
+            important_posts = Post.query(ndb.AND(Post.shop_key.IN(self.user.liked_shops),
+                                           Post.is_archived == False)).fetch(4)
         else:
             important_posts = Post.query().fetch(4)
         important_post_keys = [i.key for i in important_posts]
@@ -1158,6 +1177,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/rest/tracked_shops', TrackedShopsHandler, name='tracked_shops'),
     webapp2.Route('/rest/my_active_posts', MyActivePostsHandler, name='my_active_posts'),
 
+    webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>/<custom_sale_link:.*>', RedirectToCustomSale, name='redirect_custom_sale'),
     webapp2.Route('/shop_link/<user_id:[a-zA-Z0-9-_]*>/<shop_id:[a-zA-Z0-9-_]*>', RedirectToShop, name='redirect_shop'),
     webapp2.Route('/verification_success', MainPage, name='verification_success'),
     webapp2.Route('/new_password/<:[^/]*>/<:.*>', MainPage, name='new_password'),

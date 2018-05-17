@@ -15,7 +15,7 @@ const UserFeedPageComponent = ({
         <UserFeedPagePostBlock
           key={post.key}
           shopName={post.shop.name}
-          shopWebsite={post.shop.website}
+          shopWebsite={post.custom_sale_link || post.shop.website}
           title={post.title}
         />
       )

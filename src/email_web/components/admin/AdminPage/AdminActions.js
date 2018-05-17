@@ -6,6 +6,7 @@ import {NEW_POST_BACKEND_URL}
 export const ADMIN_POST_TITLE_CHANGE = "ADMIN_POST_TITLE_CHANGE"
 export const ADMIN_PICKED_SHOPS_CHANGE = "ADMIN_PICKED_SHOPS_CHANGE"
 export const ADMIN_IS_IMPORTANT_CHANGE = "ADMIN_IS_IMPORTANT_CHANGE"
+export const ADMIN_CUSTOM_SALE_LINK_CHANGE = "ADMIN_CUSTOM_SALE_LINK_CHANGE"
 export const NEW_POST_REQUEST = "NEW_POST_REQUEST"
 export const NEW_POST_RESPONSE = "NEW_POST_RESPONSE"
 
@@ -29,6 +30,13 @@ export const isImportantChange = () => {
   }
 }
 
+export const customSaleLinkChange = (value) => {
+  return {
+    type: ADMIN_CUSTOM_SALE_LINK_CHANGE,
+    data: value
+  }
+}
+
 export const newPostRequest = () => {
   return {
     type: NEW_POST_REQUEST
@@ -47,7 +55,7 @@ export function submitNewPost() {
     const title = state.admin.postTitleValue
     const selectedShops = state.admin.selectedShops
     const isImportant = state.admin.isImportant
-
+    const customSaleLink = state.admin.customSaleLinkValue
 
     const args = {
       method: 'POST',
@@ -55,7 +63,8 @@ export function submitNewPost() {
       body: JSON.stringify({
         title: title,
         selectedShops: selectedShops,
-        isImportant: isImportant
+        isImportant: isImportant,
+        customSaleLink: customSaleLink
       })
     }
 
