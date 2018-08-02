@@ -11,10 +11,13 @@ from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
 from google.appengine.api import images
+from google.appengine.api import mail
+
 from webapp2_extras import auth
 from webapp2_extras import sessions
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
+
 
 import auth_config
 import enums.EmailFrequency as EmailFrequency
@@ -1125,6 +1128,21 @@ class SendTestPostsEmailToMod(BaseHandler):
         unimportant_post_keys = [u.key for u in unimportant_posts]
         return important_post_keys, unimportant_post_keys
 
+has_sent_suspension_email = False
+
+
+class SendSuspensionEmail(BaseHandler):
+    def get(self):
+        if not has_sent_suspension_email:
+            for user in User.query(User.email_frequency != EmailFrequency.UNSUBSCRIBE_EMAIL):
+                template = JINJA_ENVIRONMENT.get_template('templates/suspension_email.html')
+                message = mail.EmailMessage(
+                    sender="no-reply@lightho.us",
+                    subject='Farewell!',
+                    to=user.email_address,
+                    html=template,
+                )
+                message.send()
 
 class RequestShopHandler(BaseHandler):
     def post(self):
@@ -1204,7 +1222,7 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/posts', MainPage, name='posts'),
     webapp2.Route('/post/<:.*>', MainPage, name='single_post_view'),
     webapp2.Route('/shop/<:.*>', MainPage, name='single_shop_view'),
-    webapp2.Route('/admin/script', SendTestPostsEmailToMod, name='script_runner'),
+    webapp2.Route('/admin/script', SendSuspensionEmail, name='script_runner'),
     webapp2.Route('/admin/new_shop', ModeratorsOnlyPage, name='new_shop_page'),
     webapp2.Route('/admin/tracked_shops', ModeratorsOnlyPage, name='tracked_shops_page'),
     webapp2.Route('/admin', ModeratorsOnlyPage, name='admin_page'),
